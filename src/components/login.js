@@ -22,6 +22,7 @@ export function Login() {
     <div
       style={{
         height: "100vh",
+
         background: "linear-gradient(45deg,#3585da 30%, #003C72 70%)",
       }}
     >
@@ -54,85 +55,133 @@ export function Login() {
         container
         style={{
           height: "100vh",
-          width: "100vh",
+
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
-        xs={12}
       >
-        <Grid>
-          <div className="baseContainer">
-            <Grid>
-              <div className="outerBox">
-                <Grid spacing={3}>
-                  <div className="dialogBox">
-                    <div
-                      className="loginBox"
-                      style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <header
-                        style={{
-                          marginBottom: "20px",
-                          fontSize: "24px",
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        PATIENT LOGIN
-                      </header>
-                      <div style={{ justifyContent: "left" }}>
-                        <TextField
-                          label="Email Address"
-                          style={{ marginBottom: "10px", width: "75%" }}
-                        ></TextField>
-                        <TextField
-                          label="Password"
-                          type={showPassword ? "text" : "password"}
-                          style={{ marginBottom: "40px", width: "75%" }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
-                                  onMouseDown={handleMouseDownPassword}
-                                >
-                                  {showPassword ? (
-                                    <Visibility />
-                                  ) : (
-                                    <VisibilityOff />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </div>
-                      <Button
-                        style={{
-                          width: "170px",
-                          height: "43px",
-                          borderRadius: "10px",
-                          background: "#3585da",
-                          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                          color: "white",
-                        }}
-                      >
-                        login
-                      </Button>
-                    </div>
-                    <div className="patientlogoDiv">
-                      <img src={patientlogo} className="patientlogo"></img>
-                    </div>
-                  </div>
-                </Grid>
-              </div>
+        <Grid
+          item
+          md={12}
+          md={12}
+          md={12}
+          style={{
+            width: "100%",
+            height: "100%",
+            flexDirection: "column",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Grid
+            item
+            md={8}
+            sm={8}
+            xs={8}
+            style={{
+              border: "6px solid  #59C1E8",
+            }}
+          >
+            <Grid
+              item
+              md={12}
+              sm={12}
+              xs={12}
+              style={{
+                width: "1320px",
+                height: "500px",
+                display: "flex",
+
+                alignItems: "center",
+
+                padding: "50px",
+                background: "#fff",
+                boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
+                Border: "6px",
+              }}
+            >
+              <Grid
+                item
+                md={12}
+                sm={8}
+                xs={6}
+                style={{
+                  height: "350px",
+
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <img src={patientlogo} className="patientlogo"></img>
+              </Grid>
+              <Grid
+                item
+                md={12}
+                sm={10}
+                xs={8}
+                style={{
+                  textAlign: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "270px",
+                  height: "329px",
+                  borderRadius: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "#fff",
+                  boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+                }}
+              >
+                <header
+                  style={{
+                    marginBottom: "20px",
+                    fontSize: "24px",
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  PATIENT LOGIN
+                </header>
+                <div style={{ justifyContent: "left" }}>
+                  <TextField
+                    label="Email Address"
+                    style={{ marginBottom: "10px", width: "75%" }}
+                  ></TextField>
+                  <TextField
+                    label="Password"
+                    type={showPassword ? "text" : "password"}
+                    style={{ marginBottom: "40px", width: "75%" }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </div>
+                <Button
+                  style={{
+                    width: "170px",
+                    height: "43px",
+                    borderRadius: "10px",
+                    background: "#3585da",
+                    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                    color: "white",
+                  }}
+                >
+                  login
+                </Button>
+              </Grid>
             </Grid>
-          </div>
+          </Grid>
         </Grid>
       </Grid>
     </div>

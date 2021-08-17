@@ -75,8 +75,8 @@
 }
 
 .paitentlogo{ 
-    width: 148px; 
-    height: 49px; 
+    width: 8px; 
+    height: 9px; 
 }
 
 .patientlogoDiv {
@@ -88,6 +88,6 @@
 
 .outerBox {
     border: 6px solid  #59C1E8;
-    
+    margin:auto
 }
 
