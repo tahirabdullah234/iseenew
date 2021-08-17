@@ -19,7 +19,12 @@ export function Login() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   return (
-    <div style={{ height: "100vh" }}>
+    <div
+      style={{
+        height: "100vh",
+        background: "linear-gradient(45deg,#3585da 30%, #003C72 70%)",
+      }}
+    >
       <AppBar color="inherit">
         <Toolbar>
           <Grid
@@ -28,6 +33,7 @@ export function Login() {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Grid item xs={12} sm={2} md={1}>
@@ -44,69 +50,91 @@ export function Login() {
           </Grid>
         </Toolbar>
       </AppBar>
-      <div className="baseContainer">
-        <div className="outerBox">
-          <div className="dialogBox">
-            <div
-              className="loginBox"
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <header
-                style={{
-                  marginBottom: "20px",
-                  fontSize: "24px",
-                  textDecorationLine: "underline",
-                }}
-              >
-                PATIENT LOGIN
-              </header>
-              <div style={{ justifyContent: "left" }}>
-                <TextField
-                  label="Email Address"
-                  style={{ marginBottom: "10px", width: "75%" }}
-                ></TextField>
-                <TextField
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  style={{ marginBottom: "40px", width: "75%" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+      <Grid
+        container
+        style={{
+          height: "100vh",
+          width: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        xs={12}
+      >
+        <Grid>
+          <div className="baseContainer">
+            <Grid>
+              <div className="outerBox">
+                <Grid spacing={3}>
+                  <div className="dialogBox">
+                    <div
+                      className="loginBox"
+                      style={{
+                        textAlign: "center",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <header
+                        style={{
+                          marginBottom: "20px",
+                          fontSize: "24px",
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        PATIENT LOGIN
+                      </header>
+                      <div style={{ justifyContent: "left" }}>
+                        <TextField
+                          label="Email Address"
+                          style={{ marginBottom: "10px", width: "75%" }}
+                        ></TextField>
+                        <TextField
+                          label="Password"
+                          type={showPassword ? "text" : "password"}
+                          style={{ marginBottom: "40px", width: "75%" }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? (
+                                    <Visibility />
+                                  ) : (
+                                    <VisibilityOff />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </div>
+                      <Button
+                        style={{
+                          width: "170px",
+                          height: "43px",
+                          borderRadius: "10px",
+                          background: "#3585da",
+                          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                          color: "white",
+                        }}
+                      >
+                        login
+                      </Button>
+                    </div>
+                    <div className="patientlogoDiv">
+                      <img src={patientlogo} className="patientlogo"></img>
+                    </div>
+                  </div>
+                </Grid>
               </div>
-              <Button
-                style={{
-                  width: "170px",
-                  height: "43px",
-                  borderRadius: "10px",
-                  background: "#3585da",
-                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  color: "white",
-                }}
-              >
-                login
-              </Button>
-            </div>
-            <div className="patientlogoDiv">
-              <img src={patientlogo} className="patientlogo"></img>
-            </div>
+            </Grid>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 }

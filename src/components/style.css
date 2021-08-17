@@ -61,7 +61,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg,#3585da 30%, #003C72 70%);
+    
 }
 
 .loginBox {
@@ -88,5 +88,6 @@
 
 .outerBox {
     border: 6px solid  #59C1E8;
+    
 }
 
