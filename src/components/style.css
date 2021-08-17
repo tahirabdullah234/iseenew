@@ -1,0 +1,92 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    
+}
+
+.logoText {
+    font-size: 35px;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    color: #59C1E8;
+    text-align: left;
+    padding: 5px 0 0 5px;
+}
+
+.logoTextSlash {
+    font-size: 35px;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    color: #59C1E8;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.logoTextDiv{
+    align-items: center;
+    display: flex;
+}
+
+.logoDiv {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo {
+    width: 128px;
+    height: 90%;
+}
+
+.dialogBox {
+    width: 595px;
+    height: 350px;
+    display: flex;
+    flex-direction:'row';
+    align-items: center;
+    padding:50px;
+    background: #fff;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.16);
+    Border: 6px;
+    
+}
+
+.baseContainer {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg,#3585da 30%, #003C72 70%);
+}
+
+.loginBox {
+    width: 270px;
+    height: 329px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;    
+    background: #fff;
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.16);
+}
+
+.paitentlogo{ 
+    width: 148px; 
+    height: 49px; 
+}
+
+.patientlogoDiv {
+    height: 350px;
+    width: 10%;
+    display: flex;
+    flex-direction: row
+}
+
+.outerBox {
+    border: 6px solid  #59C1E8;
+}
+
