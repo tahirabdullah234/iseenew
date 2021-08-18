@@ -1,1 +1,1 @@
-export {Login} from "./login";
+export { PatientLogin } from "./patientlogin";

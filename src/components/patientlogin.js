@@ -14,14 +14,14 @@ import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
 
-export function Login() {
+export function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   return (
     <div
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
 
         alignItems: "center",
@@ -65,8 +65,8 @@ export function Login() {
         <Grid
           item
           md={12}
-          md={12}
-          md={12}
+          sm={12}
+          xs={12}
           style={{
             width: "100%",
             height: "100%",
@@ -79,10 +79,10 @@ export function Login() {
           <Grid
             item
             md={9}
-            sm={6}
-            xs={8}
+            sm={5}
+            xs={9}
             style={{
-              marginTop: "109px",
+              marginTop: "112px",
               border: "6px solid  #59C1E8",
             }}
           >
@@ -97,7 +97,6 @@ export function Login() {
                 display: "flex",
 
                 alignItems: "center",
-
                 padding: "20px",
                 background: "#fff",
                 boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
