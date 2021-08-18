@@ -78,11 +78,11 @@ export function Login() {
         >
           <Grid
             item
-            md={8}
-            sm={8}
-            xs={8}
+            md={10}
+            sm={5}
+            xs={7}
             style={{
-              marginTop: "150px",
+              marginTop: "111px",
               border: "6px solid  #59C1E8",
             }}
           >
@@ -92,7 +92,7 @@ export function Login() {
               sm={12}
               xs={12}
               style={{
-                width: "820px",
+                width: "100%",
                 height: "100%",
                 display: "flex",
 

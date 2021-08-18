@@ -4,7 +4,7 @@
 }
 
 .logoText {
-    font-size: 35px;
+    font-size: 24px;
     margin: 0;
     padding: 0;
     font-weight: 600;
@@ -14,7 +14,7 @@
 }
 
 .logoTextSlash {
-    font-size: 35px;
+    font-size: 24px;
     margin: 0;
     padding: 0;
     font-weight: 600;
@@ -37,8 +37,8 @@
 }
 
 .logo {
-    width: 128px;
-    height: 90%;
+    width: 100px;
+    height: 70%;
 }
 
 .dialogBox {
@@ -75,7 +75,7 @@
 }
 
 .patientlogo{ 
-    width: 55%; 
+    width: 45%; 
      height:30%
     
 }
