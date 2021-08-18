@@ -78,11 +78,11 @@ export function Login() {
         >
           <Grid
             item
-            md={10}
-            sm={5}
-            xs={7}
+            md={9}
+            sm={6}
+            xs={8}
             style={{
-              marginTop: "111px",
+              marginTop: "109px",
               border: "6px solid  #59C1E8",
             }}
           >
@@ -120,7 +120,7 @@ export function Login() {
               </Grid>
               <Grid
                 item
-                md={5}
+                md={6}
                 sm={12}
                 xs={12}
                 style={{
