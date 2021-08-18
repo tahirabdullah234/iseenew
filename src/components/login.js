@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import iseelogo from "../Assets/logofilled.png";
-import patientlogo from "../Assets/patientlogin.png";
+import patientlogo from "../Assets/patientlogo.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -22,7 +22,10 @@ export function Login() {
     <div
       style={{
         height: "100vh",
+        display: "flex",
 
+        alignItems: "center",
+        justifyContent: "center",
         background: "linear-gradient(45deg,#3585da 30%, #003C72 70%)",
       }}
     >
@@ -54,8 +57,6 @@ export function Login() {
       <Grid
         container
         style={{
-          height: "100vh",
-
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -81,22 +82,23 @@ export function Login() {
             sm={8}
             xs={8}
             style={{
+              marginTop: "150px",
               border: "6px solid  #59C1E8",
             }}
           >
             <Grid
-              item
+              container
               md={12}
               sm={12}
               xs={12}
               style={{
-                width: "1320px",
-                height: "500px",
+                width: "820px",
+                height: "100%",
                 display: "flex",
 
                 alignItems: "center",
 
-                padding: "50px",
+                padding: "20px",
                 background: "#fff",
                 boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
                 Border: "6px",
@@ -104,29 +106,29 @@ export function Login() {
             >
               <Grid
                 item
-                md={12}
-                sm={8}
-                xs={6}
+                md={6}
+                sm={12}
+                xs={12}
                 style={{
-                  height: "350px",
-
                   display: "flex",
-                  flexDirection: "row",
+
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <img src={patientlogo} className="patientlogo"></img>
               </Grid>
               <Grid
                 item
-                md={12}
-                sm={10}
-                xs={8}
+                md={5}
+                sm={12}
+                xs={12}
                 style={{
                   textAlign: "center",
                   alignItems: "center",
                   justifyContent: "center",
                   width: "270px",
-                  height: "329px",
+                  height: "299px",
                   borderRadius: "20px",
                   display: "flex",
                   flexDirection: "column",
@@ -167,18 +169,20 @@ export function Login() {
                     }}
                   />
                 </div>
-                <Button
+                <Grid
                   style={{
-                    width: "170px",
-                    height: "43px",
+                    width: "38%",
+                    height: "42px",
                     borderRadius: "10px",
                     background: "#3585da",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                    color: "white",
                   }}
                 >
-                  login
-                </Button>
+                  <Button style={{ color: "white" }}>login</Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
