@@ -25,7 +25,6 @@ export function PatientLogin() {
         display: "flex",
 
         alignItems: "center",
-        justifyContent: "center",
         background: "linear-gradient(45deg,#3585da 30%, #003C72 70%)",
       }}
     >
@@ -37,10 +36,9 @@ export function PatientLogin() {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
             }}
           >
-            <Grid item xs={12} sm={2} md={1}>
+            <Grid item xs={3} sm={2} md={1}>
               <div className="logoDiv">
                 <img src={iseelogo} alt="isee logo" className="logo" />
               </div>
@@ -78,11 +76,11 @@ export function PatientLogin() {
         >
           <Grid
             item
-            md={9}
+            md={6}
             sm={5}
             xs={9}
             style={{
-              marginTop: "112px",
+              marginTop: "111px",
               border: "6px solid  #59C1E8",
             }}
           >
@@ -95,7 +93,7 @@ export function PatientLogin() {
                 width: "100%",
                 height: "100%",
                 display: "flex",
-
+                justifyContent: "center",
                 alignItems: "center",
                 padding: "20px",
                 background: "#fff",
@@ -106,13 +104,12 @@ export function PatientLogin() {
               <Grid
                 item
                 md={6}
-                sm={12}
-                xs={12}
+                sm={5}
+                xs={4}
                 style={{
                   display: "flex",
 
                   alignItems: "center",
-                  justifyContent: "center",
                 }}
               >
                 <img src={patientlogo} className="patientlogo"></img>
@@ -127,7 +124,7 @@ export function PatientLogin() {
                   alignItems: "center",
                   justifyContent: "center",
                   width: "270px",
-                  height: "299px",
+                  height: "350px",
                   borderRadius: "20px",
                   display: "flex",
                   flexDirection: "column",

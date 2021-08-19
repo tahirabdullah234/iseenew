@@ -20,12 +20,13 @@
     font-weight: 600;
     color: #59C1E8;
     text-align: left;
-    padding-left: 5px;
+    padding-bottom: 1px;
 }
 
 .logoTextDiv{
     align-items: center;
     display: flex;
+    
 }
 
 .logoDiv {
@@ -37,8 +38,10 @@
 }
 
 .logo {
-    width: 100px;
-    height: 70%;
+    width:70%;
+    height:72%;
+    display: flex;
+    align-items: center;
 }
 
 .dialogBox {
@@ -66,7 +69,7 @@
 
 .loginBox {
     width: 270px;
-    height: 329px;
+    height: 200px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;    
@@ -75,7 +78,7 @@
 }
 
 .patientlogo{ 
-    width: 45%; 
+    width: 85%; 
      height:30%
     
 }
