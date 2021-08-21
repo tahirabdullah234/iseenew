@@ -1,110 +1,113 @@
 * {
-    font-family: 'Montserrat', sans-serif;
-    
+  font-family: "Montserrat", sans-serif;
 }
 
 .logoText {
-    font-size: 24px;
-    margin: 0;
-    padding: 0;
-    font-weight: 600;
-    color: #59C1E8;
-    text-align: left;
-    padding: 5px 0 0 5px;
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  color: #59c1e8;
+  text-align: left;
+  padding: 5px 0 0 5px;
 }
 
 .logoTextSlash {
-    font-size: 24px;
-    margin: 0;
-    padding: 0;
-    font-weight: 600;
-    color: #59C1E8;
-    text-align: left;
-    padding-bottom: 1px;
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  color: #59c1e8;
+  text-align: left;
+  padding-bottom: 1px;
 }
 
-.logoTextDiv{
-    align-items: center;
-    display: flex;
-    
+.logoTextDiv {
+  align-items: center;
+  display: flex;
 }
 
 .logoDiv {
-    height: 50px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .logo {
-    width:70%;
-    height:72%;
-    display: flex;
-    align-items: center;
+  width: 90%;
+  height: 72%;
+  display: flex;
+  align-items: center;
 }
 
 .dialogBox {
-    width: 595px;
-    height: 350px;
-    display: flex;
-    flex-direction:'row';
-    align-items: center;
-    padding:50px;
-    background: #fff;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.16);
-    Border: 6px;
-    
+  width: 595px;
+  height: 350px;
+  display: flex;
+  flex-direction: "row";
+  align-items: center;
+  padding: 50px;
+  background: #fff;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.16);
+  border: 6px;
 }
 
 .baseContainer {
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginBox {
-    width: 270px;
-    height: 200px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;    
-    background: #fff;
-    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.16);
+  width: 270px;
+  height: 200px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.16);
 }
 
-.patientlogo{ 
-    width: 85%; 
-     height:30%
-    
+.patientlogo {
+  width: 70%;
 }
 
 .patientlogoDiv {
-    height: 330%;
-    width: 100%;
-    display: flex;
-    
+  height: 330%;
+  width: 100%;
+  display: flex;
 }
 
 .outerBox {
-    border: 6px solid  #59C1E8;
-    margin:auto
+  border: 6px solid #59c1e8;
+  margin: auto;
 }
 .main {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-  .kendo-imageimg {
-    width: 100%;  
-  }
-  .kendo-detailsh2 {
-    margin-top: 0.25em;
-  }
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.kendo-imageimg {
+  width: 100%;
+}
+.kendo-detailsh2 {
+  margin-top: 0.25em;
+}
+.patientregistrationlogo {
+  width: 30%;
+}
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #3585da 30%, #003c72 70%);
+}
