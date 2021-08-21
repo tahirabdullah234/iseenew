@@ -15,7 +15,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-export function PatientLogin() {
+export function DoctorLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -80,7 +80,7 @@ export function PatientLogin() {
             <img src={patientlogo} className="patientlogo"></img>
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
-            <header className={classes.loginboxheader}>PATIENT LOGIN</header>
+            <header className={classes.loginboxheader}>DOCTOR LOGIN</header>
             <div>
               <TextField
                 label="Email Address"
