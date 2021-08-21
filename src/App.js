@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import { PatientLogin } from "./components/patientlogin";
-import { PatientRegistration } from "./components/patientregistration";
+// import { PatientLogin } from "./components/patientlogin";
+import MainDrawer from './components/drawer'
 function App() {
   return (
     <div>
-      <PatientRegistration />
+      <MainDrawer />
     </div>
   );
 }
