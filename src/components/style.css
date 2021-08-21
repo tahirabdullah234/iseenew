@@ -38,7 +38,7 @@
 }
 
 .logo {
-    width:70%;
+    width:90%;
     height:72%;
     display: flex;
     align-items: center;
@@ -78,8 +78,8 @@
 }
 
 .patientlogo{ 
-    width: 85%; 
-     height:30%
+    width: 70%; 
+    
     
 }
 
@@ -108,3 +108,14 @@
   .kendo-detailsh2 {
     margin-top: 0.25em;
   }
+.patientregistrationlogo{
+    width: 30%; 
+    
+}
+.container{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg,#3585da 30%, #003C72 70%);
+}

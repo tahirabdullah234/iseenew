@@ -4,7 +4,7 @@ import Container from "@material-ui/core/Container";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import iseelogo from "../Assets/logofilled.png";
+import { Header } from "./header";
 import patientlogo from "../Assets/patientlogo.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -13,174 +13,105 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
-
+import Card from "@material-ui/core/Card";
+import { makeStyles } from "@material-ui/core/styles";
 export function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const useStyles = makeStyles({
+    border: {
+      marginTop: "111px",
+      border: "6px solid  #59C1E8",
+    },
+    dialogbox: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "20px",
+      background: "#fff",
+      boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
+      Border: "6px",
+    },
+    setpatientlogo: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    loginbox: {
+      textAlign: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "270px",
+      height: "350px",
+      borderRadius: "20px",
+      display: "flex",
+      flexDirection: "column",
+      background: "#fff",
+      boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    },
+    loginboxheader: {
+      marginBottom: "20px",
+      fontSize: "24px",
+      textDecorationLine: "underline",
+    },
+    setemail: { marginBottom: "10px", width: "75%" },
+    setpassword: { marginBottom: "40px", width: "75%" },
+    loginbutton: {
+      width: "38%",
+      height: "42px",
+      borderRadius: "10px",
+      background: "#3585da",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    },
+  });
+  const classes = useStyles();
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-
-        alignItems: "center",
-        background: "linear-gradient(45deg,#3585da 30%, #003C72 70%)",
-      }}
-    >
-      <AppBar color="inherit">
-        <Toolbar>
-          <Grid
-            container
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Grid item xs={3} sm={2} md={1}>
-              <div className="logoDiv">
-                <img src={iseelogo} alt="isee logo" className="logo" />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={10} md={11}>
-              <div className="logoTextDiv">
-                <p className="logoTextSlash">|</p>
-                <p className="logoText">Blindness Detection System</p>
-              </div>
-            </Grid>
+    <div className="container">
+      <Header />
+      <Grid container md={6} sm={5} xs={9} className={classes.border}>
+        <Grid container md={12} sm={12} xs={12} className={classes.dialogbox}>
+          <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
+            <img src={patientlogo} className="patientlogo"></img>
           </Grid>
-        </Toolbar>
-      </AppBar>
-      <Grid
-        container
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Grid
-          item
-          md={12}
-          sm={12}
-          xs={12}
-          style={{
-            width: "100%",
-            height: "100%",
-            flexDirection: "column",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Grid
-            item
-            md={6}
-            sm={5}
-            xs={9}
-            style={{
-              marginTop: "111px",
-              border: "6px solid  #59C1E8",
-            }}
-          >
-            <Grid
-              container
-              md={12}
-              sm={12}
-              xs={12}
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "20px",
-                background: "#fff",
-                boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
-                Border: "6px",
-              }}
-            >
-              <Grid
-                item
-                md={6}
-                sm={5}
-                xs={4}
-                style={{
-                  display: "flex",
+          <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
+            <header className={classes.loginboxheader}>PATIENT LOGIN</header>
+            <div>
+              <TextField
+                label="Email Address"
+                className={classes.setemail}
+              ></TextField>
+              <TextField
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                className={classes.setpassword}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
 
-                  alignItems: "center",
-                }}
-              >
-                <img src={patientlogo} className="patientlogo"></img>
-              </Grid>
-              <Grid
-                item
-                md={6}
-                sm={12}
-                xs={12}
-                style={{
-                  textAlign: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "270px",
-                  height: "350px",
-                  borderRadius: "20px",
-                  display: "flex",
-                  flexDirection: "column",
-                  background: "#fff",
-                  boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-                }}
-              >
-                <header
-                  style={{
-                    marginBottom: "20px",
-                    fontSize: "24px",
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  PATIENT LOGIN
-                </header>
-                <div style={{ justifyContent: "left" }}>
-                  <TextField
-                    label="Email Address"
-                    style={{ marginBottom: "10px", width: "75%" }}
-                  ></TextField>
-                  <TextField
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    style={{ marginBottom: "40px", width: "75%" }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </div>
-                <Grid
-                  style={{
-                    width: "38%",
-                    height: "42px",
-                    borderRadius: "10px",
-                    background: "#3585da",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
-                >
-                  <Button style={{ color: "white" }}>login</Button>
-                </Grid>
-              </Grid>
-            </Grid>
+            <Button
+              className={classes.loginbutton}
+              style={{ background: "#3585da", color: "white" }}
+            >
+              login
+            </Button>
           </Grid>
         </Grid>
       </Grid>

@@ -5,7 +5,7 @@ import { PatientRegistration } from "./components/patientregistration";
 function App() {
   return (
     <div>
-      <PatientLogin />
+      <PatientRegistration />
     </div>
   );
 }
