@@ -76,7 +76,9 @@
 .patientlogo {
   width: 70%;
 }
-
+.doctorlogo {
+    width: 55%;
+  }
 .patientlogoDiv {
   height: 330%;
   width: 100%;
@@ -110,4 +112,7 @@
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #3585da 30%, #003c72 70%);
+}
+.docreglogo {
+  width: 25%;
 }

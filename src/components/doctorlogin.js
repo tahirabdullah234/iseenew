@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Header } from "./header";
-import patientlogo from "../Assets/patientlogo.png";
+import doctorlogo from "../Assets/Doclogo.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -77,7 +77,7 @@ export function DoctorLogin() {
       <Grid container md={6} sm={5} xs={9} className={classes.border}>
         <Grid container md={12} sm={12} xs={12} className={classes.dialogbox}>
           <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
-            <img src={patientlogo} className="patientlogo"></img>
+            <img src={doctorlogo} className="doctorlogo"></img>
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
             <header className={classes.loginboxheader}>DOCTOR LOGIN</header>

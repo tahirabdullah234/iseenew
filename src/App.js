@@ -2,11 +2,12 @@ import React from "react";
 import "./App.css";
 import { PatientLogin } from "./components/patientlogin";
 import { PatientRegistration } from "./components/patientregistration";
+import { DoctorRegistration } from "./components/docreg";
 import { DoctorLogin } from "./components/doctorlogin";
 function App() {
   return (
     <div>
-      <DoctorLogin />
+      <DoctorRegistration />
     </div>
   );
 }
