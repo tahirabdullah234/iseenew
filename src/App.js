@@ -1,12 +1,13 @@
 import React from "react";
 import "./App.css";
-import { PatientLogin } from "./components/patientlogin";
-import { PatientRegistration } from "./components/patientregistration";
-import { DoctorLogin } from "./components/doctorlogin";
+// import { PatientLogin } from "./components/patientlogin";
+// import { PatientRegistration } from "./components/patientregistration";
+// import { DoctorLogin } from "./components/doctorlogin";
+import Drawer from './components/drawer'
 function App() {
   return (
     <div>
-      <DoctorLogin />
+      <Drawer />
     </div>
   );
 }
