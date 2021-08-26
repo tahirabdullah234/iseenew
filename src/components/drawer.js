@@ -21,11 +21,11 @@ const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
+        display: "flex",
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
+        transition: theme.transitions.create(["width", "margin"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     appBarShift: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
+        transition: theme.transitions.create(["width", "margin"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
@@ -42,34 +42,34 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 36,
     },
     hide: {
-        display: 'none',
+        display: "none",
     },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
-        whiteSpace: 'nowrap',
+        whiteSpace: "nowrap",
     },
     drawerClose: {
-        backgroundColor: '#1061B0',
-        color: '#1061B0',
-        transition: theme.transitions.create('width', {
+        backgroundColor: "#1061B0",
+        color: "#1061B0",
+        transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        overflowX: 'hidden',
+        overflowX: "hidden",
         width: theme.spacing(10) + 1,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up("sm")]: {
             width: theme.spacing(12) + 1,
         },
-        '&:hover': {
+        "&:hover": {
             width: drawerWidth,
-            backgroundColor: '#1061B0',
-            color: '#fff',
-            transition: theme.transitions.create('width', {
+            backgroundColor: "#1061B0",
+            color: "#fff",
+            transition: theme.transitions.create("width", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
-        }
+        },
     },
     toolbar: {
         backgroundColor: '#003C72',
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     listItemTextStyle: {
         fontSize: 16,
         fontWeight: 600,
-    }
+    },
 }));
 
 export default function MainDrawer() {
