@@ -4,6 +4,7 @@ import "./App.css";
 // import { PatientRegistration } from "./components/patientregistration";
 // import { DoctorLogin } from "./components/doctorlogin";
 import Drawer from './components/drawer'
+// import Drawer from './components/doctorCard'
 function App() {
   return (
     <div>

@@ -13,7 +13,7 @@ import report from '../Assets/document.svg';
 import exit from '../Assets/exit.svg';
 import heart from '../Assets/heart.svg';
 import user from '../Assets/user (2).svg';
-import doctor from '../Assets/doctor (1).png';
+import doctor from '../Assets/doctor-female.png';
 import classify from '../Assets/ISEE-01.png';
 import { Grid, Typography } from '@material-ui/core';
 
