@@ -1,15 +1,16 @@
 import React from "react";
 import "./App.css";
-// import { PatientLogin } from "./components/patientlogin";
-// import { PatientRegistration } from "./components/patientregistration";
-// import { DoctorLogin } from "./components/doctorlogin";
-// import Drawer from './components/drawer'
-import Drawer from './components/doctorCard'
+import { PatientLogin } from "./components/patientlogin";
+import { PatientRegistration } from "./components/patientregistration";
+import { DoctorRegistration } from "./components/docreg";
+import { DoctorLogin } from "./components/doctorlogin";
+import MainDrawer from "./components/drawer";
+import { PatientDashboard } from "./components/PatientDashboard";
+import { ManageBP } from "./components/manageBloodPressure";
 function App() {
   return (
     <div>
-      <Drawer />
-      <Drawer />
+      <ManageBP />
     </div>
   );
 }
