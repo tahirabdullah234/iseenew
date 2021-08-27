@@ -4,15 +4,16 @@ import "./App.css";
 // import { PatientRegistration } from "./components/patientregistration";
 // import { DoctorLogin } from "./components/doctorlogin";
 // import Drawer from './components/drawer'
-import Drawer from './components/doctorCard'
+import Drawer from './components/drawerEmily'
+// import Drawer from './components/doctorCard'
 function App() {
   return (
     <div>
       <Drawer />
-      <Drawer />
     </div>
   );
 }
+// <Drawer />
 // added some changes
 // changes added by abdullah bin tahir
 export default App;
