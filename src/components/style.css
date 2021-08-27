@@ -116,3 +116,12 @@
 .docreglogo {
   width: 25%;
 }
+.patdashdiv{
+  background: linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}

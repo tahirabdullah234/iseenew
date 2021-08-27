@@ -68,17 +68,7 @@ const useStyles = makeStyles({
 export function PatientDashboard() {
   const classes = useStyles();
   return (
-    <div
-      style={{
-        background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        flexDirection: "column",
-      }}
-    >
+    <div className="patdashdiv">
       <CssBaseline />
       <Typography
         style={{ color: "#1061B0", fontSize: "30px", fontWeight: "bold" }}
