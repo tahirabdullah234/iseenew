@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     background: "linear-gradient(#3585da 0%, #59c1e8 100%)",
     boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
     display: "flex",
-    padding: "40px",
+    padding: "10px",
   },
   NotificationsFont: {
     fontSize: "15px",
@@ -56,25 +56,22 @@ const useStyles = makeStyles({
   Fasting: {
     background: "#f7d9a1",
   },
+  messageDisplay: {
+    width: "100%",
+    borderRadius: "10px",
+    background: "#fff",
+    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    padding: "5px",
+  },
 });
 
 export function PatientDashboard() {
   const classes = useStyles();
   return (
-    <div
-      style={{
-        background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        flexDirection: "column",
-      }}
-    >
+    <div className="patdashdiv">
       <CssBaseline />
       <Typography
-        style={{ color: "#1061B0", fontSize: "35px", fontWeight: "bold" }}
+        style={{ color: "#1061B0", fontSize: "30px", fontWeight: "bold" }}
       >
         Welcome Abdullah Tahir
       </Typography>
@@ -340,8 +337,8 @@ export function PatientDashboard() {
           style={{
             display: "flex",
             flexDirection: "column",
-            padding: "20px",
-            marginTop: "40px",
+            padding: "10px",
+            marginTop: "20px",
           }}
           className={classes.dialogBox}
         >
@@ -452,7 +449,7 @@ export function PatientDashboard() {
           sm={4}
           xs={12}
           style={{
-            marginTop: "40px",
+            marginTop: "20px",
             display: "flex",
             flexDirection: "column",
           }}
@@ -522,14 +519,70 @@ export function PatientDashboard() {
             container
             style={{
               display: "flex",
-              flexDirection: "column",
-              marginTop: "40px",
+              textAlign: "center",
+              justifyContent: "center",
+              marginTop: "20px",
+              padding: "10px",
             }}
             className={classes.dialogBox}
           >
-            <Typography>MESSAGES</Typography>
-            <Grid></Grid>
-            <Grid></Grid>
+            <Typography className={classes.title}>MESSAGES</Typography>
+
+            <Grid item xs={9} className={classes.messageDisplay}>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "19px",
+                  textAlign: "center",
+                  color: "#3585da",
+                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                }}
+              >
+                Your latest reports are ready
+              </Typography>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "13px",
+                  textAlign: "end",
+                  color: "#3585da",
+                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                  textDecorationLine: "underline",
+                }}
+              >
+                READ NOW
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={9}
+              style={{ marginTop: "15px" }}
+              className={classes.messageDisplay}
+            >
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "19px",
+                  textAlign: "center",
+                  color: "#3585da",
+                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                }}
+              >
+                Your appointment with Dr. Aslam jamshaid is ready
+              </Typography>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "13px",
+                  textAlign: "end",
+                  color: "#3585da",
+                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+                  textDecorationLine: "underline",
+                }}
+              >
+                READ NOW
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
