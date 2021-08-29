@@ -69,8 +69,8 @@ export function PatientLogin() {
   return (
     <div className="container">
       <Header />
-      <Grid container md={6} sm={5} xs={9} className={classes.border}>
-        <Grid container md={12} sm={12} xs={12} className={classes.dialogbox}>
+      <Grid item md={6} sm={5} xs={9} className={classes.border}>
+        <Grid container className={classes.dialogbox}>
           <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
             <img
               src={patientlogo}

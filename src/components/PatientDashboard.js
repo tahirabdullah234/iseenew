@@ -85,7 +85,7 @@ const useStyles = makeStyles({
   boxdis: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   BPGLtitle: {
     display: "flex",
@@ -133,7 +133,7 @@ export function PatientDashboard() {
       >
         Welcome Abdullah Tahir
       </Typography>
-      <Grid container md={10} xs={11}>
+      <Grid item md={10} xs={11}>
         <Grid container className={classes.DashboardHead}>
           <Grid item xs={12} sm={6}>
             <Typography
@@ -159,7 +159,7 @@ export function PatientDashboard() {
               </Typography>
             </Grid>
             <Grid container className={classes.heathconcol}>
-              <Grid container xs={12} md={2} className={classes.healthcolset}>
+              <Grid item xs={12} md={2} className={classes.healthcolset}>
                 <Grid
                   item
                   style={{ background: " #85fcbc" }}
@@ -167,7 +167,7 @@ export function PatientDashboard() {
                 />
                 <Typography className={classes.healthcontxt}>Safe</Typography>
               </Grid>
-              <Grid container xs={12} md={3} className={classes.healthcolset}>
+              <Grid item xs={12} md={3} className={classes.healthcolset}>
                 <Grid
                   item
                   style={{ background: " #ffbf6b" }}
@@ -177,7 +177,7 @@ export function PatientDashboard() {
                   Be cautious
                 </Typography>
               </Grid>
-              <Grid container xs={12} md={3} className={classes.healthcolset}>
+              <Grid item xs={12} md={3} className={classes.healthcolset}>
                 <Grid
                   item
                   style={{ background: "#fa6b6b" }}
@@ -197,7 +197,7 @@ export function PatientDashboard() {
               Notifications
             </Typography>
             <div className={classes.notifications}>
-              <Grid item xs={2} sm={2} md={1}>
+              <Grid item xs={2} md={1}>
                 <div className="logoDiv">
                   <img
                     src={Bellicon}
@@ -217,7 +217,7 @@ export function PatientDashboard() {
               </Typography>
             </div>
             <div className={classes.notifications}>
-              <Grid item xs={2} sm={2} md={1}>
+              <Grid item xs={2} md={1}>
                 <div className="logoDiv">
                   <img
                     src={Bellicon}
@@ -257,7 +257,7 @@ export function PatientDashboard() {
               </Typography>
             </div>
             <div className={classes.notifications}>
-              <Grid item xs={2} sm={2} md={1}>
+              <Grid item xs={2} md={1}>
                 <div className="logoDiv">
                   <img
                     src={Bellicon}
@@ -279,157 +279,163 @@ export function PatientDashboard() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container className={classes.boxdis} md={10} xs={11}>
-        <Grid
-          container
-          sm={7}
-          xs={12}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            padding: "10px",
-            marginTop: "20px",
-          }}
-          className={classes.dialogBox}
-        >
+      <Grid item md={10} xs={11}>
+        <Grid container className={classes.boxdis}>
           <Grid
             item
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <Typography
-              style={{ fontSize: "23px" }}
-              className={classes.fonttxt}
-            >
-              WEEKLY STATISTICS
-            </Typography>
-            <Typography className={classes.timeline}>
-              JUL 21 - JUL 28
-            </Typography>
-          </Grid>
-          <Grid item className={classes.BPGLtitle}>
-            <Typography className={classes.timeline}>BLOOD PRESSURE</Typography>
-            <Typography className={classes.timeline}> GLUCOSE LEVEL</Typography>
-          </Grid>
-          <Grid
-            container
-            className={classes.BPGLgraph}
-            style={{ marginTop: "5px" }}
-          >
-            <Grid container xs={2} className={classes.healthcolset}>
-              <Grid
-                item
-                style={{ background: "#6a6cb9" }}
-                className={classes.healthcol}
-              />
-              <Typography>SBP</Typography>
-            </Grid>
-            <Grid container xs={4} className={classes.healthcolset}>
-              <Grid
-                item
-                style={{ background: "#ef8282" }}
-                className={classes.healthcol}
-              />
-              <Typography>DBP</Typography>
-            </Grid>
-            <Grid container xs={3} className={classes.healthcolset}>
-              <Grid
-                item
-                style={{ background: "#ecabab" }}
-                className={classes.healthcol}
-              />
-              <Typography>Random</Typography>
-            </Grid>
-            <Grid container xs={2} className={classes.healthcolset}>
-              <Grid
-                item
-                style={{ background: "#f7d9a1" }}
-                className={classes.healthcol}
-              />
-              <Typography>Fasting</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid sm={4} xs={12} className={classes.appmsg} container>
-          <Grid
-            container
+            sm={7}
+            xs={12}
             style={{
               display: "flex",
               flexDirection: "column",
               padding: "10px",
+              marginTop: "20px",
             }}
             className={classes.dialogBox}
           >
-            <Typography
-              style={{ fontSize: "23px", textAlign: "center" }}
-              className={classes.fonttxt}
+            <Grid
+              container
+              style={{ display: "flex", justifyContent: "space-between" }}
             >
-              LATEST APPOINTMENT
-            </Typography>
-            <Grid container className={classes.setappointtxt}>
-              <Grid sm={12} md={4} item>
-                <Typography
-                  style={{ fontSize: "23px", textAlign: "center" }}
-                  className={classes.fonttxt}
-                >
-                  AUG 21
-                </Typography>
-                <Typography
-                  style={{ fontSize: "35px", textAlign: "center" }}
-                  className={classes.fonttxt}
-                >
-                  2021
-                </Typography>
+              <Typography
+                style={{ fontSize: "23px" }}
+                className={classes.fonttxt}
+              >
+                WEEKLY STATISTICS
+              </Typography>
+              <Typography className={classes.timeline}>
+                JUL 21 - JUL 28
+              </Typography>
+            </Grid>
+            <Grid container className={classes.BPGLtitle}>
+              <Typography className={classes.timeline}>
+                BLOOD PRESSURE
+              </Typography>
+              <Typography className={classes.timeline}>
+                GLUCOSE LEVEL
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              className={classes.BPGLgraph}
+              style={{ marginTop: "5px" }}
+            >
+              <Grid item xs={2} className={classes.healthcolset}>
+                <Grid
+                  item
+                  style={{ background: "#6a6cb9" }}
+                  className={classes.healthcol}
+                />
+                <Typography>SBP</Typography>
               </Grid>
-              <Grid sm={12} md={8} item>
-                <Typography
-                  style={{ fontSize: "23px", textAlign: "start" }}
-                  className={classes.fonttxt}
-                >
-                  Dr. Aslam Jamshaid
-                </Typography>
-                <Typography
-                  style={{ fontSize: "16px", textAlign: "start" }}
-                  className={classes.fonttxt}
-                >
-                  Senior ophtalmologist
-                </Typography>
+              <Grid item xs={4} className={classes.healthcolset}>
+                <Grid
+                  container
+                  style={{ background: "#ef8282" }}
+                  className={classes.healthcol}
+                />
+                <Typography>DBP</Typography>
+              </Grid>
+              <Grid item xs={3} className={classes.healthcolset}>
+                <Grid
+                  container
+                  style={{ background: "#ecabab" }}
+                  className={classes.healthcol}
+                />
+                <Typography>Random</Typography>
+              </Grid>
+              <Grid item xs={2} className={classes.healthcolset}>
+                <Grid
+                  container
+                  style={{ background: "#f7d9a1" }}
+                  className={classes.healthcol}
+                />
+                <Typography>Fasting</Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            style={{
-              display: "flex",
-              textAlign: "center",
-              justifyContent: "center",
-              marginTop: "20px",
-              padding: "10px",
-            }}
-            className={classes.dialogBox}
-          >
-            <Typography
-              style={{ fontSize: "23px", textAlign: "center" }}
-              className={classes.fonttxt}
+          <Grid sm={4} xs={12} className={classes.appmsg} item>
+            <Grid
+              container
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                padding: "10px",
+              }}
+              className={classes.dialogBox}
             >
-              MESSAGES
-            </Typography>
-
-            <Grid item xs={9} className={classes.messageDisplay}>
-              <Typography className={classes.msg}>
-                Your latest reports are ready
+              <Typography
+                style={{ fontSize: "23px", textAlign: "center" }}
+                className={classes.fonttxt}
+              >
+                LATEST APPOINTMENT
               </Typography>
-              <Typography className={classes.readnow}>READ NOW</Typography>
+              <Grid container className={classes.setappointtxt}>
+                <Grid sm={12} md={4} item>
+                  <Typography
+                    style={{ fontSize: "23px", textAlign: "center" }}
+                    className={classes.fonttxt}
+                  >
+                    AUG 21
+                  </Typography>
+                  <Typography
+                    style={{ fontSize: "35px", textAlign: "center" }}
+                    className={classes.fonttxt}
+                  >
+                    2021
+                  </Typography>
+                </Grid>
+                <Grid sm={12} md={8} item>
+                  <Typography
+                    style={{ fontSize: "23px", textAlign: "start" }}
+                    className={classes.fonttxt}
+                  >
+                    Dr. Aslam Jamshaid
+                  </Typography>
+                  <Typography
+                    style={{ fontSize: "16px", textAlign: "start" }}
+                    className={classes.fonttxt}
+                  >
+                    Senior ophtalmologist
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid
-              item
-              xs={9}
-              style={{ marginTop: "15px" }}
-              className={classes.messageDisplay}
+              container
+              style={{
+                display: "flex",
+                textAlign: "center",
+                justifyContent: "center",
+                marginTop: "20px",
+                padding: "10px",
+              }}
+              className={classes.dialogBox}
             >
-              <Typography className={classes.msg}>
-                Your appointment with Dr. Aslam jamshaid is ready
+              <Typography
+                style={{ fontSize: "23px", textAlign: "center" }}
+                className={classes.fonttxt}
+              >
+                MESSAGES
               </Typography>
-              <Typography className={classes.readnow}>READ NOW</Typography>
+
+              <Grid item xs={9} className={classes.messageDisplay}>
+                <Typography className={classes.msg}>
+                  Your latest reports are ready
+                </Typography>
+                <Typography className={classes.readnow}>READ NOW</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={9}
+                style={{ marginTop: "15px" }}
+                className={classes.messageDisplay}
+              >
+                <Typography className={classes.msg}>
+                  Your appointment with Dr. Aslam jamshaid is ready
+                </Typography>
+                <Typography className={classes.readnow}>READ NOW</Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

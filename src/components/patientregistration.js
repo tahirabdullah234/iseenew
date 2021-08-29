@@ -16,7 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { Header } from "./header";
 import {
   makeStyles,
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
 export function PatientRegistration() {
@@ -116,7 +116,7 @@ export function PatientRegistration() {
       marginTop: "7px",
     },
   });
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       secondary: {
         main: "#3585da",
@@ -137,15 +137,9 @@ export function PatientRegistration() {
       <div className="container">
         <Header />
 
-        <Grid container md={5} sm={9} xs={11} className={classes.border}>
-          <Grid container md={12} sm={12} xs={12} className={classes.dialogbox}>
-            <Grid
-              item
-              md={12}
-              sm={12}
-              xs={12}
-              className={classes.setpatientreglogo}
-            >
+        <Grid item md={5} sm={9} xs={11} className={classes.border}>
+          <Grid container className={classes.dialogbox}>
+            <Grid item className={classes.setpatientreglogo}>
               <img
                 src={patientreglogo}
                 className="patientregistrationlogo"
@@ -156,7 +150,7 @@ export function PatientRegistration() {
                 PATIENT REGISTRATION
               </header>
             </Grid>
-            <Grid md={12} sm={12} xs={12}>
+            <Grid item>
               <div className={classes.starttextfielddiv}>
                 <TextField
                   className={classes.textfield}
