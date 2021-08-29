@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+
 import { PatientLogin } from "./components/patientlogin";
 import { PatientRegistration } from "./components/patientregistration";
 import { DoctorRegistration } from "./components/docreg";
@@ -14,6 +15,7 @@ function App() {
     </div>
   );
 }
+// <Drawer />
 // added some changes
 // changes added by abdullah bin tahir
 export default App;
