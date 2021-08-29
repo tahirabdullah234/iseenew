@@ -30,10 +30,8 @@ const useStyles = makeStyles({
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
   },
-  title: {
+  fonttxt: {
     fontWeight: "bold",
-    fontSize: "23px",
-    textAlign: "center",
     color: "#3585da",
     textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
   },
@@ -44,18 +42,6 @@ const useStyles = makeStyles({
     textAlign: "center",
     color: "#3585da",
   },
-  SBP: {
-    background: "#6a6cb9",
-  },
-  DBP: {
-    background: "#ef8282",
-  },
-  Random: {
-    background: "#ecabab",
-  },
-  Fasting: {
-    background: "#f7d9a1",
-  },
   messageDisplay: {
     width: "100%",
     borderRadius: "10px",
@@ -63,12 +49,86 @@ const useStyles = makeStyles({
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     padding: "5px",
   },
+  sameinfont: {
+    fontWeight: "bold",
+    color: "#fff",
+    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    textAlign: "start",
+  },
+  percir: {
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  healthconcol: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  healthcolset: {
+    display: "flex",
+    alignItems: "center",
+  },
+  healthcol: {
+    height: "15px",
+    width: "15px",
+  },
+  healthcontxt: {
+    fontWeight: "bold",
+    fontSize: "17.5px",
+    color: "#fff",
+    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    textAlign: "start",
+  },
+  notifications: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  boxdis: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  BPGLtitle: {
+    display: "flex",
+    justifyContent: "space-around",
+    marginTop: "10px",
+  },
+  BPGLgraph: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  setappointtxt: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  appmsg: {
+    marginTop: "20px",
+    display: "flex",
+    flexDirection: "column",
+  },
+  msg: {
+    fontWeight: "bold",
+    fontSize: "19px",
+    textAlign: "center",
+    color: "#3585da",
+    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+  },
+  readnow: {
+    fontWeight: "bold",
+    fontSize: "13px",
+    textAlign: "end",
+    color: "#3585da",
+    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    textDecorationLine: "underline",
+  },
 });
 
 export function PatientDashboard() {
   const classes = useStyles();
   return (
-    <div className="patdashdiv">
+    <div className="dashdiv">
       <CssBaseline />
       <Typography
         style={{ color: "#1061B0", fontSize: "30px", fontWeight: "bold" }}
@@ -79,137 +139,53 @@ export function PatientDashboard() {
         <Grid container className={classes.DashboardHead}>
           <Grid item xs={12} sm={6}>
             <Typography
-              style={{
-                fontWeight: "bold",
-                fontSize: "35px",
-                color: "#fff",
-                textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                textAlign: "start",
-                marginBottom: "30px",
-              }}
+              style={{ fontSize: "35px", marginBottom: "30px" }}
+              className={classes.sameinfont}
             >
               Health
             </Typography>
             <Grid
               container
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "40px",
-              }}
+              style={{ marginBottom: "40px" }}
+              className={classes.healthcolset}
             >
               <CircularProgress
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  width: "103px",
-                  height: "101px",
-                  marginRight: "20px",
-                }}
+                style={{ marginRight: "20px", width: "103px", height: "101px" }}
+                className={classes.percir}
               />
               <Typography
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "30px",
-                  color: "#fff",
-                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  textAlign: "start",
-                }}
+                className={classes.sameinfont}
+                style={{ fontSize: "30px" }}
               >
                 You are healthy!
               </Typography>
             </Grid>
-            <Grid
-              container
-              style={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Grid
-                container
-                xs={12}
-                md={2}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+            <Grid container className={classes.heathconcol}>
+              <Grid container xs={12} md={2} className={classes.healthcolset}>
                 <Grid
                   item
-                  style={{
-                    height: "15px",
-                    width: "15px",
-                    background: " #85fcbc",
-                  }}
+                  style={{ background: " #85fcbc" }}
+                  className={classes.healthcol}
                 />
-                <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "17.5px",
-                    color: "#fff",
-                    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                    textAlign: "start",
-                  }}
-                >
-                  Safe
-                </Typography>
+                <Typography className={classes.healthcontxt}>Safe</Typography>
               </Grid>
-              <Grid
-                container
-                xs={12}
-                md={3}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <Grid container xs={12} md={3} className={classes.healthcolset}>
                 <Grid
                   item
-                  style={{
-                    height: "15px",
-                    width: "15px",
-                    background: " #ffbf6b",
-                  }}
+                  style={{ background: " #ffbf6b" }}
+                  className={classes.healthcol}
                 />
-                <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "17.5px",
-                    color: "#fff",
-                    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                    textAlign: "start",
-                  }}
-                >
+                <Typography className={classes.healthcontxt}>
                   Be cautious
                 </Typography>
               </Grid>
-              <Grid
-                container
-                xs={12}
-                md={3}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <Grid container xs={12} md={3} className={classes.healthcolset}>
                 <Grid
                   item
-                  style={{
-                    height: "15px",
-                    width: "15px",
-                    background: "#fa6b6b",
-                  }}
+                  style={{ background: "#fa6b6b" }}
+                  className={classes.healthcol}
                 />
-                <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "17.5px",
-                    color: "#fff",
-                    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                    textAlign: "start",
-                  }}
-                >
+                <Typography className={classes.healthcontxt}>
                   See doctor
                 </Typography>
               </Grid>
@@ -217,24 +193,12 @@ export function PatientDashboard() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography
-              style={{
-                fontWeight: "bold",
-                fontSize: "35px",
-                color: "#fff",
-                textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                textAlign: "start",
-                marginBottom: "10px",
-              }}
+              style={{ fontSize: "35px", marginBottom: "10px" }}
+              className={classes.sameinfont}
             >
               Notifications
             </Typography>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
                   <img src={Bellicon} className={classes.BellIcon}></img>
@@ -250,13 +214,7 @@ export function PatientDashboard() {
                 Dismiss
               </Typography>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
                   <img src={Bellicon} className={classes.BellIcon}></img>
@@ -272,13 +230,7 @@ export function PatientDashboard() {
                 Dismiss
               </Typography>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
                   <img src={Bellicon} className={classes.BellIcon}></img>
@@ -294,13 +246,7 @@ export function PatientDashboard() {
                 Dismiss
               </Typography>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
                   <img src={Bellicon} className={classes.BellIcon}></img>
@@ -319,17 +265,7 @@ export function PatientDashboard() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid
-        container
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "space-between",
-        }}
-        md={10}
-        xs={11}
-      >
+      <Grid container className={classes.boxdis} md={10} xs={11}>
         <Grid
           container
           sm={7}
@@ -351,110 +287,50 @@ export function PatientDashboard() {
               JUL 21 - JUL 28
             </Typography>
           </Grid>
-          <Grid
-            item
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              marginTop: "10px",
-            }}
-          >
+          <Grid item className={classes.BPGLtitle}>
             <Typography className={classes.timeline}>BLOOD PRESSURE</Typography>
             <Typography className={classes.timeline}> GLUCOSE LEVEL</Typography>
           </Grid>
           <Grid
             container
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              marginTop: "5px",
-            }}
+            style={classes.BPGLgraph}
+            style={{ marginTop: "5px" }}
           >
-            <Grid
-              container
-              xs={2}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
+            <Grid container xs={2} className={classes.healthcolset}>
               <Grid
                 item
-                style={{
-                  height: "15px",
-                  width: "15px",
-                  background: "#6a6cb9",
-                }}
+                style={{ background: "#6a6cb9" }}
+                className={classes.healthcol}
               />
               <Typography>SBP</Typography>
             </Grid>
-            <Grid
-              container
-              xs={4}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
+            <Grid container xs={4} className={classes.healthcolset}>
               <Grid
                 item
-                style={{
-                  height: "15px",
-                  width: "15px",
-                  background: "#ef8282",
-                }}
+                style={{ background: "#ef8282" }}
+                className={classes.healthcol}
               />
               <Typography>DBP</Typography>
             </Grid>
-            <Grid
-              container
-              xs={3}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
+            <Grid container xs={3} className={classes.healthcolset}>
               <Grid
                 item
-                style={{
-                  height: "15px",
-                  width: "15px",
-                  background: "#ecabab",
-                }}
+                style={{ background: "#ecabab" }}
+                className={classes.healthcol}
               />
               <Typography>Random</Typography>
             </Grid>
-            <Grid
-              container
-              xs={2}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
+            <Grid container xs={2} className={classes.healthcolset}>
               <Grid
                 item
-                style={{
-                  height: "15px",
-                  width: "15px",
-                  background: "#f7d9a1",
-                }}
+                style={{ background: "#f7d9a1" }}
+                className={classes.healthcol}
               />
               <Typography>Fasting</Typography>
             </Grid>
           </Grid>
         </Grid>
-        <Grid
-          sm={4}
-          xs={12}
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-          container
-        >
+        <Grid sm={4} xs={12} className={classes.appmsg} container>
           <Grid
             container
             style={{
@@ -464,51 +340,37 @@ export function PatientDashboard() {
             }}
             className={classes.dialogBox}
           >
-            <Typography className={classes.title}>
+            <Typography
+              style={{ fontSize: "23px", textAlign: "center" }}
+              className={classes.fonttxt}
+            >
               LATEST APPOINTMENT
             </Typography>
-            <Grid
-              container
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
-              }}
-            >
+            <Grid container className={classes.setappointtxt}>
               <Grid sm={12} md={4} item>
-                <Typography className={classes.title}>AUG 21</Typography>
                 <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "35px",
-                    textAlign: "center",
-                    color: "#3585da",
-                    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
+                  style={{ fontSize: "23px", textAlign: "center" }}
+                  className={classes.fonttxt}
+                >
+                  AUG 21
+                </Typography>
+                <Typography
+                  style={{ fontSize: "35px", textAlign: "center" }}
+                  className={classes.fonttxt}
                 >
                   2021
                 </Typography>
               </Grid>
               <Grid sm={12} md={8} item>
                 <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "23px",
-                    textAlign: "start",
-                    color: "#3585da",
-                    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
+                  style={{ fontSize: "23px", textAlign: "start" }}
+                  className={classes.fonttxt}
                 >
                   Dr. Aslam Jamshaid
                 </Typography>
                 <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                    textAlign: "start",
-                    color: "#3585da",
-                    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
+                  style={{ fontSize: "16px", textAlign: "start" }}
+                  className={classes.fonttxt}
                 >
                   Senior ophtalmologist
                 </Typography>
@@ -526,32 +388,18 @@ export function PatientDashboard() {
             }}
             className={classes.dialogBox}
           >
-            <Typography className={classes.title}>MESSAGES</Typography>
+            <Typography
+              style={{ fontSize: "23px", textAlign: "center" }}
+              className={classes.fonttxt}
+            >
+              MESSAGES
+            </Typography>
 
             <Grid item xs={9} className={classes.messageDisplay}>
-              <Typography
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                  textAlign: "center",
-                  color: "#3585da",
-                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                }}
-              >
+              <Typography className={classes.msg}>
                 Your latest reports are ready
               </Typography>
-              <Typography
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "13px",
-                  textAlign: "end",
-                  color: "#3585da",
-                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  textDecorationLine: "underline",
-                }}
-              >
-                READ NOW
-              </Typography>
+              <Typography className={classes.readnow}>READ NOW</Typography>
             </Grid>
             <Grid
               item
@@ -559,29 +407,10 @@ export function PatientDashboard() {
               style={{ marginTop: "15px" }}
               className={classes.messageDisplay}
             >
-              <Typography
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "19px",
-                  textAlign: "center",
-                  color: "#3585da",
-                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                }}
-              >
+              <Typography className={classes.msg}>
                 Your appointment with Dr. Aslam jamshaid is ready
               </Typography>
-              <Typography
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "13px",
-                  textAlign: "end",
-                  color: "#3585da",
-                  textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  textDecorationLine: "underline",
-                }}
-              >
-                READ NOW
-              </Typography>
+              <Typography className={classes.readnow}>READ NOW</Typography>
             </Grid>
           </Grid>
         </Grid>
