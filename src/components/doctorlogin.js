@@ -1,9 +1,5 @@
 import React from "react";
 import "./style.css";
-import Container from "@material-ui/core/Container";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { Header } from "./header";
 import doctorlogo from "../Assets/Doclogo.png";
 import Grid from "@material-ui/core/Grid";
@@ -13,7 +9,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
-import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
 export function DoctorLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -74,10 +69,10 @@ export function DoctorLogin() {
   return (
     <div className="container">
       <Header />
-      <Grid container md={6} sm={5} xs={9} className={classes.border}>
-        <Grid container md={12} sm={12} xs={12} className={classes.dialogbox}>
+      <Grid item md={6} sm={5} xs={9} className={classes.border}>
+        <Grid container className={classes.dialogbox}>
           <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
-            <img src={doctorlogo} className="doctorlogo"></img>
+            <img src={doctorlogo} className="doctorlogo" alt="error found" />
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
             <header className={classes.loginboxheader}>DOCTOR LOGIN</header>

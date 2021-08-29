@@ -34,12 +34,18 @@ const useStyles = makeStyles({
     padding: "20px",
   },
   DEDial: {
-    width: "170px",
-    height: "42px",
+    width: "100%",
     borderRadius: "20px",
     background: "#3585da",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     color: "white",
+    marginTop: "10px",
+  },
+  TDialogbox: {
+    width: "100%",
+    background: "#fff",
+    boxShadow: "(6px 6px 10px rgba(0, 0, 0, 0.16))",
+    borderRadius: "12px",
   },
 });
 export function ManageBP() {
@@ -50,20 +56,41 @@ export function ManageBP() {
         <Typography className={classes.header}>
           MANAGE BLOOD PRESSURE
         </Typography>
-        <Grid item xs={10} className={classes.DEDialogBox}>
-          <TextField
-            label="Diastolic value"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          ></TextField>
-          <TextField
-            label="Systolic value"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          ></TextField>
-          <Button className={classes.DEDial}>ADD</Button>
+        <Grid container xs={11} md={10} className={classes.DEDialogBox}>
+          <Grid item xs={9} sm={4} md={3}>
+            <TextField
+              label="Diastolic value"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              style={{ marginTop: "10px", width: "100%" }}
+            ></TextField>
+          </Grid>
+          <Grid item xs={9} sm={4} md={3}>
+            <TextField
+              label="Systolic value"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              style={{ marginTop: "10px", width: "100%" }}
+            ></TextField>
+          </Grid>
+          <Grid item xs={5} sm={2}>
+            <Button className={classes.DEDial}>ADD</Button>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          xs={11}
+          md={10}
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Grid container xs={7}>
+            <Typography className={classes.TDialogbox}> Weekly</Typography>
+          </Grid>
+          <Grid container xs={4}>
+            <Typography className={classes.TDialogbox}> Weekly</Typography>
+          </Grid>
         </Grid>
       </Grid>
     </div>

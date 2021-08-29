@@ -3,10 +3,9 @@ import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Bellicon from "../Assets/bell.svg";
-import CssBaseline from "@material-ui/core/CssBaseline";
+
 import { Typography } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Paper from "@material-ui/core/Paper";
 const useStyles = makeStyles({
   DashboardHead: {
     width: "100%",
@@ -129,7 +128,6 @@ export function PatientDashboard() {
   const classes = useStyles();
   return (
     <div className="dashdiv">
-      <CssBaseline />
       <Typography
         style={{ color: "#1061B0", fontSize: "30px", fontWeight: "bold" }}
       >
@@ -201,7 +199,11 @@ export function PatientDashboard() {
             <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
-                  <img src={Bellicon} className={classes.BellIcon}></img>
+                  <img
+                    src={Bellicon}
+                    className={classes.BellIcon}
+                    alt="error found"
+                  ></img>
                 </div>
               </Grid>
               <Typography className={classes.NotificationsFont}>
@@ -217,7 +219,11 @@ export function PatientDashboard() {
             <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
-                  <img src={Bellicon} className={classes.BellIcon}></img>
+                  <img
+                    src={Bellicon}
+                    className={classes.BellIcon}
+                    alt="error found"
+                  ></img>
                 </div>
               </Grid>
               <Typography className={classes.NotificationsFont}>
@@ -233,7 +239,11 @@ export function PatientDashboard() {
             <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
-                  <img src={Bellicon} className={classes.BellIcon}></img>
+                  <img
+                    src={Bellicon}
+                    className={classes.BellIcon}
+                    alt="error found"
+                  ></img>
                 </div>
               </Grid>
               <Typography className={classes.NotificationsFont}>
@@ -249,7 +259,11 @@ export function PatientDashboard() {
             <div className={classes.notifications}>
               <Grid item xs={2} sm={2} md={1}>
                 <div className="logoDiv">
-                  <img src={Bellicon} className={classes.BellIcon}></img>
+                  <img
+                    src={Bellicon}
+                    className={classes.BellIcon}
+                    alt="error found"
+                  ></img>
                 </div>
               </Grid>
               <Typography className={classes.NotificationsFont}>
@@ -282,7 +296,12 @@ export function PatientDashboard() {
             item
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Typography className={classes.title}>WEEKLY STATISTICS</Typography>
+            <Typography
+              style={{ fontSize: "23px" }}
+              className={classes.fonttxt}
+            >
+              WEEKLY STATISTICS
+            </Typography>
             <Typography className={classes.timeline}>
               JUL 21 - JUL 28
             </Typography>
@@ -293,7 +312,7 @@ export function PatientDashboard() {
           </Grid>
           <Grid
             container
-            style={classes.BPGLgraph}
+            className={classes.BPGLgraph}
             style={{ marginTop: "5px" }}
           >
             <Grid container xs={2} className={classes.healthcolset}>
