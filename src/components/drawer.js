@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
-    menuButton: {
-        marginRight: 36,
-    },
     hide: {
         display: "none",
     },
@@ -81,10 +78,10 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
     },
     imageIcon: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         marginRight: 20,
-        marginLeft: 10,
+        marginLeft: 5,
     },
     listItemTextStyle: {
         fontSize: 16,
@@ -107,7 +104,7 @@ export default function MainDrawer() {
                     <Grid item className={classes.toolbar}>
                         <img src={iseeLogo}
                             alt="ISEE Logo"
-                            style={{ width: '100%' }}
+                            style={{ width: '100px' }}
                             onClick={handleDrawer}
                         />
                     </Grid>
@@ -118,20 +115,20 @@ export default function MainDrawer() {
                                 <ListItemIcon>
                                     <img src={user} alt='User' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>USER PROFILE</Typography>} />
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>USER PROFILE</Typography>} />
                             </ListItem>
                             <ListItem button key={2}>
                                 <ListItemIcon>
                                     <img src={classify} alt='Classify Disease' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>DISEASE DETECTION<br />SYSTEM</Typography>}
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DISEASE DETECTION<br />SYSTEM</Typography>}
                                 />
                             </ListItem>
                             <ListItem button key={3}>
                                 <ListItemIcon>
                                     <img src={report} alt='Reports' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>REPORTS</Typography>} />
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>REPORTS</Typography>} />
                             </ListItem>
                             <ListItem button key={4}>
                                 <ListItemIcon>
@@ -143,25 +140,25 @@ export default function MainDrawer() {
                                 <ListItemIcon>
                                     <img src={heart} alt='Blood Pressure' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>MANAGE BLOOD<br />PRESSURE</Typography>} />
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MANAGE BLOOD<br />PRESSURE</Typography>} />
                             </ListItem>
                             <ListItem button key={6}>
                                 <ListItemIcon>
                                     <img src={doctor} alt='Doctor' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>APPOINT DOCTORS</Typography>} />
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>APPOINT DOCTORS</Typography>} />
                             </ListItem>
                             <ListItem button key={7}>
                                 <ListItemIcon>
                                     <img src={chat} alt='chat' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>MESSAGES</Typography>} />
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MESSAGES</Typography>} />
                             </ListItem>
                             <ListItem button key={8}>
                                 <ListItemIcon>
                                     <img src={exit} alt='Logout' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>LOGOUT</Typography>} />
+                                <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>LOGOUT</Typography>} />
                             </ListItem>
                         </List>
                     </Grid>

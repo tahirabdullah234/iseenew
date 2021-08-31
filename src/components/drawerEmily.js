@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import clsx from 'clsx';
 
 import logo from '../emily/logo.svg';
 import dashboard from '../emily/dashboard.svg';
@@ -13,10 +14,12 @@ import report from '../emily/report.svg';
 import logout from '../emily/logout.svg';
 import setting from '../emily/setting.svg';
 import user from '../emily/user.svg';
+import drawerOpen from '../emily/drawerIconOpen.svg';
+import drawerClose from '../emily/drawerIconClose.svg';
 
 import { Grid, Typography } from '@material-ui/core';
 
-const drawerWidth = 250;
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
         display: "none",
     },
     drawer: {
-        width: drawerWidth,
+        width: theme.spacing(8) + 1,
+        [theme.breakpoints.up("sm")]: {
+            width: theme.spacing(12) + 1,
+        },
         flexShrink: 0,
         whiteSpace: "nowrap",
     },
@@ -60,15 +66,16 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             width: theme.spacing(12) + 1,
         },
-        "&:hover": {
-            width: drawerWidth,
-            backgroundColor: "linearGradient(#1061b0 0%, #003c72 100%)",
-            color: "#fff",
-            transition: theme.transitions.create("width", {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
+    },
+    drawerOpen: {
+        width: drawerWidth,
+        backgroundColor: "#1061b0",
+        color: "#fff",
+        transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        overflowX: "hidden",
     },
     toolbar: {
         backgroundColor: '#3585da',
@@ -80,18 +87,56 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
     },
     imageIcon: {
-        width: 50,
-        height: 50,
-        marginRight: 20,
+        width: 40,
+        height: 40,
+        marginRight: 5,
         marginLeft: 10,
     },
     listItemTextStyle: {
         fontSize: 16,
-        fontWeight: 600,
+        fontWeight: 'bold',
     },
-    listItemLogo: {
+    listItemLogoOpen: {
         justifyContent: 'center',
         alignItems: 'center',
+        margin: 'auto',
+        width: 150,
+        padding: 0,
+    },
+    listItemLogoClose: {
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: 100,
+        height: 40,
+        margin: 0,
+        padding: 0,
+    },
+    logoListItem: {
+        margin: 0,
+        padding: 0,
+        marginTop: 20,
+        marginBottom: 40,
+    },
+    dividerStyle: {
+        height: 3,
+        background: 'rgba(53, 133, 218, 0.4)',
+        borderRadius: 15,
+        margin: 'auto',
+        marginTop: 25,
+        marginBottom: 25,
+    },
+    dividerStyleClose: {
+        height: 3,
+        background: 'rgba(53, 133, 218, 0.4)',
+        margin: 'auto',
+        borderRadius: 15,
+        marginTop: 25,
+        marginBottom: 25,
+        width: 70,
+    },
+    listItemSpacing: {
+        marginTop: 15,
+        marginBottom: 15
     }
 }));
 
@@ -106,52 +151,104 @@ export default function MainDrawer() {
     return (
         <div className={classes.root}>
             <Grid container>
-                <Drawer variant="permanent" className={classes.drawer} classes={{ paper: classes.drawerClose }}>
-                    <Grid item className={classes.toolbar}>
-                        <img src={logo}
-                            alt="EMILY Logo"
-                            style={{ width: '100%' }}
-                            onClick={handleDrawer}
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
+                        [classes.drawerOpen]: open,
+                        [classes.drawerClose]: !open,
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        }),
+                    }}                    >
+                    <Grid
+                        item
+                        className={classes.toolbar}
+                        onClick={handleDrawer}
+                    >
+                        <img src={open ? drawerOpen : drawerClose}
+                            alt="Drawer Icon"
+                            style={open ? {
+                                width: '25px',
+                                height: '20px',
+                                marginLeft: '90%',
+                            } : {
+                                width: '25px',
+                                height: '20px',
+                            }}
                         />
                     </Grid>
                     <Divider />
                     <Grid container xs={12}>
                         <List>
-                            <ListItem key={1} className={classes.listItemLogo}>
-                                <img src={logo} alt='Emily Logo' style={{ width: '150px' }} />
+                            <ListItem key={1} className={classes.logoListItem}>
+                                <img src={logo}
+                                    alt='Emily Logo'
+                                    className={open ?
+                                        classes.listItemLogoOpen :
+                                        classes.listItemLogoClose
+                                    }
+                                />
                             </ListItem>
-                            <ListItem button key={11}>
+                            <ListItem button key={2} className={classes.listItemSpacing}>
                                 <ListItemIcon>
                                     <img src={dashboard} alt='User Dashboard' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>DASHBOARD</Typography>} />
+                                <ListItemText
+                                    primary={<Typography variant="p"
+                                        className={clsx(classes.listItemTextStyle, {
+                                            [classes.hide]: !open,
+                                        })}
+                                    >DASHBOARD</Typography>} />
                             </ListItem>
-                            <ListItem button key={2}>
+                            <ListItem button key={3} className={classes.listItemSpacing}>
                                 <ListItemIcon>
                                     <img src={report} alt='Reports' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>REPORTS</Typography>}
+                                <ListItemText
+                                    primary={<Typography variant="p"
+                                        className={clsx(classes.listItemTextStyle, {
+                                            [classes.hide]: !open,
+                                        })}
+                                    >REPORTS</Typography>}
                                 />
                             </ListItem>
-                            <ListItem button key={3}>
+                            <ListItem button key={4} className={classes.listItemSpacing}>
                                 <ListItemIcon>
                                     <img src={setting} alt='Settings' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>SETTINGS</Typography>} />
+                                <ListItemText
+                                    primary={<Typography variant="p"
+                                        className={clsx(classes.listItemTextStyle, {
+                                            [classes.hide]: !open,
+                                        })}
+                                    >SETTINGS</Typography>} />
                             </ListItem>
-                            <Divider />
-                            <ListItem button key={4}>
+                            <Divider className={open ? classes.dividerStyle : classes.dividerStyleClose} />
+                            <ListItem button key={5} className={classes.listItemSpacing}>
                                 <ListItemIcon>
                                     <img src={user} alt='User' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>ABDUL HADI<br /><Typography variant="subtitle2">PID: 12345678</Typography></Typography>} />
+                                <ListItemText
+                                    primary={<Typography variant="p"
+                                        className={clsx(classes.listItemTextStyle, {
+                                            [classes.hide]: !open,
+                                        })}
+                                    >ABDUL HADI<br /><Typography variant="subtitle2">PID: 12345678</Typography></Typography>} />
                             </ListItem>
-                            <Divider />
-                            <ListItem button key={8}>
+                            <Divider className={classes.dividerStyle} />
+                            <ListItem button key={6} className={classes.listItemSpacing}>
                                 <ListItemIcon>
                                     <img src={logout} alt='Logout' className={classes.imageIcon} />
                                 </ListItemIcon>
-                                <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>LOGOUT</Typography>} />
+                                <ListItemText
+                                    primary={<Typography variant="p"
+                                        className={clsx(classes.listItemTextStyle, {
+                                            [classes.hide]: !open,
+                                        })}
+                                    >LOGOUT</Typography>} />
                             </ListItem>
                         </List>
                     </Grid>

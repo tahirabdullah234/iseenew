@@ -4,13 +4,25 @@ import "./App.css";
 // import { PatientRegistration } from "./components/patientregistration";
 // import { DoctorLogin } from "./components/doctorlogin";
 // import Drawer from './components/drawer'
-import Drawer from './components/drawerEmily'
+// import Drawer from './components/idcDrawer'
 // import Drawer from './components/doctorCard'
+import Drawer from './components/doctorAppoint'
+
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Montserrat",
+  },
+});
+
 function App() {
   return (
-    <div>
-      <Drawer />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Drawer />
+      </div>
+    </ThemeProvider>
   );
 }
 // <Drawer />

@@ -6,8 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 import maleDoc from '../Assets/doctor_logo.svg';
+import report from '../Assets/reports.svg';
 // import femaleDoc from '../Assets/doctor-female.png';
 
 const theme = createTheme({
@@ -28,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: 10,
         paddingLeft: 5,
     },
+    docIcon1: {
+        width: 50,
+        height: 50,
+        paddingTop: 10,
+        paddingLeft: 5,
+    },
     textBackground: {
         backgroundColor: 'rgba(128,128,128,0.05)',
         padding: 10,
@@ -45,9 +53,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 20,
     },
     drTitle: {
         marginLeft: 60,
@@ -55,9 +63,18 @@ const useStyles = makeStyles((theme) => ({
     drDesc: {
         bottom: 35,
     },
-    gridContainer: {
-        borderWidth: 2,
-        borderColor: "black",
+    reportsGrid: {
+        backgroundColor: "#fff",
+        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+        borderRadius: 15,
+    },
+    bottomGrids: {
+        marginTop: 20,
+        padding: 5,
+    },
+    messageBox: {
+        backgroundColor: "#fff",
+        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)"
     }
 }));
 
@@ -84,6 +101,33 @@ export default function DoctorCard() {
                     <Typography variant='body2'>
                         10 YEARS of experience in treating disease related to opthamology
                     </Typography>
+                    <Typography variant='body2'>
+                        PMCD ID: 123456-S
+                    </Typography>
+                </Grid>
+
+                <Grid item xs={12} className={classes.bottomGrids}>
+                    <Typography variant="body1">
+                        ATTACH REPORTS
+                    </Typography>
+                    <Grid item xs={12} className={classes.reportsGrid} >
+                        <img src={report} alt="Report" className={classes.docIcon1} />
+                        <img src={report} alt="Report" className={classes.docIcon1} />
+                        <img src={report} alt="Report" className={classes.docIcon1} />
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} className={classes.bottomGrids}>
+                    <Typography variant="body1">
+                        MESSAGE
+                    </Typography>
+                    <OutlinedInput
+                        multiline
+                        fullWidth
+                        maxRows={5}
+                        minRows={5}
+                        placeholder="Write message here..."
+                        className={classes.messageBox}
+                    />
                 </Grid>
                 <Grid container className={classes.button}>
                     <Button variant='contained' disableElevation>
