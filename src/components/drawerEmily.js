@@ -73,41 +73,6 @@ const useStyles = makeStyles((theme) => ({
       }),
     }
   },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: "none",
-  },
-  drawer: {
-    width: theme.spacing(8) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(12) + 1,
-    },
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-  },
-  drawerClose: {
-    background: "#1061b0",
-    color: "#fff",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(8) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(12) + 1,
-    },
-  },
   drawerOpen: {
     width: drawerWidth,
     backgroundColor: "#1061b0",
