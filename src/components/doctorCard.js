@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { makeStyles, createTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -9,12 +9,6 @@ import Button from '@material-ui/core/Button';
 
 import maleDoc from '../Assets/doctor_logo.svg';
 // import femaleDoc from '../Assets/doctor-female.png';
-
-const theme = createTheme({
-    typography: {
-        fontFamily: "Montserrat"
-    },
-});
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -62,8 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DoctorCard() {
-
-    const classes = useStyles(theme);
+    const classes = useStyles();
 
     return (
         <Grid container className={classes.root}>
@@ -92,5 +85,5 @@ export default function DoctorCard() {
                 </Grid>
             </Card>
         </Grid>
-    )
+    );
 }

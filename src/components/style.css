@@ -116,7 +116,7 @@
 .docreglogo {
   width: 25%;
 }
-.patdashdiv{
+.dashdiv{
   background: linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%);
   min-height: 100vh;
   display: flex;

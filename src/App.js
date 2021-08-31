@@ -1,7 +1,9 @@
 import React from "react";
 import "./App.css";
+
 // import { PatientLogin } from "./components/patientlogin";
 // import { PatientRegistration } from "./components/patientregistration";
+// import { DoctorRegistration } from "./components/docreg";
 // import { DoctorLogin } from "./components/doctorlogin";
 // import Drawer from './components/drawer'
 // import Drawer from './components/idcDrawer'

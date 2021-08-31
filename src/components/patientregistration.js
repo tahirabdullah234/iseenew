@@ -1,10 +1,5 @@
 import React from "react";
 import "./style.css";
-import Container from "@material-ui/core/Container";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import iseelogo from "../Assets/logofilled.png";
 import patientreglogo from "../Assets/patientregistration.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -19,10 +14,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { Header } from "./header";
-import { green, blue } from "@material-ui/core/colors";
 import {
   makeStyles,
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
 export function PatientRegistration() {
@@ -122,7 +116,7 @@ export function PatientRegistration() {
       marginTop: "7px",
     },
   });
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       secondary: {
         main: "#3585da",
@@ -143,25 +137,20 @@ export function PatientRegistration() {
       <div className="container">
         <Header />
 
-        <Grid container md={5} sm={9} xs={11} className={classes.border}>
-          <Grid container md={12} sm={12} xs={12} className={classes.dialogbox}>
-            <Grid
-              item
-              md={12}
-              sm={12}
-              xs={12}
-              className={classes.setpatientreglogo}
-            >
+        <Grid item md={5} sm={9} xs={11} className={classes.border}>
+          <Grid container className={classes.dialogbox}>
+            <Grid item className={classes.setpatientreglogo}>
               <img
                 src={patientreglogo}
                 className="patientregistrationlogo"
+                alt="error found"
               ></img>
 
               <header className={classes.registrationheader}>
                 PATIENT REGISTRATION
               </header>
             </Grid>
-            <Grid md={12} sm={12} xs={12}>
+            <Grid item>
               <div className={classes.starttextfielddiv}>
                 <TextField
                   className={classes.textfield}
@@ -192,9 +181,6 @@ export function PatientRegistration() {
                   type="date"
                   defaultValue="2000-05-24"
                   style={{ color: "white" }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
                   InputLabelProps={{
                     shrink: true,
                   }}
