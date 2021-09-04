@@ -1,0 +1,7 @@
+<svg id="chat" xmlns="http://www.w3.org/2000/svg" width="38" height="36.69" viewBox="0 0 38 36.69">
+  <path id="Path_56" data-name="Path 56" d="M31.448,18.229V32.08a3.23,3.23,0,0,1-3.229,3.23H14.414L7.862,42.517V35.31H3.229A3.23,3.23,0,0,1,0,32.081V18.23A3.23,3.23,0,0,1,3.229,15H28.218A3.23,3.23,0,0,1,31.448,18.229Z" transform="translate(0 -5.828)" fill="#0391fd"/>
+  <path id="Path_57" data-name="Path 57" d="M38.219,1H13.229A3.23,3.23,0,0,0,10,4.23v5.942H31.667A3.23,3.23,0,0,1,34.9,13.4V21.31h3.322a3.23,3.23,0,0,0,3.229-3.23V4.23A3.23,3.23,0,0,0,38.219,1Z" transform="translate(-3.448 -1)" fill="#0f71d3"/>
+  <path id="Path_58" data-name="Path 58" d="M19.828,25.325H10.655a.655.655,0,1,1,0-1.31h9.172a.655.655,0,0,1,0,1.31Z" transform="translate(-3.448 -8.936)" fill="#fff"/>
+  <path id="Path_59" data-name="Path 59" d="M28.345,31.325H10.655a.655.655,0,1,1,0-1.31h17.69a.655.655,0,1,1,0,1.31Z" transform="translate(-3.448 -11.005)" fill="#fff"/>
+  <path id="Path_60" data-name="Path 60" d="M28.345,37.325H10.655a.655.655,0,1,1,0-1.31h17.69a.655.655,0,1,1,0,1.31Z" transform="translate(-3.448 -13.074)" fill="#fff"/>
+</svg>

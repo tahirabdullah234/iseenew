@@ -2,19 +2,29 @@ import React from "react";
 import "./App.css";
 
 // import { PatientLogin } from "./components/patientlogin";
-import { PatientRegistration } from "./components/patientregistration";
+// import { PatientRegistration } from "./components/patientregistration";
 // import { DoctorRegistration } from "./components/docreg";
 // import { DoctorLogin } from "./components/doctorlogin";
-// import MainDrawer from "./components/drawer";
-// import { PatientDashboard } from "./components/PatientDashboard";
-// import { ManageBP } from "./components/manageBloodPressure";
-// import DoctorCard from "./components/doctorCard";
-// import { Header } from "./components/header";
+// import Drawer from './components/drawer'
+// import Drawer from './components/idcDrawer'
+// import Drawer from './components/doctorCard'
+import Drawer from './components/doctorAppoint'
+
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Montserrat",
+  },
+});
+
 function App() {
   return (
-    <div>
-      <PatientRegistration />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Drawer />
+      </div>
+    </ThemeProvider>
   );
 }
 // <Drawer />
