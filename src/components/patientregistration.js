@@ -25,6 +25,7 @@ export function PatientRegistration() {
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
   const useStyles = makeStyles({
     border: {
       marginTop: "111px",

@@ -125,3 +125,22 @@
   text-align: center;
   flex-direction: column;
 }
+.iseewhitelogo{
+ width: 45%
+}
+.view{
+  width: 35%; 
+  margin-top: 40px
+}
+.guideimg{ 
+  width: 5%; 
+  margin-right: 10px 
+}
+.dashdiv1{
+  background: linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
