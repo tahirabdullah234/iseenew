@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-import maleDoc from "../Assets/doctor-male.png";
+import maleDoc from "../Assets/doctor_logo.svg";
 // import femaleDoc from '../Assets/doctor-female.png';
 
 const useStyles = makeStyles((theme) => ({
