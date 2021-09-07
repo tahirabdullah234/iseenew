@@ -3,7 +3,7 @@ import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Bellicon from "../Assets/bell.svg";
-
+import Messageicon from "../Assets/messageIcon.svg";
 import { Typography } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const useStyles = makeStyles({
@@ -121,6 +121,10 @@ const useStyles = makeStyles({
     color: "#3585da",
     textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     textDecorationLine: "underline",
+  },
+  msgimg: {
+    width: "10%",
+    marginTop: "2px",
   },
 });
 
@@ -420,9 +424,23 @@ export function PatientDashboard() {
               </Typography>
 
               <Grid item xs={9} className={classes.messageDisplay}>
-                <Typography className={classes.msg}>
-                  Your latest reports are ready
-                </Typography>
+                <Grid
+                  item
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <img
+                    src={Messageicon}
+                    className={classes.msgimg}
+                    alt="error occured"
+                  />
+                  <Typography className={classes.msg}>
+                    Your latest reports are ready
+                  </Typography>
+                </Grid>
                 <Typography className={classes.readnow}>READ NOW</Typography>
               </Grid>
               <Grid
@@ -431,9 +449,24 @@ export function PatientDashboard() {
                 style={{ marginTop: "15px" }}
                 className={classes.messageDisplay}
               >
-                <Typography className={classes.msg}>
-                  Your appointment with Dr. Aslam jamshaid is ready
-                </Typography>
+                <Grid
+                  item
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <img
+                    src={Messageicon}
+                    className={classes.msgimg}
+                    alt="error occured"
+                  />
+
+                  <Typography className={classes.msg}>
+                    Your appointment with Dr. Aslam jamshaid is ready
+                  </Typography>
+                </Grid>
                 <Typography className={classes.readnow}>READ NOW</Typography>
               </Grid>
             </Grid>

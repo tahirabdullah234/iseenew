@@ -8,9 +8,9 @@ import "./App.css";
 // import MainDrawer from "./components/drawer";
 // import { PatientDashboard } from "./components/PatientDashboard";
 // import { ManageBP } from "./components/manageBloodPressure";
-import DoctorCard from "./components/doctorCard";
+// import ConsultDoctor from "./components/consultadoctor";
 // import { Header } from "./components/header";
-// import { ManageGL } from "./components/manageGlucoseLevel";
+import { ManageGL } from "./components/manageGlucoseLevel";
 // import { RetinaScan } from "./components/Retinascan";
 // import { UserSettings } from "./components/usersettings";
 // import { Reports } from "./components/reports";
@@ -18,7 +18,7 @@ import DoctorCard from "./components/doctorCard";
 function App() {
   return (
     <div>
-      <DoctorCard />
+      <ManageGL />
     </div>
   );
 }

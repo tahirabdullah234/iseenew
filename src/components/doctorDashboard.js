@@ -135,6 +135,18 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
 });
+function PatientRequest() {
+  const classes = useStyles();
+  return (
+    <Grid item xs={11} className={classes.Tablecontentbox}>
+      <Typography className={classes.TableContentFont}>39009101</Typography>
+      <Typography className={classes.TableContentFont}>MR. A. ASLAM</Typography>
+      <Typography className={classes.TableContentFont}>21/08/2021</Typography>
+      <Typography className={classes.TableContentFont}>REPORT</Typography>
+      <Typography className={classes.TableContentFont}>ACCEPT</Typography>
+    </Grid>
+  );
+}
 export function DoctorDashboard() {
   const classes = useStyles();
   return (
@@ -343,62 +355,14 @@ export function DoctorDashboard() {
             <Typography className={classes.TableContentFont}>REPORT</Typography>
             <Typography className={classes.TableContentFont}>ACTION</Typography>
           </Grid>
-          <Grid item xs={11} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>
-              39009101
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              MR. A. ASLAM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              21/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>REPORT</Typography>
-            <Typography className={classes.TableContentFont}>ACCEPT</Typography>
-          </Grid>
-          <Grid item xs={11} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>
-              39009101
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              MR. A. ASLAM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              21/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>REPORT</Typography>
-            <Typography className={classes.TableContentFont}>ACCEPT</Typography>
-          </Grid>
-          <Grid item xs={11} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>
-              39009101
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              MR. A. ASLAM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              21/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>REPORT</Typography>
-            <Typography className={classes.TableContentFont}>ACCEPT</Typography>
-          </Grid>
+          <PatientRequest />
+          <PatientRequest />
+          <PatientRequest />
           <Grid
-            item
-            xs={11}
-            style={{ marginBottom: "30px" }}
-            className={classes.Tablecontentbox}
+            container
+            style={{ marginBottom: "30px", justifyContent: "center" }}
           >
-            <Typography className={classes.TableContentFont}>
-              39009101
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              MR. A. ASLAM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              21/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>REPORT</Typography>
-            <Typography className={classes.TableContentFont}>ACCEPT</Typography>
+            <PatientRequest />
           </Grid>
         </Grid>
         <Grid
