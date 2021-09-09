@@ -23,21 +23,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
   menuButton: {
     marginRight: 36,
   },
@@ -61,85 +46,40 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing(12) + 1,
     },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(["width", "margin"], {
+    "&:hover": {
+      width: drawerWidth,
+      backgroundColor: "#1061B0",
+      color: "#fff",
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
     },
-    hide: {
-      display: "none",
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: "nowrap",
-    },
-    drawerClose: {
-      backgroundColor: "#1061B0",
-      color: "#1061B0",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: "hidden",
-      width: theme.spacing(10) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(12) + 1,
-      },
-      "&:hover": {
-        width: drawerWidth,
-        backgroundColor: "#1061B0",
-        color: "#fff",
-        transition: theme.transitions.create("width", {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-    },
-    toolbar: {
-      backgroundColor: '#003C72',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-    },
-    imageIcon: {
-      width: 40,
-      height: 40,
-      marginRight: 20,
-      marginLeft: 5,
-    },
-    listItemTextStyle: {
-      fontSize: 16,
-      fontWeight: 600,
-    },
   },
   toolbar: {
-    backgroundColor: "#003C72",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#003C72',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
+  toolbarContent: {
+    display: 'flex',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
   imageIcon: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     marginRight: 20,
-    marginLeft: 10,
+    marginLeft: 5,
   },
   listItemTextStyle: {
     fontSize: 16,
@@ -225,3 +165,7 @@ export default function MainDrawer() {
     </div>
   );
 }
+    // <main className={classes.content}>
+    //   <div className={classes.toolbarContent} />
+    //   {props.children}
+    // </main>
