@@ -10,7 +10,7 @@ import "./App.css";
 import { ManageBP as BP } from "./components/manageBloodPressure";
 // import DoctorCard from "./components/doctorCard";
 // import { Header } from "./components/header";
-// import { ManageGL } from "./components/manageGlucoseLevel";
+import { ManageGL } from "./components/manageGlucoseLevel";
 // import { RetinaScan } from "./components/Retinascan";
 // import { UserSettings } from "./components/usersettings";
 // import { Reports } from "./components/reports";

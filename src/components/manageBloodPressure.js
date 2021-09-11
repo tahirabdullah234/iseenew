@@ -99,6 +99,19 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
   },
 });
+function BPRecord() {
+  const classes = useStyles();
+  return (
+    <Grid item xs={10} className={classes.Tablecontentbox}>
+      <Typography className={classes.TableContentFont}>23</Typography>
+      <Typography className={classes.TableContentFont}>mmHg</Typography>
+      <Typography className={classes.TableContentFont}>23</Typography>
+      <Typography className={classes.TableContentFont}>mmHg</Typography>
+      <Typography className={classes.TableContentFont}>10:37:51 PM</Typography>
+      <Typography className={classes.TableContentFont}>21/08/2021</Typography>
+    </Grid>
+  );
+}
 export function ManageBP() {
   const classes = useStyles();
   return (
@@ -141,90 +154,15 @@ export function ManageBP() {
               >
                 BLOOD PRESSURE TABLE
               </Typography>
-              <Grid item xs={10} className={classes.Tablecontentbox}>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  10:37:51 PM
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  21/08/2021
-                </Typography>
-              </Grid>
-              <Grid item xs={10} className={classes.Tablecontentbox}>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  10:37:51 PM
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  21/08/2021
-                </Typography>
-              </Grid>
-              <Grid item xs={10} className={classes.Tablecontentbox}>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  10:37:51 PM
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  21/08/2021
-                </Typography>
-              </Grid>
-              <Grid item xs={10} className={classes.Tablecontentbox}>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  10:37:51 PM
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  21/08/2021
-                </Typography>
-              </Grid>
+              <BPRecord />
+              <BPRecord />
+              <BPRecord />
+              <BPRecord />
               <Grid
-                item
-                xs={10}
-                style={{ marginBottom: "20px" }}
-                className={classes.Tablecontentbox}
+                container
+                style={{ marginBottom: "30px", justifyContent: "center" }}
               >
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>23</Typography>
-                <Typography className={classes.TableContentFont}>
-                  mmHg
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  10:37:51 PM
-                </Typography>
-                <Typography className={classes.TableContentFont}>
-                  21/08/2021
-                </Typography>
+                <BPRecord />
               </Grid>
             </Grid>
             <Grid item xs={12} md={4} className={classes.BPGDialogbox}>

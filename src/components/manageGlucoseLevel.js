@@ -123,6 +123,18 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
   },
 });
+function Glucoselevelrecord() {
+  const classes = useStyles();
+  return (
+    <Grid item xs={11} className={classes.Tablecontentbox}>
+      <Typography className={classes.TableContentFont}>210</Typography>
+      <Typography className={classes.TableContentFont}>mg/dl</Typography>
+      <Typography className={classes.TableContentFont}>Fasting</Typography>
+      <Typography className={classes.TableContentFont}>10:37:51 PM</Typography>
+      <Typography className={classes.TableContentFont}>21/08/2021</Typography>
+    </Grid>
+  );
+}
 export function ManageGL() {
   const theme = createTheme({
     palette: {
@@ -211,95 +223,15 @@ export function ManageGL() {
                 >
                   GLUCOSE LEVEL TABLE
                 </Typography>
-                <Grid item xs={11} className={classes.Tablecontentbox}>
-                  <Typography className={classes.TableContentFont}>
-                    210
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    mg/dl
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    Fasting
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    10:37:51 PM
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    21/08/2021
-                  </Typography>
-                </Grid>
-                <Grid item xs={11} className={classes.Tablecontentbox}>
-                  <Typography className={classes.TableContentFont}>
-                    210
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    mg/dl
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    Fasting
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    10:37:51 PM
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    21/08/2021
-                  </Typography>
-                </Grid>
-                <Grid item xs={11} className={classes.Tablecontentbox}>
-                  <Typography className={classes.TableContentFont}>
-                    210
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    mg/dl
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    Fasting
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    10:37:51 PM
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    21/08/2021
-                  </Typography>
-                </Grid>
-                <Grid item xs={11} className={classes.Tablecontentbox}>
-                  <Typography className={classes.TableContentFont}>
-                    210
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    mg/dl
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    Fasting
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    10:37:51 PM
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    21/08/2021
-                  </Typography>
-                </Grid>
+                <Glucoselevelrecord />
+                <Glucoselevelrecord />
+                <Glucoselevelrecord />
+                <Glucoselevelrecord />
                 <Grid
-                  item
-                  xs={11}
-                  style={{ marginBottom: "30px" }}
-                  className={classes.Tablecontentbox}
+                  container
+                  style={{ marginBottom: "30px", justifyContent: "center" }}
                 >
-                  <Typography className={classes.TableContentFont}>
-                    210
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    mg/dl
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    Fasting
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    10:37:51 PM
-                  </Typography>
-                  <Typography className={classes.TableContentFont}>
-                    21/08/2021
-                  </Typography>
+                  <Glucoselevelrecord />
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4} className={classes.GLGDialogbox}>

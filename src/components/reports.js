@@ -62,6 +62,21 @@ const useStyles = makeStyles({
     color: "#fff",
   },
 });
+
+function Report() {
+  const classes = useStyles();
+  return (
+    <Grid item xs={11} md={10} className={classes.Tablecontentbox}>
+      <Typography className={classes.TableContentFont}>01</Typography>
+      <Typography className={classes.TableContentFont}>
+        ISEE_3581_240821
+      </Typography>
+      <Typography className={classes.TableContentFont}>24/08/2021</Typography>
+      <Typography className={classes.TableContentFont}>10:27:31 AM</Typography>
+      <Typography className={classes.TableContentFont}>DOWNLOAD</Typography>
+    </Grid>
+  );
+}
 export function Reports() {
   const classes = useStyles();
   return (
@@ -83,86 +98,15 @@ export function Reports() {
               ACTIONS
             </Typography>
           </Grid>
-          <Grid item xs={11} md={10} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>01</Typography>
-            <Typography className={classes.TableContentFont}>
-              ISEE_3581_240821
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              24/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              10:27:31 AM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              DOWNLOAD
-            </Typography>
-          </Grid>
-          <Grid item xs={11} md={10} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>01</Typography>
-            <Typography className={classes.TableContentFont}>
-              ISEE_3581_240821
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              24/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              10:27:31 AM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              DOWNLOAD
-            </Typography>
-          </Grid>
-          <Grid item xs={11} md={10} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>01</Typography>
-            <Typography className={classes.TableContentFont}>
-              ISEE_3581_240821
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              24/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              10:27:31 AM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              DOWNLOAD
-            </Typography>
-          </Grid>
-          <Grid item xs={11} md={10} className={classes.Tablecontentbox}>
-            <Typography className={classes.TableContentFont}>01</Typography>
-            <Typography className={classes.TableContentFont}>
-              ISEE_3581_240821
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              24/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              10:27:31 AM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              DOWNLOAD
-            </Typography>
-          </Grid>
+          <Report />
+          <Report />
+          <Report />
+          <Report />
           <Grid
-            item
-            xs={11}
-            md={10}
-            style={{ marginBottom: "30px" }}
-            className={classes.Tablecontentbox}
+            container
+            style={{ marginBottom: "30px", justifyContent: "center" }}
           >
-            <Typography className={classes.TableContentFont}>01</Typography>
-            <Typography className={classes.TableContentFont}>
-              ISEE_3581_240821
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              24/08/2021
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              10:27:31 AM
-            </Typography>
-            <Typography className={classes.TableContentFont}>
-              DOWNLOAD
-            </Typography>
+            <Report />
           </Grid>
         </Grid>
       </Grid>
