@@ -92,7 +92,7 @@ export function Reports() {
   return (
     <div className="dashdiv">
       <Grid item xs={12} sm={11} className={classes.DialogBox}>
-        <Typography style={{ fontSize: "30px" }} className={classes.sameinfont}>
+        <Typography variant="h4" className={classes.sameinfont}>
           REPORTS
         </Typography>
 
