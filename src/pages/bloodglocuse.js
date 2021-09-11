@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Drawer from "../components/drawer";
-import { ManageBP as MBP } from "../components/manageBloodPressure";
+import { ManageGL as MBG } from "../components/manageGlucoseLevel";
 import Grid from "@material-ui/core/grid";
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function BP() {
+export default function BG() {
     const classes = useStyles();
     return (
         <Grid container className={classes.root}>
@@ -23,7 +23,7 @@ export default function BP() {
                 <Drawer />
             </Grid>
             <Grid item xs={10} className={classes.blodpressuregrid}>
-                <MBP />
+                <MBG />
             </Grid>
         </Grid>
     )

@@ -27,7 +27,6 @@ const useStyles = makeStyles({
     background: "#fff",
     boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
     borderRadius: "12px",
-    padding: "10px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -52,7 +51,6 @@ const useStyles = makeStyles({
     boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
     marginTop: "35px",
     padding: "12px",
   },
@@ -66,15 +64,27 @@ const useStyles = makeStyles({
 function Report() {
   const classes = useStyles();
   return (
-    <Grid item xs={11} md={10} className={classes.Tablecontentbox}>
-      <Typography className={classes.TableContentFont}>01</Typography>
-      <Typography className={classes.TableContentFont}>
-        ISEE_3581_240821
-      </Typography>
-      <Typography className={classes.TableContentFont}>24/08/2021</Typography>
-      <Typography className={classes.TableContentFont}>10:27:31 AM</Typography>
-      <Typography className={classes.TableContentFont}>DOWNLOAD</Typography>
-    </Grid>
+    <Grid item xs={11} className={classes.Tablecontentbox}>
+      <Grid container>
+        <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+          <Typography className={classes.TableContentFont}>01</Typography>
+        </Grid>
+        <Grid item xs={8} sm={4} style={{ textAlign: 'start' }}>
+          <Typography className={classes.TableContentFont}>
+            ISEE_3581_240821
+          </Typography>
+        </Grid>
+        <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+          <Typography className={classes.TableContentFont}>24/08/2021</Typography>
+        </Grid >
+        <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+          <Typography className={classes.TableContentFont}>10:27:31 AM</Typography>
+        </Grid >
+        <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+          <Typography className={classes.TableContentFont}>DOWNLOAD</Typography>
+        </Grid >
+      </Grid >
+    </Grid >
   );
 }
 export function Reports() {
@@ -87,16 +97,29 @@ export function Reports() {
         </Typography>
 
         <Grid item xs={12} sm={11} className={classes.TDialogbox}>
-          <Grid item xs={11} md={10} className={classes.Reportheader}>
-            <Typography className={classes.TableContentFont}>SR</Typography>
-            <Typography className={classes.TableContentFont}>
-              REPORT NAME
-            </Typography>
-            <Typography className={classes.TableContentFont}>DATE</Typography>
-            <Typography className={classes.TableContentFont}>TIME</Typography>
-            <Typography className={classes.TableContentFont}>
-              ACTIONS
-            </Typography>
+          <Grid item xs={11} className={classes.Reportheader}>
+            <Grid container>
+              <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+                <Typography className={classes.TableContentFont}>SR</Typography>
+              </Grid>
+              <Grid item xs={8} sm={4} style={{ textAlign: 'start' }}>
+                <Typography className={classes.TableContentFont}>
+                  REPORT NAME
+                </Typography>
+              </Grid>
+
+              <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+                <Typography className={classes.TableContentFont}>DATE</Typography>
+              </Grid>
+              <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+                <Typography className={classes.TableContentFont}>TIME</Typography>
+              </Grid>
+              <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
+                <Typography className={classes.TableContentFont}>
+                  ACTIONS
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
           <Report />
           <Report />
@@ -110,6 +133,6 @@ export function Reports() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }

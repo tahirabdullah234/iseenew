@@ -76,9 +76,11 @@
 .patientlogo {
   width: 70%;
 }
+
 .doctorlogo {
   width: 55%;
 }
+
 .patientlogoDiv {
   height: 330%;
   width: 100%;
@@ -89,6 +91,7 @@
   border: 6px solid #59c1e8;
   margin: auto;
 }
+
 .main {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -97,15 +100,19 @@
   -ms-flex-direction: column;
   flex-direction: column;
 }
+
 .kendo-imageimg {
   width: 100%;
 }
+
 .kendo-detailsh2 {
   margin-top: 0.25em;
 }
+
 .patientregistrationlogo {
   width: 30%;
 }
+
 .container {
   min-height: 100vh;
   display: flex;
@@ -113,11 +120,12 @@
   align-items: center;
   background: linear-gradient(45deg, #3585da 30%, #003c72 70%);
 }
+
 .docreglogo {
   width: 25%;
 }
-.dashdiv{
-  background: linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%);
+
+.dashdiv {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -125,19 +133,23 @@
   text-align: center;
   flex-direction: column;
 }
-.iseewhitelogo{
- width: 45%
+
+.iseewhitelogo {
+  width: 45%
 }
-.view{
-  width: 35%; 
+
+.view {
+  width: 35%;
   margin-top: 40px
 }
-.guideimg{ 
-  width: 5%; 
-  margin-right: 10px 
+
+.guideimg {
+  width: 5%;
+  margin-right: 10px
 }
-.dashdiv1{
-  background: linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%);
+
+.dashdiv1 {
+  background: linear-gradient(45deg, #f9f9f9 0%, #e8e8e8 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;

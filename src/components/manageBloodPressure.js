@@ -19,6 +19,7 @@ const useStyles = makeStyles({
   },
 
   sameinfont: {
+    fontFamily: "Montserrat",
     fontWeight: "bold",
     textDecoration: "underline",
     color: "#3585da",
@@ -40,6 +41,7 @@ const useStyles = makeStyles({
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     color: "white",
     marginTop: "10px",
+    fontFamily: "Montserrat",
   },
   TDialogbox: {
     width: "900px",
@@ -56,31 +58,28 @@ const useStyles = makeStyles({
   BPGDialogbox: {
     width: "100%",
     background: "#fff",
+    fontFamily: "Montserrat",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     borderRadius: "12px",
-
     padding: "10px",
     marginTop: "35px",
   },
   Tablecontentbox: {
-    width: "100%",
     borderRadius: "28px",
     background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
     boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    display: "flex",
-    alignItems: "center",
     justifyContent: "space-between",
     marginTop: "30px",
     padding: "12px",
   },
   TableContentFont: {
     fontWeight: "bold",
-    fontSize: "14px",
+    fontFamily: "Montserrat",
     color: "#fff",
   },
   BPGTitle: {
+    fontFamily: "Montserrat",
     fontWeight: "bold",
-    fontSize: "23px",
     color: "#3585da",
   },
   DEDialpos: {
@@ -98,29 +97,44 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  bloodpressuretableitem: {
+    margin: "auto",
+  },
+  bloodpressuretablecontainer: {
+    height: 300,
+    overflowY: "scroll"
+  }
 });
+
 function BPRecord() {
   const classes = useStyles();
   return (
-    <Grid item xs={10} className={classes.Tablecontentbox}>
-      <Typography className={classes.TableContentFont}>23</Typography>
-      <Typography className={classes.TableContentFont}>mmHg</Typography>
-      <Typography className={classes.TableContentFont}>23</Typography>
-      <Typography className={classes.TableContentFont}>mmHg</Typography>
-      <Typography className={classes.TableContentFont}>10:37:51 PM</Typography>
-      <Typography className={classes.TableContentFont}>21/08/2021</Typography>
+    <Grid container className={classes.Tablecontentbox}>
+      <Grid item xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>23 mmHg</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>23 mmHg</Typography>
+      </Grid>
+      <Grid xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>10:37:51 PM</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>21/08/2021</Typography>
+      </Grid>
     </Grid>
   );
 }
+
 export function ManageBP() {
   const classes = useStyles();
   return (
     <div className="dashdiv">
-      <Grid item xs={11} className={classes.DialogBox}>
+      <Grid item xs={12} className={classes.DialogBox}>
         <Typography variant="h4" className={classes.sameinfont}>
           MANAGE BLOOD PRESSURE
         </Typography>
-        <Grid item xs={11} md={10} className={classes.DEDialogBox}>
+        <Grid item xs={11} className={classes.DEDialogBox}>
           <Grid container className={classes.DEDialpos}>
             <Grid item xs={9} sm={4} md={3}>
               <TextField
@@ -145,28 +159,35 @@ export function ManageBP() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={11} md={10} className={classes.Gridadjust}>
+        <Grid item xs={11} className={classes.Gridadjust}>
           <Grid container className={classes.GridAjust}>
             <Grid item xs={12} md={7} className={classes.TDialogbox}>
               <Typography
-                style={{ fontSize: "23px" }}
+                variant="body1"
                 className={classes.sameinfont}
               >
                 BLOOD PRESSURE TABLE
               </Typography>
-              <BPRecord />
-              <BPRecord />
-              <BPRecord />
-              <BPRecord />
-              <Grid
-                container
-                style={{ marginBottom: "30px", justifyContent: "center" }}
-              >
-                <BPRecord />
+              <Grid container className={classes.bloodpressuretablecontainer}>
+                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                  <BPRecord />
+                </Grid>
+                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                  <BPRecord />
+                </Grid>
+                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                  <BPRecord />
+                </Grid>
+                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                  <BPRecord />
+                </Grid>
+                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                  <BPRecord />
+                </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12} md={4} className={classes.BPGDialogbox}>
-              <Typography className={classes.BPGTitle}>
+              <Typography variant="body2" className={classes.BPGTitle}>
                 BLOOD PRESSURE GRAPH
               </Typography>
             </Grid>
