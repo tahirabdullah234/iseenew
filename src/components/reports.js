@@ -76,15 +76,15 @@ function Report() {
         </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
           <Typography className={classes.TableContentFont}>24/08/2021</Typography>
-        </Grid >
+        </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
           <Typography className={classes.TableContentFont}>10:27:31 AM</Typography>
-        </Grid >
+        </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
           <Typography className={classes.TableContentFont}>DOWNLOAD</Typography>
-        </Grid >
-      </Grid >
-    </Grid >
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 export function Reports() {
