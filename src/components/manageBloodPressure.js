@@ -104,7 +104,7 @@ export function ManageBP() {
   return (
     <div className="dashdiv">
       <Grid item xs={11} className={classes.DialogBox}>
-        <Typography style={{ fontSize: "32px" }} className={classes.sameinfont}>
+        <Typography variant="h4" className={classes.sameinfont}>
           MANAGE BLOOD PRESSURE
         </Typography>
         <Grid item xs={11} md={10} className={classes.DEDialogBox}>
