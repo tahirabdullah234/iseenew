@@ -13,13 +13,13 @@ import "./App.css";
 // import { ManageGL } from "./components/manageGlucoseLevel";
 // import { RetinaScan } from "./components/Retinascan";
 // import { UserSettings } from "./components/usersettings";
-import { Reports } from "./components/reports";
+// import { Reports } from "./components/reports";
 // import { DoctorDashboard } from "./components/doctorDashboard";
 
 // import BP from "./pages/bloodpressure";
 // import BG from "./pages/bloodglocuse";
-// import BP from "./components/idcTemplate";
 
+import Reports from "./pages/drReports";
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
