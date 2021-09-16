@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     borderRadius: "30px",
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    padding: "50px",
+    padding: "30px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -66,16 +66,16 @@ const useStyles = makeStyles({
   },
 });
 export function UserSettings() {
-  const [value, setValue] = React.useState("female");
+  const [value, setValue] = React.useState("");
   const handleChang = (event) => {
     setValue(event.target.value);
   };
   const classes = useStyles();
   return (
     <div className="dashdiv">
-      <Grid item xs={11} className={classes.DialogBox}>
+      <Grid item xs={12} className={classes.DialogBox}>
         <Typography style={{ fontSize: "30px" }} className={classes.sameinfont}>
-          REPORTS
+          USER SETTINGS
         </Typography>
         <Grid item xs={12} className={classes.DEDialogBox}>
           <Grid container className={classes.DEDialpos}>
@@ -114,7 +114,7 @@ export function UserSettings() {
                 </FormLabel>
                 <RadioGroup
                   aria-label="gender"
-                  name="gender1"
+                  name="gender"
                   value={value}
                   onChange={handleChang}
                   className={classes.radiogrp}
