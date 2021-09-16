@@ -59,9 +59,11 @@ const useStyles = makeStyles((theme) => ({
     },
     drTitle: {
         marginLeft: 60,
+        fontWeight: "bold",
     },
     drDesc: {
         bottom: 35,
+        fontWeight: "bold",
     },
     reportsGrid: {
         backgroundColor: "#fff",
@@ -75,7 +77,13 @@ const useStyles = makeStyles((theme) => ({
     messageBox: {
         backgroundColor: "#fff",
         boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)"
-    }
+    },
+    Profiletxt: {
+        fontWeight: "bold",
+        textAlign: "left",
+        color: "#1061b0",
+    },
+
 }));
 
 export default function DoctorCard() {
