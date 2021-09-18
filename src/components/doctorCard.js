@@ -5,8 +5,10 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
 
 import maleDoc from "../Assets/doctor_logo.svg";
+import Appoint from "./doctorAppoint";
 const useStyles = makeStyles((theme) => ({
   marginbox: {
     display: "flex",
@@ -51,12 +53,26 @@ const useStyles = makeStyles((theme) => ({
     height: 70,
     position: "absolute",
   },
+  appointdocgrid: {
+    margin: "auto",
+    background: "transparent",
+  }
 }));
 export default function DoctorCard() {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   return (
-    <Grid item sm={5} className={classes.marginbox}>
+    <Grid conatiner className={classes.marginbox}>
       <Grid>
         <Avatar
           src={maleDoc}
@@ -99,9 +115,20 @@ export default function DoctorCard() {
             variant="contained"
             disableElevation
             className={classes.inbutton}
+            onClick={handleOpen}
           >
             APPOINT DOCTOR
           </Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <Grid item xs={10} sm={6} className={classes.appointdocgrid}>
+              <Appoint />
+            </Grid>
+          </Modal>
         </Grid>
       </Grid>
     </Grid>

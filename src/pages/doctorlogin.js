@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { Header } from "./header";
+import { Header } from "../components/header";
 import doctorlogo from "../Assets/Doclogo.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";

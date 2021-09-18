@@ -137,7 +137,7 @@ export function PatientDashboard() {
       >
         Welcome Abdullah Tahir
       </Typography>
-      <Grid item md={10} xs={11}>
+      <Grid item xs={11}>
         <Grid container className={classes.DashboardHead}>
           <Grid item xs={12} sm={6}>
             <Typography
