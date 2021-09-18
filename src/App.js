@@ -6,11 +6,11 @@ import "./App.css";
 // import { DoctorRegistration } from "./components/docreg";
 // import { DoctorLogin } from "./components/doctorlogin";
 // import MainDrawer from "./components/drawer";
-// import { PatientDashboard } from "./components/PatientDashboard";
+import { PatientDashboard } from "./components/PatientDashboard";
 // import { ManageBP } from "./components/manageBloodPressure";
 // import ConsultDoctor from "./components/consultadoctor";
 // import { Header } from "./components/header";
-import { ManageGL } from "./components/manageGlucoseLevel";
+// import { ManageGL } from "./components/manageGlucoseLevel";
 // import { RetinaScan } from "./components/Retinascan";
 // import { UserSettings } from "./components/usersettings";
 // import { Reports } from "./components/reports";
@@ -18,7 +18,7 @@ import { ManageGL } from "./components/manageGlucoseLevel";
 function App() {
   return (
     <div>
-      <ManageGL />
+      <PatientDashboard />
     </div>
   );
 }
