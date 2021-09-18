@@ -33,6 +33,7 @@ const useStyles = makeStyles({
     textDecoration: "underline",
     color: "#3585da",
     textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    fontFamily: "Montserrat",
   },
 
   DEDialogBox: {
@@ -68,7 +69,6 @@ const useStyles = makeStyles({
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     borderRadius: "12px",
-
     padding: "10px",
     marginTop: "35px",
   },
@@ -87,11 +87,12 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "14px",
     color: "#fff",
+    fontFamily: "Montserrat",
   },
   BPGTitle: {
     fontWeight: "bold",
-    fontSize: "23px",
     color: "#3585da",
+    fontFamily: "Montserrat",
   },
   DEDialpos: {
     display: "flex",
@@ -122,13 +123,19 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  bloodpressuretableitem: {
+    margin: "auto",
+  },
+  bloodpressuretablecontainer: {
+    height: 300,
+    overflowY: "scroll"
+  }
 });
 function Glucoselevelrecord() {
   const classes = useStyles();
   return (
     <Grid item xs={11} className={classes.Tablecontentbox}>
-      <Typography className={classes.TableContentFont}>210</Typography>
-      <Typography className={classes.TableContentFont}>mg/dl</Typography>
+      <Typography className={classes.TableContentFont}>210 mg/dl</Typography>
       <Typography className={classes.TableContentFont}>Fasting</Typography>
       <Typography className={classes.TableContentFont}>10:37:51 PM</Typography>
       <Typography className={classes.TableContentFont}>21/08/2021</Typography>
@@ -143,7 +150,7 @@ export function ManageGL() {
       },
     },
   });
-  const [GLunit, setGLunit] = React.useState("");
+  const [GLunit, setGLunit] = React.useState("mg/dl");
 
   const handleChange = (event) => {
     setGLunit(event.target.value);
@@ -163,9 +170,9 @@ export function ManageGL() {
           >
             MANAGE GLUCOSE LEVEL
           </Typography>
-          <Grid item xs={11} md={10} className={classes.DEDialogBox}>
+          <Grid item xs={11} className={classes.DEDialogBox}>
             <Grid container className={classes.DEDialpos}>
-              <Grid item xs={9} md={3}>
+              <Grid item xs={5} md={3}>
                 <TextField
                   label="GLUCOSE LEVEL"
                   InputLabelProps={{
@@ -174,16 +181,18 @@ export function ManageGL() {
                   className={classes.Glucoselevel}
                 ></TextField>
               </Grid>
-              <Grid item xs={9} md={3}>
+              <Grid item xs={6} md={2}>
                 <FormControl
                   className={classes.formControl}
                   style={{ marginTop: "16px", width: "100%" }}
                 >
-                  <Select value={GLunit} onChange={handleChange} displayEmpty>
-                    <MenuItem value="">
+                  <Select value={GLunit} onChange={handleChange}>
+                    <MenuItem value="mg/dl">
                       <em>mg/dl</em>
                     </MenuItem>
-                    <MenuItem value={10}>mmol/L</MenuItem>
+                    <MenuItem value="mmol/L">
+                      <em>mmol/L</em>
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -214,28 +223,35 @@ export function ManageGL() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={11} md={10} className={classes.Gridadjust}>
+          <Grid item xs={11} className={classes.Gridadjust}>
             <Grid container className={classes.GridAdjust}>
               <Grid item xs={12} md={7} className={classes.TDialogbox}>
                 <Typography
-                  style={{ fontSize: "23px" }}
+                  variant="body1"
                   className={classes.sameinfont}
                 >
                   GLUCOSE LEVEL TABLE
                 </Typography>
-                <Glucoselevelrecord />
-                <Glucoselevelrecord />
-                <Glucoselevelrecord />
-                <Glucoselevelrecord />
-                <Grid
-                  container
-                  style={{ marginBottom: "30px", justifyContent: "center" }}
-                >
-                  <Glucoselevelrecord />
+                <Grid container className={classes.bloodpressuretablecontainer}>
+                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                    <Glucoselevelrecord />
+                  </Grid>
+                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                    <Glucoselevelrecord />
+                  </Grid>
+                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                    <Glucoselevelrecord />
+                  </Grid>
+                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                    <Glucoselevelrecord />
+                  </Grid>
+                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                    <Glucoselevelrecord />
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4} className={classes.GLGDialogbox}>
-                <Typography className={classes.BPGTitle}>
+                <Typography variant="body2" className={classes.BPGTitle}>
                   GLUCOSE LEVEL GRAPH
                 </Typography>
               </Grid>

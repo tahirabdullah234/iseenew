@@ -6,20 +6,38 @@ import "./App.css";
 // import { DoctorRegistration } from "./components/docreg";
 // import { DoctorLogin } from "./components/doctorlogin";
 // import MainDrawer from "./components/drawer";
-import { PatientDashboard } from "./components/PatientDashboard";
-// import { ManageBP } from "./components/manageBloodPressure";
-// import ConsultDoctor from "./components/consultadoctor";
+// import { PatientDashboard } from "./components/PatientDashboard";
+// import { ManageBP as BP } from "./components/manageBloodPressure";
+// import DoctorCard from "./components/doctorCard";
 // import { Header } from "./components/header";
 // import { ManageGL } from "./components/manageGlucoseLevel";
 // import { RetinaScan } from "./components/Retinascan";
 // import { UserSettings } from "./components/usersettings";
 // import { Reports } from "./components/reports";
 // import { DoctorDashboard } from "./components/doctorDashboard";
+
+// import BP from "./pages/bloodpressure";
+// import BG from "./pages/bloodglocuse";
+// import Settings from "./pages/UserSettings";
+// import Reports from "./pages/drReports";
+// import Appoint from "./pages/appointDoctor";
+// import Scan from "./pages/checkdisease";
+// import Patient from "./pages/patient";
+import { PatientLogin } from "./pages/patientlogin";
+
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Montserrat",
+  },
+});
+
 function App() {
   return (
-    <div>
-      <PatientDashboard />
-    </div>
+    <ThemeProvider theme={theme}>
+      <PatientLogin />
+    </ThemeProvider>
   );
 }
 // <Drawer />

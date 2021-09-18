@@ -22,10 +22,13 @@ const useStyles = makeStyles((theme) => ({
     textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
   },
   AllGridsAdjust: {
-    display: "flex",
-    flexDirection: "row",
     justifyContent: "space-around",
+    height: "70vh",
+    overflowY: "scroll",
   },
+  appointdocgrid: {
+    margin: 10,
+  }
 }));
 
 export default function ConsultDoctor() {
@@ -33,7 +36,7 @@ export default function ConsultDoctor() {
 
   return (
     <Grid container className="dashdiv1">
-      <Grid item md={10} sm={11} className={classes.DialogBox}>
+      <Grid item xs={12} className={classes.DialogBox}>
         <Typography
           style={{
             textAlign: "center",
@@ -55,10 +58,18 @@ export default function ConsultDoctor() {
           REQUEST STATUS
         </Typography>
         <Grid container className={classes.AllGridsAdjust}>
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
+          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
+            <DoctorCard />
+          </Grid>
+          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
+            <DoctorCard />
+          </Grid>
+          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
+            <DoctorCard />
+          </Grid>
+          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
+            <DoctorCard />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
