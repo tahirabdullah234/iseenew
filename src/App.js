@@ -22,7 +22,8 @@ import "./App.css";
 // import Reports from "./pages/drReports";
 // import Appoint from "./pages/appointDoctor";
 // import Scan from "./pages/checkdisease";
-import Patient from "./pages/patient";
+// import Patient from "./pages/patient";
+import { PatientLogin } from "./pages/patientlogin";
 
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
@@ -35,7 +36,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Patient />
+      <PatientLogin />
     </ThemeProvider>
   );
 }
