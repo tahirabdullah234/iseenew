@@ -107,12 +107,12 @@ export function PatientLogin() {
             <img
               src={patientlogo}
               className="patientlogo"
-              alt="Error found"
-            ></img>
+              alt="Pateint Logo"
+            />
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
             <header className={classes.loginboxheader}>PATIENT LOGIN</header>
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <TextField
                 label="Email Address"
                 id="email"
@@ -154,7 +154,7 @@ export function PatientLogin() {
                 helperText={formik.touched.password && formik.errors.password}
               />
               <Button type="submit" className={classes.loginbutton}>
-                login
+                LOGIN
               </Button>
             </form>
           </Grid>
