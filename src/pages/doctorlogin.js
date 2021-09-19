@@ -10,61 +10,99 @@ import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
-export function DoctorLogin() {
+
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import * as auth from "../Services/auth";
+
+const validationSchema = yup.object({
+  username: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+})
+
+const useStyles = makeStyles({
+  border: {
+    marginTop: "111px",
+    border: "6px solid  #59C1E8",
+  },
+  dialogbox: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+    background: "#fff",
+    boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
+    Border: "6px",
+  },
+  setpatientlogo: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loginbox: {
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "270px",
+    height: "350px",
+    borderRadius: "20px",
+    display: "flex",
+    flexDirection: "column",
+    background: "#fff",
+    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+  },
+  loginboxheader: {
+    marginBottom: "20px",
+    fontSize: "24px",
+    textDecorationLine: "underline",
+  },
+  setemail: { marginBottom: "10px", width: "75%" },
+  setpassword: { marginBottom: "40px", width: "75%" },
+  loginbutton: {
+    width: "38%",
+    height: "42px",
+    borderRadius: "10px",
+    background: "#3585da",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    margin: "auto",
+    color: "#fff",
+    "&:hover": {
+      background: "rgba(53,133,218,0.8)",
+    },
+    fontWeight: "bold"
+  },
+});
+
+export default function DoctorLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  const useStyles = makeStyles({
-    border: {
-      marginTop: "111px",
-      border: "6px solid  #59C1E8",
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
     },
-    dialogbox: {
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: "20px",
-      background: "#fff",
-      boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
-      Border: "6px",
-    },
-    setpatientlogo: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    loginbox: {
-      textAlign: "center",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "270px",
-      height: "350px",
-      borderRadius: "20px",
-      display: "flex",
-      flexDirection: "column",
-      background: "#fff",
-      boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    },
-    loginboxheader: {
-      marginBottom: "20px",
-      fontSize: "24px",
-      textDecorationLine: "underline",
-    },
-    setemail: { marginBottom: "10px", width: "75%" },
-    setpassword: { marginBottom: "40px", width: "75%" },
-    loginbutton: {
-      width: "38%",
-      height: "42px",
-      borderRadius: "10px",
-      background: "#3585da",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values)
+      auth.login(values)
+        .then(res => alert(JSON.stringify(res)))
     },
   });
+
   const classes = useStyles();
   return (
     <div className="container">
@@ -76,15 +114,23 @@ export function DoctorLogin() {
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
             <header className={classes.loginboxheader}>DOCTOR LOGIN</header>
-            <div>
+            <form onSubmit={formik.handleSubmit}>
               <TextField
                 label="Email Address"
+                id="username"
+                name="username"
                 className={classes.setemail}
                 InputLabelProps={{
                   shrink: true,
                 }}
-              ></TextField>
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+                helperText={formik.touched.username && formik.errors.username}
+              />
               <TextField
+                id="password"
+                name="password"
                 label="Password"
                 type={showPassword ? "text" : "password"}
                 className={classes.setpassword}
@@ -104,15 +150,15 @@ export function DoctorLogin() {
                     </InputAdornment>
                   ),
                 }}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
               />
-            </div>
-
-            <Button
-              className={classes.loginbutton}
-              style={{ background: "#3585da", color: "white" }}
-            >
-              login
-            </Button>
+              <Button type="submit" className={classes.loginbutton}>
+                LOGIN
+              </Button>
+            </form>
           </Grid>
         </Grid>
       </Grid>

@@ -13,15 +13,16 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import * as auth from "../Services/auth";
 
 const validationSchema = yup.object({
-  email: yup
+  username: yup
     .string('Enter your email')
     .email('Enter a valid email')
     .required('Email is required'),
   password: yup
     .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
+    .min(4, 'Password should be of minimum 8 characters length')
     .required('Password is required'),
 });
 
@@ -76,24 +77,27 @@ const useStyles = makeStyles({
     margin: "auto",
     color: "#fff",
     "&:hover": {
-      background: "rgba(53,133,)",
-    }
+      background: "rgba(53,133,218,0.8)",
+    },
+    fontWeight: "bold"
   },
 });
 
-export function PatientLogin() {
+export default function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      username: '',
       password: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(values)
+      auth.login(values)
+        .then(res => alert(JSON.stringify(res)))
     },
   });
 
@@ -115,16 +119,16 @@ export function PatientLogin() {
             <form onSubmit={formik.handleSubmit}>
               <TextField
                 label="Email Address"
-                id="email"
-                name="email"
+                id="username"
+                name="username"
                 className={classes.setemail}
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={formik.values.email}
+                value={formik.values.username}
                 onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+                helperText={formik.touched.username && formik.errors.username}
               />
               <TextField
                 id="password"
