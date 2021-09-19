@@ -21,6 +21,9 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 const useStyles = makeStyles({
   border: {
     marginTop: "111px",
@@ -130,19 +133,79 @@ const theme = createTheme({
 });
 
 
+const validationSchema = yup.object({
+  firstname: yup
+    .string('Enter Your First Name')
+    .required('First Name is Required'),
+  lastname: yup
+    .string('Enter Your Last Name')
+    .required('Last Name is Required'),
+  username: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is Required'),
+  confirmpassword: yup
+    .string("Confirm Password")
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required("Confirm Password is Required")
+    .test('passwords-match', 'Passwords must match', function (value) {
+      return this.parent.password === value
+    }),
+  dob: yup
+    .date("Enter Date of Birth")
+    .required("Date of Birth is Required")
+    .test("age", "You must be 18 or older", function (birthdate) {
+      const cutoff = new Date();
+      cutoff.setFullYear(cutoff.getFullYear() - 18);
+      return birthdate <= cutoff;
+    }),
+  pmdcid: yup
+    .string("Enter PMDCID")
+    .required("PMDC ID is Required"),
+  specialization: yup
+    .string("Enter you Spicialization")
+    .required("Specilization is Required"),
+  city: yup
+    .string("Enter you Practice City")
+    .required("Practice City is Required"),
+})
+
+
 export default function DoctorRegistration() {
-  const [value, setValue] = React.useState("");
+
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
   const classes = useStyles();
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
   const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      confirmpassword: '',
+      firstname: '',
+      lastname: '',
+      dob: '',
+      pmdcid: '',
+      specialization: '',
+      city: '',
+      gender: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values)
+      alert(JSON.stringify(values))
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <div className="container">
@@ -154,177 +217,234 @@ export default function DoctorRegistration() {
               <img
                 src={patientreglogo}
                 className="docreglogo"
-                alt="error found"
+                alt="Doctor Reg"
               ></img>
 
               <header className={classes.registrationheader}>
                 DOCTOR REGISTRATION
               </header>
             </Grid>
-            <Grid item xs={12}>
-              <div className={classes.starttextfielddiv}>
-                <TextField
-                  className={classes.textfield}
-                  label="First name"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                />
-                <TextField
-                  className={classes.textfield}
-                  label="Last name"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                />
-              </div>
-              <div className={classes.endtextfield}>
-                <TextField
-                  className={classes.textfield}
-                  label="Email Address"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                />
-                <TextField
-                  className={classes.textfield}
-                  label="Date of Birth"
-                  type="date"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                />
-              </div>
-              <div className={classes.endtextfield}>
-                <TextField
-                  className={classes.textfield}
-                  label="Password"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                  type={showPassword ? "text" : "password"}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  className={classes.textfield}
-                  label="Confirm Password"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                  type={showConfirmPassword ? "text" : "password"}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowConfirmPassword}
-                          onMouseDown={handleMouseDownConfirmPassword}
-                        >
-                          {showConfirmPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-              <div className={classes.endtextfield}>
-                <TextField
-                  className={classes.textfield}
-                  label="PMDC ID"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                ></TextField>
-                <TextField
-                  className={classes.textfield}
-                  label="Specialization"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </div>
-              <div className={classes.radiobutton}>
-                <FormControl component="fieldset">
-                  <FormLabel component="legend" style={{ fontSize: "12px" }}>
-                    Gender
-                  </FormLabel>
-                  <RadioGroup
-                    aria-label="gender"
-                    name="gender1"
-                    value={value}
-                    onChange={handleChange}
-                    label="Other"
-                    style={{ display: "flex", flexDirection: "row" }}
-                  >
-                    <FormControlLabel
-                      value="female"
-                      control={<Radio />}
-                      label="Male"
-                    />
-                    <FormControlLabel
-                      value="male"
-                      control={<Radio />}
-                      label="Female"
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <TextField
-                  className={classes.textfield}
-                  label="Current City"
-                  InputLabelProps={{
-                    className: classes.font,
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    className: classes.font
-                  }}
-                />
-              </div>
-            </Grid>
-
-            <Button type="submit" className={classes.regbutton}>
-              Register
-            </Button>
+            <form onSubmit={formik.handleSubmit}>
+              <Grid item xs={12}>
+                <div className={classes.starttextfielddiv}>
+                  <TextField
+                    className={classes.textfield}
+                    label="First name"
+                    id="firstname"
+                    name="firstname"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    value={formik.values.firstname}
+                    onChange={formik.handleChange}
+                    error={formik.touched.firstname && Boolean(formik.errors.firstname)}
+                    helperText={formik.touched.firstname && formik.errors.firstname}
+                  />
+                  <TextField
+                    className={classes.textfield}
+                    label="Last name"
+                    id="lastname"
+                    name="lastname"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    value={formik.values.lastname}
+                    onChange={formik.handleChange}
+                    error={formik.touched.lastname && Boolean(formik.errors.lastname)}
+                    helperText={formik.touched.lastname && formik.errors.lastname}
+                  />
+                </div>
+                <div className={classes.endtextfield}>
+                  <TextField
+                    className={classes.textfield}
+                    label="Email Address"
+                    id="username"
+                    name="username"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    error={formik.touched.username && Boolean(formik.errors.username)}
+                    helperText={formik.touched.username && formik.errors.username}
+                  />
+                  <TextField
+                    className={classes.textfield}
+                    label="Date of Birth"
+                    id="dob"
+                    name="dob"
+                    type="date"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    value={formik.values.dob}
+                    onChange={formik.handleChange}
+                    error={formik.touched.dob && Boolean(formik.errors.dob)}
+                    helperText={formik.touched.dob && formik.errors.dob}
+                  />
+                </div>
+                <div className={classes.endtextfield}>
+                  <TextField
+                    className={classes.textfield}
+                    label="Password"
+                    id="password"
+                    name="password"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                  />
+                  <TextField
+                    className={classes.textfield}
+                    label="Confirm Password"
+                    id="confirmpassword"
+                    name="confirmpassword"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    type={showConfirmPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseDownConfirmPassword}
+                          >
+                            {showConfirmPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    value={formik.values.confirmpassword}
+                    onChange={formik.handleChange}
+                    error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
+                    helperText={formik.touched.confirmpassword && formik.errors.confirmpassword}
+                  />
+                </div>
+                <div className={classes.endtextfield}>
+                  <TextField
+                    className={classes.textfield}
+                    label="PMDC ID"
+                    id="pmdcid"
+                    name="pmdcid"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={formik.values.pmdcid}
+                    onChange={formik.handleChange}
+                    error={formik.touched.pmdcid && Boolean(formik.errors.pmdcid)}
+                    helperText={formik.touched.pmdcid && formik.errors.pmdcid}
+                  ></TextField>
+                  <TextField
+                    className={classes.textfield}
+                    label="Specialization"
+                    id="specialization"
+                    name="specialization"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={formik.values.specialization}
+                    onChange={formik.handleChange}
+                    error={formik.touched.specialization && Boolean(formik.errors.specialization)}
+                    helperText={formik.touched.specialization && formik.errors.specialization}
+                  />
+                </div>
+                <div className={classes.radiobutton}>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend" style={{ fontSize: "12px" }}>
+                      Gender
+                    </FormLabel>
+                    <RadioGroup
+                      aria-label="gender"
+                      id="gender"
+                      name="gender"
+                      value={formik.values.gender}
+                      onChange={formik.handleChange}
+                      error={formik.touched.gender && Boolean(formik.errors.gender)}
+                      label="Other"
+                      style={{ display: "flex", flexDirection: "row" }}
+                    >
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio />}
+                        label="Male"
+                      />
+                      <FormControlLabel
+                        value="male"
+                        control={<Radio />}
+                        label="Female"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  <TextField
+                    className={classes.textfield}
+                    label="Current City"
+                    id="city"
+                    name="city"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                    error={formik.touched.city && Boolean(formik.errors.city)}
+                    helperText={formik.touched.city && formik.errors.city}
+                  />
+                </div>
+              </Grid>
+              <Button type="submit" className={classes.regbutton}>
+                Register
+              </Button>
+            </form>
           </Grid>
         </Grid>
       </div>
