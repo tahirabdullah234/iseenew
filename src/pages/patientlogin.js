@@ -12,23 +12,11 @@ import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import * as auth from "../Services/auth";
-
-const validationSchema = yup.object({
-  username: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(4, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-});
-
+import { validationSchemaLogin as validationSchema } from "../Services/validations";
 const useStyles = makeStyles({
   border: {
-    marginTop: "111px",
+    marginTop: "75px",
     border: "6px solid  #59C1E8",
   },
   dialogbox: {
@@ -164,6 +152,6 @@ export default function PatientLogin() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }

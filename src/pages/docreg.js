@@ -22,11 +22,12 @@ import {
 } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+
+import { validationSchemaSignup as validationSchema } from "../Services/validations";
 
 const useStyles = makeStyles({
   border: {
-    marginTop: "111px",
+    marginTop: 50,
     border: "6px solid  #59C1E8",
   },
   dialogbox: {
@@ -132,49 +133,6 @@ const theme = createTheme({
   },
 });
 
-
-const validationSchema = yup.object({
-  firstname: yup
-    .string('Enter Your First Name')
-    .required('First Name is Required'),
-  lastname: yup
-    .string('Enter Your Last Name')
-    .required('Last Name is Required'),
-  username: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is Required'),
-  confirmpassword: yup
-    .string("Confirm Password")
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required("Confirm Password is Required")
-    .test('passwords-match', 'Passwords must match', function (value) {
-      return this.parent.password === value
-    }),
-  dob: yup
-    .date("Enter Date of Birth")
-    .required("Date of Birth is Required")
-    .test("age", "You must be 18 or older", function (birthdate) {
-      const cutoff = new Date();
-      cutoff.setFullYear(cutoff.getFullYear() - 18);
-      return birthdate <= cutoff;
-    }),
-  pmdcid: yup
-    .string("Enter PMDCID")
-    .required("PMDC ID is Required"),
-  specialization: yup
-    .string("Enter you Spicialization")
-    .required("Specilization is Required"),
-  city: yup
-    .string("Enter you Practice City")
-    .required("Practice City is Required"),
-})
-
-
 export default function DoctorRegistration() {
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -211,15 +169,14 @@ export default function DoctorRegistration() {
       <div className="container">
         <Header />
 
-        <Grid item md={4} sm={6} xs={10} className={classes.border}>
+        <Grid item md={5} sm={6} xs={10} className={classes.border}>
           <Grid container className={classes.dialogbox}>
             <Grid item className={classes.setpatientreglogo}>
               <img
                 src={patientreglogo}
                 className="docreglogo"
                 alt="Doctor Reg"
-              ></img>
-
+              />
               <header className={classes.registrationheader}>
                 DOCTOR REGISTRATION
               </header>
@@ -409,14 +366,15 @@ export default function DoctorRegistration() {
                       error={formik.touched.gender && Boolean(formik.errors.gender)}
                       label="Other"
                       style={{ display: "flex", flexDirection: "row" }}
+                      helperText={formik.touched.gender && formik.errors.gender}
                     >
                       <FormControlLabel
-                        value="female"
+                        value="male"
                         control={<Radio />}
                         label="Male"
                       />
                       <FormControlLabel
-                        value="male"
+                        value="female"
                         control={<Radio />}
                         label="Female"
                       />

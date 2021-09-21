@@ -12,20 +12,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-
+import { validationSchemaLogin as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
-
-const validationSchema = yup.object({
-  username: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-})
 
 const useStyles = makeStyles({
   border: {
