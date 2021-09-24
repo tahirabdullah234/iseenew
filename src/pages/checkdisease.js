@@ -19,7 +19,7 @@ export default function Scan() {
     const classes = useStyles();
     return (
         <Grid container className={classes.root}>
-            <Grid item xs={1}>
+            <Grid item xs={1}>]
                 <Drawer />
             </Grid>
             <Grid item xs={10} className={classes.rightgrid}>
