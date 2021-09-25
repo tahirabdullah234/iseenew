@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
 
 import Drawer from "../components/drawer";
-import { RetinaScan } from "../components/Retinascan";
+import { DoctorDashboard } from "../components/doctorDashboard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function Scan() {
+export default function Doctor() {
     const classes = useStyles();
     return (
         <Grid container className={classes.root}>
@@ -23,7 +23,7 @@ export default function Scan() {
                 <Drawer />
             </Grid>
             <Grid item xs={10} className={classes.rightgrid}>
-                <RetinaScan />
+                <DoctorDashboard />
             </Grid>
         </Grid>
     )

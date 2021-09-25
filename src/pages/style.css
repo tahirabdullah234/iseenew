@@ -1,3 +1,12 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@font-face {
+  font-family: 'Montserrat',
+    sans-serif;
+}
+
 .logoText {
   font-size: 24px;
   margin: 0;

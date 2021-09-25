@@ -12,6 +12,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from './statesSlice';
 import * as auth from "../Services/auth";
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
 const useStyles = makeStyles({
@@ -75,6 +77,9 @@ export default function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const islogin = useSelector((state) => state.states.islogin)
+  const dispatch = useDispatch()
+
 
   const formik = useFormik({
     initialValues: {
@@ -85,7 +90,12 @@ export default function PatientLogin() {
     onSubmit: (values) => {
       console.log(values)
       auth.login(values)
-        .then(res => alert(JSON.stringify(res)))
+        .then(res => {
+          if (res.data.success) {
+            console.log(islogin);
+            dispatch(login());
+          }
+        })
     },
   });
 
