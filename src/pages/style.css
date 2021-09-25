@@ -1,5 +1,10 @@
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+@font-face {
+  font-family: 'Montserrat',
+    sans-serif;
 }
 
 .logoText {

@@ -4,9 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
 
 import Drawer from "../components/drawer";
-import { PatientDashboard } from "../components/PatientDashboard";
-
-import { useSelector } from "react-redux";
+import { DoctorDashboard } from "../components/doctorDashboard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,17 +15,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function Patient() {
+export default function Doctor() {
     const classes = useStyles();
-    const islogin = useSelector((state) => state.states.islogin)
-    alert(islogin);
     return (
         <Grid container className={classes.root}>
             <Grid item xs={1}>
                 <Drawer />
             </Grid>
             <Grid item xs={10} className={classes.rightgrid}>
-                <PatientDashboard />
+                <DoctorDashboard />
             </Grid>
         </Grid>
     )

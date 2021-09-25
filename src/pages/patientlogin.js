@@ -12,22 +12,13 @@ import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-
-const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-});
-
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from './statesSlice';
+import * as auth from "../Services/auth";
+import { validationSchemaLogin as validationSchema } from "../Services/validations";
 const useStyles = makeStyles({
   border: {
-    marginTop: "111px",
+    marginTop: "75px",
     border: "6px solid  #59C1E8",
   },
   dialogbox: {
@@ -76,24 +67,35 @@ const useStyles = makeStyles({
     margin: "auto",
     color: "#fff",
     "&:hover": {
-      background: "rgba(53,133,)",
-    }
+      background: "rgba(53,133,218,0.8)",
+    },
+    fontWeight: "bold"
   },
 });
 
-export function PatientLogin() {
+export default function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const islogin = useSelector((state) => state.states.islogin)
+  const dispatch = useDispatch()
+
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      username: '',
       password: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(values)
+      auth.login(values)
+        .then(res => {
+          if (res.data.success) {
+            console.log(islogin);
+            dispatch(login());
+          }
+        })
     },
   });
 
@@ -107,24 +109,24 @@ export function PatientLogin() {
             <img
               src={patientlogo}
               className="patientlogo"
-              alt="Error found"
-            ></img>
+              alt="Pateint Logo"
+            />
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
             <header className={classes.loginboxheader}>PATIENT LOGIN</header>
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <TextField
                 label="Email Address"
-                id="email"
-                name="email"
+                id="username"
+                name="username"
                 className={classes.setemail}
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={formik.values.email}
+                value={formik.values.username}
                 onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+                helperText={formik.touched.username && formik.errors.username}
               />
               <TextField
                 id="password"
@@ -154,12 +156,12 @@ export function PatientLogin() {
                 helperText={formik.touched.password && formik.errors.password}
               />
               <Button type="submit" className={classes.loginbutton}>
-                login
+                LOGIN
               </Button>
             </form>
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }
