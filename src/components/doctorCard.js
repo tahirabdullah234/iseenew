@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   appointdocgrid: {
     margin: "auto",
     background: "transparent",
-  }
+  },
 }));
 export default function DoctorCard() {
   const classes = useStyles();
@@ -69,10 +69,10 @@ export default function DoctorCard() {
 
   const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   return (
-    <Grid conatiner className={classes.marginbox}>
+    <Grid container className={classes.marginbox}>
       <Grid>
         <Avatar
           src={maleDoc}

@@ -2,11 +2,11 @@ import React from "react";
 import "./App.css";
 
 // import { PatientLogin } from "./components/patientlogin";
-// import { PatientRegistration } from "./components/patientregistration";
+// import { PatientRegistration } from "./pages/patientregistration";
 // import { DoctorRegistration } from "./components/docreg";
 // import { DoctorLogin } from "./components/doctorlogin";
 // import MainDrawer from "./components/drawer";
-// import { PatientDashboard } from "./components/PatientDashboard";
+// import Patient from "./pages/patient";
 // import { ManageBP as BP } from "./components/manageBloodPressure";
 // import DoctorCard from "./components/doctorCard";
 // import { Header } from "./components/header";
@@ -19,13 +19,15 @@ import "./App.css";
 // import BP from "./pages/bloodpressure";
 // import BG from "./pages/bloodglocuse";
 // import Settings from "./pages/UserSettings";
-// import Reports from "./pages/drReports";
-// import Appoint from "./pages/appointDoctor";
+// import Report from "./pages/drReports";
+import Appoint from "./pages/appointDoctor";
 // import Scan from "./pages/checkdisease";
+// import { DoctorRegistration } from "./pages/docreg";
+// import { DoctorLogin } from "./pages/doctorlogin";
 // import Patient from "./pages/patient";
-import { PatientLogin } from "./pages/patientlogin";
+// import { PatientLogin } from "./pages/patientlogin";
 
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({
   typography: {
@@ -36,7 +38,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <PatientLogin />
+      <Appoint />
     </ThemeProvider>
   );
 }

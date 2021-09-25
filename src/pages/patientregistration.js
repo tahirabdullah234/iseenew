@@ -100,9 +100,6 @@ export function PatientRegistration() {
       display: "flex",
       width: "45%",
       color: "black",
-      "&:hover": {
-        color: "white",
-      },
     },
     endtextfield: {
       display: "flex",
@@ -151,7 +148,7 @@ export function PatientRegistration() {
                 PATIENT REGISTRATION
               </header>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <div className={classes.starttextfielddiv}>
                 <TextField
                   className={classes.textfield}
