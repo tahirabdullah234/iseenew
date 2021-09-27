@@ -7,7 +7,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
+import {GraphGlocuse, GraphBp} from "./graphs";
 
+// import { Doughnut } from "react-chartjs-2";
 const useStyles = makeStyles({
   DashboardHead: {
     width: "100%",
@@ -163,7 +165,7 @@ export function PatientDashboard() {
               <Grid item xs={12} md={2} className={classes.healthcolset}>
                 <Grid
                   item
-                  style={{ background: " #85fcbc" }}
+                  style={{ background: "#85fcbc", marginRight: "5px" }}
                   className={classes.healthcol}
                 />
                 <Typography className={classes.healthcontxt}>Safe</Typography>
@@ -171,7 +173,7 @@ export function PatientDashboard() {
               <Grid item xs={12} md={3} className={classes.healthcolset}>
                 <Grid
                   item
-                  style={{ background: " #ffbf6b" }}
+                  style={{ background: "#ffbf6b", marginRight: "5px" }}
                   className={classes.healthcol}
                 />
                 <Typography className={classes.healthcontxt}>
@@ -181,7 +183,7 @@ export function PatientDashboard() {
               <Grid item xs={12} md={3} className={classes.healthcolset}>
                 <Grid
                   item
-                  style={{ background: "#fa6b6b" }}
+                  style={{ background: "#fa6b6b", marginRight: "5px" }}
                   className={classes.healthcol}
                 />
                 <Typography className={classes.healthcontxt}>
@@ -228,49 +230,21 @@ export function PatientDashboard() {
               </Typography>
             </Grid>
             <Grid container className={classes.BPGLtitle}>
-              <Typography className={classes.timeline}>
-                BLOOD PRESSURE
-              </Typography>
-              <Typography className={classes.timeline}>
-                GLUCOSE LEVEL
-              </Typography>
-            </Grid>
-            <Grid
-              container
-              className={classes.BPGLgraph}
-              style={{ marginTop: "5px" }}
-            >
-              <Grid item xs={2} className={classes.healthcolset}>
-                <Grid
-                  item
-                  style={{ background: "#6a6cb9" }}
-                  className={classes.healthcol}
-                />
-                <Typography>SBP</Typography>
+              <Grid item xs={12} sm={6}>
+                <Typography className={classes.timeline}>
+                  BLOOD PRESSURE
+                </Typography>
+                <Grid container className={classes.graphctn}>
+                  <GraphBp />
+                </Grid>
               </Grid>
-              <Grid item xs={4} className={classes.healthcolset}>
-                <Grid
-                  container
-                  style={{ background: "#ef8282" }}
-                  className={classes.healthcol}
-                />
-                <Typography>DBP</Typography>
-              </Grid>
-              <Grid item xs={3} className={classes.healthcolset}>
-                <Grid
-                  container
-                  style={{ background: "#ecabab" }}
-                  className={classes.healthcol}
-                />
-                <Typography>Random</Typography>
-              </Grid>
-              <Grid item xs={2} className={classes.healthcolset}>
-                <Grid
-                  container
-                  style={{ background: "#f7d9a1" }}
-                  className={classes.healthcol}
-                />
-                <Typography>Fasting</Typography>
+              <Grid item xs={12} sm={6}>
+                <Typography className={classes.timeline}>
+                  GLUCOSE LEVEL
+                </Typography>
+                <Grid container className={classes.graphctn}>
+                  <GraphGlocuse />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -340,7 +314,7 @@ export function PatientDashboard() {
                 MESSAGES
               </Typography>
 
-              <Message></Message>
+              <Message />
             </Grid>
           </Grid>
         </Grid>

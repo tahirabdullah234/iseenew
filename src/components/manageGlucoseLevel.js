@@ -15,6 +15,9 @@ import Select from "@material-ui/core/Select";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+
+import { GraphGlocuse } from "./graphs";
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -163,7 +166,7 @@ export function ManageGL() {
   return (
     <ThemeProvider theme={theme}>
       <div className="dashdiv">
-        <Grid item xs={11} className={classes.DialogBox}>
+        <Grid item xs={12} className={classes.DialogBox}>
           <Typography
             style={{ fontSize: "32px" }}
             className={classes.sameinfont}
@@ -200,7 +203,7 @@ export function ManageGL() {
                 <FormControl component="fieldset" className={classes.radiosize}>
                   <RadioGroup
                     aria-label="gender"
-                    name="gender1"
+                    name="gender"
                     value={value}
                     onChange={handleChang}
                     className={classes.radiogrp}
@@ -225,7 +228,7 @@ export function ManageGL() {
           </Grid>
           <Grid item xs={11} className={classes.Gridadjust}>
             <Grid container className={classes.GridAdjust}>
-              <Grid item xs={12} md={7} className={classes.TDialogbox}>
+              <Grid item xs={12} md={5} className={classes.TDialogbox}>
                 <Typography
                   variant="body1"
                   className={classes.sameinfont}
@@ -250,10 +253,13 @@ export function ManageGL() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} md={4} className={classes.GLGDialogbox}>
+              <Grid item xs={12} md={6} className={classes.GLGDialogbox}>
                 <Typography variant="body2" className={classes.BPGTitle}>
                   GLUCOSE LEVEL GRAPH
                 </Typography>
+                <Grid container style={{ margin: "auto" }}>
+                  <GraphGlocuse />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
