@@ -151,7 +151,7 @@ const UserActions = () => {
         <ListItemIcon>
           <img src={blood} alt='Blood Glocuse' className={classes.imageIcon} />
         </ListItemIcon>
-        <ListItemText primary={<Typography variant="p" className={classes.listItemTextStyle}>MANAGE BLOOD<br />GLUCOSE</Typography>} />
+        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MANAGE BLOOD<br />GLUCOSE</Typography>} />
       </ListItem>
       <ListItem button key={5} onClick={() => history.push("/bloodpressure")}>
         <ListItemIcon>

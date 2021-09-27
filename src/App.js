@@ -20,7 +20,7 @@ import "./App.css";
 // import BG from "./pages/bloodglocuse";
 // import Settings from "./pages/UserSettings";
 // import Report from "./pages/drReports";
-import Appoint from "./pages/appointDoctor";
+// import Appoint from "./pages/appointDoctor";
 // import Scan from "./pages/checkdisease";
 // import { DoctorRegistration } from "./pages/docreg";
 // import { DoctorLogin } from "./pages/doctorlogin";
@@ -29,12 +29,15 @@ import Patient from "./pages/patient";
 // import DoctorLogin from "./pages/doctorlogin";
 // import PatientRegistration from "./pages/patientregistration";
 // import DoctorRegistration from "./pages/docreg";
+
+// import Graph from "./components/graphs"
+
 import Main from "./routes/main";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat, sans serif",
   },
 });
 

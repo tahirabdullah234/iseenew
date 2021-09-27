@@ -14,6 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from 'formik';
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
+import { useDispatch } from "react-redux";
+import { login, setuser, settoken } from "./statesSlice";
 
 const useStyles = makeStyles({
   border: {
@@ -77,6 +79,7 @@ export default function DoctorLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -85,9 +88,14 @@ export default function DoctorLogin() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
       auth.login(values)
-        .then(res => alert(JSON.stringify(res)))
+        .then(res => {
+          if (res.data.success && res.data.user.isDoctor) {
+            dispatch(login());
+            dispatch(setuser(res.data.user));
+            dispatch(settoken(res.data.token));
+          }
+        })
     },
   });
 

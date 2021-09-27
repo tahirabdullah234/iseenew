@@ -21,7 +21,6 @@ import Doctor from "../pages/doctor";
 export default function Main() {
     const islogin = useSelector((state) => state.states.islogin)
     const isdoctor = useSelector((state) => state.states.isdoctor)
-
     const history = useHistory();
 
     return (
@@ -36,6 +35,9 @@ export default function Main() {
                         </Route>
                         <Route path="/register">
                             {isdoctor ? <DoctorRegistration /> : <PatientRegistration />}
+                        </Route>
+                        <Route path="*">
+                            <Redirect to="/" />
                         </Route>
                     </Switch>
             }
@@ -68,6 +70,9 @@ const UserRoutes = () => {
             <Route path="/checkdisease">
                 <Scan />
             </Route>
+            <Route path="*">
+                <Redirect to="/" />
+            </Route>
         </Switch>
     )
 }
@@ -83,6 +88,9 @@ const DoctorRoutes = () => {
             </Route>
             <Route path="/editprofile">
                 <Settings />
+            </Route>
+            <Route path="*">
+                <Redirect to="/" />
             </Route>
         </Switch>
     )

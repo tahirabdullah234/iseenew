@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { GraphBp } from "./graphs";
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -161,7 +163,7 @@ export function ManageBP() {
         </Grid>
         <Grid item xs={11} className={classes.Gridadjust}>
           <Grid container className={classes.GridAjust}>
-            <Grid item xs={12} md={7} className={classes.TDialogbox}>
+            <Grid item xs={12} md={5} className={classes.TDialogbox}>
               <Typography
                 variant="body1"
                 className={classes.sameinfont}
@@ -169,27 +171,30 @@ export function ManageBP() {
                 BLOOD PRESSURE TABLE
               </Typography>
               <Grid container className={classes.bloodpressuretablecontainer}>
-                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                <Grid item xs={12} className={classes.bloodpressuretableitem}>
                   <BPRecord />
                 </Grid>
-                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                <Grid item xs={12} className={classes.bloodpressuretableitem}>
                   <BPRecord />
                 </Grid>
-                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                <Grid item xs={12} className={classes.bloodpressuretableitem}>
                   <BPRecord />
                 </Grid>
-                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                <Grid item xs={12} className={classes.bloodpressuretableitem}>
                   <BPRecord />
                 </Grid>
-                <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                <Grid item xs={12} className={classes.bloodpressuretableitem}>
                   <BPRecord />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} md={4} className={classes.BPGDialogbox}>
+            <Grid item xs={12} md={6} className={classes.BPGDialogbox}>
               <Typography variant="body2" className={classes.BPGTitle}>
                 BLOOD PRESSURE GRAPH
               </Typography>
+              <Grid container className={classes.graphctn}>
+                <GraphBp />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
