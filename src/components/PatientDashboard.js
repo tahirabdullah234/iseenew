@@ -7,6 +7,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
+
 const useStyles = makeStyles({
   DashboardHead: {
     width: "100%",

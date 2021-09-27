@@ -29,12 +29,15 @@ import Appoint from "./pages/appointDoctor";
 // import DoctorLogin from "./pages/doctorlogin";
 // import PatientRegistration from "./pages/patientregistration";
 // import DoctorRegistration from "./pages/docreg";
+
+// import Graph from "./components/graphs"
+
 import Main from "./routes/main";
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat, sans serif",
   },
 });
 

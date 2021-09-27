@@ -12,8 +12,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from './statesSlice';
+import { useDispatch } from 'react-redux';
+import { login, setuser, settoken } from "./statesSlice";
 import * as auth from "../Services/auth";
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
 const useStyles = makeStyles({
@@ -77,8 +77,7 @@ export default function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  const islogin = useSelector((state) => state.states.islogin)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
 
   const formik = useFormik({
@@ -88,12 +87,13 @@ export default function PatientLogin() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
       auth.login(values)
         .then(res => {
           if (res.data.success) {
-            console.log(islogin);
+            console.log(res.data)
             dispatch(login());
+            dispatch(setuser(res.data.user));
+            dispatch(settoken(res.data.token));
           }
         })
     },
@@ -162,6 +162,6 @@ export default function PatientLogin() {
           </Grid>
         </Grid>
       </Grid>
-    </div >
+    </div>
   );
 }

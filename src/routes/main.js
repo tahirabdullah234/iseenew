@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -21,7 +21,6 @@ import Doctor from "../pages/doctor";
 export default function Main() {
     const islogin = useSelector((state) => state.states.islogin)
     const isdoctor = useSelector((state) => state.states.isdoctor)
-
     const history = useHistory();
 
     return (
