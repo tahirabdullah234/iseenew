@@ -20,7 +20,7 @@ import "./App.css";
 // import BG from "./pages/bloodglocuse";
 // import Settings from "./pages/UserSettings";
 // import Report from "./pages/drReports";
-import Appoint from "./pages/appointDoctor";
+// import Appoint from "./pages/appointDoctor";
 // import Scan from "./pages/checkdisease";
 // import { DoctorRegistration } from "./pages/docreg";
 // import { DoctorLogin } from "./pages/doctorlogin";

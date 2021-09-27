@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -36,6 +36,9 @@ export default function Main() {
                         <Route path="/register">
                             {isdoctor ? <DoctorRegistration /> : <PatientRegistration />}
                         </Route>
+                        <Route path="*">
+                            <Redirect to="/" />
+                        </Route>
                     </Switch>
             }
         </Router>
@@ -67,6 +70,9 @@ const UserRoutes = () => {
             <Route path="/checkdisease">
                 <Scan />
             </Route>
+            <Route path="*">
+                <Redirect to="/" />
+            </Route>
         </Switch>
     )
 }
@@ -82,6 +88,9 @@ const DoctorRoutes = () => {
             </Route>
             <Route path="/editprofile">
                 <Settings />
+            </Route>
+            <Route path="*">
+                <Redirect to="/" />
             </Route>
         </Switch>
     )
