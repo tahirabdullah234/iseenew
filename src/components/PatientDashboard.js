@@ -2,10 +2,11 @@ import React from "react";
 import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Bellicon from "../Assets/bell.svg";
-import Messageicon from "../Assets/messageIcon.svg";
 import { Typography } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Notifications } from "./Notification";
+import { Each } from "./eachnotification";
+import { Message } from "./message";
 
 const useStyles = makeStyles({
   DashboardHead: {
@@ -17,7 +18,6 @@ const useStyles = makeStyles({
     padding: "10px",
   },
   NotificationsFont: {
-    fontSize: "15px",
     color: "#fff",
   },
   BellIcon: {
@@ -85,8 +85,6 @@ const useStyles = makeStyles({
   },
   boxdis: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
   },
   BPGLtitle: {
     display: "flex",
@@ -138,11 +136,12 @@ export function PatientDashboard() {
       >
         Welcome Abdullah Tahir
       </Typography>
-      <Grid item xs={11}>
+      <Grid container>
         <Grid container className={classes.DashboardHead}>
           <Grid item xs={12} sm={6}>
             <Typography
-              style={{ fontSize: "35px", marginBottom: "30px" }}
+              variant="h3"
+              style={{ marginBottom: "30px" }}
               className={classes.sameinfont}
             >
               Health
@@ -156,10 +155,7 @@ export function PatientDashboard() {
                 style={{ marginRight: "20px", width: "103px", height: "101px" }}
                 className={classes.percir}
               />
-              <Typography
-                className={classes.sameinfont}
-                style={{ fontSize: "30px" }}
-              >
+              <Typography className={classes.sameinfont} variant="h4">
                 You are healthy!
               </Typography>
             </Grid>
@@ -195,96 +191,15 @@ export function PatientDashboard() {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography
-              style={{ fontSize: "35px", marginBottom: "10px" }}
-              className={classes.sameinfont}
-            >
-              Notifications
-            </Typography>
-            <div className={classes.notifications}>
-              <Grid item xs={2} md={1}>
-                <div className="logoDiv">
-                  <img
-                    src={Bellicon}
-                    className={classes.BellIcon}
-                    alt="error found"
-                  ></img>
-                </div>
-              </Grid>
-              <Typography className={classes.NotificationsFont}>
-                10:25 AM : Your last reports are ready.
-              </Typography>
-              <Typography
-                className={classes.NotificationsFont}
-                style={{ textDecorationLine: "underline" }}
-              >
-                Dismiss
-              </Typography>
-            </div>
-            <div className={classes.notifications}>
-              <Grid item xs={2} md={1}>
-                <div className="logoDiv">
-                  <img
-                    src={Bellicon}
-                    className={classes.BellIcon}
-                    alt="error found"
-                  ></img>
-                </div>
-              </Grid>
-              <Typography className={classes.NotificationsFont}>
-                9:15 PM : Your blood pressure input is due.
-              </Typography>
-              <Typography
-                className={classes.NotificationsFont}
-                style={{ textDecorationLine: "underline" }}
-              >
-                Dismiss
-              </Typography>
-            </div>
-            <div className={classes.notifications}>
-              <Grid item xs={2} sm={2} md={1}>
-                <div className="logoDiv">
-                  <img
-                    src={Bellicon}
-                    className={classes.BellIcon}
-                    alt="error found"
-                  ></img>
-                </div>
-              </Grid>
-              <Typography className={classes.NotificationsFont}>
-                9:15 AM : Your glucose level input is due.
-              </Typography>
-              <Typography
-                className={classes.NotificationsFont}
-                style={{ textDecorationLine: "underline" }}
-              >
-                Dismiss
-              </Typography>
-            </div>
-            <div className={classes.notifications}>
-              <Grid item xs={2} md={1}>
-                <div className="logoDiv">
-                  <img
-                    src={Bellicon}
-                    className={classes.BellIcon}
-                    alt="error found"
-                  ></img>
-                </div>
-              </Grid>
-              <Typography className={classes.NotificationsFont}>
-                5:21 PM : Your Appointment is due.
-              </Typography>
-              <Typography
-                className={classes.NotificationsFont}
-                style={{ textDecorationLine: "underline" }}
-              >
-                Dismiss
-              </Typography>
-            </div>
+            <Notifications />
+            <Each />
+            <Each />
+            <Each />
+            <Each />
           </Grid>
         </Grid>
       </Grid>
-      <Grid item md={10} xs={11}>
+      <Grid container>
         <Grid container className={classes.boxdis}>
           <Grid
             item
@@ -359,6 +274,7 @@ export function PatientDashboard() {
               </Grid>
             </Grid>
           </Grid>
+          <Grid item sm={1}></Grid>
           <Grid sm={4} xs={12} className={classes.appmsg} item>
             <Grid
               container
@@ -424,52 +340,7 @@ export function PatientDashboard() {
                 MESSAGES
               </Typography>
 
-              <Grid item xs={9} className={classes.messageDisplay}>
-                <Grid
-                  item
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <img
-                    src={Messageicon}
-                    className={classes.msgimg}
-                    alt="error occured"
-                  />
-                  <Typography className={classes.msg}>
-                    Your latest reports are ready
-                  </Typography>
-                </Grid>
-                <Typography className={classes.readnow}>READ NOW</Typography>
-              </Grid>
-              <Grid
-                item
-                xs={9}
-                style={{ marginTop: "15px" }}
-                className={classes.messageDisplay}
-              >
-                <Grid
-                  item
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <img
-                    src={Messageicon}
-                    className={classes.msgimg}
-                    alt="error occured"
-                  />
-
-                  <Typography className={classes.msg}>
-                    Your appointment with Dr. Aslam jamshaid is ready
-                  </Typography>
-                </Grid>
-                <Typography className={classes.readnow}>READ NOW</Typography>
-              </Grid>
+              <Message></Message>
             </Grid>
           </Grid>
         </Grid>
