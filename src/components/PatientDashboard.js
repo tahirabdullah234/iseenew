@@ -6,6 +6,7 @@ import Bellicon from "../Assets/bell.svg";
 import Messageicon from "../Assets/messageIcon.svg";
 import { Typography } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 const useStyles = makeStyles({
   DashboardHead: {
     width: "100%",
