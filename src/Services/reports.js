@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const save_report = ({ token, data }) => {
+export const save_report = (token, data) => {
     return axios.post('/report/save_report', data, {
         headers: {
             'Access-Control-Allow-Origin': '*',

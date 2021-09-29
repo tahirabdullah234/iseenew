@@ -6,16 +6,10 @@ import * as getdata from "../Services/graphsdata";
 
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/core/styles";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
 
-const useStyles = makeStyles((theme) => ({
-    perci: {
-        margin: "auto"
-    },
-}))
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -24,7 +18,6 @@ function Alert(props) {
 export function GraphGlocuse() {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
-    const classes = useStyles();
 
     const [snackbar, setsnackbar] = React.useState({
         open: false,
@@ -133,7 +126,6 @@ export function GraphGlocuse() {
 export function GraphBp() {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
-    const classes = useStyles();
 
     const [snackbar, setsnackbar] = React.useState({
         open: false,
@@ -227,7 +219,6 @@ export function GraphBp() {
                     :
                     <CircularProgress
                         style={{ marginRight: "20px", width: "103px", height: "101px" }}
-                        className={classes.percir}
                     />
             }
             <Snackbar open={snackbar.open}
