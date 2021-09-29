@@ -10,6 +10,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -86,7 +87,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
               <TextField
@@ -95,7 +96,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
               <TextField
@@ -105,7 +106,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={11} md={3} className={classes.radiopos}>
               <FormControl component="fieldset" className={classes.radiosize}>
@@ -154,7 +155,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={11} md={4} style={{ marginTop: "5px" }}>
               <TextField
@@ -163,7 +164,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={6} sm={2}>
               <Button className={classes.DEDial}>UPDATE</Button>
@@ -182,21 +183,21 @@ export function UserSettings() {
           <Grid container className={classes.DEDialpos}>
             <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
               <TextField
+                label="Old Password"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                className={classes.Glucoselevel}
+              />
+            </Grid>
+            <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+              <TextField
                 label="New Password"
                 InputLabelProps={{
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
-            </Grid>
-            <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Previous Password"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
               <TextField
@@ -205,7 +206,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
-              ></TextField>
+              />
             </Grid>
             <Grid item xs={6} sm={2}>
               <Button className={classes.DEDial}>UPDATE</Button>

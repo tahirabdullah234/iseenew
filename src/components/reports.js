@@ -3,11 +3,15 @@ import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
+
+import * as rep from "../Services/reports";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -68,31 +72,30 @@ const useStyles = makeStyles({
   },
   reportlistcontainer: {
     marginBottom: "30px",
-    justifyContent: "center",
     height: "60vh",
     overflowY: "scroll",
     margin: "auto",
   }
 });
 
-function Report() {
+function Report({ name, date, index }) {
   const classes = useStyles();
   return (
     <Grid item xs={11} className={classes.Tablecontentbox}>
       <Grid container style={{ alignItems: "center" }}>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
-          <Typography className={classes.TableContentFont}>01</Typography>
+          <Typography className={classes.TableContentFont}>{index}</Typography>
         </Grid>
         <Grid item xs={8} sm={4} style={{ textAlign: 'start' }}>
           <Typography className={classes.TableContentFont}>
-            ISEE_3581_240821
+            {name}
           </Typography>
         </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
-          <Typography className={classes.TableContentFont}>24/08/2021</Typography>
+          <Typography className={classes.TableContentFont}>{date.split('T')[0]}</Typography>
         </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
-          <Typography className={classes.TableContentFont}>10:27:31 AM</Typography>
+          <Typography className={classes.TableContentFont}>{date.split('T')[1]}</Typography>
         </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
           <IconButton>
@@ -109,14 +112,30 @@ function Report() {
 }
 export function Reports() {
   const classes = useStyles();
+  const token = useSelector((state) => state.states.token);
+  const [reports, setreports] = React.useState(null);
+  React.useEffect(() => {
+    rep.get_reports(token)
+      .then(res => {
+        if (res.data.success) {
+          setreports(res.data.reports)
+        } else {
+          setreports([{
+            title: "No Reports Found",
+            date: "N/ATN/A"
+          }])
+        }
+      })
+  }, [token])
+
   return (
     <div className="dashdiv">
-      <Grid item xs={12} sm={11} className={classes.DialogBox}>
+      <Grid item xs={12} className={classes.DialogBox}>
         <Typography variant="h4" className={classes.sameinfont}>
           REPORTS
         </Typography>
 
-        <Grid item xs={12} sm={11} className={classes.TDialogbox}>
+        <Grid item xs={12} className={classes.TDialogbox}>
           <Grid item xs={11} className={classes.Reportheader}>
             <Grid container>
               <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
@@ -142,11 +161,17 @@ export function Reports() {
             </Grid>
           </Grid>
           <Grid container className={classes.reportlistcontainer}>
-            <Report />
-            <Report />
-            <Report />
-            <Report />
-            <Report />
+            {
+              reports ?
+                reports.map((item, index) => {
+                  return <Report name={item.title} date={item.date} index={index + 1} />
+                })
+                :
+                <CircularProgress
+                  style={{ marginRight: "20px", width: "103px", height: "101px" }}
+                  className={classes.percir}
+                />
+            }
           </Grid>
         </Grid>
       </Grid>

@@ -30,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
   innerGrid: {
     flexDirection: "row",
-    marginLeft: 60,
+  },
+  innerGriditem: {
+    padding: "20px 0px 0px 20px"
   },
   Profiletxt: {
     fontWeight: "bold",
@@ -47,16 +49,24 @@ const useStyles = makeStyles((theme) => ({
     background: "#3585da",
     boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     color: "#fff",
+    "&:hover": {
+      background: "rgba(53,133,218,0.7)",
+    }
   },
   docIcon: {
     width: 70,
     height: 70,
-    position: "absolute",
+    // position: "absolute",
   },
   appointdocgrid: {
     margin: "auto",
     background: "transparent",
   },
+  modalcenter: {
+    alignItems: "center",
+    marginTop: "15%",
+    borderRadius: 15
+  }
 }));
 export default function DoctorCard() {
   const classes = useStyles();
@@ -73,29 +83,31 @@ export default function DoctorCard() {
 
   return (
     <Grid container className={classes.marginbox}>
-      <Grid>
-        <Avatar
-          src={maleDoc}
-          alt="Male Doctor Avatar"
-          className={classes.docIcon}
-        />
-      </Grid>
       <Grid item className={classes.textBackground}>
         <Grid item className={classes.innerGrid}>
-          <Typography
-            variant="body1"
-            display="block"
-            className={classes.Profiletxt}
-          >
-            DR FAISAL JAWED
-          </Typography>
-          <Typography
-            variant="caption"
-            display="block"
-            className={classes.Profiletxt}
-          >
-            Senior Doctor
-          </Typography>
+          <Grid container>
+            <Avatar
+              src={maleDoc}
+              alt="Male Doctor Avatar"
+              className={classes.docIcon}
+            />
+            <Grid item className={classes.innerGriditem}>
+              <Typography
+                variant="body1"
+                display="block"
+                className={classes.Profiletxt}
+              >
+                DR FAISAL JAWED
+              </Typography>
+              <Typography
+                variant="caption"
+                display="block"
+                className={classes.Profiletxt}
+              >
+                Senior Doctor
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid container className={classes.infoGrid}>
           <Typography
@@ -124,8 +136,9 @@ export default function DoctorCard() {
             onClose={handleClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
+            className={classes.modalcenter}
           >
-            <Grid item xs={10} sm={6} className={classes.appointdocgrid}>
+            <Grid item xs={10} sm={3} className={classes.appointdocgrid}>
               <Appoint />
             </Grid>
           </Modal>
