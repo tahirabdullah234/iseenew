@@ -92,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontWeight: 600,
   },
+  listcenter: {
+    alignItems: "center"
+  }
 }));
 
 export default function MainDrawer() {
@@ -115,7 +118,7 @@ export default function MainDrawer() {
             />
           </Grid>
           <Divider />
-          <Grid container xs={12}>
+          <Grid container xs={12} className={classes.listcenter}>
             {isdoctor ? <DoctorActions /> : <UserActions />}
           </Grid>
         </Drawer>

@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   docIcon: {
     width: 70,
     height: 70,
-    position: "absolute",
+    // position: "absolute",
   },
   appointdocgrid: {
     margin: "auto",

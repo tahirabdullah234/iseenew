@@ -8,16 +8,38 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+
 const useStyles = makeStyles((theme) => ({
     perci: {
         margin: "auto"
     },
 }))
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export function GraphGlocuse() {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
     const classes = useStyles();
+
+    const [snackbar, setsnackbar] = React.useState({
+        open: false,
+        msg: "",
+        type: ""
+    })
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setsnackbar({ ...snackbar, open: false });
+    };
+
+
     React.useEffect(() => {
         getdata.getglocusedata(token)
             .then(res => {
@@ -26,6 +48,12 @@ export function GraphGlocuse() {
                     setdata(res.data.record)
                 } else {
                     setdata(res.data.record)
+                    setsnackbar({
+                        ...snackbar,
+                        open: true,
+                        msg: "No Blood Glocuse Data Found",
+                        type: "info"
+                    })
                 }
             })
     }, [token])
@@ -91,6 +119,14 @@ export function GraphGlocuse() {
                         className={classes.percir}
                     />
             }
+            <Snackbar open={snackbar.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert severity={snackbar.type}>
+                    {snackbar.msg}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }
@@ -100,19 +136,38 @@ export function GraphBp() {
     const [data, setdata] = React.useState(null);
     const classes = useStyles();
 
+    const [snackbar, setsnackbar] = React.useState({
+        open: false,
+        msg: "",
+        type: ""
+    })
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setsnackbar({ ...snackbar, open: false });
+    };
+
+
     React.useEffect(() => {
-        getdata.getbpdata(token)
+        getdata.getglocusedata(token)
             .then(res => {
                 if (res.data.success) {
                     console.log(res.data)
                     setdata(res.data.record)
                 } else {
                     setdata(res.data.record)
+                    setsnackbar({
+                        ...snackbar,
+                        open: true,
+                        msg: "No Blood Glocuse Data Found",
+                        type: "info"
+                    })
                 }
             })
     }, [token])
-
-    // systolic upper - 120 ideal 
+    // systolic upper - 120 ideal
     // distlic lower - 80 ideal
 
     return (
@@ -176,6 +231,14 @@ export function GraphBp() {
                         className={classes.percir}
                     />
             }
+            <Snackbar open={snackbar.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert severity={snackbar.type}>
+                    {snackbar.msg}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }
