@@ -15,8 +15,12 @@ import Select from "@material-ui/core/Select";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { useSelector } from "react-redux";
 
 import { GraphGlocuse } from "./graphs";
+import * as getdata from "../Services/graphsdata";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -86,6 +90,17 @@ const useStyles = makeStyles({
     marginTop: "30px",
     padding: "12px",
   },
+  Tablecontenthead: {
+    width: "100%",
+    borderRadius: "28px",
+    background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
+    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: "30px",
+    padding: "10px",
+  },
   TableContentFont: {
     fontWeight: "bold",
     fontSize: "14px",
@@ -134,17 +149,47 @@ const useStyles = makeStyles({
     overflowY: "scroll"
   }
 });
-function Glucoselevelrecord() {
+
+function Glucoselevelrecord({ value, type, date, unit }) {
   const classes = useStyles();
   return (
     <Grid item xs={11} className={classes.Tablecontentbox}>
-      <Typography className={classes.TableContentFont}>210 mg/dl</Typography>
-      <Typography className={classes.TableContentFont}>Fasting</Typography>
-      <Typography className={classes.TableContentFont}>10:37:51 PM</Typography>
-      <Typography className={classes.TableContentFont}>21/08/2021</Typography>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>{value + " " + unit}</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>{type}</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>{date.split("T")[1]}</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>{date.split("T")[0]}</Typography>
+      </Grid>
     </Grid>
   );
 }
+
+function Glucoselevelhead() {
+  const classes = useStyles();
+  return (
+    <Grid item xs={11} className={classes.Tablecontenthead}>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>Value</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>Type</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>Time</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography className={classes.TableContentFont}>Date</Typography>
+      </Grid>
+    </Grid>
+  );
+}
+
 export function ManageGL() {
   const theme = createTheme({
     palette: {
@@ -158,11 +203,39 @@ export function ManageGL() {
   const handleChange = (event) => {
     setGLunit(event.target.value);
   };
-  const [value, setValue] = React.useState("female");
+  const [value, setValue] = React.useState("");
   const handleChang = (event) => {
     setValue(event.target.value);
   };
   const classes = useStyles();
+
+  const token = useSelector((state) => state.states.token);
+  const [data, setdata] = React.useState(null);
+
+  React.useEffect(() => {
+    getdata.getbgrecord(token)
+      .then(res => {
+        if (res.data.success) {
+          if (res.data.record.length > 0)
+            setdata(res.data.record)
+          else
+            setdata([{
+              value: 'No Record Found ',
+              unit: "",
+              dateAdded: "N/ATN/A",
+              type: ""
+            }])
+        } else {
+          setdata([{
+            value: 'No Record Found ',
+            unit: "",
+            dateAdded: "N/ATN/A",
+            type: ""
+          }])
+        }
+      })
+  }, [token])
+
   return (
     <ThemeProvider theme={theme}>
       <div className="dashdiv">
@@ -202,19 +275,19 @@ export function ManageGL() {
               <Grid item xs={11} md={3} className={classes.radiopos}>
                 <FormControl component="fieldset" className={classes.radiosize}>
                   <RadioGroup
-                    aria-label="gender"
-                    name="gender"
+                    aria-label="isFasting"
+                    name="isFasting"
                     value={value}
                     onChange={handleChang}
                     className={classes.radiogrp}
                   >
                     <FormControlLabel
-                      value="Random"
+                      value={false}
                       control={<Radio />}
                       label="Random"
                     />
                     <FormControlLabel
-                      value="Fasting"
+                      value={true}
                       control={<Radio />}
                       label="Fasting"
                     />
@@ -235,22 +308,22 @@ export function ManageGL() {
                 >
                   GLUCOSE LEVEL TABLE
                 </Typography>
+                <Grid container>
+                  <Glucoselevelhead />
+                </Grid>
                 <Grid container className={classes.bloodpressuretablecontainer}>
-                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
-                    <Glucoselevelrecord />
-                  </Grid>
-                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
-                    <Glucoselevelrecord />
-                  </Grid>
-                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
-                    <Glucoselevelrecord />
-                  </Grid>
-                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
-                    <Glucoselevelrecord />
-                  </Grid>
-                  <Grid item xs={11} className={classes.bloodpressuretableitem}>
-                    <Glucoselevelrecord />
-                  </Grid>
+                  {
+                    data ? data.map((item, index) => {
+                      return (
+                        <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                          <Glucoselevelrecord date={item.dateAdded} value={item.value} type={item.isFasting ? 'Fasting' : 'Random'} unit={item.unit} />
+                        </Grid>
+                      )
+                    })
+                      : <CircularProgress
+                        style={{ marginRight: "20px", width: "50px", height: "50px" }}
+                      />
+                  }
                 </Grid>
               </Grid>
               <Grid item xs={12} md={6} className={classes.GLGDialogbox}>

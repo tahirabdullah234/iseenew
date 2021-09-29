@@ -43,23 +43,22 @@ export function Message() {
   return (
     <Grid
       item
-      xs={10}
-      style={{ marginTop: "9px" }}
+      xs={12}
+      style={{ marginTop: "10px" }}
       className={classes.messageDisplay}
     >
       <Grid container>
-        <Grid item xs={1}>
+        <Grid item xs={2} md={1}>
           <img
             src={Messageicon}
             className={classes.msgimg}
             alt="error occured"
           />
         </Grid>
-        <Grid item xs={1}></Grid>
-        <Grid item xs={5}>
+        <Grid item xs={10} md={6}>
           <Typography className={classes.msg}>A.ASLAM:</Typography>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12} md={5}>
           <Typography className={classes.msg}>Please review ...</Typography>
         </Grid>
         <Grid container direction="row-reverse">

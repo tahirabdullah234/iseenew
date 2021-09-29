@@ -6,166 +6,229 @@ import * as getdata from "../Services/graphsdata";
 
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  perci: {
-    margin: "auto",
-  },
-}));
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export function GraphGlocuse() {
-  const token = useSelector((state) => state.states.token);
-  const [data, setdata] = React.useState(null);
-  const classes = useStyles();
-  React.useEffect(() => {
-    console.log(token);
-    getdata.getglocusedata(token).then((res) => {
-      if (res.data.success) {
-        console.log(res.data);
-        setdata(res.data.record);
-      }
-    });
-  }, [token]);
+    const token = useSelector((state) => state.states.token);
+    const [data, setdata] = React.useState(null);
 
-  return (
-    <div style={{ margin: "auto" }}>
-      {data ? (
-        <Grid item xs={12}>
-          <Line
-            data={{
-              labels: data.fdates,
-              datasets: [
-                {
-                  label: "FASTING LEVEL",
-                  backgroundColor: "rgba(20, 122, 214, 0.3)",
-                  borderColor: "rgba(20, 122, 214, 0.5)",
-                  borderWidth: 2,
-                  data: data.fasting,
-                },
-                {
-                  label: "RANDOM LEVEL",
-                  backgroundColor: "rgba(121, 210, 222, 0.3)",
-                  borderColor: "rgba(121, 210, 222, 0.5)",
-                  borderWidth: 2,
-                  data: data.random,
-                },
-              ],
-            }}
-            height={300}
-            options={{
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      beginAtZero: true,
-                    },
-                  },
-                ],
-              },
-              plugins: {
-                legend: {
-                  labels: {
-                    fontSize: 25,
-                  },
-                  position: "bottom",
-                },
-                fullSize: true,
-              },
-              elements: {
-                line: {
-                  tension: 0.4,
-                },
-              },
-            }}
-          />
-        </Grid>
-      ) : (
-        <CircularProgress
-          style={{ marginRight: "20px", width: "103px", height: "101px" }}
-          className={classes.percir}
-        />
-      )}
-    </div>
-  );
+    const [snackbar, setsnackbar] = React.useState({
+        open: false,
+        msg: "",
+        type: ""
+    })
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setsnackbar({ ...snackbar, open: false });
+    };
+
+
+    React.useEffect(() => {
+        getdata.getglocusedata(token)
+            .then(res => {
+                if (res.data.success) {
+                    console.log(res.data)
+                    setdata(res.data.record)
+                } else {
+                    setdata(res.data.record)
+                    setsnackbar({
+                        ...snackbar,
+                        open: true,
+                        msg: "No Blood Glocuse Data Found",
+                        type: "info"
+                    })
+                }
+            })
+    }, [token])
+
+    return (
+        <div style={{ margin: "auto" }}>
+            {
+                data ?
+                    <Grid item xs={12}>
+                        <Line
+                            data={
+                                {
+                                    labels: data.fdates,
+                                    datasets: [
+                                        {
+                                            label: 'FASTING LEVEL',
+                                            backgroundColor: 'rgba(20, 122, 214, 0.3)',
+                                            borderColor: 'rgba(20, 122, 214, 0.5)',
+                                            borderWidth: 2,
+                                            data: data.fasting
+                                        },
+                                        {
+                                            label: 'RANDOM LEVEL',
+                                            backgroundColor: 'rgba(121, 210, 222, 0.3)',
+                                            borderColor: 'rgba(121, 210, 222, 0.5)',
+                                            borderWidth: 2,
+                                            data: data.random
+                                        },
+                                    ]
+                                }
+                            }
+                            height={300}
+                            options={{
+                                scales: {
+                                    yAxes: [
+                                        {
+                                            ticks: {
+                                                beginAtZero: true,
+                                            },
+                                        },
+                                    ],
+                                },
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            fontSize: 25,
+                                        },
+                                        position: "bottom"
+                                    },
+                                    fullSize: true
+                                },
+                                elements: {
+                                    line: {
+                                        tension: 0.4,
+                                    }
+                                }
+                            }}
+                        />
+                    </Grid>
+                    :
+                    <CircularProgress
+                        style={{ marginRight: "20px", width: "103px", height: "101px" }}
+                    />
+            }
+            <Snackbar open={snackbar.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert severity={snackbar.type}>
+                    {snackbar.msg}
+                </Alert>
+            </Snackbar>
+        </div>
+    )
 }
 
 export function GraphBp() {
-  const token = useSelector((state) => state.states.token);
-  const [data, setdata] = React.useState(null);
-  const classes = useStyles();
+    const token = useSelector((state) => state.states.token);
+    const [data, setdata] = React.useState(null);
 
-  React.useEffect(() => {
-    console.log(token);
-    getdata.getbpdata(token).then((res) => {
-      if (res.data.success) {
-        console.log(res.data);
-        setdata(res.data.record);
-      }
-    });
-  }, [token]);
+    const [snackbar, setsnackbar] = React.useState({
+        open: false,
+        msg: "",
+        type: ""
+    })
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
 
-  // systolic upper - 120 ideal
-  // distlic lower - 80 ideal
+        setsnackbar({ ...snackbar, open: false });
+    };
 
-  return (
-    <div style={{ margin: "auto" }}>
-      {data ? (
-        <Grid item xs={12}>
-          <Line
-            data={{
-              labels: data.dates,
-              datasets: [
-                {
-                  label: "SYSTOLIC LEVEL",
-                  backgroundColor: "rgba(20, 122, 214, 0.3)",
-                  borderColor: "rgba(20, 122, 214, 0.5)",
-                  borderWidth: 2,
-                  data: data.systolic,
-                },
-                {
-                  label: "DISTOLIC LEVEL",
-                  backgroundColor: "rgba(236, 102, 102, 0.3)",
-                  borderColor: "rgba(236, 102, 102, 0.5)",
-                  borderWidth: 2,
-                  data: data.dystolic,
-                },
-              ],
-            }}
-            height={300}
-            options={{
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      beginAtZero: true,
-                    },
-                  },
-                ],
-              },
-              plugins: {
-                legend: {
-                  labels: {
-                    fontSize: 25,
-                  },
-                  position: "bottom",
-                },
-                fullSize: true,
-              },
-              elements: {
-                line: {
-                  tension: 0.4,
-                },
-              },
-            }}
-          />
-        </Grid>
-      ) : (
-        <CircularProgress
-          style={{ marginRight: "20px", width: "103px", height: "101px" }}
-          className={classes.percir}
-        />
-      )}
-    </div>
-  );
+
+    React.useEffect(() => {
+        getdata.getglocusedata(token)
+            .then(res => {
+                if (res.data.success) {
+                    console.log(res.data)
+                    setdata(res.data.record)
+                } else {
+                    setdata(res.data.record)
+                    setsnackbar({
+                        ...snackbar,
+                        open: true,
+                        msg: "No Blood Glocuse Data Found",
+                        type: "info"
+                    })
+                }
+            })
+    }, [token])
+    // systolic upper - 120 ideal
+    // distlic lower - 80 ideal
+
+    return (
+        <div style={{ margin: "auto" }}>
+            {
+                data ?
+                    <Grid item xs={12}>
+                        <Line
+                            data={
+                                {
+                                    labels: data.dates,
+                                    datasets: [
+                                        {
+                                            label: 'SYSTOLIC LEVEL',
+                                            backgroundColor: 'rgba(20, 122, 214, 0.3)',
+                                            borderColor: 'rgba(20, 122, 214, 0.5)',
+                                            borderWidth: 2,
+                                            data: data.systolic
+                                        },
+                                        {
+                                            label: 'DISTOLIC LEVEL',
+                                            backgroundColor: 'rgba(236, 102, 102, 0.3)',
+                                            borderColor: 'rgba(236, 102, 102, 0.5)',
+                                            borderWidth: 2,
+                                            data: data.dystolic
+                                        },
+                                    ]
+                                }
+                            }
+                            height={300}
+                            options={{
+                                scales: {
+                                    yAxes: [
+                                        {
+                                            ticks: {
+                                                beginAtZero: true,
+                                            },
+                                        },
+                                    ],
+                                },
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            fontSize: 25,
+                                        },
+                                        position: "bottom"
+                                    },
+                                    fullSize: true
+                                },
+                                elements: {
+                                    line: {
+                                        tension: 0.4,
+                                    }
+                                }
+                            }}
+                        />
+                    </Grid>
+                    :
+                    <CircularProgress
+                        style={{ marginRight: "20px", width: "103px", height: "101px" }}
+                    />
+            }
+            <Snackbar open={snackbar.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert severity={snackbar.type}>
+                    {snackbar.msg}
+                </Alert>
+            </Snackbar>
+        </div>
+    )
 }
