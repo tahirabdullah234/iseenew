@@ -18,6 +18,8 @@ import user from "../Assets/user (2).svg";
 import doctor from "../Assets/doctor-female.png";
 import classify from "../Assets/ISEE-01.png";
 import appointment from "../Assets/appointment.png"
+import dashboard from "../Assets/dashboard.png";
+
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from "react-router";
 import { logout } from "../pages/statesSlice";
@@ -128,6 +130,12 @@ const UserActions = () => {
   const dispatch = useDispatch();
   return (
     <List>
+      <ListItem button key="dashboard" onClick={() => history.push("/")}>
+        <ListItemIcon>
+          <img src={dashboard} alt='HOME' className={classes.imageIcon} />
+        </ListItemIcon>
+        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DASHBOARD</Typography>} />
+      </ListItem>
       <ListItem button key={1} onClick={() => history.push("/editprofile")}>
         <ListItemIcon>
           <img src={user} alt='User' className={classes.imageIcon} />
@@ -190,6 +198,12 @@ const DoctorActions = () => {
   const dispatch = useDispatch();
   return (
     <List>
+      <ListItem button key="dashboard" onClick={() => history.push("/")}>
+        <ListItemIcon>
+          <img src={dashboard} alt='HOME' className={classes.imageIcon} />
+        </ListItemIcon>
+        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DASHBOARD</Typography>} />
+      </ListItem>
       <ListItem button key={1} onClick={() => history.push("/editprofile")}>
         <ListItemIcon>
           <img src={user} alt='User' className={classes.imageIcon} />

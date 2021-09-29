@@ -230,7 +230,7 @@ export function PatientDashboard() {
               </Typography>
             </Grid>
             <Grid container className={classes.BPGLtitle}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <Typography className={classes.timeline}>
                   BLOOD PRESSURE
                 </Typography>
@@ -238,7 +238,7 @@ export function PatientDashboard() {
                   <GraphBp />
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <Typography className={classes.timeline}>
                   GLUCOSE LEVEL
                 </Typography>

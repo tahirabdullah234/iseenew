@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     perci: {
         margin: "auto"
-    }
+    },
 }))
 
 export function GraphGlocuse() {
@@ -19,11 +19,12 @@ export function GraphGlocuse() {
     const [data, setdata] = React.useState(null);
     const classes = useStyles();
     React.useEffect(() => {
-        console.log(token)
         getdata.getglocusedata(token)
             .then(res => {
                 if (res.data.success) {
                     console.log(res.data)
+                    setdata(res.data.record)
+                } else {
                     setdata(res.data.record)
                 }
             })
@@ -100,11 +101,12 @@ export function GraphBp() {
     const classes = useStyles();
 
     React.useEffect(() => {
-        console.log(token)
         getdata.getbpdata(token)
             .then(res => {
                 if (res.data.success) {
                     console.log(res.data)
+                    setdata(res.data.record)
+                } else {
                     setdata(res.data.record)
                 }
             })
