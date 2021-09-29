@@ -121,7 +121,7 @@ export default function DoctorLogin() {
               dispatch(setuser(res.data.user));
               dispatch(settoken(res.data.token));
             }, 1000)
-          } else if (!res.data.user.isDoctor) {
+          } else if (!res.data.user.isDoctor && res.data.success) {
             setsnackbar({
               ...snackbar,
               open: true,
@@ -136,6 +136,14 @@ export default function DoctorLogin() {
               type: "error"
             })
           }
+        })
+        .catch(err => {
+          setsnackbar({
+            ...snackbar,
+            open: true,
+            msg: "Invalid Credentials",
+            type: "error"
+          })
         })
     },
   });
