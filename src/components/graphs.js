@@ -116,7 +116,6 @@ export function GraphGlocuse() {
                     :
                     <CircularProgress
                         style={{ marginRight: "20px", width: "103px", height: "101px" }}
-                        className={classes.percir}
                     />
             }
             <Snackbar open={snackbar.open}

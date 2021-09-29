@@ -10,7 +10,6 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 import maleDoc from '../Assets/doctor_logo.svg';
 import report from '../Assets/reports.svg';
-// import femaleDoc from '../Assets/doctor-female.png';
 
 const theme = createTheme({
     typography: {
@@ -83,7 +82,15 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "left",
         color: "#1061b0",
     },
-
+    inbutton: {
+        borderRadius: "12px",
+        background: "#3585da",
+        boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+        color: "#fff",
+        "&:hover": {
+            background: "rgba(53,133,218,0.7)",
+        }
+    },
 }));
 
 export default function DoctorCard() {
@@ -138,7 +145,11 @@ export default function DoctorCard() {
                     />
                 </Grid>
                 <Grid container className={classes.button}>
-                    <Button variant='contained' disableElevation>
+                    <Button
+                        variant="contained"
+                        disableElevation
+                        className={classes.inbutton}
+                    >
                         APPOINT DOCTOR
                     </Button>
                 </Grid>

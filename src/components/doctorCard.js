@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     background: "#3585da",
     boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     color: "#fff",
+    "&:hover": {
+      background: "rgba(53,133,218,0.7)",
+    }
   },
   docIcon: {
     width: 70,
@@ -57,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     background: "transparent",
   },
+  modalcenter: {
+    margin: "auto",
+    alignItems: "center",
+  }
 }));
 export default function DoctorCard() {
   const classes = useStyles();
@@ -124,6 +131,7 @@ export default function DoctorCard() {
             onClose={handleClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
+            className={classes.modalcenter}
           >
             <Grid item xs={10} sm={6} className={classes.appointdocgrid}>
               <Appoint />
