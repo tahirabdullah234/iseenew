@@ -17,6 +17,9 @@ import * as auth from "../Services/auth";
 import { useDispatch } from "react-redux";
 import { login, setuser, settoken } from "./statesSlice";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+
 const useStyles = makeStyles({
   border: {
     marginTop: "111px",
@@ -75,11 +78,27 @@ const useStyles = makeStyles({
   },
 });
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function DoctorLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
+  const [snackbar, setsnackbar] = React.useState({
+    open: false,
+    msg: "",
+    type: ""
+  })
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setsnackbar({ ...snackbar, open: false });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -91,10 +110,40 @@ export default function DoctorLogin() {
       auth.login(values)
         .then(res => {
           if (res.data.success && res.data.user.isDoctor) {
-            dispatch(login());
-            dispatch(setuser(res.data.user));
-            dispatch(settoken(res.data.token));
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Login Successfull",
+              type: "success"
+            })
+            setTimeout(() => {
+              dispatch(login());
+              dispatch(setuser(res.data.user));
+              dispatch(settoken(res.data.token));
+            }, 1000)
+          } else if (!res.data.user.isDoctor && res.data.success) {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "You are not A Doctor",
+              type: "error"
+            })
+          } else {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Invalid Credentials",
+              type: "error"
+            })
           }
+        })
+        .catch(err => {
+          setsnackbar({
+            ...snackbar,
+            open: true,
+            msg: "Invalid Credentials",
+            type: "error"
+          })
         })
     },
   });
@@ -158,6 +207,14 @@ export default function DoctorLogin() {
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert severity={snackbar.type}>
+          {snackbar.msg}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

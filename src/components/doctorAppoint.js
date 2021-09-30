@@ -10,7 +10,6 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 import maleDoc from '../Assets/doctor_logo.svg';
 import report from '../Assets/reports.svg';
-// import femaleDoc from '../Assets/doctor-female.png';
 
 const theme = createTheme({
     typography: {
@@ -26,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
     docIcon: {
         width: 60,
         height: 60,
-        position: 'absolute',
-        paddingTop: 10,
-        paddingLeft: 5,
     },
     docIcon1: {
         width: 50,
@@ -40,15 +36,16 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'rgba(128,128,128,0.05)',
         padding: 10,
         width: 'auto',
-        marginTop: 20,
         borderRadius: 10,
         color: "#1061b0",
         boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)"
     },
     innerGrid: {
-        flexDirection: 'row',
+        flexDirection: "row",
     },
-    infoGrid: {
+    innerGriditem: {
+        padding: "20px 0px 0px 20px"
+    }, infoGrid: {
         flexDirection: 'column'
     },
     button: {
@@ -83,7 +80,15 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "left",
         color: "#1061b0",
     },
-
+    inbutton: {
+        borderRadius: "12px",
+        background: "#3585da",
+        boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+        color: "#fff",
+        "&:hover": {
+            background: "rgba(53,133,218,0.7)",
+        }
+    },
 }));
 
 export default function DoctorCard() {
@@ -92,15 +97,29 @@ export default function DoctorCard() {
 
     return (
         <Grid container className={classes.root}>
-            <Avatar src={maleDoc} alt='Male Doctor Avatar' className={classes.docIcon} />
             <Card variant="outlined" className={classes.textBackground}>
-                <Grid container className={classes.innerGrid}>
-                    <Typography variant='body1' display='block' aling="center" className={classes.drTitle}>
-                        DR FAISAL JAWED
-                        <Typography variant='caption' display='block'>
+                <Grid container>
+                    <Avatar
+                        src={maleDoc}
+                        alt="Male Doctor Avatar"
+                        className={classes.docIcon}
+                    />
+                    <Grid item className={classes.innerGriditem}>
+                        <Typography
+                            variant="body1"
+                            display="block"
+                            className={classes.Profiletxt}
+                        >
+                            DR FAISAL JAWED
+                        </Typography>
+                        <Typography
+                            variant="caption"
+                            display="block"
+                            className={classes.Profiletxt}
+                        >
                             Senior Doctor
                         </Typography>
-                    </Typography>
+                    </Grid>
                 </Grid>
                 <Grid container className={classes.infoGrid}>
                     <Typography variant='body2' aling='left' className={classes.drDesc}>
@@ -138,7 +157,11 @@ export default function DoctorCard() {
                     />
                 </Grid>
                 <Grid container className={classes.button}>
-                    <Button variant='contained' disableElevation>
+                    <Button
+                        variant="contained"
+                        disableElevation
+                        className={classes.inbutton}
+                    >
                         APPOINT DOCTOR
                     </Button>
                 </Grid>

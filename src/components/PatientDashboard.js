@@ -7,7 +7,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
-import {GraphGlocuse, GraphBp} from "./graphs";
+import { GraphGlocuse, GraphBp } from "./graphs";
+import { useSelector } from "react-redux";
 
 // import { Doughnut } from "react-chartjs-2";
 const useStyles = makeStyles({
@@ -131,12 +132,13 @@ const useStyles = makeStyles({
 
 export function PatientDashboard() {
   const classes = useStyles();
+  const name = useSelector((state) => state.states.name)
   return (
     <div className="dashdiv">
       <Typography
         style={{ color: "#1061B0", fontSize: "30px", fontWeight: "bold" }}
       >
-        Welcome Abdullah Tahir
+        Welcome , {name}
       </Typography>
       <Grid container>
         <Grid container className={classes.DashboardHead}>
@@ -230,7 +232,7 @@ export function PatientDashboard() {
               </Typography>
             </Grid>
             <Grid container className={classes.BPGLtitle}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <Typography className={classes.timeline}>
                   BLOOD PRESSURE
                 </Typography>
@@ -238,7 +240,7 @@ export function PatientDashboard() {
                   <GraphBp />
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <Typography className={classes.timeline}>
                   GLUCOSE LEVEL
                 </Typography>

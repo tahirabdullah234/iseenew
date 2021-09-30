@@ -3,8 +3,11 @@ import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import DoctorCard from "./doctorCard";
-// import femaleDoc from '../Assets/doctor-female.png';
+
+import * as apt from "../Services/appointment";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   DialogBox: {
@@ -33,6 +36,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ConsultDoctor() {
   const classes = useStyles();
+  const token = useSelector((state) => state.states.token);
+
+  const [state, setstate] = React.useState({
+    doctor: null
+  })
+
+  React.useEffect(() => {
+    apt.get_doctors(token)
+      .then(res => {
+        console.log(res.data)
+        setstate({ ...state, doctor: res.data })
+      })
+  }, [])
 
   return (
     <Grid container className="dashdiv1">
@@ -58,18 +74,20 @@ export default function ConsultDoctor() {
           REQUEST STATUS
         </Typography>
         <Grid container className={classes.AllGridsAdjust}>
-          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
-            <DoctorCard />
-          </Grid>
-          <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
-            <DoctorCard />
-          </Grid>
+          {
+            state.doctor ?
+              state.doctor.map((item, index) => {
+                return (
+                  <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
+                    <DoctorCard />
+                  </Grid>
+                )
+              })
+              :
+              <CircularProgress
+                style={{ marginRight: "20px", width: "103px", height: "101px" }}
+              />
+          }
         </Grid>
       </Grid>
     </Grid>

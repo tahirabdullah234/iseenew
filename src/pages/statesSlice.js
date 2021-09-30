@@ -7,6 +7,7 @@ export const stateSlice = createSlice({
         user: {},
         token: '',
         isdoctor: true,
+        name: "",
     },
     reducers: {
         login: (state) => {
@@ -20,6 +21,7 @@ export const stateSlice = createSlice({
         },
         setuser: (state, action) => {
             state.user = action.payload;
+            state.name = action.payload.fname + " " + action.payload.lname;
         },
         setdoctortrue: (state) => {
             state.isdoctor = true;

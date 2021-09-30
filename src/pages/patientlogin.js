@@ -16,6 +16,11 @@ import { useDispatch } from 'react-redux';
 import { login, setuser, settoken } from "./statesSlice";
 import * as auth from "../Services/auth";
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
+
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+
+
 const useStyles = makeStyles({
   border: {
     marginTop: "75px",
@@ -73,12 +78,27 @@ const useStyles = makeStyles({
   },
 });
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function PatientLogin() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
+  const [snackbar, setsnackbar] = React.useState({
+    open: false,
+    msg: "",
+    type: ""
+  })
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setsnackbar({ ...snackbar, open: false });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -91,10 +111,33 @@ export default function PatientLogin() {
         .then(res => {
           if (res.data.success) {
             console.log(res.data)
-            dispatch(login());
-            dispatch(setuser(res.data.user));
-            dispatch(settoken(res.data.token));
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Login Successfull",
+              type: "success"
+            })
+            setTimeout(() => {
+              dispatch(login());
+              dispatch(setuser(res.data.user));
+              dispatch(settoken(res.data.token));
+            }, 1000)
+          } else {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Invalid Credentials",
+              type: "error"
+            })
           }
+        })
+        .catch(err => {
+          setsnackbar({
+            ...snackbar,
+            open: true,
+            msg: "Login Not Successfull",
+            type: "error"
+          })
         })
     },
   });
@@ -162,6 +205,14 @@ export default function PatientLogin() {
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert severity={snackbar.type}>
+          {snackbar.msg}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

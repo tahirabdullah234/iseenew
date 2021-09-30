@@ -6,6 +6,10 @@ import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { GraphBp } from "./graphs";
+import * as getdata from "../Services/graphsdata";
+import { useSelector } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -104,25 +108,45 @@ const useStyles = makeStyles({
   },
   bloodpressuretablecontainer: {
     height: 300,
-    overflowY: "scroll"
+    overflowY: "scroll",
+    marginTop: 30,
   }
 });
 
-function BPRecord() {
+function BPRecord({ sys, dys, date }) {
   const classes = useStyles();
   return (
     <Grid container className={classes.Tablecontentbox}>
       <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>23 mmHg</Typography>
+        <Typography variant="body1" className={classes.TableContentFont}>{sys + " mmHg"}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>23 mmHg</Typography>
+        <Typography variant="body1" className={classes.TableContentFont}>{dys + " mmHg"}</Typography>
       </Grid>
       <Grid xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>10:37:51 PM</Typography>
+        <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[1]}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>21/08/2021</Typography>
+        <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[0]}</Typography>
+      </Grid>
+    </Grid>
+  );
+}
+function BPRecordhead() {
+  const classes = useStyles();
+  return (
+    <Grid container className={classes.Tablecontentbox}>
+      <Grid item xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>SYS</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>DYS</Typography>
+      </Grid>
+      <Grid xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>Time</Typography>
+      </Grid>
+      <Grid item xs={6} sm={3}>
+        <Typography variant="body1" className={classes.TableContentFont}>Date</Typography>
       </Grid>
     </Grid>
   );
@@ -130,6 +154,33 @@ function BPRecord() {
 
 export function ManageBP() {
   const classes = useStyles();
+  const token = useSelector((state) => state.states.token);
+  const [data, setdata] = React.useState(null);
+
+  React.useEffect(() => {
+    getdata.getbprecord(token)
+      .then(res => {
+        if (res.data.success) {
+          if (res.data.record.length > 0)
+            setdata(res.data.record)
+          else
+            setdata([{
+              systolic: 'No Record Found ',
+              dystolic: "No Record Found",
+              dateAdded: "N/ATN/A",
+              type: ""
+            }])
+        } else {
+          setdata([{
+            value: 'No Record Found ',
+            unit: "",
+            dateAdded: "N/ATN/A",
+            type: ""
+          }])
+        }
+      })
+  }, [token])
+
   return (
     <div className="dashdiv">
       <Grid item xs={12} className={classes.DialogBox}>
@@ -170,22 +221,22 @@ export function ManageBP() {
               >
                 BLOOD PRESSURE TABLE
               </Typography>
+              <Grid container>
+                <BPRecordhead />
+              </Grid>
               <Grid container className={classes.bloodpressuretablecontainer}>
-                <Grid item xs={12} className={classes.bloodpressuretableitem}>
-                  <BPRecord />
-                </Grid>
-                <Grid item xs={12} className={classes.bloodpressuretableitem}>
-                  <BPRecord />
-                </Grid>
-                <Grid item xs={12} className={classes.bloodpressuretableitem}>
-                  <BPRecord />
-                </Grid>
-                <Grid item xs={12} className={classes.bloodpressuretableitem}>
-                  <BPRecord />
-                </Grid>
-                <Grid item xs={12} className={classes.bloodpressuretableitem}>
-                  <BPRecord />
-                </Grid>
+                {
+                  data ? data.map((item, index) => {
+                    return (
+                      <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                        <BPRecord date={item.dateAdded} dys={item.dystolic} sys={item.systolic} key={index} />
+                      </Grid>
+                    )
+                  })
+                    : <CircularProgress
+                      style={{ marginRight: "20px", width: "50px", height: "50px" }}
+                    />
+                }
               </Grid>
             </Grid>
             <Grid item xs={12} md={6} className={classes.BPGDialogbox}>

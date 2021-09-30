@@ -20,11 +20,13 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 
-import { useHistory } from "react-router";
-
 import { useFormik } from "formik";
 import { validationSchemePatient as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
+import { useHistory } from "react-router";
+
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles({
   border: {
@@ -134,11 +136,19 @@ const theme = createTheme({
   },
 });
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+
 export default function PatientRegistration() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const history = useHistory();
-
+  const [snackbar, setsnackbar] = React.useState({
+    open: false,
+    msg: "",
+    type: ""
+  })
   const classes = useStyles();
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -146,6 +156,14 @@ export default function PatientRegistration() {
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
   const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
+  const history = useHistory();
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setsnackbar({ ...snackbar, open: false });
+  };
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -164,7 +182,20 @@ export default function PatientRegistration() {
       auth.signup(values)
         .then(res => {
           if (res.data.success) {
-            history.push('/');
+            history.push('/')
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Registration Successfull",
+              type: "success"
+            })
+          } else {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Registration Not Successfull",
+              type: "error"
+            })
           }
         })
     },
@@ -384,6 +415,14 @@ export default function PatientRegistration() {
             </form>
           </Grid>
         </Grid>
+        <Snackbar open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert severity={snackbar.type} className={classes.snack}>
+            {snackbar.msg}
+          </Alert>
+        </Snackbar>
       </div>
     </ThemeProvider>
   );
