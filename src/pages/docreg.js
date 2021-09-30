@@ -159,6 +159,7 @@ export default function DoctorRegistration() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      values = { ...values, isDoctor: true }
       console.log(values)
       alert(JSON.stringify(values))
     },

@@ -20,9 +20,11 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 
+import { useHistory } from "react-router";
+
 import { useFormik } from "formik";
 import { validationSchemePatient as validationSchema } from "../Services/validations";
-
+import * as auth from "../Services/auth";
 
 const useStyles = makeStyles({
   border: {
@@ -135,6 +137,7 @@ const theme = createTheme({
 export default function PatientRegistration() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -156,8 +159,14 @@ export default function PatientRegistration() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      values = { ...values, isDoctor: false }
       console.log(values)
-      alert(JSON.stringify(values))
+      auth.signup(values)
+        .then(res => {
+          if (res.data.success) {
+            history.push('/');
+          }
+        })
     },
   });
 
