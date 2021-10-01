@@ -142,7 +142,7 @@ export function GraphBp() {
 
 
     React.useEffect(() => {
-        getdata.getglocusedata(token)
+        getdata.getbpdata(token)
             .then(res => {
                 if (res.data.success) {
                     console.log(res.data)

@@ -14,6 +14,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { Header } from "../components/header";
+import Typography from "@material-ui/core/Typography";
 
 import {
   makeStyles,
@@ -29,6 +30,14 @@ const useStyles = makeStyles({
   border: {
     marginTop: 50,
     border: "6px solid  #59C1E8",
+  },
+  extratxt: {
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 10,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold",
   },
   dialogbox: {
     width: "100%",
@@ -403,6 +412,7 @@ export default function DoctorRegistration() {
               <Button type="submit" className={classes.regbutton}>
                 Register
               </Button>
+              <Typography variant="body2" className={classes.extratxt}>Already have An Account? SignIn Here</Typography>
             </form>
           </Grid>
         </Grid>

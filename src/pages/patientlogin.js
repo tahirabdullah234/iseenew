@@ -9,6 +9,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
@@ -25,6 +26,14 @@ const useStyles = makeStyles({
   border: {
     marginTop: "75px",
     border: "6px solid  #59C1E8",
+  },
+  extratxt: {
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 10,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold"
   },
   dialogbox: {
     width: "100%",
@@ -60,9 +69,9 @@ const useStyles = makeStyles({
     textDecorationLine: "underline",
   },
   setemail: { marginBottom: "10px", width: "75%" },
-  setpassword: { marginBottom: "40px", width: "75%" },
+  setpassword: { marginBottom: "15px", width: "75%" },
   loginbutton: {
-    width: "38%",
+    width: "40%",
     borderRadius: "15px",
     background: "#3585da",
     display: "flex",
@@ -201,6 +210,8 @@ export default function PatientLogin() {
               <Button type="submit" className={classes.loginbutton}>
                 LOGIN
               </Button>
+              <Typography variant="body2" className={classes.extratxt}>Forgot Password?</Typography>
+              <Typography variant="body2" className={classes.extratxt}>New User SignUp Here</Typography>
             </form>
           </Grid>
         </Grid>

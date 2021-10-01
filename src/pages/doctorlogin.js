@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import { useFormik } from 'formik';
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
@@ -24,6 +25,14 @@ const useStyles = makeStyles({
   border: {
     marginTop: "111px",
     border: "6px solid  #59C1E8",
+  },
+  extratxt: {
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 10,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold"
   },
   dialogbox: {
     width: "100%",
@@ -203,6 +212,8 @@ export default function DoctorLogin() {
               <Button type="submit" className={classes.loginbutton}>
                 LOGIN
               </Button>
+              <Typography variant="body2" className={classes.extratxt}>Forgot Password?</Typography>
+              <Typography variant="body2" className={classes.extratxt}>New User SignUp Here</Typography>
             </form>
           </Grid>
         </Grid>
