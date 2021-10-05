@@ -92,3 +92,16 @@ export const validationSchemePatient = yup.object({
         .string("Select a Gender")
         .required("Gender is Required"),
 })
+
+export const validationSchemaBP = yup.object({
+    systolic: yup
+        .number("Enter Systolic Value")
+        .min(0, "Blood Pressure Cannot Be Lower Then 0")
+        .max(300, "Blood Pressure Cannot Be Higher Then 300")
+        .required("This field is requried"),
+    dystolic: yup
+        .number("Enter Systolic Value")
+        .min(0, "Blood Pressure Cannot Be Lower Then 0")
+        .max(300, "Blood Pressure Cannot Be Higher Then 300")
+        .required("This field is requried"),
+})
