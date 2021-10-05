@@ -14,3 +14,7 @@ export const login = payload => {
 export const signup = payload => {
     return axios.post("/users/register", payload, header)
 }
+
+export const doctor_register = payload => {
+    return
+}

@@ -13,6 +13,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
+import Typography from "@material-ui/core/Typography"
 import { Header } from "../components/header";
 import {
   makeStyles,
@@ -67,7 +68,7 @@ const useStyles = makeStyles({
   setemail: { marginBottom: "10px", width: "75%" },
   setpassword: { marginBottom: "40px", width: "75%" },
   regbutton: {
-    width: "38%",
+    width: "40%",
     height: "42px",
     borderRadius: "10px",
     display: "flex",
@@ -80,7 +81,8 @@ const useStyles = makeStyles({
     "&:hover": {
       background: "rgba(53,133,218,0.8)",
     },
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginTop: 10,
   },
   setpatientreglogo: {
     display: "flex",
@@ -101,6 +103,15 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: "8px",
+  },
+  extratxt: {
+    textAlign: "center",
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 15,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold"
   },
   textfield: {
     display: "flex",
@@ -177,6 +188,7 @@ export default function PatientRegistration() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      values = { ...values, isDoctor: false }
       console.log(values)
       auth.signup(values)
         .then(res => {
@@ -411,6 +423,7 @@ export default function PatientRegistration() {
               <Button type="submit" className={classes.regbutton}>
                 Register
               </Button>
+              <Typography variant="body2" className={classes.extratxt}>Already have An Account? SignIn Here</Typography>
             </form>
           </Grid>
         </Grid>
