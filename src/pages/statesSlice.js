@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+// redux to manage states easily
 export const stateSlice = createSlice({
     name: 'states',
     initialState: {
         islogin: false,
         user: {},
         token: '',
-        isdoctor: false,
+        isdoctor: true,
         name: "",
     },
     reducers: {

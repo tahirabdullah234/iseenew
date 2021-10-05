@@ -28,7 +28,7 @@ import { useHistory } from "react-router";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
-
+// styles in JSS for material ui
 const useStyles = makeStyles({
   border: {
     marginTop: 50,
@@ -151,7 +151,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-
+// form validations with YUP and FORMIK
 export default function PatientRegistration() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);

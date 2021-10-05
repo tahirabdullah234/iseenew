@@ -1,5 +1,5 @@
 import * as yup from "yup";
-
+// form validations
 export const validationSchemaSignup = yup.object({
     firstname: yup
         .string('Enter Your First Name')

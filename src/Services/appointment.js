@@ -1,5 +1,5 @@
 import axios from "axios";
-
+// api calls are written in seperate folders and files 
 export const get_requests = (token) => {
     return axios.get("/request/get_requests", {
         headers: {

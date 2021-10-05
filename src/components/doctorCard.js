@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   modalcenter: {
     alignItems: "center",
-    marginTop: "15%",
+    marginTop: "10%",
     borderRadius: 15
   }
 }));

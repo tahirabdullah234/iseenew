@@ -22,6 +22,7 @@ export default function Main() {
     const islogin = useSelector((state) => state.states.islogin)
     const isdoctor = useSelector((state) => state.states.isdoctor)
     const history = useHistory();
+    // used redux to manage routing in our web application
 
     return (
         <Router history={history}>
