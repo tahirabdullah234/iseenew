@@ -1,5 +1,5 @@
 import * as yup from "yup";
-
+// form validations
 export const validationSchemaSignup = yup.object({
     firstname: yup
         .string('Enter Your First Name')
@@ -91,4 +91,24 @@ export const validationSchemePatient = yup.object({
     gender: yup
         .string("Select a Gender")
         .required("Gender is Required"),
+})
+
+export const validationSchemaBP = yup.object({
+    systolic: yup
+        .number("Enter Systolic Value")
+        .min(0, "Blood Pressure Cannot Be Lower Then 0")
+        .max(300, "Blood Pressure Cannot Be Higher Then 300")
+        .required("This field is requried"),
+    dystolic: yup
+        .number("Enter Systolic Value")
+        .min(0, "Blood Pressure Cannot Be Lower Then 0")
+        .max(300, "Blood Pressure Cannot Be Higher Then 300")
+        .required("This field is requried"),
+})
+
+export const validationSchemaBG = yup.object({
+    value: yup
+        .number("Enter Systolic Value")
+        .min(0, "Glucose Value Cannot Be Lower Then 0")
+        .required("This field is requried"),
 })

@@ -9,6 +9,7 @@ import Modal from "@material-ui/core/Modal";
 
 import maleDoc from "../Assets/doctor_logo.svg";
 import Appoint from "./doctorAppoint";
+
 const useStyles = makeStyles((theme) => ({
   marginbox: {
     display: "flex",
@@ -64,11 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
   modalcenter: {
     alignItems: "center",
-    marginTop: "15%",
+    marginTop: "10%",
     borderRadius: 15
   }
 }));
-export default function DoctorCard() {
+
+export default function DoctorCard({ name }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -97,7 +99,7 @@ export default function DoctorCard() {
                 display="block"
                 className={classes.Profiletxt}
               >
-                DR FAISAL JAWED
+                DR {name}
               </Typography>
               <Typography
                 variant="caption"
@@ -139,7 +141,7 @@ export default function DoctorCard() {
             className={classes.modalcenter}
           >
             <Grid item xs={10} sm={3} className={classes.appointdocgrid}>
-              <Appoint />
+              <Appoint name={name} />
             </Grid>
           </Modal>
         </Grid>

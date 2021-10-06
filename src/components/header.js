@@ -27,7 +27,7 @@ export function Header() {
             <Grid item xs={12} sm={10} md={11}>
               <div className="logoTextDiv">
                 <p className="logoTextSlash">|</p>
-                <p className="logoText">Blindness Detection System</p>
+                <p className="logoText">Diabetic Retinopathy Detection System</p>
               </div>
             </Grid>
           </Grid>

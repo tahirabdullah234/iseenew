@@ -6,6 +6,8 @@ import { Typography } from "@material-ui/core";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
+
+import { useSelector } from "react-redux";
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -151,10 +153,11 @@ function Appointments() {
 }
 export function DoctorDashboard() {
   const classes = useStyles();
+  const name = useSelector((state) => state.states.name)
   return (
     <div className="dashdiv">
       <Typography style={{ fontSize: "30px" }} className={classes.sameinfont1}>
-        WELCOME DR. FAISAL
+        WELCOME, {name}
       </Typography>
       <Grid container className={classes.AllGridsAdjust}>
         <Grid

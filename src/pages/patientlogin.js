@@ -9,6 +9,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
@@ -16,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { login, setuser, settoken } from "./statesSlice";
 import * as auth from "../Services/auth";
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
+import { useHistory } from "react-router";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
@@ -25,6 +27,14 @@ const useStyles = makeStyles({
   border: {
     marginTop: "75px",
     border: "6px solid  #59C1E8",
+  },
+  extratxt: {
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 10,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold"
   },
   dialogbox: {
     width: "100%",
@@ -60,9 +70,9 @@ const useStyles = makeStyles({
     textDecorationLine: "underline",
   },
   setemail: { marginBottom: "10px", width: "75%" },
-  setpassword: { marginBottom: "40px", width: "75%" },
+  setpassword: { marginBottom: "15px", width: "75%" },
   loginbutton: {
-    width: "38%",
+    width: "40%",
     borderRadius: "15px",
     background: "#3585da",
     display: "flex",
@@ -87,6 +97,8 @@ export default function PatientLogin() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [snackbar, setsnackbar] = React.useState({
     open: false,
     msg: "",
@@ -118,9 +130,9 @@ export default function PatientLogin() {
               type: "success"
             })
             setTimeout(() => {
-              dispatch(login());
               dispatch(setuser(res.data.user));
               dispatch(settoken(res.data.token));
+              dispatch(login());
             }, 1000)
           } else {
             setsnackbar({
@@ -201,6 +213,20 @@ export default function PatientLogin() {
               <Button type="submit" className={classes.loginbutton}>
                 LOGIN
               </Button>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+              >
+                Forgot Password?
+              </Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => history.push('/register')}
+                style={{ "cursor": "pointer" }}
+              >
+                New User SignUp Here
+              </Typography>
             </form>
           </Grid>
         </Grid>

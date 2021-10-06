@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DoctorCard() {
+export default function DoctorCard({ name }) {
 
     const classes = useStyles(theme);
 
@@ -110,7 +110,7 @@ export default function DoctorCard() {
                             display="block"
                             className={classes.Profiletxt}
                         >
-                            DR FAISAL JAWED
+                            DR {name}
                         </Typography>
                         <Typography
                             variant="caption"

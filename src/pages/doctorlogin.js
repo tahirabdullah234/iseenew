@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Visibility from "@material-ui/icons/Visibility";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import { useFormik } from 'formik';
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
@@ -19,11 +20,20 @@ import { login, setuser, settoken } from "./statesSlice";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   border: {
     marginTop: "111px",
     border: "6px solid  #59C1E8",
+  },
+  extratxt: {
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 10,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold"
   },
   dialogbox: {
     width: "100%",
@@ -87,6 +97,8 @@ export default function DoctorLogin() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [snackbar, setsnackbar] = React.useState({
     open: false,
     msg: "",
@@ -121,7 +133,7 @@ export default function DoctorLogin() {
               dispatch(setuser(res.data.user));
               dispatch(settoken(res.data.token));
             }, 1000)
-          } else if (!res.data.user.isDoctor) {
+          } else if (!res.data.user.isDoctor && res.data.success) {
             setsnackbar({
               ...snackbar,
               open: true,
@@ -136,6 +148,14 @@ export default function DoctorLogin() {
               type: "error"
             })
           }
+        })
+        .catch(err => {
+          setsnackbar({
+            ...snackbar,
+            open: true,
+            msg: "Invalid Credentials",
+            type: "error"
+          })
         })
     },
   });
@@ -195,6 +215,20 @@ export default function DoctorLogin() {
               <Button type="submit" className={classes.loginbutton}>
                 LOGIN
               </Button>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+              >
+                Forgot Password?
+              </Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => history.push('/register')}
+                style={{ "cursor": "pointer" }}
+              >
+                New User SignUp Here
+              </Typography>
             </form>
           </Grid>
         </Grid>

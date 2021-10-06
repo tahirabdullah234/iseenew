@@ -53,7 +53,7 @@ export const getbprecord = (token) => {
 }
 
 export const getbgrecord = (token) => {
-    return axios.get("/chart/get_bp_record", {
+    return axios.get("/chart/get_bg_record", {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

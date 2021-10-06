@@ -14,6 +14,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { Header } from "../components/header";
+import Typography from "@material-ui/core/Typography";
 
 import {
   makeStyles,
@@ -24,11 +25,25 @@ import {
 import { useFormik } from 'formik';
 
 import { validationSchemaSignup as validationSchema } from "../Services/validations";
+import * as auth from "../Services/auth";
+import { useHistory } from "react-router";
+
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+
 
 const useStyles = makeStyles({
   border: {
     marginTop: 50,
     border: "6px solid  #59C1E8",
+  },
+  extratxt: {
+    textDecoration: "underline",
+    marginBottom: 10,
+    marginTop: 10,
+    width: "75%",
+    margin: "auto",
+    fontWeight: "bold",
   },
   dialogbox: {
     width: "100%",
@@ -133,6 +148,11 @@ const theme = createTheme({
   },
 });
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+
 export default function DoctorRegistration() {
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -143,6 +163,21 @@ export default function DoctorRegistration() {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
   const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const [snackbar, setsnackbar] = React.useState({
+    open: false,
+    msg: "",
+    type: ""
+  })
+  const history = useHistory();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setsnackbar({ ...snackbar, open: false });
+  };
+
 
   const formik = useFormik({
     initialValues: {
@@ -159,8 +194,39 @@ export default function DoctorRegistration() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
-      alert(JSON.stringify(values))
+      values = { ...values, isDoctor: true }
+      auth.signup(values)
+        .then(res => {
+          if (res.data.success) {
+            auth.doctor_register({ ...values, id: res.data.id, isVerified: true })
+              .then(res => {
+                if (res.data.success) {
+                  setsnackbar({
+                    ...snackbar,
+                    open: true,
+                    msg: "Registration Successfull",
+                    type: "success"
+                  })
+                  setTimeout(() => history.push('/'), 1000)
+                } else {
+                  setsnackbar({
+                    ...snackbar,
+                    open: true,
+                    msg: "Registration Not Successfull",
+                    type: "error"
+                  })
+                }
+              })
+          } else {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: "Registration Not Successfull",
+              type: "error"
+            })
+          }
+        })
+
     },
   });
 
@@ -402,9 +468,25 @@ export default function DoctorRegistration() {
               <Button type="submit" className={classes.regbutton}>
                 Register
               </Button>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => history.push('/')}
+                style={{ "cursor": "pointer" }}
+              >
+                Already have An Account? SignIn Here
+              </Typography>
             </form>
           </Grid>
         </Grid>
+        <Snackbar open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert severity={snackbar.type} className={classes.snack}>
+            {snackbar.msg}
+          </Alert>
+        </Snackbar>
       </div>
     </ThemeProvider>
   );

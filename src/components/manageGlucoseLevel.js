@@ -21,6 +21,8 @@ import { useSelector } from "react-redux";
 
 import { GraphGlocuse } from "./graphs";
 import * as getdata from "../Services/graphsdata";
+import { useFormik } from "formik";
+import { validationSchemaBG as validationSchema } from "../Services/validations";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -58,6 +60,9 @@ const useStyles = makeStyles({
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     color: "white",
     marginTop: "13px",
+    "&:hover": {
+      background: "rgba(53,133,218,0.7)",
+    }
   },
   TDialogbox: {
     width: "900px",
@@ -161,7 +166,7 @@ function Glucoselevelrecord({ value, type, date, unit }) {
         <Typography className={classes.TableContentFont}>{type}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>{date.split("T")[1]}</Typography>
+        <Typography className={classes.TableContentFont}>{date.split("T")[1].split(".")[0]}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
         <Typography className={classes.TableContentFont}>{date.split("T")[0]}</Typography>
@@ -203,16 +208,34 @@ export function ManageGL() {
   const handleChange = (event) => {
     setGLunit(event.target.value);
   };
-  const [value, setValue] = React.useState("");
+  const [fast, setfast] = React.useState("");
   const handleChang = (event) => {
-    setValue(event.target.value);
+    setfast(event.target.value);
   };
   const classes = useStyles();
 
   const token = useSelector((state) => state.states.token);
+  const id = useSelector((state) => state.states.user._id)
   const [data, setdata] = React.useState(null);
 
-  React.useEffect(() => {
+  const formik = useFormik({
+    initialValues: {
+      value: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      values = { ...values, patient: id, isFasting: fast === "Fasting" ? true : false, unit: GLunit }
+      getdata.savebgrecord(token, values)
+        .then(res => {
+          if (res.data.success) {
+            rows();
+            formik.resetForm()
+          }
+        })
+    }
+  })
+
+  const rows = () => {
     getdata.getbgrecord(token)
       .then(res => {
         if (res.data.success) {
@@ -234,6 +257,10 @@ export function ManageGL() {
           }])
         }
       })
+  }
+
+  React.useEffect(() => {
+    rows();
   }, [token])
 
   return (
@@ -247,57 +274,65 @@ export function ManageGL() {
             MANAGE GLUCOSE LEVEL
           </Typography>
           <Grid item xs={11} className={classes.DEDialogBox}>
-            <Grid container className={classes.DEDialpos}>
-              <Grid item xs={5} md={3}>
-                <TextField
-                  label="GLUCOSE LEVEL"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  className={classes.Glucoselevel}
-                ></TextField>
-              </Grid>
-              <Grid item xs={6} md={2}>
-                <FormControl
-                  className={classes.formControl}
-                  style={{ marginTop: "16px", width: "100%" }}
-                >
-                  <Select value={GLunit} onChange={handleChange}>
-                    <MenuItem value="mg/dl">
-                      <em>mg/dl</em>
-                    </MenuItem>
-                    <MenuItem value="mmol/L">
-                      <em>mmol/L</em>
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={11} md={3} className={classes.radiopos}>
-                <FormControl component="fieldset" className={classes.radiosize}>
-                  <RadioGroup
-                    aria-label="isFasting"
-                    name="isFasting"
-                    value={value}
-                    onChange={handleChang}
-                    className={classes.radiogrp}
+            <form onSubmit={formik.handleSubmit}>
+              <Grid container className={classes.DEDialpos}>
+                <Grid item xs={5} md={3}>
+                  <TextField
+                    label="GLUCOSE LEVEL"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    className={classes.Glucoselevel}
+                    id="value"
+                    name="value"
+                    value={formik.values.value}
+                    onChange={formik.handleChange}
+                    error={formik.touched.value && Boolean(formik.errors.value)}
+                    helperText={formik.touched.value && formik.errors.value}
+                  ></TextField>
+                </Grid>
+                <Grid item xs={6} md={2}>
+                  <FormControl
+                    className={classes.formControl}
+                    style={{ marginTop: "16px", width: "100%" }}
                   >
-                    <FormControlLabel
-                      value={false}
-                      control={<Radio />}
-                      label="Random"
-                    />
-                    <FormControlLabel
-                      value={true}
-                      control={<Radio />}
-                      label="Fasting"
-                    />
-                  </RadioGroup>
-                </FormControl>
+                    <Select value={GLunit} onChange={handleChange}>
+                      <MenuItem value="mg/dl">
+                        <em>mg/dl</em>
+                      </MenuItem>
+                      <MenuItem value="mmol/L">
+                        <em>mmol/L</em>
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={11} md={3} className={classes.radiopos}>
+                  <FormControl component="fieldset" className={classes.radiosize}>
+                    <RadioGroup
+                      aria-label="isFasting"
+                      name="isFasting"
+                      value={fast}
+                      onChange={handleChang}
+                      className={classes.radiogrp}
+                    >
+                      <FormControlLabel
+                        value="Random"
+                        control={<Radio />}
+                        label="Random"
+                      />
+                      <FormControlLabel
+                        value="Fasting"
+                        control={<Radio />}
+                        label="Fasting"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={5} sm={2}>
+                  <Button type="submit" className={classes.DEDial}>ADD</Button>
+                </Grid>
               </Grid>
-              <Grid item xs={5} sm={2}>
-                <Button className={classes.DEDial}>ADD</Button>
-              </Grid>
-            </Grid>
+            </form>
           </Grid>
           <Grid item xs={11} className={classes.Gridadjust}>
             <Grid container className={classes.GridAdjust}>
@@ -315,7 +350,7 @@ export function ManageGL() {
                   {
                     data ? data.map((item, index) => {
                       return (
-                        <Grid item xs={11} className={classes.bloodpressuretableitem}>
+                        <Grid item xs={11} className={classes.bloodpressuretableitem} key={index}>
                           <Glucoselevelrecord date={item.dateAdded} value={item.value} type={item.isFasting ? 'Fasting' : 'Random'} unit={item.unit} />
                         </Grid>
                       )

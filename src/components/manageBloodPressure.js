@@ -10,6 +10,8 @@ import * as getdata from "../Services/graphsdata";
 import { useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import { validationSchemaBP as validationSchema } from "../Services/validations";
+import { useFormik } from "formik";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -124,7 +126,7 @@ function BPRecord({ sys, dys, date }) {
         <Typography variant="body1" className={classes.TableContentFont}>{dys + " mmHg"}</Typography>
       </Grid>
       <Grid xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[1]}</Typography>
+        <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[1].split(".")[0]}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[0]}</Typography>
@@ -155,12 +157,33 @@ function BPRecordhead() {
 export function ManageBP() {
   const classes = useStyles();
   const token = useSelector((state) => state.states.token);
+  const id = useSelector((state) => state.states.user._id);
   const [data, setdata] = React.useState(null);
 
-  React.useEffect(() => {
+  const formik = useFormik({
+    initialValues: {
+      systolic: '',
+      dystolic: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      values = { ...values, patient: id }
+      console.log(values)
+      getdata.savebprecord(token, values)
+        .then(res => {
+          if (res.data.success) {
+            rows();
+            formik.resetForm()
+          }
+        })
+    }
+  })
+
+  const rows = () => {
     getdata.getbprecord(token)
       .then(res => {
         if (res.data.success) {
+          console.log(res.data)
           if (res.data.record.length > 0)
             setdata(res.data.record)
           else
@@ -179,6 +202,10 @@ export function ManageBP() {
           }])
         }
       })
+  }
+
+  React.useEffect(() => {
+    rows();
   }, [token])
 
   return (
@@ -188,31 +215,45 @@ export function ManageBP() {
           MANAGE BLOOD PRESSURE
         </Typography>
         <Grid item xs={11} className={classes.DEDialogBox}>
-          <Grid container className={classes.DEDialpos}>
-            <Grid item xs={9} sm={4} md={3}>
-              <TextField
-                label="Diastolic value"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.setTextField}
-              ></TextField>
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container className={classes.DEDialpos}>
+              <Grid item xs={9} sm={4} md={3}>
+                <TextField
+                  label="Diastolic value"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.setTextField}
+                  id="dystolic"
+                  name="dystolic"
+                  value={formik.values.dystolic}
+                  onChange={formik.handleChange}
+                  error={formik.touched.dystolic && Boolean(formik.errors.dystolic)}
+                  helperText={formik.touched.dystolic && formik.errors.dystolic}
+                ></TextField>
+              </Grid>
+              <Grid item xs={9} sm={4} md={3}>
+                <TextField
+                  label="Systolic value"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.setTextField}
+                  id="systolic"
+                  name="systolic"
+                  value={formik.values.systolic}
+                  onChange={formik.handleChange}
+                  error={formik.touched.systolic && Boolean(formik.errors.systolic)}
+                  helperText={formik.touched.systolic && formik.errors.systolic}
+                ></TextField>
+              </Grid>
+              <Grid item xs={5} sm={2}>
+                <Button type="submit" className={classes.DEDial}>ADD</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={9} sm={4} md={3}>
-              <TextField
-                label="Systolic value"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.setTextField}
-              ></TextField>
-            </Grid>
-            <Grid item xs={5} sm={2}>
-              <Button className={classes.DEDial}>ADD</Button>
-            </Grid>
-          </Grid>
+          </form>
         </Grid>
-        <Grid item xs={11} className={classes.Gridadjust}>
+        <Grid item xs={12} className={classes.Gridadjust}>
           <Grid container className={classes.GridAjust}>
             <Grid item xs={12} md={5} className={classes.TDialogbox}>
               <Typography
