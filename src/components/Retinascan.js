@@ -75,8 +75,6 @@ export function RetinaScan() {
       });
   }
 
-
-
   return (
     <div className="dashdiv">
       <Grid item md={6} sm={8} xs={11} className={classes.DialogBox}>
