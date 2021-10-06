@@ -24,7 +24,7 @@ router.post('/is_doctor', (req, res) => {
                 userid: _id,
                 pmdcid: req.body.pmdcid,
                 specialization: req.body.specialization,
-                isVerified: res.body.isVerified,
+                isVerified: req.body.isVerified,
             });
             doctor.save((err, doc) => {
                 if (err) {

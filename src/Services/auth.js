@@ -16,5 +16,5 @@ export const signup = payload => {
 }
 
 export const doctor_register = payload => {
-    return
+    return axios.post("/doctor/is_doctor", payload, header)
 }

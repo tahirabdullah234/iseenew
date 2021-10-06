@@ -34,21 +34,24 @@ export function GraphGlocuse() {
 
 
     React.useEffect(() => {
-        getdata.getglocusedata(token)
-            .then(res => {
-                if (res.data.success) {
-                    console.log(res.data)
-                    setdata(res.data.record)
-                } else {
-                    setdata(res.data.record)
-                    setsnackbar({
-                        ...snackbar,
-                        open: true,
-                        msg: "No Blood Glocuse Data Found",
-                        type: "info"
+        setTimeout(
+            () =>
+                getdata.getglocusedata(token)
+                    .then(res => {
+                        if (res.data.success) {
+                            console.log(res.data)
+                            setdata(res.data.record)
+                        } else {
+                            setdata(res.data.record)
+                            setsnackbar({
+                                ...snackbar,
+                                open: true,
+                                msg: "No Blood Glocuse Data Found",
+                                type: "info"
+                            })
+                        }
                     })
-                }
-            })
+            , 150)
     }, [])
 
     return (
@@ -142,21 +145,24 @@ export function GraphBp() {
 
 
     React.useEffect(() => {
-        getdata.getbpdata(token)
-            .then(res => {
-                if (res.data.success) {
-                    console.log(res.data)
-                    setdata(res.data.record)
-                } else {
-                    setdata(res.data.record)
-                    setsnackbar({
-                        ...snackbar,
-                        open: true,
-                        msg: "No Blood Glocuse Data Found",
-                        type: "info"
+        setTimeout(
+            () =>
+                getdata.getbpdata(token)
+                    .then(res => {
+                        if (res.data.success) {
+                            console.log(res.data)
+                            setdata(res.data.record)
+                        } else {
+                            setdata(res.data.record)
+                            setsnackbar({
+                                ...snackbar,
+                                open: true,
+                                msg: "No Blood Glocuse Data Found",
+                                type: "info"
+                            })
+                        }
                     })
-                }
-            })
+            , 50)
     }, [token])
     // systolic upper - 120 ideal
     // distlic lower - 80 ideal

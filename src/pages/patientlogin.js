@@ -127,9 +127,9 @@ export default function PatientLogin() {
               type: "success"
             })
             setTimeout(() => {
-              dispatch(login());
               dispatch(setuser(res.data.user));
               dispatch(settoken(res.data.token));
+              dispatch(login());
             }, 1000)
           } else {
             setsnackbar({

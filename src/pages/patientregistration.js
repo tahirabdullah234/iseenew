@@ -193,13 +193,13 @@ export default function PatientRegistration() {
       auth.signup(values)
         .then(res => {
           if (res.data.success) {
-            history.push('/')
             setsnackbar({
               ...snackbar,
               open: true,
               msg: "Registration Successfull",
               type: "success"
             })
+            setTimeout(() => history.push('/'), 1000)
           } else {
             setsnackbar({
               ...snackbar,

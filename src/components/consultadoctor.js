@@ -78,8 +78,8 @@ export default function ConsultDoctor() {
             state.doctor ?
               state.doctor.map((item, index) => {
                 return (
-                  <Grid item xs={11} sm={5} className={classes.appointdocgrid}>
-                    <DoctorCard />
+                  <Grid item xs={11} sm={5} className={classes.appointdocgrid} key={index}>
+                    <DoctorCard name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()} />
                   </Grid>
                 )
               })
