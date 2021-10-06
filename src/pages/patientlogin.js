@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { login, setuser, settoken } from "./statesSlice";
 import * as auth from "../Services/auth";
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
+import { useHistory } from "react-router";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
@@ -96,6 +97,8 @@ export default function PatientLogin() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [snackbar, setsnackbar] = React.useState({
     open: false,
     msg: "",
@@ -210,8 +213,20 @@ export default function PatientLogin() {
               <Button type="submit" className={classes.loginbutton}>
                 LOGIN
               </Button>
-              <Typography variant="body2" className={classes.extratxt}>Forgot Password?</Typography>
-              <Typography variant="body2" className={classes.extratxt}>New User SignUp Here</Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+              >
+                Forgot Password?
+              </Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => history.push('/register')}
+                style={{ "cursor": "pointer" }}
+              >
+                New User SignUp Here
+              </Typography>
             </form>
           </Grid>
         </Grid>

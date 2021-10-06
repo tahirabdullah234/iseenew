@@ -26,7 +26,6 @@ import { useFormik } from 'formik';
 
 import { validationSchemaSignup as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 import Snackbar from "@material-ui/core/Snackbar";
@@ -170,6 +169,7 @@ export default function DoctorRegistration() {
     type: ""
   })
   const history = useHistory();
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -468,7 +468,14 @@ export default function DoctorRegistration() {
               <Button type="submit" className={classes.regbutton}>
                 Register
               </Button>
-              <Typography variant="body2" className={classes.extratxt}>Already have An Account? SignIn Here</Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => history.push('/')}
+                style={{ "cursor": "pointer" }}
+              >
+                Already have An Account? SignIn Here
+              </Typography>
             </form>
           </Grid>
         </Grid>

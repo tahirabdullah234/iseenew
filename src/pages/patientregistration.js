@@ -423,7 +423,14 @@ export default function PatientRegistration() {
               <Button type="submit" className={classes.regbutton}>
                 Register
               </Button>
-              <Typography variant="body2" className={classes.extratxt}>Already have An Account? SignIn Here</Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => history.push('/')}
+                style={{ "cursor": "pointer" }}
+              >
+                Already have An Account? SignIn Here
+              </Typography>
             </form>
           </Grid>
         </Grid>
