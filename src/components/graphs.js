@@ -49,7 +49,7 @@ export function GraphGlocuse() {
                     })
                 }
             })
-    }, [token])
+    }, [])
 
     return (
         <div style={{ margin: "auto" }}>
