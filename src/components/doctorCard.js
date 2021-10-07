@@ -141,7 +141,7 @@ export default function DoctorCard({ name, id }) {
             className={classes.modalcenter}
           >
             <Grid item xs={10} sm={3} className={classes.appointdocgrid}>
-              <Appoint name={name} id={id} />
+              <Appoint name={name} id={id} onClose={handleClose}/>
             </Grid>
           </Modal>
         </Grid>

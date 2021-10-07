@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DoctorCard({ name, id }) {
+export default function DoctorCard({ name, id, onClose }) {
 
     const classes = useStyles(theme);
     const token = useSelector((state) => state.states.token)
@@ -127,6 +127,7 @@ export default function DoctorCard({ name, id }) {
             .then(res => {
                 if (res.data.success) {
                     alert("Request Sent")
+                    onClose();
                 }
             })
     }
