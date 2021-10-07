@@ -62,6 +62,9 @@ const UserRoutes = () => {
             <Route path="/reports">
                 <Reports />
             </Route>
+            <Route path="/result">
+                <Reports />
+            </Route>
             <Route path="/appointdoctor">
                 <Appoint />
             </Route>
