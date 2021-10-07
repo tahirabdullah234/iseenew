@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var authenticate = require('../authenticate');
-var Request = require('../models/request')
-var Doctor = require('../models/doctor')
+var Request = require('../models/request');
+var Doctor = require('../models/doctor');
+
 router.post('/add_request', authenticate.verifyUser, (req, res) => {
     Request.create(req.body, (err, data) => {
         if (err)

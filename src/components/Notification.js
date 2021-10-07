@@ -15,7 +15,7 @@ export function Notifications() {
   return (
     <div>
       <Typography
-        variant="h3"
+        variant="h4"
         style={{ marginBottom: "10px" }}
         className={classes.sameinfont}
       >

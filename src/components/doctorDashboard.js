@@ -109,6 +109,7 @@ const useStyles = makeStyles({
   },
   Apptxt: { display: "flex", textAlign: "start" },
 });
+
 function PatientRequest() {
   const classes = useStyles();
   return (
@@ -118,7 +119,7 @@ function PatientRequest() {
           <Typography>39009101</Typography>
         </Grid>
         <Grid item xs={5} sm={3} className={classes.TableContentFont}>
-          <Typography>MR. A. ASLAM ghadjl</Typography>
+          <Typography>MR. A. ASLAM</Typography>
         </Grid>
         <Grid item xs={3} sm={3} className={classes.TableContentFont}>
           <Typography>21/08/2021</Typography>
@@ -133,6 +134,7 @@ function PatientRequest() {
     </Grid>
   );
 }
+
 function Appointments() {
   const classes = useStyles();
   return (
@@ -151,6 +153,7 @@ function Appointments() {
     </Grid>
   );
 }
+
 export function DoctorDashboard() {
   const classes = useStyles();
   const name = useSelector((state) => state.states.name)
@@ -162,7 +165,7 @@ export function DoctorDashboard() {
       <Grid container className={classes.AllGridsAdjust}>
         <Grid
           item
-          md={6}
+          md={7}
           xs={11}
           style={{ marginTop: "10px", padding: "10px" }}
           className={classes.DialogBox}
@@ -173,7 +176,11 @@ export function DoctorDashboard() {
           >
             APPOINTMENTS
           </Typography>
-          <Grid item className={classes.AppAdjust}>
+          <Grid
+            item
+            className={classes.AppAdjust}
+            style={{ height: "40vh", overflowY: "scroll" }}
+          >
             <Grid container style={{ marginTop: "10px" }}>
               <Appointments />
             </Grid>
@@ -193,20 +200,25 @@ export function DoctorDashboard() {
         </Grid>
         <Grid
           item
-          md={5}
+          md={4}
           xs={11}
           style={{ marginTop: "10px", padding: "10px" }}
           className={classes.DashboardHead}
         >
           <Notifications />
-          <Each />
-          <Each />
-          <Each />
-          <Each />
+          <Grid
+            container
+            style={{ height: "40vh", overflowY: "scroll" }}
+          >
+            <Each />
+            <Each />
+            <Each />
+            <Each />
+          </Grid>
         </Grid>
         <Grid
           item
-          md={6}
+          md={7}
           xs={11}
           className={classes.DialogBox}
           style={{
@@ -220,7 +232,7 @@ export function DoctorDashboard() {
           <Grid item xs={11} className={classes.Reportheader}>
             <Grid container>
               <Grid item xs={4} sm={2} className={classes.TableContentFont}>
-                <Typography>PATIENT ID</Typography>
+                <Typography>ID</Typography>
               </Grid>
               <Grid item xs={5} sm={3} className={classes.TableContentFont}>
                 <Typography>PATIENT NAME</Typography>
@@ -236,19 +248,19 @@ export function DoctorDashboard() {
               </Grid>
             </Grid>
           </Grid>
-          <PatientRequest />
-          <PatientRequest />
-          <PatientRequest />
           <Grid
             container
-            style={{ marginBottom: "30px", justifyContent: "center" }}
+            style={{ marginBottom: "10px", justifyContent: "center", height: "40vh", overflowY: "scroll" }}
           >
+            <PatientRequest />
+            <PatientRequest />
+            <PatientRequest />
             <PatientRequest />
           </Grid>
         </Grid>
         <Grid
           item
-          md={5}
+          md={4}
           xs={11}
           style={{
             marginTop: "20px",
@@ -266,12 +278,16 @@ export function DoctorDashboard() {
           >
             MESSAGES
           </Typography>
-
-          <Message />
-          <Message />
-          <Message />
-          <Message />
-          <Message />
+          <Grid
+            container
+            style={{ marginBottom: "10px", justifyContent: "center", height: "40vh", overflowY: "scroll" }}
+          >
+            <Message />
+            <Message />
+            <Message />
+            <Message />
+            <Message />
+          </Grid>
         </Grid>
       </Grid>
     </div>

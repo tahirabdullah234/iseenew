@@ -6,7 +6,7 @@ export const stateSlice = createSlice({
         islogin: false,
         user: {},
         token: '',
-        isdoctor: false,
+        isdoctor: true,
         name: "",
         data: null,
     },

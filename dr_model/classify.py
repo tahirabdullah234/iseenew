@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 model = load_model(
-    r'C:\Users\H.A.R\Desktop\iseenew\dr_model\DR_14.h5', compile=True)
+    r'C:\Users\abdul\Desktop\iseenew\dr_model\DR_14.h5', compile=True)
 
 
 def reshape_data(x):
@@ -63,7 +63,7 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5001, debug=True)
 
 # 10002_left.jpeg - 0
 # 1623_right.jpeg - 0

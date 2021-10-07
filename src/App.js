@@ -30,7 +30,7 @@ import "./App.css";
 // import PatientRegistration from "./pages/patientregistration";
 // import DoctorRegistration from "./pages/docreg";
 // import Graph from "./components/graphs";
-import Template from "./components/report_template"
+// import Template from "./components/report_template"
 import Main from "./routes/main";
 
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
@@ -44,7 +44,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Template />
+      <Main />
     </ThemeProvider>
   );
 }

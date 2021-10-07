@@ -7,6 +7,8 @@ import view from "../Assets/view.svg";
 import guideline from "../Assets/guideline.svg";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import * as model from "../Services/model";
 import { useSelector, useDispatch } from "react-redux";
 import { setdata } from "../pages/statesSlice";
@@ -59,12 +61,13 @@ const useStyles = makeStyles({
 
 export function RetinaScan() {
   const classes = useStyles();
-  const fileInput = React.createRef();
+  const [fileInput, setfileinput] = React.useState(React.createRef());
   const [scan, setscan] = React.useState(null);
   const token = useSelector((state) => state.states.token)
   const user = useSelector((state) => state.states.user)
   const dispatch = useDispatch();
   const history = useHistory();
+  const [loader, setloader] = React.useState(false);
 
   const handleClick = () => {
     fileInput.current.click();
@@ -83,6 +86,7 @@ export function RetinaScan() {
   const handleClassifyImage = () => {
     const data = new FormData();
     data.append('file', fileInput.current.files[0]);
+    setloader(!loader)
     model.get_prediction(token, data)
       .then(res => {
         if (res.data.success) {
@@ -111,7 +115,14 @@ export function RetinaScan() {
         <Typography className={classes.headerfont}>
           DISEASE DETECTION SYSTEM
         </Typography>
-        <img src={scan ? `/${scan.filename}` : view} className="view" alt="error found"></img>
+        {
+          loader ?
+            <CircularProgress
+              style={{ marginRight: "20px", width: "103px", height: "101px" }}
+            />
+            :
+            <img src={scan ? `/${scan.filename}` : view} className="view" alt="error found"></img>
+        }
         <Grid item md={4} className={classes.butpos}>
           <Button className={classes.Button} onClick={handleClick}>UPLOAD IMAGE</Button>
           <input type='file' ref={fileInput} accept="image/*" onChange={handleChange} style={{ display: "none" }} />

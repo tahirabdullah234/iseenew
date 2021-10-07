@@ -11,7 +11,7 @@ export const upload_file = (token, payload) => {
 }
 
 export const get_prediction = (token, payload) => {
-    return axios.post('http://127.0.0.1:5000/classify', payload, {
+    return axios.post('http://127.0.0.1:5001/classify', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

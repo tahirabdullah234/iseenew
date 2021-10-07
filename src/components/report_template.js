@@ -10,6 +10,10 @@ import ListItemText from "@material-ui/core/ListItemText"
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
+    border: {
+        border: "1px solid black",
+        background: "#fff"
+    },
     root: {
         justifyContent: "space-between",
         backgroundColor: "#003C72",
@@ -47,7 +51,7 @@ export default function Template() {
     const name = useSelector((state) => state.states.name)
 
     return (
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.border}>
             <Grid container className={classes.root}>
                 <Typography vatiant="h4">
                     ISEE | Diabetic Retinopahty Detection System
@@ -178,6 +182,7 @@ export default function Template() {
                         </ListItem>
                     </List>
                 </Grid>
+                <hr />
                 <Grid container className={classes.resultgrid}>
                     <Typography variant="h6">
                         Note: This report is automatically generated using iSee DR
