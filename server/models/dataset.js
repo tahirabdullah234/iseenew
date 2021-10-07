@@ -14,6 +14,10 @@ var Dataset = new Schema({
     },
     probability: {
         type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now(),
     }
 });
 

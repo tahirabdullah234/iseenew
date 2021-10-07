@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function DoctorCard({ name }) {
+export default function DoctorCard({ name, id }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -141,7 +141,7 @@ export default function DoctorCard({ name }) {
             className={classes.modalcenter}
           >
             <Grid item xs={10} sm={3} className={classes.appointdocgrid}>
-              <Appoint name={name} />
+              <Appoint name={name} id={id} onClose={handleClose}/>
             </Grid>
           </Modal>
         </Grid>

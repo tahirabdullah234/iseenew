@@ -1,7 +1,7 @@
 import axios from "axios";
-// api calls are written in seperate folders and files 
-export const get_requests = (token) => {
-    return axios.get("/request/get_requests", {
+
+export const upload_file = (token, payload) => {
+    return axios.post('/users/upload', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -10,8 +10,8 @@ export const get_requests = (token) => {
     })
 }
 
-export const get_doctors = token => {
-    return axios.get("/doctor/get_doc", {
+export const get_prediction = (token, payload) => {
+    return axios.post('http://127.0.0.1:5001/classify', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -20,8 +20,8 @@ export const get_doctors = token => {
     })
 }
 
-export const add_appointment = (token, payload) => {
-    return axios.post('/request/add_request', payload, {
+export const new_dataset = (token, payload) => {
+    return axios.post('/users/add_new_data', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

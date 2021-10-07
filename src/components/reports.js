@@ -11,7 +11,9 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
 
 import * as rep from "../Services/reports";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setdata } from "../pages/statesSlice";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -78,10 +80,21 @@ const useStyles = makeStyles({
   }
 });
 
-function Report({ name, date, index }) {
+function Report({ name, date, index, data }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleClick = () => {
+    dispatch(setdata(data))
+    history.push('/result')
+  }
   return (
-    <Grid item xs={11} className={classes.Tablecontentbox}>
+    <Grid
+      item
+      xs={11}
+      className={classes.Tablecontentbox}
+    >
       <Grid container style={{ alignItems: "center" }}>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
           <Typography className={classes.TableContentFont}>{index}</Typography>
@@ -102,7 +115,9 @@ function Report({ name, date, index }) {
             <CloudDownloadOutlinedIcon style={{ color: "#fff" }} />
           </IconButton>
           <Typography display="inline" style={{ color: "#fff", fontWeight: "bold" }}>|</Typography>
-          <IconButton>
+          <IconButton
+            onClick={handleClick}
+          >
             <VisibilityOutlinedIcon style={{ color: "#fff" }} />
           </IconButton>
         </Grid>
@@ -118,6 +133,7 @@ export function Reports() {
     rep.get_reports(token)
       .then(res => {
         if (res.data.success) {
+          console.log(res.data)
           setreports(res.data.reports)
         } else {
           setreports([{
@@ -164,7 +180,7 @@ export function Reports() {
             {
               reports ?
                 reports.map((item, index) => {
-                  return <Report name={item.title} date={item.date} index={index + 1} />
+                  return <Report name={item.title} date={item.date} index={index + 1} data={item.report} />
                 })
                 :
                 <CircularProgress

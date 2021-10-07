@@ -15,6 +15,7 @@ import BP from "../pages/bloodpressure";
 import Reports from "../pages/drReports";
 import Settings from "../pages/UserSettings";
 import Scan from "../pages/checkdisease";
+import Result from "../pages/results";
 
 import Doctor from "../pages/doctor";
 
@@ -61,6 +62,9 @@ const UserRoutes = () => {
             </Route>
             <Route path="/reports">
                 <Reports />
+            </Route>
+            <Route path="/result">
+                <Result />
             </Route>
             <Route path="/appointdoctor">
                 <Appoint />

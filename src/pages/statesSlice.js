@@ -8,6 +8,7 @@ export const stateSlice = createSlice({
         token: '',
         isdoctor: true,
         name: "",
+        data: null,
     },
     reducers: {
         login: (state) => {
@@ -29,10 +30,13 @@ export const stateSlice = createSlice({
         setdoctorfalse: (state) => {
             state.isdoctor = false;
         },
+        setdata: (state, action) => {
+            state.data = action.payload
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { login, logout, settoken, setuser, setdoctortrue, setdoctorfalse } = stateSlice.actions
+export const { login, logout, settoken, setuser, setdoctortrue, setdoctorfalse, setdata } = stateSlice.actions
 
 export default stateSlice.reducer

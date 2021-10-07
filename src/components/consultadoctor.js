@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ConsultDoctor() {
   const classes = useStyles();
   const token = useSelector((state) => state.states.token);
+  const [req, setreq] = React.useState(false);
 
   const [state, setstate] = React.useState({
     doctor: null
@@ -48,6 +49,7 @@ export default function ConsultDoctor() {
         console.log(res.data)
         setstate({ ...state, doctor: res.data })
       })
+
   }, [])
 
   return (
@@ -70,6 +72,7 @@ export default function ConsultDoctor() {
             fontSize: "20px",
           }}
           className={classes.sameinfont}
+          onClick={() => setreq(!req)}
         >
           REQUEST STATUS
         </Typography>
@@ -79,7 +82,7 @@ export default function ConsultDoctor() {
               state.doctor.map((item, index) => {
                 return (
                   <Grid item xs={11} sm={5} className={classes.appointdocgrid} key={index}>
-                    <DoctorCard name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()} />
+                    <DoctorCard name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()} id={item._id} />
                   </Grid>
                 )
               })
