@@ -11,6 +11,11 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import maleDoc from '../Assets/doctor_logo.svg';
 import report from '../Assets/reports.svg';
 
+import * as rep from "../Services/reports";
+import * as apt from "../Services/appointment";
+
+import { useSelector } from 'react-redux';
+
 const theme = createTheme({
     typography: {
         fontFamily: "Montserrat"
@@ -91,9 +96,40 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DoctorCard({ name }) {
+export default function DoctorCard({ name, id }) {
 
     const classes = useStyles(theme);
+    const token = useSelector((state) => state.states.token)
+    const user = useSelector((state) => state.states.user)
+    const pname = useSelector((state) => state.states.name)
+    const [reports, setreports] = React.useState(null);
+    const [msg, setmsg] = React.useState("")
+
+    React.useEffect(() => {
+        rep.get_reports(token)
+            .then(res => {
+                if (res.data.success) {
+                    setreports(res.data.reports)
+                } else {
+                    setreports(null)
+                }
+            })
+    }, [])
+
+    const handelRequest = () => {
+        const data = {
+            p_id: user._id,
+            d_id: id,
+            msg: msg,
+            name: pname,
+        }
+        apt.add_appointment(token, data)
+            .then(res => {
+                if (res.data.success) {
+                    alert("Request Sent")
+                }
+            })
+    }
 
     return (
         <Grid container className={classes.root}>
@@ -138,9 +174,12 @@ export default function DoctorCard({ name }) {
                         ATTACH REPORTS
                     </Typography>
                     <Grid item xs={12} className={classes.reportsGrid} >
-                        <img src={report} alt="Report" className={classes.docIcon1} />
-                        <img src={report} alt="Report" className={classes.docIcon1} />
-                        <img src={report} alt="Report" className={classes.docIcon1} />
+                        {
+                            reports ?
+                                <img src={report} alt="Report" className={classes.docIcon1} />
+                                :
+                                <Typography vartiant="h5">No Reports to Attach</Typography>
+                        }
                     </Grid>
                 </Grid>
                 <Grid item xs={12} className={classes.bottomGrids}>
@@ -154,6 +193,8 @@ export default function DoctorCard({ name }) {
                         minRows={5}
                         placeholder="Write message here..."
                         className={classes.messageBox}
+                        value={msg}
+                        onChange={e => setmsg(e.target.value)}
                     />
                 </Grid>
                 <Grid container className={classes.button}>
@@ -161,6 +202,7 @@ export default function DoctorCard({ name }) {
                         variant="contained"
                         disableElevation
                         className={classes.inbutton}
+                        onClick={handelRequest}
                     >
                         APPOINT DOCTOR
                     </Button>

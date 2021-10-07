@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const upload_file = (token, payload) => {
-    return axios.post('http://localhost:5000/users/upload', payload, {
+    return axios.post('/users/upload', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -21,7 +21,7 @@ export const get_prediction = (token, payload) => {
 }
 
 export const new_dataset = (token, payload) => {
-    return axios.post('http://localhost:5000/users/add_new_data', payload, {
+    return axios.post('/users/add_new_data', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

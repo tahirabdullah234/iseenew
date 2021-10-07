@@ -19,3 +19,13 @@ export const get_doctors = token => {
         }
     })
 }
+
+export const add_appointment = (token, payload) => {
+    return axios.post('/request/add_request', payload, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
