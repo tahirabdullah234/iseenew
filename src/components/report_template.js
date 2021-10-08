@@ -3,10 +3,10 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemText from "@material-ui/core/ListItemText"
-
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -137,18 +137,26 @@ export default function Template() {
                         Patient Eye Scan:
                     </Typography>
                     <Typography variant="body1">
-                        No apparent signs of DR detected [0.0]
+                        No apparent signs of DR detected {data.prediction === 1 ? "[1., 1]" : "[0., 0]"}
                     </Typography>
-                    <img
-                        src={data ? `http://localhost:5000/images/${data.scan}` : ''}
-                        alt="Eye Scan"
-                        style={{
-                            width: "128px",
-                            height: "128px",
-                            objectFit: "cover",
-                            borderRadius: "50%",
-                        }}
-                    />
+                    {
+                        data ?
+                            <img
+                                src={data ? `http://localhost:5000/images/${data.scan}` : ''}
+                                alt="Eye Scan"
+                                style={{
+                                    width: "128px",
+                                    height: "128px",
+                                    objectFit: "cover",
+                                    borderRadius: "50%",
+                                }}
+                            />
+                            :
+                            <CircularProgress
+                                style={{ marginRight: "20px", width: "103px", height: "101px" }}
+                            />
+
+                    }
                 </Grid>
                 <hr />
                 <Grid container className={classes.margin5}>
@@ -161,7 +169,8 @@ export default function Template() {
                                 <Typography variant="body1">
                                     Return for retinal imaging within 12 months.
                                 </Typography>
-                            } />
+                            }
+                            />
                         </ListItem>
                         <ListItem>
                             <ListItemText primary={

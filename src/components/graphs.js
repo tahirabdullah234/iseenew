@@ -101,11 +101,6 @@ export function GraphGlocuse() {
                                     },
                                     fullSize: true
                                 },
-                                elements: {
-                                    line: {
-                                        tension: 0.4,
-                                    }
-                                }
                             }}
                         />
                     </Grid>
@@ -214,11 +209,6 @@ export function GraphBp() {
                                     },
                                     fullSize: true
                                 },
-                                elements: {
-                                    line: {
-                                        tension: 0.4,
-                                    }
-                                }
                             }}
                         />
                     </Grid>

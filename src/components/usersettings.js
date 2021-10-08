@@ -234,6 +234,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
+                type="password"
               />
             </Grid>
             <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
@@ -243,6 +244,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
+                type="password"
               />
             </Grid>
             <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
@@ -252,6 +254,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
+                type="password"
               />
             </Grid>
             <Grid item xs={6} sm={2}>
