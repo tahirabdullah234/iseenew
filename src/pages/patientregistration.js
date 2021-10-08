@@ -237,7 +237,6 @@ export default function PatientRegistration() {
                     className={classes.textfield}
                     label="First name"
                     id="firstname"
-                    name="firstname"
                     InputLabelProps={{
                       className: classes.font,
                       shrink: true,
@@ -245,6 +244,7 @@ export default function PatientRegistration() {
                     inputProps={{
                       className: classes.font
                     }}
+                    name="firstname"
                     value={formik.values.firstname}
                     onChange={formik.handleChange}
                     error={formik.touched.firstname && Boolean(formik.errors.firstname)}
@@ -385,9 +385,9 @@ export default function PatientRegistration() {
                       value={formik.values.gender}
                       onChange={formik.handleChange}
                       error={formik.touched.gender && Boolean(formik.errors.gender)}
+                      helperText={formik.touched.gender && formik.errors.gender}
                       label="Other"
                       style={{ display: "flex", flexDirection: "row" }}
-                      helperText={formik.touched.gender && formik.errors.gender}
                     >
                       <FormControlLabel
                         value="male"

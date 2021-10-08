@@ -157,7 +157,7 @@ export function GraphBp() {
                             setsnackbar({
                                 ...snackbar,
                                 open: true,
-                                msg: "No Blood Glocuse Data Found",
+                                msg: "No Blood Pressure Data Found",
                                 type: "info"
                             })
                         }

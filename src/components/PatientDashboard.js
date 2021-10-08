@@ -3,14 +3,14 @@ import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
 import { GraphGlocuse, GraphBp } from "./graphs";
 import { useSelector } from "react-redux";
 
-// import { Doughnut } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
+
 const useStyles = makeStyles({
   DashboardHead: {
     width: "100%",
@@ -155,10 +155,24 @@ export function PatientDashboard() {
               style={{ marginBottom: "40px" }}
               className={classes.healthcolset}
             >
-              <CircularProgress
-                style={{ marginRight: "20px", width: "103px", height: "101px" }}
-                className={classes.percir}
-              />
+              <Grid container style={{ width: "20vh" }}>
+                <Doughnut
+                  data={
+                    {
+                      label: ['Health'],
+                      datasets: [
+                        {
+                          label: ["Health LEVEL"],
+                          backgroundColor: ['#85fcbc', "transparent"],
+                          borderColor: "transparent",
+                          borderRadius: 5,
+                          data: [85, 15]
+                        },
+                      ]
+                    }
+                  }
+                />
+              </Grid>
               <Typography className={classes.sameinfont} variant="h4">
                 You are healthy!
               </Typography>
