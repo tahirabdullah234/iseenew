@@ -33,7 +33,7 @@ export const validationSchemaSignup = yup.object({
         .string("Enter PMDCID")
         .required("PMDC ID is Required"),
     specialization: yup
-        .string("Enter you Spicialization")
+        .string("Enter you Specialization")
         .required("Specilization is Required"),
     city: yup
         .string("Enter you Practice City")
@@ -111,4 +111,27 @@ export const validationSchemaBG = yup.object({
         .number("Enter Systolic Value")
         .min(0, "Glucose Value Cannot Be Lower Then 0")
         .required("This field is requried"),
+})
+
+export const validationSchemePatientBasic = yup.object({
+    fname: yup
+        .string('Enter Your First Name')
+        .required('First Name is Required'),
+    lname: yup
+        .string('Enter Your Last Name')
+        .required('Last Name is Required'),
+    dob: yup
+        .date("Enter Date of Birth")
+        .required("Date of Birth is Required")
+        .test("age", "You must be 18 or older", function (birthdate) {
+            const cutoff = new Date();
+            cutoff.setFullYear(cutoff.getFullYear() - 18);
+            return birthdate <= cutoff;
+        }),
+    city: yup
+        .string("Enter you City")
+        .required("City is Required"),
+    gender: yup
+        .string("Select a Gender")
+        .required("Gender is Required"),
 })

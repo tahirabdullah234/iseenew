@@ -45,7 +45,7 @@ router.post('/change_password', authenticate.verifyUser, (req, res) => {
     })
 })
 
-router.patch('/update_name', authenticate.verifyUser, (req, res) => {
+router.patch('/update_basic', authenticate.verifyUser, (req, res) => {
     console.log(req.body)
     User.findById(req.user.id, (err, user) => {
         if (err) {
@@ -57,6 +57,8 @@ router.patch('/update_name', authenticate.verifyUser, (req, res) => {
         else if (user) {
             user.fname = req.body.fname;
             user.lname = req.body.lname;
+            user.gender = req.body.gender;
+            user.dob = req.body.dob;
             user.save((err, user) => {
                 if (err)
                     res.json({
@@ -79,33 +81,4 @@ router.patch('/update_name', authenticate.verifyUser, (req, res) => {
     })
 })
 
-router.patch('/update_gender_dob', authenticate.verifyUser, (req, res) => {
-    User.findById(req.user._id, (err, user) => {
-        if (err) {
-            res.json({
-                success: false,
-                message: err.name
-            })
-        }
-        else if (user) {
-            user.dob = req.body.dob
-            user.gender = req.body.gender
-            user.save((err, updateduser) => {
-                if (err) {
-                    res.json({
-                        success: false,
-                        message: err.name
-                    })
-                }
-                else {
-                    res.json({
-                        success: false,
-                        message: 'User Profile Updated',
-                        user: updateduser
-                    })
-                }
-            })
-        }
-    })
-})
 module.exports = router;

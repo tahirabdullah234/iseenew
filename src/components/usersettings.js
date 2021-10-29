@@ -11,6 +11,12 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { validationSchemePatientBasic } from "../Services/validations";
+import * as auth from "../Services/auth";
+import { setuser } from "../pages/statesSlice";
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -67,11 +73,32 @@ const useStyles = makeStyles({
   },
 });
 export function UserSettings() {
-  const [value, setValue] = React.useState("");
-  const handleChang = (event) => {
-    setValue(event.target.value);
-  };
+
   const classes = useStyles();
+  const user = useSelector((state) => state.states.user);
+  const token = useSelector((state) => state.states.token);
+  const dispatch = useDispatch();
+
+  const formikBasicInfo = useFormik({
+    initialValues: {
+      fname: user.fname,
+      lname: user.lname,
+      gender: user.gender,
+      dob: user.dob.split("T")[0],
+    },
+    validationSchema: validationSchemePatientBasic,
+    onSubmit: (values) => {
+      auth.update_basic(token, values)
+        .then(res => {
+          if (res.data.success) {
+            dispatch(setuser(res.data.user))
+            alert("Basic Info Updated Sccessfully")
+          }
+        })
+    }
+
+  })
+
   return (
     <div className="dashdiv">
       <Grid item xs={12} className={classes.DialogBox}>
@@ -79,64 +106,83 @@ export function UserSettings() {
           USER SETTINGS
         </Typography>
         <Grid item xs={12} className={classes.DEDialogBox}>
-          <Grid container className={classes.DEDialpos}>
-            <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
-              <TextField
-                label="First Name"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-              />
+          <form onSubmit={formikBasicInfo.handleSubmit}>
+            <Grid container className={classes.DEDialpos}>
+              <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
+                <TextField
+                  label="First Name"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.Glucoselevel}
+                  name="fname"
+                  value={formikBasicInfo.values.fname}
+                  onChange={formikBasicInfo.handleChange}
+                  error={formikBasicInfo.touched.fname && Boolean(formikBasicInfo.errors.fname)}
+                  helperText={formikBasicInfo.touched.fname && formikBasicInfo.errors.fname}
+                />
+              </Grid>
+              <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
+                <TextField
+                  label="Last Name"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.Glucoselevel}
+                  name="lname"
+                  value={formikBasicInfo.values.lname}
+                  onChange={formikBasicInfo.handleChange}
+                  error={formikBasicInfo.touched.lname && Boolean(formikBasicInfo.errors.lname)}
+                  helperText={formikBasicInfo.touched.lname && formikBasicInfo.errors.lname}
+                />
+              </Grid>
+              <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
+                <TextField
+                  label="Date of Birth"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.Glucoselevel}
+                  name="dob"
+                  value={formikBasicInfo.values.dob}
+                  onChange={formikBasicInfo.handleChange}
+                  error={formikBasicInfo.touched.dob && Boolean(formikBasicInfo.errors.dob)}
+                  helperText={formikBasicInfo.touched.dob && formikBasicInfo.errors.dob}
+                />
+              </Grid>
+              <Grid item xs={11} md={3} className={classes.radiopos}>
+                <FormControl component="fieldset" className={classes.radiosize}>
+                  <FormLabel component="legend" style={{ fontSize: "12px" }}>
+                    Gender
+                  </FormLabel>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender"
+                    className={classes.radiogrp}
+                    value={formikBasicInfo.values.gender}
+                    onChange={formikBasicInfo.handleChange}
+                    error={formikBasicInfo.touched.gender && Boolean(formikBasicInfo.errors.gender)}
+                    helperText={formikBasicInfo.touched.gender && formikBasicInfo.errors.gender}
+                  >
+                    <FormControlLabel
+                      value="Male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="Female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} sm={2}>
+                <Button type="submit" className={classes.DEDial}>UPDATE</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Last Name"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-              />
-            </Grid>
-            <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Date of Birth"
-                type="date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-              />
-            </Grid>
-            <Grid item xs={11} md={3} className={classes.radiopos}>
-              <FormControl component="fieldset" className={classes.radiosize}>
-                <FormLabel component="legend" style={{ fontSize: "12px" }}>
-                  Gender
-                </FormLabel>
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender"
-                  value={value}
-                  onChange={handleChang}
-                  className={classes.radiogrp}
-                >
-                  <FormControlLabel
-                    value="Male"
-                    control={<Radio />}
-                    label="Male"
-                  />
-                  <FormControlLabel
-                    value="Female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} sm={2}>
-              <Button className={classes.DEDial}>UPDATE</Button>
-            </Grid>
-          </Grid>
+          </form>
         </Grid>
         <Grid container style={{ marginTop: "50px" }}>
           <Typography
@@ -188,6 +234,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
+                type="password"
               />
             </Grid>
             <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
@@ -197,6 +244,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
+                type="password"
               />
             </Grid>
             <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
@@ -206,6 +254,7 @@ export function UserSettings() {
                   shrink: true,
                 }}
                 className={classes.Glucoselevel}
+                type="password"
               />
             </Grid>
             <Grid item xs={6} sm={2}>
@@ -214,6 +263,6 @@ export function UserSettings() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }

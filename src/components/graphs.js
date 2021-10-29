@@ -101,11 +101,6 @@ export function GraphGlocuse() {
                                     },
                                     fullSize: true
                                 },
-                                elements: {
-                                    line: {
-                                        tension: 0.4,
-                                    }
-                                }
                             }}
                         />
                     </Grid>
@@ -157,7 +152,7 @@ export function GraphBp() {
                             setsnackbar({
                                 ...snackbar,
                                 open: true,
-                                msg: "No Blood Glocuse Data Found",
+                                msg: "No Blood Pressure Data Found",
                                 type: "info"
                             })
                         }
@@ -214,11 +209,6 @@ export function GraphBp() {
                                     },
                                     fullSize: true
                                 },
-                                elements: {
-                                    line: {
-                                        tension: 0.4,
-                                    }
-                                }
                             }}
                         />
                     </Grid>

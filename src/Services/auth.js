@@ -18,3 +18,13 @@ export const signup = payload => {
 export const doctor_register = payload => {
     return axios.post("/doctor/is_doctor", payload, header)
 }
+
+export const update_basic = (token, payload) => {
+    return axios.patch("/settings/update_basic", payload, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
