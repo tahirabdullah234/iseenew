@@ -10,6 +10,11 @@ import Modal from "@material-ui/core/Modal";
 import maleDoc from "../Assets/doctor_logo.svg";
 import Appoint from "./doctorAppoint";
 
+import * as apt from "../Services/appointment";
+
+import { changeState } from "../pages/statesSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   marginbox: {
     display: "flex",
@@ -54,6 +59,15 @@ const useStyles = makeStyles((theme) => ({
       background: "rgba(53,133,218,0.7)",
     }
   },
+  inbuttoncancel: {
+    borderRadius: "12px",
+    background: "#FF0000",
+    boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    color: "#fff",
+    "&:hover": {
+      background: "rgba(255, 0, 0, 0.7)",
+    }
+  },
   docIcon: {
     width: 70,
     height: 70,
@@ -70,13 +84,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function DoctorCard({ name, id }) {
+export default function DoctorCard({ name, id, requested }) {
   const classes = useStyles();
-
   const [open, setOpen] = React.useState(false);
+  const p_id = useSelector((state) => state.states.user._id);
+  const token = useSelector((state) => state.states.token);
+  const dispatch = useDispatch();
+
+  const modalStyle = {
+    top: "50%",
+    left: "50%",
+    transform: "translate(50%, -50%)",
+    margin: "auto"
+  }
 
   const handleOpen = () => {
-    setOpen(true);
+    if (requested) {
+      const query = "/" + p_id + "/" + id
+      apt.delete_request(token, query)
+        .then(res => {
+          console.log(res.data)
+          dispatch(changeState())
+        })
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -128,20 +160,19 @@ export default function DoctorCard({ name, id }) {
           <Button
             variant="contained"
             disableElevation
-            className={classes.inbutton}
+            className={requested ? classes.inbuttoncancel : classes.inbutton}
             onClick={handleOpen}
           >
-            APPOINT DOCTOR
+            {requested ? "CANCEL REQUEST" : "APPOINT DOCTOR"}
           </Button>
           <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
-            className={classes.modalcenter}
           >
-            <Grid item xs={10} sm={3} className={classes.appointdocgrid}>
-              <Appoint name={name} id={id} onClose={handleClose}/>
+            <Grid item xs={10} sm={3} className={modalStyle}>
+              <Appoint name={name} id={id} onClose={handleClose} />
             </Grid>
           </Modal>
         </Grid>
