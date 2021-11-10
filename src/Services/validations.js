@@ -128,10 +128,25 @@ export const validationSchemePatientBasic = yup.object({
             cutoff.setFullYear(cutoff.getFullYear() - 18);
             return birthdate <= cutoff;
         }),
-    city: yup
-        .string("Enter you City")
-        .required("City is Required"),
     gender: yup
         .string("Select a Gender")
         .required("Gender is Required"),
+})
+
+export const validationSchemaForgotPassword = yup.object({
+    oldpassword: yup
+        .string('Enter your password')
+        .min(4, 'Password should be of minimum 8 characters length')
+        .required('Password is Required'),
+    newpassword: yup
+        .string('Enter your password')
+        .min(4, 'Password should be of minimum 8 characters length')
+        .required('Password is Required'),
+    confirmpassword: yup
+        .string("Confirm Password")
+        .required("Confirm Password is Required")
+        .test('passwords-match', 'Passwords must match', function (value) {
+            return this.parent.newpassword === value
+        }),
+
 })

@@ -61,7 +61,7 @@ export default function ConsultDoctor() {
             }
           })
       })
-  }, [flag])
+  }, [])
 
   return (
     <Grid container className="dashdiv1">
@@ -90,7 +90,7 @@ export default function ConsultDoctor() {
         <Grid container className={classes.AllGridsAdjust}>
           {
             state.doctor ?
-              state.requested.length > 0 ?
+              (state.requested.length | !req) > 0 ?
                 state.doctor.map((item, index) => {
                   if (req) {
                     if (!state.requested.includes(item._id)) {

@@ -21,7 +21,7 @@ var User = new Schema({
     },
     city: {
         type: String,
-    }
+    },
 });
 
 User.plugin(passportLocalMongoose);
