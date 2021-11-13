@@ -15,7 +15,7 @@ import "./App.css";
 // import { UserSettings } from "./components/usersettings";
 // import { Reports } from "./components/reports";
 // import { DoctorDashboard } from "./components/doctorDashboard";
-
+import Chat from "./pages/chat";
 // import BP from "./pages/bloodpressure";
 // import BG from "./pages/bloodglocuse";
 // import Settings from "./pages/UserSettings";
@@ -32,7 +32,7 @@ import "./App.css";
 // import Graph from "./components/graphs";
 // import Template from "./components/report_template"
 import Main from "./routes/main";
-
+import DoctorFP from "./pages/DoctorForgetPassword";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({
@@ -44,7 +44,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Main />
+      <Chat />
     </ThemeProvider>
   );
 }
