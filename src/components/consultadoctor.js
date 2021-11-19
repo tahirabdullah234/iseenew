@@ -8,7 +8,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import DoctorCard from "./doctorCard";
 
 import * as apt from "../Services/appointment";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { setrequesteddoc, setdoctors } from "../pages/statesSlice";
 
 const useStyles = makeStyles((theme) => ({
   DialogBox: {
@@ -39,12 +41,17 @@ export default function ConsultDoctor() {
   const classes = useStyles();
   const token = useSelector((state) => state.states.token);
   const [req, setreq] = React.useState(false);
-  const [flag] = React.useState(useSelector((state) => state.states.flag))
 
-  const [state, setstate] = React.useState({
-    doctor: null,
-    requested: null
-  })
+  // const [state, setstate] = React.useState({
+  //   doctor: null,
+  //   requested: null
+  // })
+
+  const doctor = useSelector((state) => state.states.doctors)
+  const requested = useSelector((state) => state.states.requesteddocs)
+
+  const dispatch = useDispatch();
+
 
   React.useEffect(() => {
     apt.get_doctors(token)
@@ -55,13 +62,17 @@ export default function ConsultDoctor() {
           .then(response => {
             if (response.data.success) {
               console.log(response.data)
-              setstate({ ...state, doctor: data, requested: response.data.data })
+              dispatch(setdoctors(data))
+              dispatch(setrequesteddoc(response.data.data))
+              // setstate({ ...state, doctor: data, requested: response.data.data })
             } else {
-              setstate({ ...state, doctor: data, requested: [] })
+              dispatch(setdoctors(data))
+              dispatch(setrequesteddoc([]))
+              // setstate({ ...state, doctor: xdata, requested: [] })
             }
           })
       })
-  }, [])
+  }, [dispatch, token])
 
   return (
     <Grid container className="dashdiv1">
@@ -89,11 +100,11 @@ export default function ConsultDoctor() {
         </Button>
         <Grid container className={classes.AllGridsAdjust}>
           {
-            state.doctor ?
-              (state.requested.length | !req) > 0 ?
-                state.doctor.map((item, index) => {
+            doctor ?
+              (requested.length | !req) > 0 ?
+                doctor.map((item, index) => {
                   if (req) {
-                    if (!state.requested.includes(item._id)) {
+                    if (!requested.includes(item._id)) {
                       return;
                     } else
                       return (
@@ -107,7 +118,7 @@ export default function ConsultDoctor() {
                       )
                   }
                   else {
-                    if (state.requested.includes(item._id)) {
+                    if (requested.includes(item._id)) {
                       return;
                     } else
                       return (

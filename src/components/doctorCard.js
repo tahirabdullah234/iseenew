@@ -12,8 +12,10 @@ import Appoint from "./doctorAppoint";
 
 import * as apt from "../Services/appointment";
 
-import { changeState } from "../pages/statesSlice";
 import { useSelector, useDispatch } from "react-redux";
+
+import { setrequesteddoc, setdoctors } from "../pages/statesSlice";
+
 
 const useStyles = makeStyles((theme) => ({
   marginbox: {
@@ -104,7 +106,24 @@ export default function DoctorCard({ name, id, requested }) {
       apt.delete_request(token, query)
         .then(res => {
           console.log(res.data)
-          dispatch(changeState())
+          apt.get_doctors(token)
+            .then(res => {
+              const data = res.data
+              console.log(data)
+              apt.get_requests(token)
+                .then(response => {
+                  if (response.data.success) {
+                    console.log(response.data)
+                    dispatch(setdoctors(data))
+                    dispatch(setrequesteddoc(response.data.data))
+                    // setstate({ ...state, doctor: data, requested: response.data.data })
+                  } else {
+                    dispatch(setdoctors(data))
+                    dispatch(setrequesteddoc([]))
+                    // setstate({ ...state, doctor: xdata, requested: [] })
+                  }
+                })
+            })
         })
     } else {
       setOpen(true);

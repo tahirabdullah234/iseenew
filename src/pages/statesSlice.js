@@ -9,7 +9,8 @@ export const stateSlice = createSlice({
         isdoctor: false,
         name: "",
         data: null,
-        flag: true,
+        doctors: null,
+        requesteddocs: [],
     },
     reducers: {
         login: (state) => {
@@ -34,8 +35,11 @@ export const stateSlice = createSlice({
         setdata: (state, action) => {
             state.data = action.payload
         },
-        changeState: (state) => {
-            state.flag = !state.flag
+        setrequesteddoc: (state, action) => {
+            state.requesteddocs = action.payload
+        },
+        setdoctors: (state, action) => {
+            state.doctors = action.payload
         }
     },
 })
@@ -49,7 +53,8 @@ export const {
     setdoctortrue,
     setdoctorfalse,
     setdata,
-    changeState
+    setrequesteddoc,
+    setdoctors,
 } = stateSlice.actions
 
 export default stateSlice.reducer

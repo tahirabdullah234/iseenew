@@ -14,7 +14,9 @@ import report from '../Assets/reports.svg';
 import * as rep from "../Services/reports";
 import * as apt from "../Services/appointment";
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
+
+import { setrequesteddoc, setdoctors } from "../pages/statesSlice";
 
 const theme = createTheme({
     typography: {
@@ -104,6 +106,8 @@ export default function DoctorCard({ name, id, onClose }) {
     const pname = useSelector((state) => state.states.name)
     const [reports, setreports] = React.useState(null);
     const [msg, setmsg] = React.useState("")
+    const dispatch = useDispatch();
+
 
     React.useEffect(() => {
         rep.get_reports(token)
@@ -114,7 +118,7 @@ export default function DoctorCard({ name, id, onClose }) {
                     setreports(null)
                 }
             })
-    }, [])
+    }, [token])
 
     const handelRequest = () => {
         const data = {
@@ -126,6 +130,24 @@ export default function DoctorCard({ name, id, onClose }) {
         apt.add_appointment(token, data)
             .then(res => {
                 if (res.data.success) {
+                    apt.get_doctors(token)
+                        .then(res => {
+                            const data = res.data
+                            console.log(data)
+                            apt.get_requests(token)
+                                .then(response => {
+                                    if (response.data.success) {
+                                        console.log(response.data)
+                                        dispatch(setdoctors(data))
+                                        dispatch(setrequesteddoc(response.data.data))
+                                        // setstate({ ...state, doctor: data, requested: response.data.data })
+                                    } else {
+                                        dispatch(setdoctors(data))
+                                        dispatch(setrequesteddoc([]))
+                                        // setstate({ ...state, doctor: xdata, requested: [] })
+                                    }
+                                })
+                        })
                     alert("Request Sent")
                     onClose();
                 }
