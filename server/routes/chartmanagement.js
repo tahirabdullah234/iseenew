@@ -215,6 +215,7 @@ router.get("/bp_graph", authenticate.verifyUser, (req, res) => {
   });
 });
 
+
 router.get("/bp_graph/:id", authenticate.verifyUser, (req, res) => {
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/json");
@@ -253,5 +254,109 @@ router.get("/bp_graph/:id", authenticate.verifyUser, (req, res) => {
     }
   });
 });
+
+router.get('/bp_avg', authenticate.verifyUser, (req, res) => {
+    BP
+        .aggregate([
+            {
+                $match: {
+                    patient: req.user._id,
+                }
+            },
+            {
+                $group: {
+                    _id: "$patient",
+                    sysAvg: {
+                        $avg: '$systolic'
+                    },
+                    dysAvg: {
+                        $avg: '$dystolic'
+                    },
+                }
+            }
+        ])
+        .exec((err, avg) => {
+            console.log(avg)
+            if (err) {
+                res.json({
+                    success: false,
+                    err: err.name
+                })
+            } else {
+                res.json({
+                    success: true,
+                    avg
+                })
+            }
+        })
+})
+
+router.get('/bg_avg_fasting', authenticate.verifyUser, (req, res) => {
+    BG
+        .aggregate([
+            {
+                $match: {
+                    patient: req.user._id,
+                    isFasting: true
+                }
+            },
+            {
+                $group: {
+                    _id: "$patient",
+                    fastingAvg: {
+                        $avg: '$value'
+                    },
+                }
+            }
+        ])
+        .exec((err, avg) => {
+            console.log(avg)
+            if (err) {
+                res.json({
+                    success: false,
+                    err: err.name
+                })
+            } else {
+                res.json({
+                    success: true,
+                    avg
+                })
+            }
+        })
+})
+
+router.get('/bg_avg_random', authenticate.verifyUser, (req, res) => {
+    BG
+        .aggregate([
+            {
+                $match: {
+                    patient: req.user._id,
+                    isFasting: false
+                }
+            },
+            {
+                $group: {
+                    _id: "$patient",
+                    randomAvg: {
+                        $avg: '$value'
+                    },
+                }
+            }
+        ])
+        .exec((err, avg) => {
+            console.log(avg)
+            if (err) {
+                res.json({
+                    success: false,
+                    err: err.name
+                })
+            } else {
+                res.json({
+                    success: true,
+                    avg
+                })
+            }
+        })
+})
 
 module.exports = router;

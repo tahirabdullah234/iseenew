@@ -62,3 +62,33 @@ export const getbgrecord = (token) => {
     })
 }
 
+// Average Values Get Methods 
+export const getbpavg = (token) => {
+    return axios.get("/chart/bp_avg", {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const getfastingavg = (token) => {
+    return axios.get("/chart/bg_avg_fasting", {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const getrandomavg = (token) => {
+    return axios.get("/chart/bg_avg_random", {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

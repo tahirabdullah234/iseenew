@@ -13,9 +13,18 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { validationSchemePatientBasic } from "../Services/validations";
+import { validationSchemePatientBasic, validationSchemaForgotPassword } from "../Services/validations";
 import * as auth from "../Services/auth";
 import { setuser } from "../pages/statesSlice";
+
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -50,6 +59,9 @@ const useStyles = makeStyles({
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     color: "white",
     marginTop: "10px",
+    "&:hover": {
+      background: "rgba(53,133,218,0.7)",
+    }
   },
   Glucoselevel: { width: "100%" },
   radiopos: {
@@ -78,6 +90,17 @@ export function UserSettings() {
   const user = useSelector((state) => state.states.user);
   const token = useSelector((state) => state.states.token);
   const dispatch = useDispatch();
+  const [snackbar, setsnackbar] = React.useState({
+    open: false,
+    msg: "",
+    type: ""
+  })
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setsnackbar({ ...snackbar, open: false });
+  };
 
   const formikBasicInfo = useFormik({
     initialValues: {
@@ -88,22 +111,70 @@ export function UserSettings() {
     },
     validationSchema: validationSchemePatientBasic,
     onSubmit: (values) => {
+      alert(JSON.stringify(values))
       auth.update_basic(token, values)
         .then(res => {
           if (res.data.success) {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: res.data.message,
+              type: "success"
+            })
             dispatch(setuser(res.data.user))
-            alert("Basic Info Updated Sccessfully")
+          } else {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: res.data.message,
+              type: "error"
+            })
           }
         })
     }
 
   })
 
+  const formikchangepass = useFormik({
+    initialValues: {
+      oldpassword: "",
+      newpassword: "",
+      confirmpassword: "",
+    },
+    validationSchema: validationSchemaForgotPassword,
+    onSubmit: (values) => {
+      auth.change_password(token, values)
+        .then(res => {
+          formikchangepass.resetForm()
+          if (res.data.success) {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: res.data.message,
+              type: "success"
+            })
+          } else {
+            setsnackbar({
+              ...snackbar,
+              open: true,
+              msg: res.data.message,
+              type: "error"
+            })
+          }
+        })
+    }
+
+  })
+
+
   return (
     <div className="dashdiv">
       <Grid item xs={12} className={classes.DialogBox}>
         <Typography style={{ fontSize: "30px" }} className={classes.sameinfont}>
           USER SETTINGS
+        </Typography>
+        <Typography style={{ fontSize: "28px", width: "100%", textAlign: "left" }} className={classes.sameinfont}>
+          BASIC PROFILE
         </Typography>
         <Grid item xs={12} className={classes.DEDialogBox}>
           <form onSubmit={formikBasicInfo.handleSubmit}>
@@ -179,43 +250,13 @@ export function UserSettings() {
                 </FormControl>
               </Grid>
               <Grid item xs={6} sm={2}>
-                <Button type="submit" className={classes.DEDial}>UPDATE</Button>
+                <Button
+                  className={classes.DEDial}
+                  type="submit"
+                >UPDATE</Button>
               </Grid>
             </Grid>
           </form>
-        </Grid>
-        <Grid container style={{ marginTop: "50px" }}>
-          <Typography
-            style={{ fontSize: "28px" }}
-            className={classes.sameinfont}
-          >
-            CHANGE EMAIL
-          </Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.DEDialogBox}>
-          <Grid container className={classes.DEDialpos}>
-            <Grid item xs={11} md={5} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Email Address"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-              />
-            </Grid>
-            <Grid item xs={11} md={4} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Confirm Email Address"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-              />
-            </Grid>
-            <Grid item xs={6} sm={2}>
-              <Button className={classes.DEDial}>UPDATE</Button>
-            </Grid>
-          </Grid>
         </Grid>
         <Grid container style={{ marginTop: "50px" }}>
           <Typography
@@ -226,43 +267,103 @@ export function UserSettings() {
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.DEDialogBox}>
-          <Grid container className={classes.DEDialpos}>
-            <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Old Password"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-                type="password"
-              />
+          <form onSubmit={formikchangepass.handleSubmit}>
+            <Grid container className={classes.DEDialpos}>
+              <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+                <TextField
+                  label="Old Password"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.Glucoselevel}
+                  type="password"
+                  name="oldpassword"
+                  value={formikchangepass.values.oldpassword}
+                  onChange={formikchangepass.handleChange}
+                  error={formikchangepass.touched.oldpassword && Boolean(formikchangepass.errors.oldpassword)}
+                  helperText={formikchangepass.touched.oldpassword && formikchangepass.errors.oldpassword}
+                />
+              </Grid>
+              <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+                <TextField
+                  label="New Password"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.Glucoselevel}
+                  type="password"
+                  name="newpassword"
+                  value={formikchangepass.values.newpassword}
+                  onChange={formikchangepass.handleChange}
+                  error={formikchangepass.touched.newpassword && Boolean(formikchangepass.errors.newpassword)}
+                  helperText={formikchangepass.touched.newpassword && formikchangepass.errors.newpassword}
+                />
+              </Grid>
+              <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+                <TextField
+                  label="Confirm New Password"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  className={classes.Glucoselevel}
+                  type="password"
+                  name="confirmpassword"
+                  value={formikchangepass.values.confirmpassword}
+                  onChange={formikchangepass.handleChange}
+                  error={formikchangepass.touched.confirmpassword && Boolean(formikchangepass.errors.confirmpassword)}
+                  helperText={formikchangepass.touched.confirmpassword && formikchangepass.errors.confirmpassword}
+                />
+              </Grid>
+              <Grid item xs={6} sm={2}>
+                <Button className={classes.DEDial} type="submit">UPDATE</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
-              <TextField
-                label="New Password"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-                type="password"
-              />
-            </Grid>
-            <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
-              <TextField
-                label="Confirm New Password"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                className={classes.Glucoselevel}
-                type="password"
-              />
-            </Grid>
-            <Grid item xs={6} sm={2}>
-              <Button className={classes.DEDial}>UPDATE</Button>
-            </Grid>
-          </Grid>
+          </form>
         </Grid>
       </Grid>
-    </div >
+      <Snackbar open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert severity={snackbar.type}>
+          {snackbar.msg}
+        </Alert>
+      </Snackbar>
+
+    </div>
   );
 }
+
+        // <Grid container style={{ marginTop: "50px" }}>
+        //   <Typography
+        //     style={{ fontSize: "28px" }}
+        //     className={classes.sameinfont}
+        //   >
+        //     CHANGE EMAIL
+        //   </Typography>
+        // </Grid>
+        // <Grid item xs={12} className={classes.DEDialogBox}>
+        //   <Grid container className={classes.DEDialpos}>
+        //     <Grid item xs={11} md={5} style={{ marginTop: "5px" }}>
+        //       <TextField
+        //         label="New Email Address"
+        //         InputLabelProps={{
+        //           shrink: true,
+        //         }}
+        //         className={classes.Glucoselevel}
+        //       />
+        //     </Grid>
+        //     <Grid item xs={11} md={4} style={{ marginTop: "5px" }}>
+        //       <TextField
+        //         label="Confirm Email Address"
+        //         InputLabelProps={{
+        //           shrink: true,
+        //         }}
+        //         className={classes.Glucoselevel}
+        //       />
+        //     </Grid>
+        //     <Grid item xs={6} sm={2}>
+        //       <Button className={classes.DEDial}>UPDATE</Button>
+        //     </Grid>
+        //   </Grid>
+        // </Grid>

@@ -29,3 +29,13 @@ export const add_appointment = (token, payload) => {
         }
     })
 }
+
+export const delete_request = (token, query) => {
+    return axios.delete('/request/delete_req' + query, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

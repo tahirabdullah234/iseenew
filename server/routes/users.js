@@ -116,6 +116,8 @@ router.post('/add_new_data', authenticate.verifyUser, (req, res) => {
   })
 })
 
+// sample code to upload a profile picture
+
 const storage_pp = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public')

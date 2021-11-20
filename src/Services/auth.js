@@ -28,3 +28,13 @@ export const update_basic = (token, payload) => {
         }
     })
 }
+
+export const change_password = (token, payload) => {
+    return axios.post("/settings/change_password", payload, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

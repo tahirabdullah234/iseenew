@@ -69,7 +69,7 @@ router.patch('/update_basic', authenticate.verifyUser, (req, res) => {
                     res.json({
                         success: true,
                         user: user,
-                        message: 'Name Updated Successfully'
+                        message: 'Basic Profile Updated Successfully'
                     })
             })
         }
@@ -78,6 +78,40 @@ router.patch('/update_basic', authenticate.verifyUser, (req, res) => {
                 success: false,
                 message: 'User not Found'
             })
+    })
+})
+
+router.put("/update_email", authenticate.verifyUser, (req, res) => {
+    const email = req.body.email
+    User.findById(req.user._id, (err, user) => {
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name,
+                test: "testig"
+            })
+        } else if (user) {
+            user.username = email;
+            user.save((err, user) => {
+                if (err) {
+                    res.json({
+                        success: false,
+                        err: err.name,
+                        test: "testing123"
+                    })
+                } else {
+                    res.json({
+                        success: true,
+                        user
+                    })
+                }
+            })
+        } else {
+            res.json({
+                success: false,
+                err: "User Not Found"
+            })
+        }
     })
 })
 
