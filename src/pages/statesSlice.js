@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 // redux to manage states easily
 export const stateSlice = createSlice({
     name: 'states',
@@ -41,8 +41,8 @@ export const stateSlice = createSlice({
         setdoctors: (state, action) => {
             state.doctors = action.payload
         }
-    },
-})
+  },
+});
 
 // Action creators are generated for each case reducer function
 export const {
@@ -57,4 +57,4 @@ export const {
     setdoctors,
 } = stateSlice.actions
 
-export default stateSlice.reducer
+export default stateSlice.reducer;

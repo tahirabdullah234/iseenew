@@ -151,7 +151,7 @@ const useStyles = makeStyles({
   },
   bloodpressuretablecontainer: {
     height: 300,
-    overflowY: "scroll"
+    overflowY: "scroll",
   }
 });
 
