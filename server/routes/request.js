@@ -3,7 +3,8 @@ var router = express.Router();
 var authenticate = require('../authenticate');
 var Request = require('../models/request');
 var Doctor = require('../models/doctor');
-
+var Appointment = require('../models/appointments');
+var Message = require('../models/message')
 router.post('/add_request', authenticate.verifyUser, (req, res) => {
     Request.create(req.body, (err, data) => {
         if (err)
@@ -96,4 +97,58 @@ router.delete('/delete_req/:p_id/:d_id', authenticate.verifyUser, (req, res) => 
     })
 })
 
+// from patient only
+router.post('/accept_req/:p_id/:d_id', authenticate.verifyUser, (req, res) => {
+    Request.deleteOne({ p_id: req.params.p_id, d_id: req.params.d_id }, (err) => {
+        if (err)
+            res.json({
+                success: false,
+            })
+        else {
+            var appointment = new Appointment({
+                p_id: req.params.p_id,
+                d_id: req.params.d_id,
+            })
+            appointment.save((err, apt) => {
+                if (err) {
+                    res.json({
+                        success: false,
+                        err: err.name,
+                    })
+                } else {
+                    res.json({
+                        success: true,
+                        apt,
+                    })
+                }
+            })
+        }
+    })
+})
+
+
+router.get('/get_apponitment/:d_id', authenticate.verifyUser, (req, res) => {
+    Doctor.findOne({ userid: req.params.d_id }, (err, doc) => {
+        if (err) {
+            res.json({
+                err: err.name,
+                success: false
+            })
+        } else {
+            Appointment.find({ d_id: doc._id }, (err, data) => {
+                if (err) {
+                    res.json({
+                        success: false,
+                        err: err.name
+                    })
+                } else {
+                    res.json({
+                        success: true,
+                        data
+                    })
+                }
+            })
+        }
+    })
+})
 module.exports = router;

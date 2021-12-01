@@ -105,9 +105,8 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  bloodpressuretableitem: {
-    margin: "auto",
-  },
+  
+  
   bloodpressuretablecontainer: {
     height: 300,
     overflowY: "scroll",
