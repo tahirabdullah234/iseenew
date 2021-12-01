@@ -13,6 +13,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import * as apt from "../Services/appointment";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -120,6 +122,7 @@ const useStyles = makeStyles({
 
 function PatientRequest({ data }) {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <Grid item xs={12} className={classes.Tablecontentbox}>
       <Grid container>
@@ -129,10 +132,14 @@ function PatientRequest({ data }) {
         <Grid item xs={5} sm={4} className={classes.TableContentFont}>
           <Typography>{data.name}</Typography>
         </Grid>
-        <Grid item xs={4} sm={2} className={classes.TableContentFont}>
+        <Grid item xs={4} sm={2}
+          className={classes.TableContentFont}
+          style={{ cursor: "pointer" }}
+          onClick={() => history.push({ pathname: '/userinfo', state: { id: data.p_id } })}
+        >
           <Typography>DETAILS</Typography>
         </Grid>
-        <Grid item xs={8} sm={2} className={classes.TableContentFont}>
+        <Grid item xs={8} sm={2} className={classes.TableContentFont} style={{ cursor: "pointer" }}>
           <Typography>ACCEPT</Typography>
         </Grid>
       </Grid>
@@ -169,7 +176,7 @@ export function DoctorDashboard() {
   React.useEffect(() => {
     apt.recieved_req(token)
       .then(res => {
-        const requests = res.data.requests
+        // const requests = res.data.requests
         if (res.data.success) {
           apt.get_apponitment(token)
           dispatch(setrecivedreq(res.data.requests))

@@ -10,6 +10,7 @@ import Drawer from "../components/drawer";
 import ReportTemplate from "../components/report_template";
 
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Result() {
   const classes = useStyles();
-  const history = useHistory()
+  const history = useHistory();
+  const isdoctor = useSelector((state) => state.states.isdoctor)
   return (
     <Grid container className={classes.root}>
       <Grid item xs={1}>
@@ -49,13 +51,13 @@ export default function Result() {
             </Button>
           </Grid>
           <Grid item xs={4}>
-            <Button
+            {isdoctor ? <Button
               variant="container"
               startIcon={<SaveIcon />}
               className={classes.button}
             >
               Save Report
-            </Button>
+            </Button> : <div></div>}
           </Grid>
         </Grid>
         <Grid container>

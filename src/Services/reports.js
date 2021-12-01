@@ -19,3 +19,13 @@ export const get_reports = (token) => {
         }
     })
 }
+
+export const get_reports_user = (token, userId) => {
+    return axios.get("/report/get_reports_list/" + userId, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

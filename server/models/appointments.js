@@ -10,6 +10,12 @@ var Appointment = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Doctor'
     },
+    apt_date: {
+        type: String,
+    },
+    time: {
+        type: String
+    },
 });
 
 module.exports = mongoose.model('Appointment', Appointment);

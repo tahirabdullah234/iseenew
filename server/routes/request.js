@@ -4,7 +4,8 @@ var authenticate = require('../authenticate');
 var Request = require('../models/request');
 var Doctor = require('../models/doctor');
 var Appointment = require('../models/appointments');
-var Message = require('../models/message')
+// var Message = require('../models/message');
+
 router.post('/add_request', authenticate.verifyUser, (req, res) => {
     Request.create(req.body, (err, data) => {
         if (err)
@@ -96,18 +97,20 @@ router.delete('/delete_req/:p_id/:d_id', authenticate.verifyUser, (req, res) => 
             })
     })
 })
-
 // from patient only
-router.post('/accept_req/:p_id/:d_id', authenticate.verifyUser, (req, res) => {
-    Request.deleteOne({ p_id: req.params.p_id, d_id: req.params.d_id }, (err) => {
+
+router.post('/accept_req', authenticate.verifyUser, (req, res) => {
+    Request.deleteOne({ p_id: req.body.p_id, d_id: req.body.d_id }, (err) => {
         if (err)
             res.json({
                 success: false,
             })
         else {
             var appointment = new Appointment({
-                p_id: req.params.p_id,
-                d_id: req.params.d_id,
+                p_id: req.body.p_id,
+                d_id: req.body.d_id,
+                on: req.body.date,
+                time: req.body.time,
             })
             appointment.save((err, apt) => {
                 if (err) {

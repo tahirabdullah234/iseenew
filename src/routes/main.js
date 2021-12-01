@@ -16,7 +16,8 @@ import Reports from "../pages/drReports";
 import Settings from "../pages/UserSettings";
 import Scan from "../pages/checkdisease";
 import Result from "../pages/results";
-
+import UserInfo from "../pages/userinfo";
+import Chat from "../pages/chat";
 import Doctor from "../pages/doctor";
 
 export default function Main() {
@@ -75,6 +76,9 @@ const UserRoutes = () => {
             <Route path="/checkdisease">
                 <Scan />
             </Route>
+            <Route path="/messages">
+                <Chat />
+            </Route>
             <Route path="*">
                 <Redirect to="/" />
             </Route>
@@ -93,6 +97,15 @@ const DoctorRoutes = () => {
             </Route>
             <Route path="/editprofile">
                 <Settings />
+            </Route>
+            <Route path="/userinfo">
+                <UserInfo />
+            </Route>
+            <Route path="/result">
+                <Result />
+            </Route>
+            <Route path="/messages">
+                <Chat />
             </Route>
             <Route path="*">
                 <Redirect to="/" />
