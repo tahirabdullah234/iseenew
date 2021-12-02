@@ -8,10 +8,10 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from "formik";
-import { validationSchemaLogin as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
 import { useDispatch } from "react-redux";
 import { login, setuser, settoken } from "./statesSlice";
+import * as yup from "yup";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -85,10 +85,16 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+const validationSchema = yup.object({
+  username: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+
+})
+
+
 export default function PatientFP() {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -108,7 +114,6 @@ export default function PatientFP() {
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {

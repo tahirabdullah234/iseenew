@@ -7,6 +7,8 @@ import PatientLogin from "../pages/patientlogin";
 import PatientRegistration from "../pages/patientregistration";
 import DoctorLogin from "../pages/doctorlogin";
 import DoctorRegistration from "../pages/docreg";
+import DoctorFP from "../pages/DoctorForgetPassword";
+import PatientFP from "../pages/PatientForgetPassword";
 
 import Patient from "../pages/patient";
 import Appoint from "../pages/appointDoctor";
@@ -38,6 +40,9 @@ export default function Main() {
                         </Route>
                         <Route path="/register">
                             {isdoctor ? <DoctorRegistration /> : <PatientRegistration />}
+                        </Route>
+                        <Route path="/forgotpassword">
+                            {isdoctor ? <DoctorFP /> : <PatientFP />}
                         </Route>
                         <Route path="*">
                             <Redirect to="/" />

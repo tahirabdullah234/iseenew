@@ -5,6 +5,16 @@ var Dataset = require('../models/dataset')
 var passport = require('passport');
 var authenticate = require('../authenticate');
 var router = express.Router();
+const nodemailer = require('nodemailer');
+var generator = require('generate-password');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'abdullah.jankhan445@gmail.com',
+    pass: 'khanabjankhan98'
+  }
+});
 
 router.use(express.json());
 
@@ -136,6 +146,67 @@ router.post("/uploadprofilepicture", authenticate.verifyUser, (req, res) => {
     }
     res.send(req.file);
   });
+})
+
+router.post('/forgotpass', (req, res, next) => {
+  const email = req.body.username;
+  User.findOne({ email: email }, (err, user) => {
+    if (err) {
+      console.log(err)
+      res.json({
+        err: err.name,
+        success: false
+      })
+    } else if (user) {
+      var newPass = generator.generate({
+        length: 8,
+        numbers: true,
+        uppercase: false,
+        excludeSimilarCharacters: true,
+      });
+      console.log(String(newPass))
+      user.setPassword(String(newPass), (err, user) => {
+        if (err) {
+          console.log(err)
+          res.json({
+            err: err.name,
+            success: false
+          })
+        } else {
+          user.save((err) => {
+            if (err) {
+              console.log(err)
+              res.json({
+                err: err.name,
+                success: false
+              })
+            } else {
+              passport.authenticate('local')(req, res, () => { });
+              var mailOptions = {
+                from: 'abdullah.jankhan445@gmail.com',
+                to: email,
+                subject: 'New Password for ISEE | Diabetic Retinopathy Detection System',
+                text: 'Your new password is: ' + String(newPass)
+              };
+              transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                  console.log(err)
+                  res.json({ err: err.name, success: false })
+                } else {
+                  res.json({ data: 'Email sent: ' + info.response, success: true });
+                }
+              });
+            }
+          })
+        }
+      })
+    } else {
+      res.json({
+        err: 'No User Found',
+        success: false,
+      })
+    }
+  })
 })
 
 module.exports = router;

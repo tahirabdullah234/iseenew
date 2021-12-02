@@ -71,7 +71,6 @@ const useStyles = makeStyles({
   setemail: { marginBottom: "10px", width: "75%" },
   setpassword: { marginBottom: "40px", width: "75%" },
   loginbutton: {
-    width: "38%",
     height: "42px",
     borderRadius: "10px",
     background: "#3585da",
@@ -79,6 +78,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    width: "80%",
     margin: "auto",
     color: "#fff",
     "&:hover": {
@@ -218,6 +218,8 @@ export default function DoctorLogin() {
               <Typography
                 variant="body2"
                 className={classes.extratxt}
+                onClick={() => history.push('/forgotpassword')}
+                style={{ "cursor": "pointer" }}
               >
                 Forgot Password?
               </Typography>
