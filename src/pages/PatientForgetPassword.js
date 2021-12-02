@@ -74,6 +74,8 @@ const useStyles = makeStyles({
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     marginTop: "25px",
     color: "#fff",
+    width: "80%",
+    margin: "auto",
     "&:hover": {
       background: "rgba(53,133,218,0.8)",
     },
@@ -188,9 +190,14 @@ export default function PatientFP() {
                   helperText={formik.touched.username && formik.errors.username}
                 />
 
-                <Button type="submit" className={classes.loginbutton}>
-                  RESET PASSWORD
-                </Button>
+                <Grid container>
+                  <Button type="submit" className={classes.loginbutton} fullWidth>
+                    RESET PASSWORD
+                  </Button>
+                  <Button onClick={() => history.goBack()} className={classes.loginbutton} fullWidth>
+                    BACK
+                  </Button>
+                </Grid>
               </Grid>
             </form>
           </Grid>

@@ -150,7 +150,8 @@ router.post("/uploadprofilepicture", authenticate.verifyUser, (req, res) => {
 
 router.post('/forgotpass', (req, res, next) => {
   const email = req.body.username;
-  User.findOne({ email: email }, (err, user) => {
+  console.log(req.body.username)
+  User.findOne({ username: email }, (err, user) => {
     if (err) {
       console.log(err)
       res.json({
@@ -175,7 +176,7 @@ router.post('/forgotpass', (req, res, next) => {
         } else {
           user.save((err) => {
             if (err) {
-              console.log(err)
+              console.log(err.name)
               res.json({
                 err: err.name,
                 success: false
@@ -190,7 +191,7 @@ router.post('/forgotpass', (req, res, next) => {
               };
               transporter.sendMail(mailOptions, function (err, info) {
                 if (err) {
-                  console.log(err)
+                  console.log(err.name)
                   res.json({ err: err.name, success: false })
                 } else {
                   res.json({ data: 'Email sent: ' + info.response, success: true });
