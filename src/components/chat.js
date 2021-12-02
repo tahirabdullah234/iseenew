@@ -65,57 +65,7 @@ const useStyles = makeStyles({
 
 export default function Chat() {
   const classes = useStyles();
-
-  return (
-    <Grid container className={classes.root}>
-      <Grid item xs={10} className={classes.chatbox}>
-        <Grid container>
-          <Grid item xs={3} className={classes.chatbox}>
-            <Grid container>
-              <Button className={classes.chatsbutton}>
-                <Avatar style={{ width: "50px", height: "50px" }}>A</Avatar>
-                <Grid container>
-                  <Grid item xs={1}></Grid>
-                  <Grid
-                    item
-                    style={{ display: "flex", justifyContent: "flex-start" }}
-                    xs={7}
-                  >
-                    <Typography
-                      variant="subtitlel"
-                      style={{ fontWeight: "bold", color: "#3585da" }}
-                    >
-                      Abdullah
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid item xs={9} className={classes.root1}>
-            <Grid container>
-              <Grid item xs={11} style={{
-                margin: "auto", height: "60vh",
-                overflowY: "scroll",
-              }}>
-                <Messages />
-              </Grid>
-              <Grid item xs={10}>
-                <input type="text" style={{ width: "90%", height: "30px" }} />
-              </Grid>
-              <Grid item xs={2}>
-                <Button fullWidth>Send</Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid >
-  );
-}
-
-function Messages() {
-  const msg = [
+  const [msg, setmsg] = React.useState([
     {
       msg: "Hello I am Abdulah jan Khan",
       side: true
@@ -168,7 +118,68 @@ function Messages() {
       msg: "test1",
       side: false
     },
-  ]
+  ])
+  const [newmsg, setnewmsg] = React.useState('')
+
+  return (
+    <Grid container className={classes.root}>
+      <Grid item xs={10} className={classes.chatbox}>
+        <Grid container>
+          <Grid item xs={3} className={classes.chatbox}>
+            <Grid container>
+              <Button className={classes.chatsbutton}>
+                <Avatar style={{ width: "50px", height: "50px" }}>A</Avatar>
+                <Grid container>
+                  <Grid item xs={1}></Grid>
+                  <Grid
+                    item
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                    xs={7}
+                  >
+                    <Typography
+                      variant="subtitlel"
+                      style={{ fontWeight: "bold", color: "#3585da" }}
+                    >
+                      Abdullah
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid item xs={9} className={classes.root1}>
+            <Grid container>
+              <Grid item xs={11} style={{
+                margin: "auto", height: "60vh",
+                overflowY: "scroll",
+              }}>
+                <Messages msg={msg} />
+              </Grid>
+              <Grid item xs={10}>
+                <input
+                  type="text"
+                  style={{ width: "90%", height: "30px" }}
+                  placeholder="Enter Message"
+                  value={newmsg}
+                  onChange={e => setnewmsg(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <Button fullWidth onClick={() => {
+                  setmsg([...msg, { msg: newmsg, side: false }])
+                  setnewmsg('')
+                }}>Send</Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid >
+  );
+}
+
+function Messages({ msg }) {
+
   const classes = useStyles();
   return (
     <Grid container>
