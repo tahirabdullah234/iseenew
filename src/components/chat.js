@@ -123,7 +123,7 @@ export default function Chat() {
 
   return (
     <Grid container className={classes.root}>
-      <Grid item xs={10} className={classes.chatbox}>
+      <Grid item xs={12} className={classes.chatbox}>
         <Grid container>
           <Grid item xs={3} className={classes.chatbox}>
             <Grid container>
