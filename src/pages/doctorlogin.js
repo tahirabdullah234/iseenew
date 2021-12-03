@@ -121,6 +121,7 @@ export default function DoctorLogin() {
     onSubmit: (values) => {
       auth.login(values)
         .then(res => {
+          console.log(res.data)
           if (res.data.success && res.data.user.isDoctor) {
             setsnackbar({
               ...snackbar,

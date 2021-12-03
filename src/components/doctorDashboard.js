@@ -291,7 +291,7 @@ export function DoctorDashboard() {
                   <Typography vairant='body1'>No Pending Requests</Typography>
                   :
                   <CircularProgress
-                    style={{ marginRight: "20px", width: "103px", height: "101px" }}
+                    style={{ marginRight: "20px", width: "100px", height: "100px", margin: "auto" }}
                   />
 
             }
