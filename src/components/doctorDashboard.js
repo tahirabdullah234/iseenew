@@ -151,16 +151,13 @@ function Appointments() {
   const classes = useStyles();
   return (
     <Grid container className={classes.AppAdjust1}>
-      <Grid item xs={4} className={classes.Apptxt}>
+      <Grid item xs={6} className={classes.Apptxt}>
         <Typography className={classes.sameinfont1}>
           AUG 22 2021 3:15 PM
         </Typography>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={6}>
         <Typography className={classes.sameinfont1}>ALEEM KHAN</Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <Typography className={classes.sameinfont2}>MEETING LINK</Typography>
       </Grid>
     </Grid>
   );
@@ -193,7 +190,7 @@ export function DoctorDashboard() {
       <Grid container className={classes.AllGridsAdjust}>
         <Grid
           item
-          md={7}
+          md={5}
           xs={11}
           style={{ marginTop: "10px", padding: "10px" }}
           className={classes.DialogBox}
@@ -228,25 +225,7 @@ export function DoctorDashboard() {
         </Grid>
         <Grid
           item
-          md={4}
-          xs={11}
-          style={{ marginTop: "10px", padding: "10px" }}
-          className={classes.DashboardHead}
-        >
-          <Notifications />
-          <Grid
-            container
-            style={{ height: "40vh", overflowY: "scroll" }}
-          >
-            <Each />
-            <Each />
-            <Each />
-            <Each />
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          md={7}
+          md={6}
           xs={11}
           className={classes.DialogBox}
           style={{
@@ -275,7 +254,7 @@ export function DoctorDashboard() {
           </Grid>
           <Grid
             container
-            style={{ marginBottom: "10px", height: "40vh", overflowY: "scroll" }}
+            style={{ height: "40vh", overflowY: "scroll" }}
           >
             {
               requests ?
@@ -291,41 +270,10 @@ export function DoctorDashboard() {
                   <Typography vairant='body1'>No Pending Requests</Typography>
                   :
                   <CircularProgress
-                    style={{ marginRight: "20px", width: "100px", height: "100px", margin: "auto" }}
+                    style={{ width: "50px", height: "50px", margin: "auto" }}
                   />
 
             }
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          md={4}
-          xs={11}
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "15px",
-          }}
-          className={classes.DialogBox}
-        >
-          <Typography
-            style={{ fontSize: "23px", textAlign: "center" }}
-            className={classes.fonttxt}
-          >
-            MESSAGES
-          </Typography>
-          <Grid
-            container
-            style={{ marginBottom: "10px", justifyContent: "center", height: "40vh", overflowY: "scroll" }}
-          >
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
           </Grid>
         </Grid>
       </Grid>

@@ -16,6 +16,9 @@ var Appointment = new Schema({
     time: {
         type: String
     },
+    name: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model('Appointment', Appointment);
