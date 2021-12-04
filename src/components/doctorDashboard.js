@@ -267,17 +267,17 @@ function PatientRequest({ data }) {
   );
 }
 
-function Appointments() {
+function Appointments({ data }) {
   const classes = useStyles();
   return (
     <Grid container className={classes.AppAdjust1}>
       <Grid item xs={6} className={classes.Apptxt}>
         <Typography className={classes.sameinfont1}>
-          AUG 22 2021 3:15 PM
+          {data.date.split('T')[0] + " " + data.time}
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <Typography className={classes.sameinfont1}>ALEEM KHAN</Typography>
+        <Typography className={classes.sameinfont1}>{data.name}</Typography>
       </Grid>
     </Grid>
   );
@@ -288,6 +288,7 @@ export function DoctorDashboard() {
   const name = useSelector((state) => state.states.name)
   const token = useSelector((state) => state.states.token)
   const requests = useSelector((state) => state.states.recieved_requests)
+  const appointments = useSelector((state) => state.states.appointments)
 
   const dispatch = useDispatch()
   React.useEffect(() => {
@@ -296,10 +297,10 @@ export function DoctorDashboard() {
         if (res.data.success) {
           // alert(JSON.stringify(res.data))
           const apt_data = res.data.data ? res.data.data : []
+          dispatch(setappointments(apt_data))
           apt.get_requests(token)
             .then(res => {
               if (res.data.success) {
-                dispatch(setappointments(apt_data))
                 dispatch(setrecivedreq(res.data.requests))
               } else {
                 dispatch(setrecivedreq([]))
@@ -333,21 +334,29 @@ export function DoctorDashboard() {
               className={classes.AppAdjust}
               style={{ height: "40vh", overflowY: "scroll" }}
             >
-              <Grid container style={{ marginTop: "10px" }}>
-                <Appointments />
-              </Grid>
-              <Grid container style={{ marginTop: "20px" }}>
-                <Appointments />
-              </Grid>
-              <Grid container style={{ marginTop: "20px" }}>
-                <Appointments />
-              </Grid>
-              <Grid container style={{ marginTop: "20px" }}>
-                <Appointments />
-              </Grid>
-              <Grid container style={{ marginTop: "20px" }}>
-                <Appointments />
-              </Grid>
+              {
+                appointments && appointments.length > 0 ?
+                  appointments.map((item) => {
+                    return (
+                      <Grid container style={{ marginTop: "20px", margin: "auto" }}>
+                        <Appointments data={item} />
+                      </Grid>
+                    )
+                  })
+                  :
+                  (appointments && appointments.length === 0) ?
+                    <Grid container className={classes.AppAdjust1}>
+                      <Grid item xs={6} className={classes.Apptxt}>
+                        <Typography className={classes.sameinfont1}>
+                          No Upcoming Appointments
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    :
+                    <CircularProgress
+                      style={{ width: "50px", height: "50px", margin: "auto" }}
+                    />
+              }
             </Grid>
           </Grid>
           <Grid
@@ -416,6 +425,6 @@ export function DoctorDashboard() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }
