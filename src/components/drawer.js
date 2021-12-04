@@ -226,7 +226,7 @@ const DoctorActions = () => {
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>APPOINTMENT</Typography>} />
       </ListItem>
-      <ListItem button key={7}>
+      <ListItem button key={7} onClick={() => history.push("/messages")}>
         <ListItemIcon>
           <img src={chat} alt='chat' className={classes.imageIcon} />
         </ListItemIcon>

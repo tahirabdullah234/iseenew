@@ -38,3 +38,13 @@ export const change_password = (token, payload) => {
         }
     })
 }
+
+export const get_user = (token, id) => {
+    return axios.get("/users/get_user/" + id, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

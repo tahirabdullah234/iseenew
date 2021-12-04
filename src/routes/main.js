@@ -7,6 +7,8 @@ import PatientLogin from "../pages/patientlogin";
 import PatientRegistration from "../pages/patientregistration";
 import DoctorLogin from "../pages/doctorlogin";
 import DoctorRegistration from "../pages/docreg";
+import DoctorFP from "../pages/DoctorForgetPassword";
+import PatientFP from "../pages/PatientForgetPassword";
 
 import Patient from "../pages/patient";
 import Appoint from "../pages/appointDoctor";
@@ -16,7 +18,8 @@ import Reports from "../pages/drReports";
 import Settings from "../pages/UserSettings";
 import Scan from "../pages/checkdisease";
 import Result from "../pages/results";
-
+import UserInfo from "../pages/userinfo";
+import Chat from "../pages/chat";
 import Doctor from "../pages/doctor";
 
 export default function Main() {
@@ -37,6 +40,9 @@ export default function Main() {
                         </Route>
                         <Route path="/register">
                             {isdoctor ? <DoctorRegistration /> : <PatientRegistration />}
+                        </Route>
+                        <Route path="/forgotpassword">
+                            {isdoctor ? <DoctorFP /> : <PatientFP />}
                         </Route>
                         <Route path="*">
                             <Redirect to="/" />
@@ -75,6 +81,9 @@ const UserRoutes = () => {
             <Route path="/checkdisease">
                 <Scan />
             </Route>
+            <Route path="/messages">
+                <Chat />
+            </Route>
             <Route path="*">
                 <Redirect to="/" />
             </Route>
@@ -93,6 +102,15 @@ const DoctorRoutes = () => {
             </Route>
             <Route path="/editprofile">
                 <Settings />
+            </Route>
+            <Route path="/userinfo">
+                <UserInfo />
+            </Route>
+            <Route path="/result">
+                <Result />
+            </Route>
+            <Route path="/messages">
+                <Chat />
             </Route>
             <Route path="*">
                 <Redirect to="/" />

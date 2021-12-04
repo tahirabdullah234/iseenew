@@ -18,17 +18,17 @@ var reportsRouter = require("./routes/report");
 var tipsRouter = require("./routes/tips");
 var app = express();
 
-const connection = mongoose.connect(
-  "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false/isee",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-// const connection = mongoose.connect('mongodb://localhost:27017/isee', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+// const connection = mongoose.connect(
+//   "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false/isee",
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   }
+// );
+const connection = mongoose.connect('mongodb://localhost:27017/isee', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 connection.then(
   (db) => {
     console.log("Connected correctly to server");

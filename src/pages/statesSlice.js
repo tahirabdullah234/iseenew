@@ -6,13 +6,21 @@ export const stateSlice = createSlice({
         islogin: false,
         user: {},
         token: '',
-        isdoctor: false,
+        isdoctor: true,
         name: "",
         data: null,
         doctors: null,
         requesteddocs: [],
+        recieved_requests: null,
+        appointments: null,
     },
     reducers: {
+        setrecivedreq: (state, action) => {
+            state.recieved_requests = action.payload
+        },
+        setappointments: (state, action) => {
+            state.appointments = action.payload
+        },
         login: (state) => {
             state.islogin = true;
         },
@@ -41,7 +49,7 @@ export const stateSlice = createSlice({
         setdoctors: (state, action) => {
             state.doctors = action.payload
         }
-  },
+    },
 });
 
 // Action creators are generated for each case reducer function
@@ -55,6 +63,8 @@ export const {
     setdata,
     setrequesteddoc,
     setdoctors,
+    setrecivedreq,
+    setappointments,
 } = stateSlice.actions
 
 export default stateSlice.reducer;

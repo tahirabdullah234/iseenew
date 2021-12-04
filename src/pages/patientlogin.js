@@ -72,7 +72,7 @@ const useStyles = makeStyles({
   setemail: { marginBottom: "10px", width: "75%" },
   setpassword: { marginBottom: "15px", width: "75%" },
   loginbutton: {
-    width: "40%",
+    width: "80%",
     borderRadius: "15px",
     background: "#3585da",
     display: "flex",
@@ -216,6 +216,8 @@ export default function PatientLogin() {
               <Typography
                 variant="body2"
                 className={classes.extratxt}
+                onClick={() => history.push('/forgotpassword')}
+                style={{ "cursor": "pointer" }}
               >
                 Forgot Password?
               </Typography>

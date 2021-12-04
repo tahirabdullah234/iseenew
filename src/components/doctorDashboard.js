@@ -7,13 +7,23 @@ import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
 
-import { useSelector } from "react-redux";
+import { setrecivedreq, setappointment } from "../pages/statesSlice";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import * as apt from "../Services/appointment";
+
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
     borderRadius: "12px",
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+  },
+  bloodpressuretableitem: {
+    margin: "auto",
   },
   DashboardHead: {
     width: "100%",
@@ -110,24 +120,26 @@ const useStyles = makeStyles({
   Apptxt: { display: "flex", textAlign: "start" },
 });
 
-function PatientRequest() {
+function PatientRequest({ data }) {
   const classes = useStyles();
+  const history = useHistory();
   return (
-    <Grid item xs={11} className={classes.Tablecontentbox}>
+    <Grid item xs={12} className={classes.Tablecontentbox}>
       <Grid container>
-        <Grid item xs={4} sm={2} className={classes.TableContentFont}>
-          <Typography>39009101</Typography>
+        <Grid item xs={4} sm={3} className={classes.TableContentFont}>
+          <Typography>{data.p_id.slice(0, 10)}</Typography>
         </Grid>
-        <Grid item xs={5} sm={3} className={classes.TableContentFont}>
-          <Typography>MR. A. ASLAM</Typography>
+        <Grid item xs={5} sm={4} className={classes.TableContentFont}>
+          <Typography>{data.name}</Typography>
         </Grid>
-        <Grid item xs={3} sm={3} className={classes.TableContentFont}>
-          <Typography>21/08/2021</Typography>
+        <Grid item xs={4} sm={2}
+          className={classes.TableContentFont}
+          style={{ cursor: "pointer" }}
+          onClick={() => history.push({ pathname: '/userinfo', state: { id: data.p_id } })}
+        >
+          <Typography>DETAILS</Typography>
         </Grid>
-        <Grid item xs={4} sm={2} className={classes.TableContentFont}>
-          <Typography>REPORT</Typography>
-        </Grid>
-        <Grid item xs={8} sm={2} className={classes.TableContentFont}>
+        <Grid item xs={8} sm={2} className={classes.TableContentFont} style={{ cursor: "pointer" }}>
           <Typography>ACCEPT</Typography>
         </Grid>
       </Grid>
@@ -139,16 +151,13 @@ function Appointments() {
   const classes = useStyles();
   return (
     <Grid container className={classes.AppAdjust1}>
-      <Grid item xs={4} className={classes.Apptxt}>
+      <Grid item xs={6} className={classes.Apptxt}>
         <Typography className={classes.sameinfont1}>
           AUG 22 2021 3:15 PM
         </Typography>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={6}>
         <Typography className={classes.sameinfont1}>ALEEM KHAN</Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <Typography className={classes.sameinfont2}>MEETING LINK</Typography>
       </Grid>
     </Grid>
   );
@@ -157,6 +166,22 @@ function Appointments() {
 export function DoctorDashboard() {
   const classes = useStyles();
   const name = useSelector((state) => state.states.name)
+  const token = useSelector((state) => state.states.token)
+  const requests = useSelector((state) => state.states.recieved_requests)
+
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    apt.recieved_req(token)
+      .then(res => {
+        // const requests = res.data.requests
+        if (res.data.success) {
+          apt.get_apponitment(token)
+          dispatch(setrecivedreq(res.data.requests))
+        } else {
+          dispatch(setrecivedreq(['No Requests Found']))
+        }
+      })
+  }, [token])
   return (
     <div className="dashdiv">
       <Typography style={{ fontSize: "30px" }} className={classes.sameinfont1}>
@@ -165,7 +190,7 @@ export function DoctorDashboard() {
       <Grid container className={classes.AllGridsAdjust}>
         <Grid
           item
-          md={7}
+          md={5}
           xs={11}
           style={{ marginTop: "10px", padding: "10px" }}
           className={classes.DialogBox}
@@ -200,25 +225,7 @@ export function DoctorDashboard() {
         </Grid>
         <Grid
           item
-          md={4}
-          xs={11}
-          style={{ marginTop: "10px", padding: "10px" }}
-          className={classes.DashboardHead}
-        >
-          <Notifications />
-          <Grid
-            container
-            style={{ height: "40vh", overflowY: "scroll" }}
-          >
-            <Each />
-            <Each />
-            <Each />
-            <Each />
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          md={7}
+          md={6}
           xs={11}
           className={classes.DialogBox}
           style={{
@@ -231,17 +238,14 @@ export function DoctorDashboard() {
         >
           <Grid item xs={11} className={classes.Reportheader}>
             <Grid container>
-              <Grid item xs={4} sm={2} className={classes.TableContentFont}>
+              <Grid item xs={4} sm={3} className={classes.TableContentFont}>
                 <Typography>ID</Typography>
               </Grid>
-              <Grid item xs={5} sm={3} className={classes.TableContentFont}>
+              <Grid item xs={5} sm={4} className={classes.TableContentFont}>
                 <Typography>PATIENT NAME</Typography>
               </Grid>
-              <Grid item xs={3} sm={3} className={classes.TableContentFont}>
-                <Typography>APP. DATE</Typography>
-              </Grid>
               <Grid item xs={4} sm={2} className={classes.TableContentFont}>
-                <Typography>REPORT</Typography>
+                <Typography>DETAILS</Typography>
               </Grid>
               <Grid item xs={8} sm={2} className={classes.TableContentFont}>
                 <Typography>ACTION</Typography>
@@ -250,43 +254,26 @@ export function DoctorDashboard() {
           </Grid>
           <Grid
             container
-            style={{ marginBottom: "10px", justifyContent: "center", height: "40vh", overflowY: "scroll" }}
+            style={{ height: "40vh", overflowY: "scroll" }}
           >
-            <PatientRequest />
-            <PatientRequest />
-            <PatientRequest />
-            <PatientRequest />
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          md={4}
-          xs={11}
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "15px",
-          }}
-          className={classes.DialogBox}
-        >
-          <Typography
-            style={{ fontSize: "23px", textAlign: "center" }}
-            className={classes.fonttxt}
-          >
-            MESSAGES
-          </Typography>
-          <Grid
-            container
-            style={{ marginBottom: "10px", justifyContent: "center", height: "40vh", overflowY: "scroll" }}
-          >
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
+            {
+              requests ?
+                requests.map((item) => {
+                  return (
+                    <Grid item xs={11} style={{ margin: "auto" }}>
+                      <PatientRequest data={item} key={item._id} />
+                    </Grid>
+                  )
+                })
+                :
+                (requests && requests.length === 0) ?
+                  <Typography vairant='body1'>No Pending Requests</Typography>
+                  :
+                  <CircularProgress
+                    style={{ width: "50px", height: "50px", margin: "auto" }}
+                  />
+
+            }
           </Grid>
         </Grid>
       </Grid>

@@ -14,6 +14,7 @@ export const validationSchemaSignup = yup.object({
     password: yup
         .string('Enter your password')
         .min(8, 'Password should be of minimum 8 characters length')
+        .max(16, 'Password should be of maximum 16 characters length')
         .required('Password is Required'),
     confirmpassword: yup
         .string("Confirm Password")
@@ -51,7 +52,8 @@ export const validationSchemaLogin = yup.object({
         .required('Email is required'),
     password: yup
         .string('Enter your password')
-        .min(4, 'Password should be of minimum 8 characters length')
+        .min(8, 'Password should be of minimum 8 characters length')
+        .max(16, 'Password should be of maximum 16 characters length')
         .required('Password is required'),
 });
 
@@ -70,6 +72,7 @@ export const validationSchemePatient = yup.object({
     password: yup
         .string('Enter your password')
         .min(8, 'Password should be of minimum 8 characters length')
+        .max(16, 'Password should be of maximum 16 characters length')
         .required('Password is Required'),
     confirmpassword: yup
         .string("Confirm Password")

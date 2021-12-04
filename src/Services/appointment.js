@@ -39,3 +39,34 @@ export const delete_request = (token, query) => {
         }
     })
 }
+
+export const recieved_req = (token) => {
+    return axios.get('/request/recieved_req', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const get_apponitment = (token, d_id) => {
+    return axios.get('/request/get_apponitment/' + d_id, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const accept_req = (token, p_id, d_id) => {
+    return axios.get('/request/get_apponitment/' + p_id + "/" + d_id, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+

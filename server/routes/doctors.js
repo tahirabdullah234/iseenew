@@ -54,11 +54,14 @@ router.get('/get_doc', authenticate.verifyUser, (req, res) => {
     Doctor.find({})
         .populate('userid')
         .then((err, user) => {
+            console.log(err)
+            console.log(user)
             if (err)
                 res.send(err)
             else {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
+                console.log(user)
                 res.json({ user: user })
             }
         })

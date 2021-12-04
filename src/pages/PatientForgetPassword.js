@@ -8,10 +8,10 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from "formik";
-import { validationSchemaLogin as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
 import { useDispatch } from "react-redux";
 import { login, setuser, settoken } from "./statesSlice";
+import * as yup from "yup";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -74,6 +74,8 @@ const useStyles = makeStyles({
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     marginTop: "25px",
     color: "#fff",
+    width: "80%",
+    margin: "auto",
     "&:hover": {
       background: "rgba(53,133,218,0.8)",
     },
@@ -85,10 +87,16 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+const validationSchema = yup.object({
+  username: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+
+})
+
+
 export default function PatientFP() {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -108,7 +116,6 @@ export default function PatientFP() {
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -183,9 +190,14 @@ export default function PatientFP() {
                   helperText={formik.touched.username && formik.errors.username}
                 />
 
-                <Button type="submit" className={classes.loginbutton}>
-                  RESET PASSWORD
-                </Button>
+                <Grid container>
+                  <Button type="submit" className={classes.loginbutton} fullWidth>
+                    RESET PASSWORD
+                  </Button>
+                  <Button onClick={() => history.goBack()} className={classes.loginbutton} fullWidth>
+                    BACK
+                  </Button>
+                </Grid>
               </Grid>
             </form>
           </Grid>

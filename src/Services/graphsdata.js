@@ -20,6 +20,27 @@ export const getbpdata = (token) => {
     })
 }
 
+export const getglocusedatauser = (token, id) => {
+    return axios.get('/chart/bg_graph/' + id, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const getbpdatauser = (token, id) => {
+    return axios.get('/chart/bp_graph/' + id, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+
 export const savebprecord = (token, data) => {
     return axios.post('/chart/add_bp_record', data,
         {

@@ -15,7 +15,7 @@ import "./App.css";
 // import { UserSettings } from "./components/usersettings";
 // import { Reports } from "./components/reports";
 // import { DoctorDashboard } from "./components/doctorDashboard";
-import Chat from "./pages/chat";
+// import Chat from "./pages/chat";
 // import BP from "./pages/bloodpressure";
 // import BG from "./pages/bloodglocuse";
 // import Settings from "./pages/UserSettings";
@@ -32,7 +32,8 @@ import Chat from "./pages/chat";
 // import Graph from "./components/graphs";
 // import Template from "./components/report_template"
 import Main from "./routes/main";
-import DoctorFP from "./pages/DoctorForgetPassword";
+// import DoctorFP from "./pages/DoctorForgetPassword";
+import Chat from "./components/chat";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({

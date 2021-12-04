@@ -22,4 +22,14 @@ router.get('/get_reports_list', authenticate.verifyUser, (req, res) => {
         else res.json({ success: false, message: 'No Reports' })
     })
 })
+
+router.get('/get_reports_list/:id', authenticate.verifyUser, (req, res) => {
+    Report.find({ u_id: req.params.id }, (err, reps) => {
+        if (err) res.json({ success: false, message: err.name })
+        else if (reps.length > 0) res.json({ success: true, reports: reps })
+        else res.json({ success: false, message: 'No Reports' })
+    })
+})
+
+
 module.exports = router;
