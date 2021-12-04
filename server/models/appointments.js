@@ -10,8 +10,8 @@ var Appointment = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Doctor'
     },
-    apt_date: {
-        type: String,
+    date: {
+        type: Date,
     },
     time: {
         type: String
