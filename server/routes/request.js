@@ -109,8 +109,9 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
             var appointment = new Appointment({
                 p_id: req.body.p_id,
                 d_id: req.body.d_id,
-                on: req.body.date,
+                date: req.body.date,
                 time: req.body.time,
+                name: req.body.name,
             })
             appointment.save((err, apt) => {
                 if (err) {
@@ -130,8 +131,9 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
 })
 
 
-router.get('/get_apponitment/:d_id', authenticate.verifyUser, (req, res) => {
-    Doctor.findOne({ userid: req.params.d_id }, (err, doc) => {
+router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
+    Doctor.findOne({ userid: req.user._id }, (err, doc) => {
+        console.log(doc)
         if (err) {
             res.json({
                 err: err.name,

@@ -50,8 +50,8 @@ export const recieved_req = (token) => {
     })
 }
 
-export const get_apponitment = (token, d_id) => {
-    return axios.get('/request/get_apponitment/' + d_id, {
+export const get_apponitment = (token) => {
+    return axios.get('/request/get_apponitment', {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -60,8 +60,8 @@ export const get_apponitment = (token, d_id) => {
     })
 }
 
-export const accept_req = (token, p_id, d_id) => {
-    return axios.get('/request/get_apponitment/' + p_id + "/" + d_id, {
+export const accept_req = (token, payload) => {
+    return axios.post('/request/accept_req', payload, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',

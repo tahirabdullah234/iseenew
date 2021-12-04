@@ -3,12 +3,14 @@ import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
-import { Notifications } from "./Notification";
-import { Each } from "./eachnotification";
-import { Message } from "./message";
 
-import { setrecivedreq, setappointment } from "../pages/statesSlice";
+import TextField from "@material-ui/core/TextField";
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+
+import { setrecivedreq, setappointments } from "../pages/statesSlice";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Modal from '@material-ui/core/Modal';
 
 import * as apt from "../Services/appointment";
 
@@ -21,6 +23,10 @@ const useStyles = makeStyles({
     borderRadius: "12px",
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+  },
+  card_root: {
+    flexGrow: 1,
+    background: '#fff',
   },
   bloodpressuretableitem: {
     margin: "auto",
@@ -118,11 +124,71 @@ const useStyles = makeStyles({
     justifyContent: "space-around",
   },
   Apptxt: { display: "flex", textAlign: "start" },
+  textfield: {
+    display: "flex",
+    width: "80%",
+    color: "black",
+    margin: "auto",
+    "&:hover": {
+      color: "white",
+    },
+    fontFamily: "Montserrat",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  font: {
+    fontFamily: "Montserrat",
+  },
 });
 
 function PatientRequest({ data }) {
   const classes = useStyles();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+  const [date, setdate] = React.useState('');
+  const [time, settime] = React.useState('');
+  const token = useSelector((state) => state.states.token);
+  const dispatch = useDispatch();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const onAccept = () => {
+    const new_data = {
+      p_id: data.p_id,
+      d_id: data.d_id,
+      date: date,
+      time: time,
+      name: data.name,
+    }
+    apt.accept_req(token, new_data)
+      .then(res => {
+        if (res.data.success) {
+          apt.get_apponitment(token, data.d_id)
+            .then(res => {
+              if (res.data.success) {
+                console.log(res.data)
+                const apt_data = res.data.data ? res.data.data : []
+                apt.get_requests(token)
+                  .then(res => {
+                    if (res.data.success) {
+                      dispatch(setappointments(apt_data))
+                      dispatch(setrecivedreq(res.data.requests))
+                    } else {
+                      dispatch(setrecivedreq([]))
+                    }
+                  })
+              }
+            })
+        }
+      })
+  }
+
   return (
     <Grid item xs={12} className={classes.Tablecontentbox}>
       <Grid container>
@@ -139,11 +205,65 @@ function PatientRequest({ data }) {
         >
           <Typography>DETAILS</Typography>
         </Grid>
-        <Grid item xs={8} sm={2} className={classes.TableContentFont} style={{ cursor: "pointer" }}>
+        <Grid item xs={8} sm={2}
+          className={classes.TableContentFont}
+          style={{ cursor: "pointer" }}
+          onClick={handleOpen}
+        >
           <Typography>ACCEPT</Typography>
         </Grid>
       </Grid>
-    </Grid>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Grid item xs={10} sm={5} style={{ margin: "auto", marginTop: "15%" }}>
+          <Card variant="outlined" className={classes.cardroot}>
+            <Grid container>
+              <TextField
+                className={classes.textfield}
+                label="Appointment Date"
+                id="Appointment Date"
+                InputLabelProps={{
+                  className: classes.font,
+                  shrink: true,
+                }}
+                inputProps={{
+                  className: classes.font
+                }}
+                type="date"
+                name="Appointment Date"
+                value={date}
+                onChange={e => setdate(e.target.value)}
+              />
+            </Grid>
+            <Grid container>
+              <TextField
+                className={classes.textfield}
+                label="Appointment Time"
+                id="Appointment Date"
+                InputLabelProps={{
+                  className: classes.font,
+                  shrink: true,
+                }}
+                inputProps={{
+                  className: classes.font
+                }}
+                type="time"
+                name="Appointment Date"
+                value={time}
+                onChange={e => settime(e.target.value)}
+              />
+            </Grid>
+            <Grid container>
+              <Button onClick={onAccept}>Accept Request</Button>
+            </Grid>
+          </Card>
+        </Grid>
+      </Modal>
+    </Grid >
   );
 }
 
@@ -171,109 +291,128 @@ export function DoctorDashboard() {
 
   const dispatch = useDispatch()
   React.useEffect(() => {
-    apt.recieved_req(token)
+    apt.get_apponitment(token)
       .then(res => {
-        // const requests = res.data.requests
         if (res.data.success) {
-          apt.get_apponitment(token)
-          dispatch(setrecivedreq(res.data.requests))
-        } else {
-          dispatch(setrecivedreq(['No Requests Found']))
+          // alert(JSON.stringify(res.data))
+          const apt_data = res.data.data ? res.data.data : []
+          apt.get_requests(token)
+            .then(res => {
+              if (res.data.success) {
+                dispatch(setappointments(apt_data))
+                dispatch(setrecivedreq(res.data.requests))
+              } else {
+                dispatch(setrecivedreq([]))
+              }
+            })
         }
       })
   }, [token])
   return (
     <div className="dashdiv">
-      <Typography style={{ fontSize: "30px" }} className={classes.sameinfont1}>
-        WELCOME, {name}
-      </Typography>
-      <Grid container className={classes.AllGridsAdjust}>
-        <Grid
-          item
-          md={5}
-          xs={11}
-          style={{ marginTop: "10px", padding: "10px" }}
-          className={classes.DialogBox}
-        >
-          <Typography
-            style={{ fontSize: "26px" }}
-            className={classes.sameinfont}
-          >
-            APPOINTMENTS
-          </Typography>
+      <Grid container className={classes.DialogBox} style={{ padding: "15px" }}>
+        <Typography style={{ fontSize: "30px", testAlign: "center", width: "100%" }} className={classes.sameinfont1}>
+          WELCOME, Dr. {name}
+        </Typography>
+        <Grid container className={classes.AllGridsAdjust}>
           <Grid
             item
-            className={classes.AppAdjust}
-            style={{ height: "40vh", overflowY: "scroll" }}
+            md={5}
+            xs={11}
+            style={{ marginTop: "10px", padding: "10px" }}
+            className={classes.DialogBox}
           >
-            <Grid container style={{ marginTop: "10px" }}>
-              <Appointments />
-            </Grid>
-            <Grid container style={{ marginTop: "20px" }}>
-              <Appointments />
-            </Grid>
-            <Grid container style={{ marginTop: "20px" }}>
-              <Appointments />
-            </Grid>
-            <Grid container style={{ marginTop: "20px" }}>
-              <Appointments />
-            </Grid>
-            <Grid container style={{ marginTop: "20px" }}>
-              <Appointments />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          md={6}
-          xs={11}
-          className={classes.DialogBox}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            marginTop: "20px",
-          }}
-        >
-          <Grid item xs={11} className={classes.Reportheader}>
-            <Grid container>
-              <Grid item xs={4} sm={3} className={classes.TableContentFont}>
-                <Typography>ID</Typography>
+            <Typography
+              style={{ fontSize: "26px" }}
+              className={classes.sameinfont}
+            >
+              UPCOMING APPOINTMENTS
+            </Typography>
+            <Grid
+              item
+              className={classes.AppAdjust}
+              style={{ height: "40vh", overflowY: "scroll" }}
+            >
+              <Grid container style={{ marginTop: "10px" }}>
+                <Appointments />
               </Grid>
-              <Grid item xs={5} sm={4} className={classes.TableContentFont}>
-                <Typography>PATIENT NAME</Typography>
+              <Grid container style={{ marginTop: "20px" }}>
+                <Appointments />
               </Grid>
-              <Grid item xs={4} sm={2} className={classes.TableContentFont}>
-                <Typography>DETAILS</Typography>
+              <Grid container style={{ marginTop: "20px" }}>
+                <Appointments />
               </Grid>
-              <Grid item xs={8} sm={2} className={classes.TableContentFont}>
-                <Typography>ACTION</Typography>
+              <Grid container style={{ marginTop: "20px" }}>
+                <Appointments />
+              </Grid>
+              <Grid container style={{ marginTop: "20px" }}>
+                <Appointments />
               </Grid>
             </Grid>
           </Grid>
           <Grid
-            container
-            style={{ height: "40vh", overflowY: "scroll" }}
+            item
+            md={6}
+            xs={11}
+            className={classes.DialogBox}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              marginTop: "20px",
+              padding: "10px"
+            }}
           >
-            {
-              requests ?
-                requests.map((item) => {
-                  return (
-                    <Grid item xs={11} style={{ margin: "auto" }}>
-                      <PatientRequest data={item} key={item._id} />
-                    </Grid>
-                  )
-                })
-                :
-                (requests && requests.length === 0) ?
-                  <Typography vairant='body1'>No Pending Requests</Typography>
+            <Typography
+              style={{ fontSize: "26px" }}
+              className={classes.sameinfont}
+            >
+              APPOINTMENT REQUESTS
+            </Typography>
+            <Grid item xs={11} className={classes.Reportheader}>
+              <Grid container>
+                <Grid item xs={4} sm={3} className={classes.TableContentFont}>
+                  <Typography>ID</Typography>
+                </Grid>
+                <Grid item xs={5} sm={4} className={classes.TableContentFont}>
+                  <Typography>PATIENT NAME</Typography>
+                </Grid>
+                <Grid item xs={4} sm={2} className={classes.TableContentFont}>
+                  <Typography>DETAILS</Typography>
+                </Grid>
+                <Grid item xs={8} sm={2} className={classes.TableContentFont}>
+                  <Typography>ACTION</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              style={{ height: "40vh", overflowY: "scroll" }}
+            >
+              {
+                requests && requests.length > 0 ?
+                  requests.map((item) => {
+                    return (
+                      <Grid item xs={11} style={{ margin: "auto" }}>
+                        <PatientRequest data={item} key={item._id} />
+                      </Grid>
+                    )
+                  })
                   :
-                  <CircularProgress
-                    style={{ width: "50px", height: "50px", margin: "auto" }}
-                  />
+                  (requests && requests.length === 0) ?
+                    <Grid item xs={11} className={classes.Tablecontentbox} style={{ margin: "auto" }}>
+                      <Grid container className={classes.TableContentFont}>
+                        <Typography variant="h6" align="center">No Pending Requests</Typography>
+                      </Grid>
+                    </Grid>
+                    :
+                    <CircularProgress
+                      style={{ width: "50px", height: "50px", margin: "auto" }}
+                    />
 
-            }
+              }
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
