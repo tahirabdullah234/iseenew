@@ -15,7 +15,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export function GraphGlocuse() {
+export function GraphGlocuse({ check }) {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
 
@@ -51,8 +51,8 @@ export function GraphGlocuse() {
                             })
                         }
                     })
-            , 150)
-    }, [])
+            , 50)
+    }, [token, check])
 
     return (
         <div style={{ margin: "auto" }}>
@@ -121,7 +121,7 @@ export function GraphGlocuse() {
     )
 }
 
-export function GraphBp() {
+export function GraphBp({ check }) {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
 
@@ -158,7 +158,7 @@ export function GraphBp() {
                         }
                     })
             , 50)
-    }, [token])
+    }, [token, check])
     // systolic upper - 120 ideal
     // distlic lower - 80 ideal
 
