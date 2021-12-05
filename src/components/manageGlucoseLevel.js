@@ -23,6 +23,7 @@ import { GraphGlocuse } from "./graphs";
 import * as getdata from "../Services/graphsdata";
 import { useFormik } from "formik";
 import { validationSchemaBG as validationSchema } from "../Services/validations";
+import { questions, answers } from "../Services/questions";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -204,6 +205,7 @@ export function ManageGL() {
     },
   });
   const [GLunit, setGLunit] = React.useState("mg/dl");
+  const [index, setindex] = React.useState(0);
 
   const handleChange = (event) => {
     setGLunit(event.target.value);
@@ -220,6 +222,7 @@ export function ManageGL() {
   const [fasting, setfasting] = React.useState(null);
   const [rand, setrand] = React.useState(null);
   const [check, setcheck] = React.useState(true);
+  const [ans, setans] = React.useState(answers);
 
   const formik = useFormik({
     initialValues: {
@@ -327,9 +330,6 @@ export function ManageGL() {
                       <MenuItem value="mg/dl">
                         <em>mg/dl</em>
                       </MenuItem>
-                      <MenuItem value="mmol/L">
-                        <em>mmol/L</em>
-                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -375,7 +375,40 @@ export function ManageGL() {
               </Grid>
             </Grid>
           </Grid>
-
+          {/*questions grid*/}
+          <Grid item xs={11} className={classes.DEDialogBox}>
+            <Grid container className={classes.DEDialpos}>
+              <Grid item xs={12}>
+                <Typography variant="h6">Symptoms Based Check for Diabeties: </Typography>
+                <Typography variant="subtitle">Please Answer the following Question! </Typography>
+              </Grid>
+              <Grid item xs={11} style={{ width: "80%", textAlign: "left", margin: "auto" }}>
+                <Typography variant="subtitle">{questions ? questions[index] : ''} </Typography>
+                <Grid item xs={11} md={3} >
+                  <FormControl component="fieldset">
+                    <RadioGroup
+                      value={ans[index]}
+                      onChange={e => {
+                        ans[index] = Number(e.target.value);
+                        setans(ans)
+                      }}
+                    >
+                      <FormControlLabel
+                        value='0'
+                        control={<Radio />}
+                        label="No"
+                      />
+                      <FormControlLabel
+                        value='1'
+                        control={<Radio />}
+                        label="Yes"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid item xs={11} className={classes.Gridadjust}>
             <Grid container className={classes.GridAdjust}>
               <Grid item xs={12} md={5} className={classes.TDialogbox}>
@@ -415,6 +448,6 @@ export function ManageGL() {
           </Grid>
         </Grid>
       </div>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
