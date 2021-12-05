@@ -12,6 +12,15 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { validationSchemaBP as validationSchema } from "../Services/validations";
 import { useFormik } from "formik";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { questions, answers } from "../Services/questions";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -160,6 +169,10 @@ export function ManageBP() {
   const [data, setdata] = React.useState(null);
   const [avg, setavg] = React.useState(null);
   const [check, setcheck] = React.useState(true);
+  const [ans, setans] = React.useState(answers);
+  const [mark, setmark] = React.useState('')
+  const [index, setindex] = React.useState(0);
+
 
   const formik = useFormik({
     initialValues: {
@@ -279,6 +292,78 @@ export function ManageBP() {
               <Typography variant="h6">Diastolic Blood Pressure Average:
                 <Typography variant="body1"> {avg ? avg.dysAvg : "No Record Avaliable"}</Typography>
               </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        {/*Questions grid */}
+        <Grid item xs={11} className={classes.DEDialogBox}>
+          <Grid container className={classes.DEDialpos}>
+            <Grid item xs={12}>
+              <Typography variant="h6">Symptoms Based Check for Hypertension: </Typography>
+              <Typography variant="subtitle">Please Answer the following Question:</Typography>
+            </Grid>
+            <Grid item xs={11} style={{ width: "100%", margin: "auto" }}>
+              <Typography variant="h6">{questions ? questions[index] : ''} </Typography>
+              <Grid item xs={11} style={{ margin: "auto" }}>
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    value={mark}
+                    onChange={e => {
+                      ans[index] = Number(e.target.value);
+                      setmark(e.target.value)
+                    }}
+                  >
+                    <FormControlLabel
+                      value='0'
+                      control={<Radio />}
+                      label="No"
+                    />
+                    <FormControlLabel
+                      value='1'
+                      control={<Radio />}
+                      label="Yes"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <IconButton
+                aria-label="previous question"
+                component="span"
+                onClick={() => {
+                  if (index > 0 && mark !== "") {
+                    setindex(index - 1);
+                    setmark("");
+                  }
+                }}
+                disabled={index === 0}
+              >
+                <ArrowBackIosIcon />
+                <Typography variant="caption">Prevoius</Typography>
+              </IconButton>
+              {
+                index === questions.length - 1 ?
+                  <Button
+                    onClick={() =>
+                      alert(JSON.stringify(ans))
+                    }
+                  >
+                    Submit
+                  </Button>
+                  :
+                  <IconButton
+                    aria-label="next question"
+                    component="span"
+                    onClick={() => {
+                      if (index < questions.length - 1 && mark !== "") {
+                        setindex(index + 1);
+                        setmark("");
+                      }
+                    }}
+                    disabled={index === questions.length - 1}
+                  >
+                    <Typography variant="caption">Next</Typography>
+                    <ArrowForwardIosIcon />
+                  </IconButton>}
             </Grid>
           </Grid>
         </Grid>

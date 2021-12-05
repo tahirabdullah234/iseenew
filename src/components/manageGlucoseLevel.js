@@ -16,6 +16,9 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { useSelector } from "react-redux";
 
@@ -197,25 +200,7 @@ function Glucoselevelhead() {
 }
 
 export function ManageGL() {
-  const theme = createTheme({
-    palette: {
-      secondary: {
-        main: "#3585da",
-      },
-    },
-  });
-  const [GLunit, setGLunit] = React.useState("mg/dl");
-  const [index, setindex] = React.useState(0);
-
-  const handleChange = (event) => {
-    setGLunit(event.target.value);
-  };
-  const [fast, setfast] = React.useState("");
-  const handleChang = (event) => {
-    setfast(event.target.value);
-  };
   const classes = useStyles();
-
   const token = useSelector((state) => state.states.token);
   const id = useSelector((state) => state.states.user._id)
   const [data, setdata] = React.useState(null);
@@ -223,6 +208,25 @@ export function ManageGL() {
   const [rand, setrand] = React.useState(null);
   const [check, setcheck] = React.useState(true);
   const [ans, setans] = React.useState(answers);
+  const [mark, setmark] = React.useState('')
+  const [GLunit, setGLunit] = React.useState("mg/dl");
+  const [index, setindex] = React.useState(0);
+  const [fast, setfast] = React.useState("");
+
+  const theme = createTheme({
+    palette: {
+      secondary: {
+        main: "#3585da",
+      },
+    },
+  });
+
+  const handleChange = (event) => {
+    setGLunit(event.target.value);
+  };
+  const handleChang = (event) => {
+    setfast(event.target.value);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -380,17 +384,17 @@ export function ManageGL() {
             <Grid container className={classes.DEDialpos}>
               <Grid item xs={12}>
                 <Typography variant="h6">Symptoms Based Check for Diabeties: </Typography>
-                <Typography variant="subtitle">Please Answer the following Question! </Typography>
+                <Typography variant="subtitle">Please Answer the following Question:</Typography>
               </Grid>
-              <Grid item xs={11} style={{ width: "80%", textAlign: "left", margin: "auto" }}>
-                <Typography variant="subtitle">{questions ? questions[index] : ''} </Typography>
-                <Grid item xs={11} md={3} >
+              <Grid item xs={11} style={{ width: "100%", margin: "auto" }}>
+                <Typography variant="h6">{questions ? questions[index] : ''} </Typography>
+                <Grid item xs={11} style={{ margin: "auto" }}>
                   <FormControl component="fieldset">
                     <RadioGroup
-                      value={ans[index]}
+                      value={mark}
                       onChange={e => {
                         ans[index] = Number(e.target.value);
-                        setans(ans)
+                        setmark(e.target.value)
                       }}
                     >
                       <FormControlLabel
@@ -406,6 +410,44 @@ export function ManageGL() {
                     </RadioGroup>
                   </FormControl>
                 </Grid>
+                <IconButton
+                  aria-label="previous question"
+                  component="span"
+                  onClick={() => {
+                    if (index > 0 && mark !== "") {
+                      setindex(index - 1);
+                      setmark("");
+                    }
+                  }}
+                  disabled={index === 0}
+                >
+                  <ArrowBackIosIcon />
+                  <Typography variant="caption">Prevoius</Typography>
+                </IconButton>
+                {
+                  index === questions.length - 1 ?
+                    <Button
+                      onClick={() =>
+                        alert(JSON.stringify(ans))
+                      }
+                    >
+                      Submit
+                    </Button>
+                    :
+                    <IconButton
+                      aria-label="next question"
+                      component="span"
+                      onClick={() => {
+                        if (index < questions.length - 1 && mark !== "") {
+                          setindex(index + 1);
+                          setmark("");
+                        }
+                      }}
+                      disabled={index === questions.length - 1}
+                    >
+                      <Typography variant="caption">Next</Typography>
+                      <ArrowForwardIosIcon />
+                    </IconButton>}
               </Grid>
             </Grid>
           </Grid>
@@ -448,6 +490,6 @@ export function ManageGL() {
           </Grid>
         </Grid>
       </div>
-    </ThemeProvider >
+    </ThemeProvider>
   );
 }
