@@ -217,6 +217,9 @@ export function ManageGL() {
   const token = useSelector((state) => state.states.token);
   const id = useSelector((state) => state.states.user._id)
   const [data, setdata] = React.useState(null);
+  const [fasting, setfasting] = React.useState(null);
+  const [rand, setrand] = React.useState(null);
+  const [check, setcheck] = React.useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -229,6 +232,9 @@ export function ManageGL() {
         .then(res => {
           if (res.data.success) {
             rows();
+            getfastavg();
+            getrandavg();
+            setcheck(!check);
             formik.resetForm()
           }
         })
@@ -259,8 +265,29 @@ export function ManageGL() {
       })
   }
 
+  const getfastavg = () => {
+    getdata.getfastingavg(token)
+      .then(res => {
+        // alert(JSON.stringify(res.data))
+        if (res.data.success) {
+          setfasting(res.data.avg);
+        }
+      })
+  }
+
+  const getrandavg = () => {
+    getdata.getrandomavg(token)
+      .then(res => {
+        if (res.data.success) {
+          setrand(res.data.avg)
+        }
+      })
+  }
+
   React.useEffect(() => {
     rows();
+    getfastavg();
+    getrandavg();
   }, [token])
 
   return (
@@ -334,6 +361,21 @@ export function ManageGL() {
               </Grid>
             </form>
           </Grid>
+          <Grid item xs={11} className={classes.DEDialogBox}>
+            <Grid container className={classes.DEDialpos}>
+              <Grid item xs={6}>
+                <Typography variant="h6">Fasting Sugar Level Average:
+                  <Typography variant="body1"> {fasting ? fasting.fastingAvg : "No Record Avaliable"}</Typography>
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h6">Random Sugar Level Average:
+                  <Typography variant="body1"> {rand ? rand.randomAvg : "No Record Avaliable"}</Typography>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+
           <Grid item xs={11} className={classes.Gridadjust}>
             <Grid container className={classes.GridAdjust}>
               <Grid item xs={12} md={5} className={classes.TDialogbox}>
@@ -366,7 +408,7 @@ export function ManageGL() {
                   GLUCOSE LEVEL GRAPH
                 </Typography>
                 <Grid container style={{ margin: "auto" }}>
-                  <GraphGlocuse />
+                  <GraphGlocuse check={check} />
                 </Grid>
               </Grid>
             </Grid>

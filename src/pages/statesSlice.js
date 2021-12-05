@@ -1,22 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 // redux to manage states easily
 export const stateSlice = createSlice({
-  name: "states",
-  initialState: {
-    islogin: false,
-    user: {},
-    token: "",
-    isdoctor: false,
-    name: "",
-    data: null,
-    doctors: null,
-    requesteddocs: [],
-    recieved_requests: null,
-    appointments: null,
-  },
-  reducers: {
-    setrecivedreq: (state, action) => {
-      state.recieved_requests = action.payload;
+    name: 'states',
+    initialState: {
+        islogin: false,
+        user: {},
+        token: '',
+        isdoctor: false,
+        name: "",
+        data: null,
+        doctors: null,
+        requesteddocs: [],
+        recieved_requests: null,
+        appointments: null,
     },
     setappointments: (state, action) => {
       state.appointments = action.payload;

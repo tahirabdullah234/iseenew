@@ -105,8 +105,8 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  
-  
+
+
   bloodpressuretablecontainer: {
     height: 300,
     overflowY: "scroll",
@@ -158,6 +158,8 @@ export function ManageBP() {
   const token = useSelector((state) => state.states.token);
   const id = useSelector((state) => state.states.user._id);
   const [data, setdata] = React.useState(null);
+  const [avg, setavg] = React.useState(null);
+  const [check, setcheck] = React.useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -172,6 +174,8 @@ export function ManageBP() {
         .then(res => {
           if (res.data.success) {
             rows();
+            getBpavg();
+            setcheck(!check)
             formik.resetForm()
           }
         })
@@ -203,8 +207,20 @@ export function ManageBP() {
       })
   }
 
+  const getBpavg = () => {
+    getdata.getbpavg(token)
+      .then(res => {
+        if (res.data.success) {
+          setavg(res.data.avg)
+        } else {
+          setavg(null)
+        }
+      })
+  }
+
   React.useEffect(() => {
     rows();
+    getBpavg();
   }, [token])
 
   return (
@@ -252,7 +268,21 @@ export function ManageBP() {
             </Grid>
           </form>
         </Grid>
-        <Grid item xs={12} className={classes.Gridadjust}>
+        <Grid item xs={11} className={classes.DEDialogBox}>
+          <Grid container className={classes.DEDialpos}>
+            <Grid item xs={6}>
+              <Typography variant="h6">Systolic Blood Pressure Average:
+                <Typography variant="body1"> {avg ? avg.sysAvg : "No Record Avaliable"}</Typography>
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="h6">Diastolic Blood Pressure Average:
+                <Typography variant="body1"> {avg ? avg.dysAvg : "No Record Avaliable"}</Typography>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={11} className={classes.Gridadjust}>
           <Grid container className={classes.GridAjust}>
             <Grid item xs={12} md={5} className={classes.TDialogbox}>
               <Typography
@@ -284,7 +314,7 @@ export function ManageBP() {
                 BLOOD PRESSURE GRAPH
               </Typography>
               <Grid container className={classes.graphctn}>
-                <GraphBp />
+                <GraphBp check={check} />
               </Grid>
             </Grid>
           </Grid>
