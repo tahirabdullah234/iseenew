@@ -1,0 +1,35 @@
+export const questions = [
+    'Do you feel fatigue?',
+    "Have you had weight loss recently?",
+    "Do you feel restlessness?",
+    "Do you feel lethargic?",
+    "Do you have irregular blood glucose levels?",
+    "Have you had headaces recently?",
+    "Do you have a blurred or distorted vision?",
+    "Have you experienced chest pain recently?",
+    "Do you feel dizziness?",
+    "Do you have obesity?",
+    "Do you feel excessive hunger?",
+    "Have you had loss of balance recently?",
+    "Is your appitite increased?",
+    "Do you have increased frequency of Urine?",
+    "Have you experience loss of concentration recently?"
+]
+
+export const answers = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+]
