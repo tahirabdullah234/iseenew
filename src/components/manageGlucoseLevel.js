@@ -207,7 +207,7 @@ export function ManageGL() {
   const [fasting, setfasting] = React.useState(null);
   const [rand, setrand] = React.useState(null);
   const [check, setcheck] = React.useState(true);
-  const [ans, setans] = React.useState(answers);
+  const [ans] = React.useState(answers);
   const [mark, setmark] = React.useState('')
   const [GLunit, setGLunit] = React.useState("mg/dl");
   const [index, setindex] = React.useState(0);

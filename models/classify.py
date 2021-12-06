@@ -4,12 +4,15 @@ from keras.models import load_model
 from PIL import Image
 import numpy as np
 import os
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
-
+print(os.getcwd())
 model = load_model(
-    r'C:\Users\abdul\Desktop\iseenew\dr_model\DR_14.h5', compile=True)
+    r'C:\Users\abdul\Desktop\iseenew\models\DR_14.h5', compile=True)
+symptoms = load_model(
+    r'C:\Users\abdul\Desktop\iseenew\models\symptoms training\mode_symp.h5', compile=True)
 
 
 def reshape_data(x):
@@ -32,7 +35,7 @@ def reshape_data(x):
     return x
 
 
-@app.route('/classify', methods=['POST'])
+@ app.route('/classify', methods=['POST'])
 def index():
     if request.method == 'POST':
         if 'file' in request.files:
@@ -60,6 +63,21 @@ def index():
                 'success': False,
                 'message': 'No Image Attached'
             })
+
+
+@ app.route('/symptom', methods=['POST'])
+def indexSymp():
+    if request.method == "POST":
+        # inp = request.json
+        # print(request.json)
+        print(request.form)
+        inp = np.array([int(i) for i in request.form['symptoms'].split(',')])
+        print(inp)
+        # inp = inp['symptoms']
+        inp = inp.reshape((1, 15))
+        prediction = symptoms.predict(inp, verbose=1)
+        print(prediction)
+        return {'request': "true"}
 
 
 if __name__ == '__main__':
