@@ -10,7 +10,7 @@ var Message = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Doctor'
     },
-    data: {
+    msg: {
         type: String
     },
 }, { timestamps: true });
