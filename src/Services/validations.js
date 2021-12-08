@@ -113,6 +113,7 @@ export const validationSchemaBG = yup.object({
     value: yup
         .number("Enter Systolic Value")
         .min(0, "Glucose Value Cannot Be Lower Then 0")
+        .max(999, "Please")
         .required("This field is requried"),
 })
 

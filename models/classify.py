@@ -91,3 +91,4 @@ if __name__ == '__main__':
 # 10001_right.jpeg - 0
 # 10002_right.jpeg - 0
 # 10004_left.jpeg - 0
+# what is gaussian blur and why it is used
