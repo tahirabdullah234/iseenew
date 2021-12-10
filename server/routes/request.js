@@ -4,7 +4,7 @@ var authenticate = require('../authenticate');
 var Request = require('../models/request');
 var Doctor = require('../models/doctor');
 var Appointment = require('../models/appointments');
-// var Message = require('../models/message');
+var Message = require('../models/message');
 
 router.post('/add_request', authenticate.verifyUser, (req, res) => {
     Request.create(req.body, (err, data) => {
@@ -13,11 +13,25 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
                 success: false,
                 err: err
             })
-        else
-            res.json({
-                success: true,
-                data: data
+        else {
+            Message.create({
+                p_id: req.body.p_id,
+                d_id: req.body.d_id,
+                msg: req.body.msg,
+            }, (err, msg) => {
+                if (err) {
+                    res.json({
+                        success: false,
+                        err: err.name,
+                    })
+                } else {
+                    res.json({
+                        success: true,
+                        data: data
+                    })
+                }
             })
+        }
     })
 })
 
@@ -49,18 +63,20 @@ router.get('/get_requests', authenticate.verifyUser, (req, res) => {
 
 router.get('/recieved_req', authenticate.verifyUser, (req, res) => {
     Doctor.findOne({ userid: req.user._id }, (err, user) => {
-        if (err)
+        if (err) {
             res.json({
                 success: false,
                 message: err.name
             })
+        }
         else if (user) {
             Request.find({ d_id: user._id }, (err, requests) => {
-                if (err)
+                if (err) {
                     res.json({
                         success: false,
                         message: err.name
                     })
+                }
                 else if (requests.length > 0) {
                     res.json({
                         success: true,
@@ -140,7 +156,7 @@ router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
                 success: false
             })
         } else {
-            Appointment.find({ d_id: doc._id }, (err, data) => {
+            Appointment.find({ d_id: doc._id, date: { '$gte': Date.now(), } }, (err, data) => {
                 if (err) {
                     res.json({
                         success: false,
@@ -152,6 +168,37 @@ router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
                         data
                     })
                 }
+            })
+        }
+    })
+})
+
+router.get('/get_chat', authenticate.verifyUser, (req, res) => {
+    Doctor.findOne({ userid: req.user._id }, (err, doc) => {
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name
+            })
+        } else if (doc) {
+            Message.find({ d_id: doc._id }, 'p_id', (err, users) => {
+                if (err) {
+                    res.json({
+                        success: false,
+                        err: err.name
+                    })
+                } else {
+                    console.log(users)
+                    res.json({
+                        success: true,
+                        users
+                    })
+                }
+            })
+        } else {
+            res.json({
+                success: false,
+                err: "User no Found"
             })
         }
     })

@@ -169,12 +169,12 @@ function PatientRequest({ data }) {
     apt.accept_req(token, new_data)
       .then(res => {
         if (res.data.success) {
-          apt.get_apponitment(token, data.d_id)
+          apt.get_apponitment(token)
             .then(res => {
               if (res.data.success) {
                 console.log(res.data)
                 const apt_data = res.data.data ? res.data.data : []
-                apt.get_requests(token)
+                apt.recieved_req(token)
                   .then(res => {
                     if (res.data.success) {
                       dispatch(setappointments(apt_data))
@@ -294,19 +294,22 @@ export function DoctorDashboard() {
   React.useEffect(() => {
     apt.get_apponitment(token)
       .then(res => {
+        var apt_data = []
         if (res.data.success) {
           // alert(JSON.stringify(res.data))
-          const apt_data = res.data.data ? res.data.data : []
-          dispatch(setappointments(apt_data))
-          apt.get_requests(token)
-            .then(res => {
-              if (res.data.success) {
-                dispatch(setrecivedreq(res.data.requests))
-              } else {
-                dispatch(setrecivedreq([]))
-              }
-            })
+          apt_data = res.data.data ? res.data.data : []
         }
+        apt.recieved_req(token)
+          .then(res => {
+            if (res.data.success) {
+              dispatch(setappointments(apt_data))
+              dispatch(setrecivedreq(res.data.requests))
+            } else {
+              dispatch(setappointments(apt_data))
+              dispatch(setrecivedreq([]))
+            }
+          })
+
       })
   }, [token])
   return (
@@ -346,7 +349,7 @@ export function DoctorDashboard() {
                   :
                   (appointments && appointments.length === 0) ?
                     <Grid container className={classes.AppAdjust1}>
-                      <Grid item xs={6} className={classes.Apptxt}>
+                      <Grid item xs={8} className={classes.Apptxt}>
                         <Typography className={classes.sameinfont1}>
                           No Upcoming Appointments
                         </Typography>
@@ -410,16 +413,17 @@ export function DoctorDashboard() {
                   })
                   :
                   (requests && requests.length === 0) ?
-                    <Grid item xs={11} className={classes.Tablecontentbox} style={{ margin: "auto" }}>
-                      <Grid container className={classes.TableContentFont}>
-                        <Typography variant="h6" align="center">No Pending Requests</Typography>
+                    <Grid container className={classes.AppAdjust1}>
+                      <Grid item xs={6} className={classes.Apptxt}>
+                        <Typography className={classes.sameinfont1}>
+                          No Pending Requests
+                        </Typography>
                       </Grid>
                     </Grid>
                     :
                     <CircularProgress
                       style={{ width: "50px", height: "50px", margin: "auto" }}
                     />
-
               }
             </Grid>
           </Grid>

@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
+import * as apt from "../Services/appointment";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles({
   root: {
     // background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
@@ -119,7 +121,17 @@ export default function Chat() {
       side: false
     },
   ])
+
   const [newmsg, setnewmsg] = React.useState('')
+  const token = useSelector((state) => state.states.token)
+  const isdoctor = useSelector((state) => state.states.isdoctor)
+
+  React.useEffect(() => {
+    apt.get_users(token, isdoctor)
+      .then(res => {
+        alert(JSON.stringify(res.data))
+      })
+  }, [token, isdoctor])
 
   return (
     <Grid container className={classes.root}>
@@ -165,22 +177,29 @@ export default function Chat() {
                 />
               </Grid>
               <Grid item xs={2}>
-                <Button fullWidth onClick={() => {
-                  setmsg([...msg, { msg: newmsg, side: false }])
-                  setnewmsg('')
-                }}>Send</Button>
+                <Button fullWidth
+                  onClick={() => {
+                    setmsg([...msg, { msg: newmsg, side: false }])
+                    setnewmsg('')
+                  }}>Send</Button>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid >
+    </Grid>
   );
 }
 
 function Messages({ msg }) {
 
   const classes = useStyles();
+  const messagesEndRef = React.useRef(null)
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
+  React.useEffect(scrollToBottom, [msg]);
   return (
     <Grid container>
       {
@@ -217,6 +236,7 @@ function Messages({ msg }) {
           :
           <Grid></Grid>
       }
+      <div ref={messagesEndRef} />
     </Grid>
   )
 }

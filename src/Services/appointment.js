@@ -70,3 +70,12 @@ export const accept_req = (token, payload) => {
     })
 }
 
+export const get_users = (token) => {
+    return axios.get('/request/get_chat', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
