@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Message = new Schema({
+var Chats = new Schema({
     p_id: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
@@ -10,9 +10,6 @@ var Message = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
-    msg: {
-        type: String
-    },
-}, { timestamps: true });
+});
 
-module.exports = mongoose.model('Message', Message);
+module.exports = mongoose.model('Chats', Chats);

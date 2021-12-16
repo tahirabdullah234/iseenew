@@ -5,6 +5,8 @@ var Request = require('../models/request');
 var Doctor = require('../models/doctor');
 var Appointment = require('../models/appointments');
 var Message = require('../models/message');
+var User = require('../models/user');
+var Chat = require('../models/chats');
 
 router.post('/add_request', authenticate.verifyUser, (req, res) => {
     Request.create(req.body, (err, data) => {
@@ -14,22 +16,38 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
                 err: err
             })
         else {
-            Message.create({
-                p_id: req.body.p_id,
-                d_id: req.body.d_id,
-                msg: req.body.msg,
-            }, (err, msg) => {
-                if (err) {
-                    res.json({
-                        success: false,
-                        err: err.name,
-                    })
-                } else {
-                    res.json({
-                        success: true,
-                        data: data
-                    })
-                }
+            Doctor.findById(req.body.d_id, (err, data) => {
+                console.log("Sample Data:" + data);
+                const d_id = data.userid;
+                Chat.create({
+                    p_id: req.user._id,
+                    d_id,
+                }, (err, data) => {
+                    if (err) {
+                        res.json({
+                            err: err.name,
+                            success: false
+                        })
+                    } else {
+                        Message.create({
+                            p_id: req.body.p_id,
+                            d_id,
+                            msg: req.body.msg,
+                        }, (err, msg) => {
+                            if (err) {
+                                res.json({
+                                    success: false,
+                                    err: err.name,
+                                })
+                            } else {
+                                res.json({
+                                    success: true,
+                                    data: data
+                                })
+                            }
+                        })
+                    }
+                })
             })
         }
     })
@@ -173,34 +191,5 @@ router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
     })
 })
 
-router.get('/get_chat', authenticate.verifyUser, (req, res) => {
-    Doctor.findOne({ userid: req.user._id }, (err, doc) => {
-        if (err) {
-            res.json({
-                success: false,
-                err: err.name
-            })
-        } else if (doc) {
-            Message.find({ d_id: doc._id }, 'p_id', (err, users) => {
-                if (err) {
-                    res.json({
-                        success: false,
-                        err: err.name
-                    })
-                } else {
-                    console.log(users)
-                    res.json({
-                        success: true,
-                        users
-                    })
-                }
-            })
-        } else {
-            res.json({
-                success: false,
-                err: "User no Found"
-            })
-        }
-    })
-})
+
 module.exports = router;

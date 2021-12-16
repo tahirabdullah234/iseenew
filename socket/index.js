@@ -7,11 +7,6 @@ const axios = require('axios');
 
 let users = [];
 
-// {
-//   userid,
-//     socketid
-// }
-
 const addUser = (payload) => {
   !users.some((user) => user.userId === payload.userId) &&
     users.push(payload);
