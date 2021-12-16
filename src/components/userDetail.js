@@ -13,7 +13,19 @@ import { useLocation } from "react-router";
 
 
 const useStyles = makeStyles({
-
+    root: {
+        height: "100vh",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    DialogBox: {
+        width: "100%",
+        borderRadius: "12px",
+        background: "#fff",
+        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+        padding: "15px",
+        margin: "auto"
+    },
 })
 
 export default function UserInfo() {
@@ -48,51 +60,52 @@ export default function UserInfo() {
     }
 
     return (
-        <Grid>
-            <Grid container>
-                <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Typography variant="h4">Basic Information: </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                    <Typography variant="body1">Name: {user ? user.fname + " " + user.lname : ''}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                    <Typography variant="body1">Gender: {user ? user.gender : ""}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                    <Typography variant="body1">Age: {user ? getAge(user.dob.split("T")[0]) : ""}</Typography>
-                </Grid>
-            </Grid>
-            <Grid container>
-                <Grid item xs={12}>
-                    <Reports />
-                </Grid>
-            </Grid>
-            {
-                userId ?
-                    <Grid container className={classes.BPGLtitle}>
-                        <Grid item xs={12} md={6}>
-                            <Typography className={classes.timeline}>
-                                BLOOD PRESSURE
-                            </Typography>
-                            <Grid container className={classes.graphctn}>
-                                <GraphBp userId={userId} />
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Typography className={classes.timeline}>
-                                GLUCOSE LEVEL
-                            </Typography>
-                            <Grid container className={classes.graphctn}>
-                                <GraphGlocuse userId={userId} />
-                            </Grid>
-                        </Grid>
+        <Grid className={classes.root}>
+            <Grid container className={classes.DialogBox}>
+                <Grid container >
+                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                        <Typography variant="h4">Basic Information: </Typography>
                     </Grid>
-                    :
-                    <Grid></Grid>
+                    <Grid item xs={4}>
+                        <Typography variant="body1">Name: {user ? user.fname + " " + user.lname : ''}</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Typography variant="body1">Gender: {user ? user.gender : ""}</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Typography variant="body1">Age: {user ? getAge(user.dob.split("T")[0]) : ""}</Typography>
+                    </Grid>
+                </Grid>
+                <Grid container>
+                    <Grid item xs={12}>
+                    </Grid>
+                </Grid>
+                {
+                    userId ?
+                        <Grid container className={classes.BPGLtitle}>
+                            <Grid item xs={12} md={6}>
+                                <Typography className={classes.timeline}>
+                                    BLOOD PRESSURE
+                                </Typography>
+                                <Grid container className={classes.graphctn}>
+                                    <GraphBp userId={userId} />
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Typography className={classes.timeline}>
+                                    GLUCOSE LEVEL
+                                </Typography>
+                                <Grid container className={classes.graphctn}>
+                                    <GraphGlocuse userId={userId} />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        :
+                        <Grid></Grid>
 
-            }
+                }
 
+            </Grid>
         </Grid>
     )
 }

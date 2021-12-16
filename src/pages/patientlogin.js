@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { login, setuser, settoken } from "./statesSlice";
+import { login, setuser, settoken, setdoctortrue } from "./statesSlice";
 import * as auth from "../Services/auth";
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
 import { useHistory } from "react-router";
@@ -158,7 +158,7 @@ export default function PatientLogin() {
   return (
     <div className="container">
       <Header />
-      <Grid item md={6} sm={5} xs={9} className={classes.border}>
+      <Grid item md={7} sm={6} xs={9} className={classes.border}>
         <Grid container className={classes.dialogbox}>
           <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
             <img
@@ -228,6 +228,14 @@ export default function PatientLogin() {
                 style={{ "cursor": "pointer" }}
               >
                 New User SignUp Here
+              </Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => dispatch(setdoctortrue())}
+                style={{ "cursor": "pointer" }}
+              >
+                Are You A Doctor?
               </Typography>
             </form>
           </Grid>

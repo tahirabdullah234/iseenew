@@ -12,7 +12,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { validationSchemaBP as validationSchema } from "../Services/validations";
 import { useFormik } from "formik";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -169,7 +168,7 @@ export function ManageBP() {
   const [data, setdata] = React.useState(null);
   const [avg, setavg] = React.useState(null);
   const [check, setcheck] = React.useState(true);
-  const [ans, setans] = React.useState(answers);
+  const [ans] = React.useState(answers);
   const [mark, setmark] = React.useState('')
   const [index, setindex] = React.useState(0);
 

@@ -70,3 +70,41 @@ export const accept_req = (token, payload) => {
     })
 }
 
+export const get_users = (token, isdoctor) => {
+    if (isdoctor)
+        return axios.get('/request/doctor/get_chat', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    else
+        return axios.get('/request/patient/get_chat', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+}
+
+export const get_msgs = (token, isdoctor, payload) => {
+    console.log(payload)
+    if (isdoctor)
+        return axios.get('/request/doctor/messages/' + payload.p_id._id, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    else
+        return axios.get('/request/patient/messages/' + payload.d_id._id, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+}

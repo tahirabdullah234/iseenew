@@ -142,7 +142,7 @@ export function GraphBp({ userId }) {
     React.useEffect(() => {
         setTimeout(
             () =>
-                getdata.getglocusedatauser(token, userId)
+                getdata.getbpdatauser(token, userId)
                     .then(res => {
                         if (res.data.success) {
                             console.log(res.data)

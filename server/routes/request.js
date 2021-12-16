@@ -4,7 +4,9 @@ var authenticate = require('../authenticate');
 var Request = require('../models/request');
 var Doctor = require('../models/doctor');
 var Appointment = require('../models/appointments');
-// var Message = require('../models/message');
+var Message = require('../models/message');
+var User = require('../models/user');
+var Chat = require('../models/chats');
 
 router.post('/add_request', authenticate.verifyUser, (req, res) => {
     Request.create(req.body, (err, data) => {
@@ -13,11 +15,42 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
                 success: false,
                 err: err
             })
-        else
-            res.json({
-                success: true,
-                data: data
+        else {
+            Doctor.findById(req.body.d_id, (err, data) => {
+                console.log("Sample Data:" + data);
+                const d_id = data.userid;
+                Chat.create({
+                    p_id: req.user._id,
+                    d_id,
+                }, (err, data) => {
+                    if (err) {
+                        res.json({
+                            err: err.name,
+                            success: false
+                        })
+                    } else {
+                        Message.create({
+                            p_id: req.body.p_id,
+                            d_id,
+                            msg: req.body.msg,
+                            patient: true,
+                        }, (err, msg) => {
+                            if (err) {
+                                res.json({
+                                    success: false,
+                                    err: err.name,
+                                })
+                            } else {
+                                res.json({
+                                    success: true,
+                                    data: data
+                                })
+                            }
+                        })
+                    }
+                })
             })
+        }
     })
 })
 
@@ -49,18 +82,20 @@ router.get('/get_requests', authenticate.verifyUser, (req, res) => {
 
 router.get('/recieved_req', authenticate.verifyUser, (req, res) => {
     Doctor.findOne({ userid: req.user._id }, (err, user) => {
-        if (err)
+        if (err) {
             res.json({
                 success: false,
                 message: err.name
             })
+        }
         else if (user) {
             Request.find({ d_id: user._id }, (err, requests) => {
-                if (err)
+                if (err) {
                     res.json({
                         success: false,
                         message: err.name
                     })
+                }
                 else if (requests.length > 0) {
                     res.json({
                         success: true,
@@ -132,28 +167,110 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
 
 
 router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
-    Doctor.findOne({ userid: req.user._id }, (err, doc) => {
-        console.log(doc)
+    Appointment.find({ d_id: req.user._id, date: { '$gte': Date.now(), } }, (err, data) => {
         if (err) {
             res.json({
-                err: err.name,
-                success: false
+                success: false,
+                err: err.name
             })
         } else {
-            Appointment.find({ d_id: doc._id }, (err, data) => {
-                if (err) {
-                    res.json({
-                        success: false,
-                        err: err.name
-                    })
-                } else {
-                    res.json({
-                        success: true,
-                        data
-                    })
-                }
+            res.json({
+                success: true,
+                data
             })
         }
     })
 })
+
+router.get('/patient/get_chat', authenticate.verifyUser, (req, res) => {
+    Chat.find({ p_id: req.user._id })
+        .populate('d_id')
+        .then((data, err) => {
+            console.log(err)
+            console.log(data)
+            if (err) {
+                res.json({
+                    err: err.name,
+                    success: false
+                })
+            } else {
+                res.json({
+                    success: true,
+                    chats: data
+                })
+            }
+        })
+})
+
+router.get('/doctor/get_chat', authenticate.verifyUser, (req, res) => {
+    Chat.find({ d_id: req.user._id })
+        .populate('p_id')
+        .then((data, err) => {
+            console.log(err)
+            console.log(data)
+            if (err) {
+                res.json({
+                    err: err.name,
+                    success: false
+                })
+            } else {
+                res.json({
+                    success: true,
+                    chats: data
+                })
+            }
+        })
+})
+
+router.get('/patient/messages/:d_id', authenticate.verifyUser, (req, res) => {
+    console.log(req.body)
+    Message.find({ d_id: req.params.d_id }, (err, msgs) => {
+        console.log(msgs)
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name
+            })
+        } else {
+            res.json({
+                success: true,
+                msgs,
+            })
+        }
+    })
+})
+
+router.get('/doctor/messages/:p_id', authenticate.verifyUser, (req, res) => {
+    Message.find({ p_id: req.params.p_id }, (err, msgs) => {
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name
+            })
+        } else {
+            res.json({
+                success: true,
+                msgs,
+            })
+        }
+    })
+})
+
+router.post('/newmessage', authenticate.verifyUser, (req, res) => {
+    Message.create(req.body.data, (err, msg) => {
+        if (err) {
+            res.json({
+                err: err.name,
+                success: false,
+            })
+        } else {
+            res.json({
+                success: true,
+                msg
+            })
+        }
+    })
+})
+
 module.exports = router;
+

@@ -16,7 +16,7 @@ import { useFormik } from 'formik';
 import { validationSchemaLogin as validationSchema } from "../Services/validations";
 import * as auth from "../Services/auth";
 import { useDispatch } from "react-redux";
-import { login, setuser, settoken } from "./statesSlice";
+import { login, setuser, settoken, setdoctorfalse } from "./statesSlice";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
@@ -165,12 +165,12 @@ export default function DoctorLogin() {
   return (
     <div className="container">
       <Header />
-      <Grid item md={6} sm={5} xs={9} className={classes.border}>
+      <Grid item md={7} sm={6} xs={9} className={classes.border}>
         <Grid container className={classes.dialogbox}>
           <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
             <img src={doctorlogo} className="doctorlogo" alt="error found" />
           </Grid>
-          <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
+          <Grid item md={6} sm={12} xs={12} className={classes.loginbox} >
             <header className={classes.loginboxheader}>DOCTOR LOGIN</header>
             <form onSubmit={formik.handleSubmit}>
               <TextField
@@ -231,6 +231,14 @@ export default function DoctorLogin() {
                 style={{ "cursor": "pointer" }}
               >
                 New User SignUp Here
+              </Typography>
+              <Typography
+                variant="body2"
+                className={classes.extratxt}
+                onClick={() => dispatch(setdoctorfalse())}
+                style={{ "cursor": "pointer" }}
+              >
+                Not A Doctor?
               </Typography>
             </form>
           </Grid>

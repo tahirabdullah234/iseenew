@@ -8,7 +8,7 @@ var Requests = new Schema({
     },
     d_id: {
         type: mongoose.Types.ObjectId,
-        ref: 'Doctor'
+        ref: 'User'
     },
     msg: {
         type: String

@@ -103,9 +103,11 @@ router.get("/bg_graph", authenticate.verifyUser, (req, res) => {
           fdates.push(record[i].dateAdded.getDay());
         } else {
           random.push(record[i].value);
-          rdates.push(record[i].dateAdded);
+          rdates.push(record[i].dateAdded.getDay());
         }
       }
+      // const diff = rdates.length - fdates.length;
+
       res.json({
         success: true,
         record: {
