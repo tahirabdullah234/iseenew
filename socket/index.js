@@ -1,9 +1,18 @@
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "*",
-  },
+var express = require('express');
+var app = express();
+var port = process.env.PORT || '8900';
+app.set('port', port);
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: "*"
 });
+var cors = require('cors');
+
 const axios = require('axios');
+app.use(cors());
 
 let users = [];
 
@@ -17,39 +26,44 @@ const removeUser = (socketId) => {
   console.log(users)
 };
 
-const getUser = (socketId) => {
-  return users.find((user) => user.socketId === socketId);
+const getUser = (userid) => {
+  return users.find((user) => user.userId === userid);
 };
 
-io.on("connection", onConnect);
-function onConnect(socket) {
-  socket.on("addUser", ({ p_id }) => {
-    addUser({ p_id, socketId: socket.id })
+io.on("connection", (socket) => {
+  console.log('users connected')
+  socket.on("addUser", ({ id }) => {
+    addUser({ userId: id, socketId: socket.id })
     console.log(users)
-    axios.get('/users/getMsgs/')
-      .then(res => {
-        if (res.data.success) {
-          io.to(socket.id).emit('newUser', res.data.data)
-        }
-      })
   });
 
   //send and get message
-  socket.on('newMsg', ({ p_id, d_id, msg }) => {
-    const user = getUser(socket.id)
-    const data = {
-      p_id,
-      d_id,
-      msg,
-    }
-    // io.to(socket.id).emit('newUser', "res.data.data")
-    console.log(data)
-
+  socket.on('sendmsg', (data, token) => {
+    const user = getUser(!data.patient ? data.p_id : data.d_id)
+    console.log(data, token)
+    console.log(user)
+    axios.post('http://localhost:5000/request/newmessage', { data }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        if (res.data.success) {
+          if (user) {
+            io.to(user.socketId).emit('newmsg', res.data.msg)
+          }
+        }
+      })
   })
   //when disconnect
   socket.on("disconnect", () => {
     console.log("a user disconnected!");
     removeUser(socket.id);
   });
+});
 
-}
+httpServer.listen(port, () => {
+  console.log('Server Running at 8900')
+});

@@ -126,15 +126,51 @@ export default function Chat() {
   const [newmsg, setnewmsg] = React.useState('')
   const token = useSelector((state) => state.states.token)
   const isdoctor = useSelector((state) => state.states.isdoctor)
+  const user = useSelector((state) => state.states.user)
 
-  const [socket] = React.useState(io('http://localhost:8900'))
+  const [socket] = React.useState(io('ws://localhost:8900'))
 
   const [otheruser, setotheruser] = React.useState(null)
   const [otheruserid, setotheruserid] = React.useState(null)
 
   // React.useEffect(() => alert(JSON.stringify(otheruserid)), [otheruserid])
 
-  React.useEffect()
+  React.useEffect(() => {
+    console.log(socket)
+    socket.emit('addUser', { id: user._id })
+  }, [])
+
+  const sendMsg = () => {
+    if (newmsg.length === 0) {
+      return;
+    }
+    var data = {}
+    if (isdoctor) {
+      data = {
+        d_id: user._id,
+        p_id: otheruserid,
+        msg: newmsg,
+        patient: false,
+      }
+    } else {
+      data = {
+        p_id: user._id,
+        d_id: otheruserid,
+        msg: newmsg,
+        patient: true,
+      }
+    }
+    socket.emit('sendmsg', data, token);
+    setmsg([...msg, { ...data, _id: String(Math.random()) }]);
+    setnewmsg('');
+  }
+
+  React.useEffect(() => {
+    socket.on('newmsg', (newmsg) => {
+      alert('Test')
+      setmsg([...msg, newmsg])
+    })
+  })
 
   React.useEffect(() => {
     apt.get_users(token, isdoctor)
@@ -146,6 +182,7 @@ export default function Chat() {
               // alert(JSON.stringify(chats))
               if (res.data.success) {
                 setotheruser(chats)
+                setotheruserid(isdoctor ? chats[0].p_id._id : chats[0].d_id._id)
                 setmsg(res.data.msgs)
                 // alert(JSON.stringify(res.data.msgs))
               }
@@ -168,6 +205,7 @@ export default function Chat() {
                       name={item.p_id.fname + ' ' + item.p_id.lname}
                       id={item.p_id._id}
                       setid={setotheruserid}
+                      isdoctor={isdoctor}
                     />
                   })
                   :
@@ -176,6 +214,7 @@ export default function Chat() {
                       name={item.d_id.fname + ' ' + item.d_id.lname}
                       id={item.d_id._id}
                       setid={setotheruserid}
+                      isdoctor={isdoctor}
                     />
                   })
                 :
@@ -191,24 +230,21 @@ export default function Chat() {
               }}>
                 <Messages msg={msg} isdoctor={isdoctor} />
               </Grid>
-              <Grid item xs={10}>
-                <input
-                  type="text"
-                  style={{ width: "90%", height: "30px" }}
-                  placeholder="Enter Message"
-                  value={newmsg}
-                  onChange={e => setnewmsg(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Button fullWidth
-                  onClick={() => {
-                    setmsg([...msg, { msg: newmsg, side: false }])
-                    setnewmsg('')
-                  }}
-                >
-                  Send
-                </Button>
+              <Grid container style={{ marginTop: "5px", borderTop: "1px solid grey", padding: "10px" }}>
+                <Grid item xs={10}>
+                  <input
+                    type="text"
+                    style={{ width: "90%", height: "30px", margin: "auto" }}
+                    placeholder="Enter Message"
+                    value={newmsg}
+                    onChange={e => setnewmsg(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Button fullWidth onClick={sendMsg} variant="outlined">
+                    Send
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -235,7 +271,7 @@ function Messages({ msg, isdoctor }) {
             if (isdoctor) {
               if (item.patient) {
                 return (
-                  <Grid container >
+                  <Grid container key={item._id}>
                     <Grid item xs={5} className={classes.msg}>
                       <Typography variant="body1">
                         {item.msg}
@@ -248,7 +284,7 @@ function Messages({ msg, isdoctor }) {
                 )
               } else {
                 return (
-                  <Grid container>
+                  <Grid container key={item._id}>
                     <Grid item xs={7}>
                     </Grid>
                     <Grid item xs={5} className={classes.msg}>
@@ -263,7 +299,7 @@ function Messages({ msg, isdoctor }) {
             } else {
               if (!item.patient) {
                 return (
-                  <Grid container >
+                  <Grid container key={item._id}>
                     <Grid item xs={5} className={classes.msg}>
                       <Typography variant="body1">
                         {item.msg}
@@ -276,7 +312,7 @@ function Messages({ msg, isdoctor }) {
                 )
               } else {
                 return (
-                  <Grid container>
+                  <Grid container key={item._id}>
                     <Grid item xs={7}>
                     </Grid>
                     <Grid item xs={5} className={classes.msg}>
@@ -301,7 +337,7 @@ function Messages({ msg, isdoctor }) {
 }
 
 
-function UserList({ name, id, setid }) {
+function UserList({ name, id, setid, isdoctor }) {
   const classes = useStyles();
   return (
     <Grid container>
@@ -324,7 +360,7 @@ function UserList({ name, id, setid }) {
               variant="subtitlel"
               style={{ fontWeight: "bold", color: "#3585da" }}
             >
-              {name}
+              {isdoctor ? name : 'DR. ' + name}
             </Typography>
           </Grid>
         </Grid>

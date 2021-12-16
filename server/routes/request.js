@@ -167,26 +167,16 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
 
 
 router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
-    Doctor.findOne({ userid: req.user._id }, (err, doc) => {
-        console.log(doc)
+    Appointment.find({ d_id: req.user._id, date: { '$gte': Date.now(), } }, (err, data) => {
         if (err) {
             res.json({
-                err: err.name,
-                success: false
+                success: false,
+                err: err.name
             })
         } else {
-            Appointment.find({ d_id: doc._id, date: { '$gte': Date.now(), } }, (err, data) => {
-                if (err) {
-                    res.json({
-                        success: false,
-                        err: err.name
-                    })
-                } else {
-                    res.json({
-                        success: true,
-                        data
-                    })
-                }
+            res.json({
+                success: true,
+                data
             })
         }
     })
@@ -261,6 +251,22 @@ router.get('/doctor/messages/:p_id', authenticate.verifyUser, (req, res) => {
             res.json({
                 success: true,
                 msgs,
+            })
+        }
+    })
+})
+
+router.post('/newmessage', authenticate.verifyUser, (req, res) => {
+    Message.create(req.body.data, (err, msg) => {
+        if (err) {
+            res.json({
+                err: err.name,
+                success: false,
+            })
+        } else {
+            res.json({
+                success: true,
+                msg
             })
         }
     })
