@@ -126,9 +126,14 @@ export default function Chat() {
   const token = useSelector((state) => state.states.token)
   const isdoctor = useSelector((state) => state.states.isdoctor)
 
+  const [otheruser, setotheruser] = React.useState(null)
+
   React.useEffect(() => {
     apt.get_users(token, isdoctor)
       .then(res => {
+        if (res.data.success) {
+          setotheruser(res.data.chats)
+        }
         alert(JSON.stringify(res.data))
       })
   }, [token, isdoctor])
@@ -137,29 +142,23 @@ export default function Chat() {
     <Grid container className={classes.root}>
       <Grid item xs={12} className={classes.chatbox}>
         <Grid container>
-          <Grid item xs={3} className={classes.chatbox}>
-            <Grid container>
-              <Button className={classes.chatsbutton}>
-                <Avatar style={{ width: "50px", height: "50px" }}>A</Avatar>
-                <Grid container>
-                  <Grid item xs={1}></Grid>
-                  <Grid
-                    item
-                    style={{ display: "flex", justifyContent: "flex-start" }}
-                    xs={7}
-                  >
-                    <Typography
-                      variant="subtitlel"
-                      style={{ fontWeight: "bold", color: "#3585da" }}
-                    >
-                      Abdullah
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Button>
-            </Grid>
+          <Grid item xs={4} className={classes.chatbox}>
+            {
+              otheruser ?
+                isdoctor ?
+                  otheruser.map((item) => {
+                    return <UserList name={item.p_id.fname + ' ' + item.p_id.lname} />
+                  })
+                  :
+                  otheruser.map((item) => {
+                    return <UserList name={item.d_id.fname + ' ' + item.d_id.lname} />
+                  })
+                :
+                <UserList name={"No Chat Avaliable"} />
+
+            }
           </Grid>
-          <Grid item xs={9} className={classes.root1}>
+          <Grid item xs={8} className={classes.root1}>
             <Grid container>
               <Grid item xs={11} style={{
                 margin: "auto", height: "60vh",
@@ -237,6 +236,35 @@ function Messages({ msg }) {
           <Grid></Grid>
       }
       <div ref={messagesEndRef} />
+      <hr />
+      <hr />
+    </Grid>
+  )
+}
+
+
+function UserList({ name, id }) {
+  const classes = useStyles();
+  return (
+    <Grid container>
+      <Button className={classes.chatsbutton}>
+        <Avatar style={{ width: "50px", height: "50px" }}>A</Avatar>
+        <Grid container>
+          <Grid item xs={1}></Grid>
+          <Grid
+            item
+            style={{ display: "flex", justifyContent: "flex-start" }}
+            xs={7}
+          >
+            <Typography
+              variant="subtitlel"
+              style={{ fontWeight: "bold", color: "#3585da" }}
+            >
+              {name}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Button>
     </Grid>
   )
 }

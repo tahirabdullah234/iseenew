@@ -191,5 +191,44 @@ router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
     })
 })
 
+router.get('/patient/get_chat', authenticate.verifyUser, (req, res) => {
+    Chat.find({ p_id: req.user._id })
+        .populate('d_id')
+        .then((data, err) => {
+            console.log(err)
+            console.log(data)
+            if (err) {
+                res.json({
+                    err: err.name,
+                    success: false
+                })
+            } else {
+                res.json({
+                    success: true,
+                    chats: data
+                })
+            }
+        })
+})
+
+router.get('/doctor/get_chat', authenticate.verifyUser, (req, res) => {
+    Chat.find({ d_id: req.user._id })
+        .populate('p_id')
+        .then((data, err) => {
+            console.log(err)
+            console.log(data)
+            if (err) {
+                res.json({
+                    err: err.name,
+                    success: false
+                })
+            } else {
+                res.json({
+                    success: true,
+                    chats: data
+                })
+            }
+        })
+})
 
 module.exports = router;
