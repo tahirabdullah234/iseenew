@@ -231,4 +231,40 @@ router.get('/doctor/get_chat', authenticate.verifyUser, (req, res) => {
         })
 })
 
+router.get('/patient/messages', authenticate.verifyUser, (req, res) => {
+    console.log(req.body)
+    Message.find({ d_id: req.body.d_id }, (err, msgs) => {
+        console.log(msgs)
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name
+            })
+        } else {
+            res.json({
+                success: true,
+                msgs,
+            })
+        }
+    })
+})
+
+router.get('/doctor/messages', authenticate.verifyUser, (req, res) => {
+    console.log(req.body)
+    Message.find({ p_id: req.body.p_id }, (err, msgs) => {
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name
+            })
+        } else {
+            res.json({
+                success: true,
+                msgs,
+            })
+        }
+    })
+})
+
 module.exports = router;
+

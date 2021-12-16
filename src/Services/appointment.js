@@ -88,3 +88,23 @@ export const get_users = (token, isdoctor) => {
             }
         })
 }
+
+export const get_msgs = (token, isdoctor, payload) => {
+    console.log(token)
+    if (isdoctor)
+        return axios.get('/request/doctor/messages', { p_id: payload.p_id._id }, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    else
+        return axios.get('/request/patient/messages', { d_id: payload.d_id._id }, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+}

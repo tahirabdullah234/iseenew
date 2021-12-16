@@ -127,14 +127,26 @@ export default function Chat() {
   const isdoctor = useSelector((state) => state.states.isdoctor)
 
   const [otheruser, setotheruser] = React.useState(null)
+  const [otheruserid, setotheruserid] = React.useState(null)
+
+  // React.useEffect(() => alert(JSON.stringify(otheruserid)), [otheruserid])
 
   React.useEffect(() => {
     apt.get_users(token, isdoctor)
       .then(res => {
         if (res.data.success) {
-          setotheruser(res.data.chats)
+          const chats = res.data.chats
+          apt.get_msgs(token, isdoctor, res.data.chats[0])
+            .then(res => {
+              // alert(JSON.stringify(chats))
+              if (res.data.success) {
+                setotheruser(chats)
+                // setmsg(res.data.msgs)
+                alert(JSON.stringify(res.data.msgs))
+              }
+            })
         }
-        alert(JSON.stringify(res.data))
+        // alert(JSON.stringify(res.data))
       })
   }, [token, isdoctor])
 
@@ -147,11 +159,19 @@ export default function Chat() {
               otheruser ?
                 isdoctor ?
                   otheruser.map((item) => {
-                    return <UserList name={item.p_id.fname + ' ' + item.p_id.lname} />
+                    return <UserList
+                      name={item.p_id.fname + ' ' + item.p_id.lname}
+                      id={item.p_id._id}
+                      setid={setotheruserid}
+                    />
                   })
                   :
                   otheruser.map((item) => {
-                    return <UserList name={item.d_id.fname + ' ' + item.d_id.lname} />
+                    return <UserList
+                      name={item.d_id.fname + ' ' + item.d_id.lname}
+                      id={item.d_id._id}
+                      setid={setotheruserid}
+                    />
                   })
                 :
                 <UserList name={"No Chat Avaliable"} />
@@ -208,7 +228,7 @@ function Messages({ msg }) {
               return (
                 <Grid container >
                   <Grid item xs={5} className={classes.msg}>
-                    <Typography variant="body2">
+                    <Typography variant="body1">
                       {item.msg}
                     </Typography>
                     <br />
@@ -223,7 +243,7 @@ function Messages({ msg }) {
                   <Grid item xs={7}>
                   </Grid>
                   <Grid item xs={5} className={classes.msg}>
-                    <Typography variant="body2">
+                    <Typography variant="body1">
                       {item.msg}
                     </Typography>
                     <br />
@@ -243,12 +263,15 @@ function Messages({ msg }) {
 }
 
 
-function UserList({ name, id }) {
+function UserList({ name, id, setid }) {
   const classes = useStyles();
   return (
     <Grid container>
-      <Button className={classes.chatsbutton}>
-        <Avatar style={{ width: "50px", height: "50px" }}>A</Avatar>
+      <Button
+        className={classes.chatsbutton}
+        onClick={() => setid(id)}
+      >
+        <Avatar style={{ width: "50px", height: "50px" }}>{name ? name[0] : 'A'}</Avatar>
         <Grid container>
           <Grid item xs={1}></Grid>
           <Grid
