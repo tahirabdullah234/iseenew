@@ -2,19 +2,24 @@ import React from "react";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { GraphBp, GraphGlocuse } from "./graphsUserid";
-import Reports from "./reportsuser";
 import * as auth from "../Services/auth";
+import * as reps from "../Services/reports";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
+import { useHistory } from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import report from '../Assets/reports.svg';
+import { setdata } from "../pages/statesSlice";
 
 
 const useStyles = makeStyles({
     root: {
-        height: "100vh",
+        // height: "100vh",
         alignItems: "center",
         justifyContent: "center"
     },
@@ -23,8 +28,20 @@ const useStyles = makeStyles({
         borderRadius: "12px",
         background: "#fff",
         boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-        padding: "15px",
+        padding: "25px",
         margin: "auto"
+    },
+    button: {
+        width: "95%",
+        marginBottom: 10,
+        fontWeight: "bold",
+        marginTop: 10,
+    },
+    docIcon1: {
+        width: 50,
+        height: 50,
+        paddingTop: 10,
+        paddingLeft: 5,
     },
 })
 
@@ -34,6 +51,14 @@ export default function UserInfo() {
     const token = useSelector((state) => state.states.token)
     const location = useLocation();
     const [userId, setuserId] = React.useState(null);
+    const [reports, setreports] = React.useState(null);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleClick = (data) => {
+        dispatch(setdata(data))
+        history.push('/result')
+    }
 
     React.useEffect(() => {
         if (location.state) {
@@ -41,8 +66,15 @@ export default function UserInfo() {
             setuserId(location.state.id);
             auth.get_user(token, location.state.id)
                 .then(res => {
+                    const user = res.data.user
+                    setuser(user)
                     if (res.data.success) {
-                        setuser(res.data.user)
+                        reps.get_reports_user(token, user._id)
+                            .then(res => {
+                                if (res.data.success) {
+                                    setreports(res.data.reports)
+                                }
+                            })
                     }
                 })
         }
@@ -62,29 +94,83 @@ export default function UserInfo() {
     return (
         <Grid className={classes.root}>
             <Grid container className={classes.DialogBox}>
+                <Grid item xs={2}>
+                    <Button
+                        variant="container"
+                        startIcon={<ArrowBackIcon />}
+                        className={classes.button}
+                        onClick={() => history.goBack()}
+                    >
+                        Back
+                    </Button>
+                </Grid>
                 <Grid container >
-                    <Grid item xs={12} style={{ textAlign: "center" }}>
-                        <Typography variant="h4">Basic Information: </Typography>
+                    <Grid
+                        item
+                        xs={12}
+                        style={{
+                            textAlign: "left", textDecoration: "underline", marginBottom: "10px"
+                        }}>
+                        <Typography variant="h5">Basic Information: </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="body1">Name: {user ? user.fname + " " + user.lname : ''}</Typography>
+                        <Typography variant="h6">Name: {user ? user.fname + " " + user.lname : ''}</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="body1">Gender: {user ? user.gender : ""}</Typography>
+                        <Typography variant="h6">Gender: {user ? user.gender : ""}</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="body1">Age: {user ? getAge(user.dob.split("T")[0]) : ""}</Typography>
+                        <Typography variant="h6">Age: {user ? getAge(user.dob.split("T")[0]) : ""}</Typography>
                     </Grid>
                 </Grid>
+                <hr />
                 <Grid container>
+                    <Grid
+                        item
+                        xs={12}
+                        style={{
+                            textAlign: "left", textDecoration: "underline", marginBottom: "10px"
+                        }}>
+                        <Typography variant="h5">Reports: </Typography>
+                    </Grid>
                     <Grid item xs={12}>
+                        {
+                            reports ?
+                                reports.map((item) => {
+                                    return (
+                                        <Grid container onClick={() => handleClick(item.report)}>
+                                            <img src={report} alt={item.title} className={classes.docIcon1} />
+                                        </Grid>
+                                    )
+                                })
+                                :
+                                <Grid container>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        style={{
+                                            textAlign: "left", marginBottom: "10px"
+                                        }}>
+                                        <Typography variant="body1">No Reports Avaliable </Typography>
+                                    </Grid>
+                                </Grid>
+                        }
                     </Grid>
                 </Grid>
+                <hr />
                 {
                     userId ?
                         <Grid container className={classes.BPGLtitle}>
+                            <Grid
+                                item
+                                xs={12}
+                                style={{
+                                    textAlign: "left", textDecoration: "underline", marginBottom: "10px"
+                                }}>
+                                <Typography variant="h5">Health Information: </Typography>
+                            </Grid>
                             <Grid item xs={12} md={6}>
-                                <Typography className={classes.timeline}>
+                                <Typography className={classes.timeline} variant="h6">
                                     BLOOD PRESSURE
                                 </Typography>
                                 <Grid container className={classes.graphctn}>
@@ -92,7 +178,7 @@ export default function UserInfo() {
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Typography className={classes.timeline}>
+                                <Typography className={classes.timeline} variant="h6">
                                     GLUCOSE LEVEL
                                 </Typography>
                                 <Grid container className={classes.graphctn}>
@@ -106,6 +192,6 @@ export default function UserInfo() {
                 }
 
             </Grid>
-        </Grid>
+        </Grid >
     )
 }

@@ -61,7 +61,7 @@ export default function Template() {
                 </Typography>
             </Grid>
             <Grid container className={classes.maincontainer}>
-                <Typography vatiant="h6">
+                <Typography vatiant="h4">
                     Patient Information:
                 </Typography>
             </Grid>
@@ -121,14 +121,19 @@ export default function Template() {
             </Grid>
             <hr />
             <Grid container className={classes.resultgrid}>
-                <Typography variant="h6" style={{ "textDecoration": "underline" }}>
+                <Typography variant="h4" style={{ "textDecoration": "underline" }}>
                     Diabetic Retinopathy Screening Summary:
                 </Typography>
-                <Typography variant="body1" className={classes.margin5}>
+                <Typography variant="h5" className={classes.margin5}>
                     Screening Result:
                 </Typography>
-                <Typography variant="body1" className={classes.margin5}>
-                    Negative for referable diabetic retinopathy.
+                <Typography variant="h6" className={classes.margin5}>
+                    {
+                        String(data.prediction) === "0" ?
+                            "Negative for referable diabetic retinopathy."
+                            :
+                            "Positive for referable diabetic retinopathy."
+                    }
                 </Typography>
             </Grid>
             <Grid conatiner justifyContent="space-evenly">
@@ -137,7 +142,7 @@ export default function Template() {
                         Patient Eye Scan:
                     </Typography>
                     <Typography variant="body1">
-                        No apparent signs of DR detected {data.prediction === 1 ? "[1., 1]" : "[0., 0]"}
+                        {data.prediction >= 1 ? "Apparent signs of DR detected [1.," + String(data.prediction) + "]" : "No apparent signs of DR detected [0., 0]"}
                     </Typography>
                     {
                         data ?

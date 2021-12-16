@@ -140,7 +140,7 @@ router.get("/bg_graph/:id", authenticate.verifyUser, (req, res) => {
         success: false,
         err: err,
       });
-    else if (record) {
+    else if (record.lenght > 0) {
       var fasting = [];
       var random = [];
       var fdates = [];
@@ -360,5 +360,178 @@ router.get('/bg_avg_random', authenticate.verifyUser, (req, res) => {
       }
     })
 })
+
+
+router.get("/databp", authenticate.verifyUser, (req, res) => {
+  var olddate = new Date();
+  olddate.setDate(olddate.getDate() - 7);
+  BP.find({ patient: req.user._id, dateAdded: { '$gte': olddate } }, (err, record) => {
+    if (err)
+      res.json({
+        err: err.name,
+        success: false
+      })
+    else if (record.length > 0) {
+      var dates = [];
+      var systolic = [];
+      var dystolic = [];
+      for (var i = 0; i < record.length; i++) {
+        dates.push(record[i].dateAdded.getDay());
+        systolic.push(record[i].systolic);
+        dystolic.push(record[i].dystolic);
+      }
+      res.json({
+        success: true,
+        record: {
+          dates: dates,
+          systolic: systolic,
+          dystolic: dystolic,
+        },
+      });
+    } else {
+      res.json({
+        success: false,
+        record: {
+          dates: [],
+          systolic: [],
+          dystolic: [],
+        },
+      });
+    }
+  })
+})
+
+router.get("/databg", authenticate.verifyUser, (req, res) => {
+  var olddate = new Date();
+  olddate.setDate(olddate.getDate() - 7);
+  BG.find({ patient: req.user._id, dateAdded: { '$gte': olddate } }, (err, record) => {
+    if (err)
+      res.json({
+        err: err.name,
+        success: false
+      })
+    else if (record.lenght > 0) {
+      var fasting = [];
+      var random = [];
+      var fdates = [];
+      var rdates = [];
+      for (var i = 0; i < record.length; i++) {
+        if (record[i].isFasting) {
+          fasting.push(record[i].value);
+          fdates.push(record[i].dateAdded.getDay());
+        } else {
+          random.push(record[i].value);
+          rdates.push(record[i].dateAdded);
+        }
+      }
+      res.json({
+        success: true,
+        record: {
+          fdates: fdates,
+          fasting: fasting,
+          rdates: rdates,
+          random: random,
+        },
+      });
+    } else {
+      res.json({
+        success: false,
+        record: {
+          fdates: [],
+          fasting: [],
+          rdates: [],
+          random: [],
+        },
+      });
+    }
+  })
+})
+
+router.get("/databp/_id", authenticate.verifyUser, (req, res) => {
+  var olddate = new Date();
+  olddate.setDate(olddate.getDate() - 7);
+  BP.find({ patient: req.params._id, dateAdded: { '$gte': olddate } }, (err, record) => {
+    if (err)
+      res.json({
+        err: err.name,
+        success: false
+      })
+    else if (record.length > 0) {
+      var dates = [];
+      var systolic = [];
+      var dystolic = [];
+      for (var i = 0; i < record.length; i++) {
+        dates.push(record[i].dateAdded.getDay());
+        systolic.push(record[i].systolic);
+        dystolic.push(record[i].dystolic);
+      }
+      res.json({
+        success: true,
+        record: {
+          dates: dates,
+          systolic: systolic,
+          dystolic: dystolic,
+        },
+      });
+    } else {
+      res.json({
+        success: false,
+        record: {
+          dates: [],
+          systolic: [],
+          dystolic: [],
+        },
+      });
+    }
+
+  })
+})
+
+router.get("/databg/:_id", authenticate.verifyUser, (req, res) => {
+  var olddate = new Date();
+  olddate.setDate(olddate.getDate() - 7);
+  BG.find({ patient: req.params._id, dateAdded: { '$gte': olddate } }, (err, record) => {
+    if (err)
+      res.json({
+        err: err.name,
+        success: false
+      })
+    else if (record.lenght > 0) {
+      var fasting = [];
+      var random = [];
+      var fdates = [];
+      var rdates = [];
+      for (var i = 0; i < record.length; i++) {
+        if (record[i].isFasting) {
+          fasting.push(record[i].value);
+          fdates.push(record[i].dateAdded.getDay());
+        } else {
+          random.push(record[i].value);
+          rdates.push(record[i].dateAdded);
+        }
+      }
+      res.json({
+        success: true,
+        record: {
+          fdates: fdates,
+          fasting: fasting,
+          rdates: rdates,
+          random: random,
+        },
+      });
+    } else {
+      res.json({
+        success: false,
+        record: {
+          fdates: [],
+          fasting: [],
+          rdates: [],
+          random: [],
+        },
+      });
+    }
+  })
+})
+
 
 module.exports = router;

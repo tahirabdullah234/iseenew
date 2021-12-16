@@ -21,6 +21,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { questions, answers } from "../Services/questions";
 
+import * as model from "../Services/model"
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -235,6 +237,13 @@ export function ManageBP() {
     getBpavg();
   }, [token])
 
+  const getSymPred = () => {
+    model.get_symp_pred(token, ans)
+      .then(res => {
+        alert(JSON.stringify(res.data))
+      })
+  }
+
   return (
     <div className="dashdiv">
       <Grid item xs={12} className={classes.DialogBox}>
@@ -329,7 +338,7 @@ export function ManageBP() {
                 aria-label="previous question"
                 component="span"
                 onClick={() => {
-                  if (index > 0 && mark !== "") {
+                  if (index > 0) {
                     setindex(index - 1);
                     setmark("");
                   }
@@ -342,9 +351,10 @@ export function ManageBP() {
               {
                 index === questions.length - 1 ?
                   <Button
-                    onClick={() =>
+                    onClick={() => {
                       alert(JSON.stringify(ans))
-                    }
+                      getSymPred()
+                    }}
                   >
                     Submit
                   </Button>
@@ -404,6 +414,6 @@ export function ManageBP() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }

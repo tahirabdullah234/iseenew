@@ -220,12 +220,6 @@ const DoctorActions = () => {
         <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DISEASE DETECTION<br />SYSTEM</Typography>}
         />
       </ListItem>
-      <ListItem button key={3}>
-        <ListItemIcon>
-          <img src={appointment} alt='Appointments' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>APPOINTMENT</Typography>} />
-      </ListItem>
       <ListItem button key={7} onClick={() => history.push("/messages")}>
         <ListItemIcon>
           <img src={chat} alt='chat' className={classes.imageIcon} />

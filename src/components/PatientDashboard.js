@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
-import { GraphGlocuse, GraphBp } from "./graphs";
+import { GraphGlocuse, GraphBp } from "./graphsUserid";
 import { useSelector } from "react-redux";
 
 import { Doughnut } from "react-chartjs-2";
@@ -132,7 +132,12 @@ const useStyles = makeStyles({
 
 export function PatientDashboard() {
   const classes = useStyles();
-  const name = useSelector((state) => state.states.name)
+  const name = useSelector((state) => state.states.name);
+  const date = new Date(Date.now()).toLocaleDateString();
+  var olddate = new Date();
+  olddate.setDate(olddate.getDate() - 7);
+  olddate = olddate.toLocaleDateString();
+
   return (
     <div className="dashdiv">
       <Typography
@@ -221,7 +226,6 @@ export function PatientDashboard() {
         <Grid container className={classes.boxdis}>
           <Grid
             item
-            sm={7}
             xs={12}
             style={{
               display: "flex",
@@ -242,7 +246,7 @@ export function PatientDashboard() {
                 WEEKLY STATISTICS
               </Typography>
               <Typography className={classes.timeline}>
-                JUL 21 - JUL 28
+                {olddate + " to " + date}
               </Typography>
             </Grid>
             <Grid container className={classes.BPGLtitle}>
@@ -265,74 +269,7 @@ export function PatientDashboard() {
             </Grid>
           </Grid>
           <Grid item sm={1}></Grid>
-          <Grid sm={4} xs={12} className={classes.appmsg} item>
-            <Grid
-              container
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "10px",
-              }}
-              className={classes.dialogBox}
-            >
-              <Typography
-                style={{ fontSize: "23px", textAlign: "center" }}
-                className={classes.fonttxt}
-              >
-                LATEST APPOINTMENT
-              </Typography>
-              <Grid container className={classes.setappointtxt}>
-                <Grid sm={12} md={4} item>
-                  <Typography
-                    style={{ fontSize: "23px", textAlign: "center" }}
-                    className={classes.fonttxt}
-                  >
-                    AUG 21
-                  </Typography>
-                  <Typography
-                    style={{ fontSize: "35px", textAlign: "center" }}
-                    className={classes.fonttxt}
-                  >
-                    2021
-                  </Typography>
-                </Grid>
-                <Grid sm={12} md={8} item>
-                  <Typography
-                    style={{ fontSize: "23px", textAlign: "start" }}
-                    className={classes.fonttxt}
-                  >
-                    Dr. Aslam Jamshaid
-                  </Typography>
-                  <Typography
-                    style={{ fontSize: "16px", textAlign: "start" }}
-                    className={classes.fonttxt}
-                  >
-                    Senior ophtalmologist
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              style={{
-                display: "flex",
-                textAlign: "center",
-                justifyContent: "center",
-                marginTop: "20px",
-                padding: "10px",
-              }}
-              className={classes.dialogBox}
-            >
-              <Typography
-                style={{ fontSize: "23px", textAlign: "center" }}
-                className={classes.fonttxt}
-              >
-                MESSAGES
-              </Typography>
 
-              <Message />
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
     </div>
