@@ -70,7 +70,7 @@ def indexSymp():
     if request.method == "POST":
         # inp = request.json
         # print(request.json)
-        print(request.form)
+        print(request.data)
         inp = np.array([int(i) for i in request.form['symptoms'].split(',')])
         print(inp)
         # inp = inp['symptoms']
