@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { Header } from "../components/header";
-import doctorlogo from "../Assets/Doclogo.png";
+import patientlogo from "../Assets/patientlogo.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -168,7 +168,7 @@ export default function PatientFP() {
       <Grid item md={6} sm={5} xs={9} className={classes.border}>
         <Grid container className={classes.dialogbox}>
           <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
-            <img src={doctorlogo} className="doctorlogo" alt="error found" />
+            <img src={patientlogo} className="doctorlogo" alt="error found" />
           </Grid>
           <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
             <header className={classes.loginboxheader}>FORGET PASSWORD</header>

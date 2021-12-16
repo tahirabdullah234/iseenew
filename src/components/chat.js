@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
+import io from 'socket.io-client';
 
 import * as apt from "../Services/appointment";
 import { useSelector } from "react-redux";
@@ -126,10 +127,14 @@ export default function Chat() {
   const token = useSelector((state) => state.states.token)
   const isdoctor = useSelector((state) => state.states.isdoctor)
 
+  const [socket] = React.useState(io('http://localhost:8900'))
+
   const [otheruser, setotheruser] = React.useState(null)
   const [otheruserid, setotheruserid] = React.useState(null)
 
   // React.useEffect(() => alert(JSON.stringify(otheruserid)), [otheruserid])
+
+  React.useEffect()
 
   React.useEffect(() => {
     apt.get_users(token, isdoctor)
@@ -141,8 +146,8 @@ export default function Chat() {
               // alert(JSON.stringify(chats))
               if (res.data.success) {
                 setotheruser(chats)
-                // setmsg(res.data.msgs)
-                alert(JSON.stringify(res.data.msgs))
+                setmsg(res.data.msgs)
+                // alert(JSON.stringify(res.data.msgs))
               }
             })
         }
@@ -184,7 +189,7 @@ export default function Chat() {
                 margin: "auto", height: "60vh",
                 overflowY: "scroll",
               }}>
-                <Messages msg={msg} />
+                <Messages msg={msg} isdoctor={isdoctor} />
               </Grid>
               <Grid item xs={10}>
                 <input
@@ -200,7 +205,10 @@ export default function Chat() {
                   onClick={() => {
                     setmsg([...msg, { msg: newmsg, side: false }])
                     setnewmsg('')
-                  }}>Send</Button>
+                  }}
+                >
+                  Send
+                </Button>
               </Grid>
             </Grid>
           </Grid>
@@ -210,7 +218,7 @@ export default function Chat() {
   );
 }
 
-function Messages({ msg }) {
+function Messages({ msg, isdoctor }) {
 
   const classes = useStyles();
   const messagesEndRef = React.useRef(null)
@@ -224,32 +232,62 @@ function Messages({ msg }) {
       {
         msg ?
           msg.map((item) => {
-            if (item.side) {
-              return (
-                <Grid container >
-                  <Grid item xs={5} className={classes.msg}>
-                    <Typography variant="body1">
-                      {item.msg}
-                    </Typography>
-                    <br />
+            if (isdoctor) {
+              if (item.patient) {
+                return (
+                  <Grid container >
+                    <Grid item xs={5} className={classes.msg}>
+                      <Typography variant="body1">
+                        {item.msg}
+                      </Typography>
+                      <br />
+                    </Grid>
+                    <Grid item xs={7}>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={7}>
+                )
+              } else {
+                return (
+                  <Grid container>
+                    <Grid item xs={7}>
+                    </Grid>
+                    <Grid item xs={5} className={classes.msg}>
+                      <Typography variant="body1">
+                        {item.msg}
+                      </Typography>
+                      <br />
+                    </Grid>
                   </Grid>
-                </Grid>
-              )
+                )
+              }
             } else {
-              return (
-                <Grid container>
-                  <Grid item xs={7}>
+              if (!item.patient) {
+                return (
+                  <Grid container >
+                    <Grid item xs={5} className={classes.msg}>
+                      <Typography variant="body1">
+                        {item.msg}
+                      </Typography>
+                      <br />
+                    </Grid>
+                    <Grid item xs={7}>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={5} className={classes.msg}>
-                    <Typography variant="body1">
-                      {item.msg}
-                    </Typography>
-                    <br />
+                )
+              } else {
+                return (
+                  <Grid container>
+                    <Grid item xs={7}>
+                    </Grid>
+                    <Grid item xs={5} className={classes.msg}>
+                      <Typography variant="body1">
+                        {item.msg}
+                      </Typography>
+                      <br />
+                    </Grid>
                   </Grid>
-                </Grid>
-              )
+                )
+              }
             }
           })
           :
@@ -269,7 +307,10 @@ function UserList({ name, id, setid }) {
     <Grid container>
       <Button
         className={classes.chatsbutton}
-        onClick={() => setid(id)}
+        onClick={() => {
+          setid(id);
+          // alert(id)
+        }}
       >
         <Avatar style={{ width: "50px", height: "50px" }}>{name ? name[0] : 'A'}</Avatar>
         <Grid container>

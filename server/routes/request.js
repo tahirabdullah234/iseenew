@@ -33,6 +33,7 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
                             p_id: req.body.p_id,
                             d_id,
                             msg: req.body.msg,
+                            patient: true,
                         }, (err, msg) => {
                             if (err) {
                                 res.json({
@@ -231,9 +232,9 @@ router.get('/doctor/get_chat', authenticate.verifyUser, (req, res) => {
         })
 })
 
-router.get('/patient/messages', authenticate.verifyUser, (req, res) => {
+router.get('/patient/messages/:d_id', authenticate.verifyUser, (req, res) => {
     console.log(req.body)
-    Message.find({ d_id: req.body.d_id }, (err, msgs) => {
+    Message.find({ d_id: req.params.d_id }, (err, msgs) => {
         console.log(msgs)
         if (err) {
             res.json({
@@ -249,9 +250,8 @@ router.get('/patient/messages', authenticate.verifyUser, (req, res) => {
     })
 })
 
-router.get('/doctor/messages', authenticate.verifyUser, (req, res) => {
-    console.log(req.body)
-    Message.find({ p_id: req.body.p_id }, (err, msgs) => {
+router.get('/doctor/messages/:p_id', authenticate.verifyUser, (req, res) => {
+    Message.find({ p_id: req.params.p_id }, (err, msgs) => {
         if (err) {
             res.json({
                 success: false,
