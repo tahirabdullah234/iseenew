@@ -21,23 +21,43 @@ export const getbpdata = (token) => {
 }
 
 export const getglocusedatauser = (token, id) => {
-    return axios.get('/chart/bg_graph/' + id, {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            'Authorization': `Bearer ${token}`
-        }
-    })
+    if (id)
+        return axios.get('/chart/databg/' + id, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    else
+        return axios.get('/chart/databg', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
 }
 
 export const getbpdatauser = (token, id) => {
-    return axios.get('/chart/bp_graph/' + id, {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            'Authorization': `Bearer ${token}`
-        }
-    })
+    if (id)
+        return axios.get('/chart/databp/' + id, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    else
+        return axios.get('/chart/databp', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
 }
 
 
@@ -113,3 +133,4 @@ export const getrandomavg = (token) => {
         }
     })
 }
+

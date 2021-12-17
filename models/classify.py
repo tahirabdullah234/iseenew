@@ -5,6 +5,7 @@ from PIL import Image
 import numpy as np
 import os
 import numpy as np
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -70,14 +71,21 @@ def indexSymp():
     if request.method == "POST":
         # inp = request.json
         # print(request.json)
-        print(request.form)
-        inp = np.array([int(i) for i in request.form['symptoms'].split(',')])
-        print(inp)
-        # inp = inp['symptoms']
-        inp = inp.reshape((1, 15))
-        prediction = symptoms.predict(inp, verbose=1)
-        print(prediction)
-        return {'request': "true"}
+        data = json.loads(request.data)
+        print(data)
+        symptom = data['symptoms'].split(',')
+        # print(symptoms)
+        inp = [int(i) for i in symptom]
+        if sum(inp) == 0:
+            return {'request': "true", "prediction": str(0)}
+        else:
+            inp = np.array(inp)
+            # print(inp)
+            # inp = inp['symptoms']
+            inp = inp.reshape((1, 15))
+            prediction = symptoms.predict(inp, verbose=1)
+            print(prediction)
+            return {'request': "true", "prediction": str(prediction[0][0])}
 
 
 if __name__ == '__main__':

@@ -108,3 +108,13 @@ export const get_msgs = (token, isdoctor, payload) => {
             }
         })
 }
+
+export const get_apponitment_p = (token) => {
+    return axios.get('/request/get_apponitment_p', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

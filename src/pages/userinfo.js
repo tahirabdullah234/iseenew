@@ -9,6 +9,7 @@ import UserDetail from "../components/userDetail";
 const useStyles = makeStyles((theme) => ({
     root: {
         background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
+        height: "100vh"
     },
     rightgrid: {
         margin: "auto",

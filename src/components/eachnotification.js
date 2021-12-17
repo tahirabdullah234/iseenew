@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Bellicon from "../Assets/bell.svg";
 import { Typography } from "@material-ui/core";
-export function Each() {
+export function Each({ data }) {
   const useStyles = makeStyles({
     NotificationsFont: {
       color: "#fff",
@@ -27,19 +27,21 @@ export function Each() {
           <img
             src={Bellicon}
             className={classes.BellIcon}
-            alt="error found"
+            alt="Notification Bell"
           ></img>
         </div>
       </Grid>
-      <Typography className={classes.NotificationsFont}>
-        10:25 AM : Your last reports are ready.
-      </Typography>
-      <Typography
-        className={classes.NotificationsFont}
-        style={{ textDecorationLine: "underline" }}
-      >
-        Dismiss
-      </Typography>
+      {
+        data ?
+
+          <Typography className={classes.NotificationsFont}>
+            Upcoming Appointment @ {" " + data.date.split('T')[0] + " " + data.time}.
+          </Typography>
+          :
+          <Typography className={classes.NotificationsFont}>
+            No New Notifications.
+          </Typography>
+      }
     </div>
   );
 }

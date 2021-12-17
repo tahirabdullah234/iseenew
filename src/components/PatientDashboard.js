@@ -6,10 +6,12 @@ import { Typography } from "@material-ui/core";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { Message } from "./message";
-import { GraphGlocuse, GraphBp } from "./graphs";
+import { GraphGlocuse, GraphBp } from "./graphsUserid";
 import { useSelector } from "react-redux";
 
 import { Doughnut } from "react-chartjs-2";
+import * as chart from "../Services/graphsdata";
+import * as apts from "../Services/appointment";
 
 const useStyles = makeStyles({
   DashboardHead: {
@@ -132,7 +134,57 @@ const useStyles = makeStyles({
 
 export function PatientDashboard() {
   const classes = useStyles();
-  const name = useSelector((state) => state.states.name)
+  const name = useSelector((state) => state.states.name);
+  const token = useSelector((state) => state.states.token);
+  const date = new Date(Date.now()).toLocaleDateString();
+  var olddate = new Date();
+  olddate.setDate(olddate.getDate() - 7);
+  olddate = olddate.toLocaleDateString();
+  const [health, sethealth] = React.useState(null)
+  const [apt, setapt] = React.useState(null)
+  React.useEffect(() => {
+    chart.getbpavg(token)
+      .then(res => {
+        if (res.data.success) {
+          const bp_avg = res.data.avg;
+          chart.getfastingavg(token)
+            .then(res => {
+              if (res.data.success) {
+                const fastavg = res.data.avg
+                chart.getrandomavg(token)
+                  .then(res => {
+                    const randomavg = res.data.avg
+                    var checker = (bp_avg.sysAvg - 120) + (bp_avg.dysAvg - 80) + (randomavg.randomAvg - 200) + (fastavg.fastingAvg - 120)
+                    // alert(checker, bp_avg.sysAvg, bp_avg.dysAvg, randomavg.randomAvg, fastavg.fastingAvg)
+                    // alert(fastavg.fastingAvg)
+                    if (checker <= 0) {
+                      sethealth({ value: 100, color: "#85fcbc" })
+                    } else {
+                      checker /= 100
+                      checker = 100 - checker
+                      if (checker > 70) {
+                        sethealth({ value: checker, color: "#85fcbc" })
+                      } else if (checker > 50) {
+                        sethealth({ value: checker, color: "#ffbf6b" })
+                      } else {
+                        sethealth({ value: checker > 10 ? checker : 10, color: "#fa6b6b" })
+                      }
+                    }
+                  })
+              }
+            })
+        }
+      })
+  }, [])
+  React.useEffect(() => {
+    apts.get_apponitment_p(token)
+      .then(res => {
+        if (res.data.success) {
+          setapt(res.data.data)
+        }
+      })
+  }, [])
+
   return (
     <div className="dashdiv">
       <Typography
@@ -163,10 +215,10 @@ export function PatientDashboard() {
                       datasets: [
                         {
                           label: ["Health LEVEL"],
-                          backgroundColor: ['#85fcbc', "transparent"],
+                          backgroundColor: [health ? health.color : "#85fcbc", "transparent"],
                           borderColor: "transparent",
                           borderRadius: 5,
-                          data: [85, 15]
+                          data: health ? [health.value, 100 - health.value] : [85, 15]
                         },
                       ]
                     }
@@ -210,10 +262,16 @@ export function PatientDashboard() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Notifications />
-            <Each />
-            <Each />
-            <Each />
-            <Each />
+            {
+              apt ?
+                apt.map((item) => {
+                  return (
+                    <Each data={item} />
+                  )
+                })
+                :
+                <Each />
+            }
           </Grid>
         </Grid>
       </Grid>
@@ -221,7 +279,6 @@ export function PatientDashboard() {
         <Grid container className={classes.boxdis}>
           <Grid
             item
-            sm={7}
             xs={12}
             style={{
               display: "flex",
@@ -242,7 +299,7 @@ export function PatientDashboard() {
                 WEEKLY STATISTICS
               </Typography>
               <Typography className={classes.timeline}>
-                JUL 21 - JUL 28
+                {olddate + " to " + date}
               </Typography>
             </Grid>
             <Grid container className={classes.BPGLtitle}>
@@ -265,74 +322,7 @@ export function PatientDashboard() {
             </Grid>
           </Grid>
           <Grid item sm={1}></Grid>
-          <Grid sm={4} xs={12} className={classes.appmsg} item>
-            <Grid
-              container
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "10px",
-              }}
-              className={classes.dialogBox}
-            >
-              <Typography
-                style={{ fontSize: "23px", textAlign: "center" }}
-                className={classes.fonttxt}
-              >
-                LATEST APPOINTMENT
-              </Typography>
-              <Grid container className={classes.setappointtxt}>
-                <Grid sm={12} md={4} item>
-                  <Typography
-                    style={{ fontSize: "23px", textAlign: "center" }}
-                    className={classes.fonttxt}
-                  >
-                    AUG 21
-                  </Typography>
-                  <Typography
-                    style={{ fontSize: "35px", textAlign: "center" }}
-                    className={classes.fonttxt}
-                  >
-                    2021
-                  </Typography>
-                </Grid>
-                <Grid sm={12} md={8} item>
-                  <Typography
-                    style={{ fontSize: "23px", textAlign: "start" }}
-                    className={classes.fonttxt}
-                  >
-                    Dr. Aslam Jamshaid
-                  </Typography>
-                  <Typography
-                    style={{ fontSize: "16px", textAlign: "start" }}
-                    className={classes.fonttxt}
-                  >
-                    Senior ophtalmologist
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              style={{
-                display: "flex",
-                textAlign: "center",
-                justifyContent: "center",
-                marginTop: "20px",
-                padding: "10px",
-              }}
-              className={classes.dialogBox}
-            >
-              <Typography
-                style={{ fontSize: "23px", textAlign: "center" }}
-                className={classes.fonttxt}
-              >
-                MESSAGES
-              </Typography>
 
-              <Message />
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
     </div>

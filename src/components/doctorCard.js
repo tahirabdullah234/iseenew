@@ -94,10 +94,8 @@ export default function DoctorCard({ name, id, requested }) {
   const dispatch = useDispatch();
 
   const modalStyle = {
-    top: "50%",
-    left: "50%",
-    transform: "translate(50%, -50%)",
-    margin: "auto"
+    margin: "auto",
+    marginTop: "15%"
   }
 
   const handleOpen = () => {

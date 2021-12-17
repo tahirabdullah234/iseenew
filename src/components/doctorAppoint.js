@@ -148,7 +148,7 @@ export default function DoctorCard({ name, id, onClose }) {
                                     }
                                 })
                         })
-                    alert("Request Sent")
+                    // alert("Request Sent")
                     onClose();
                 }
             })
