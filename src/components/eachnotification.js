@@ -27,7 +27,7 @@ export function Each({ data }) {
           <img
             src={Bellicon}
             className={classes.BellIcon}
-            alt="error found"
+            alt="Notification Bell"
           ></img>
         </div>
       </Grid>
