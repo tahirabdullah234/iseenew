@@ -182,6 +182,27 @@ router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
     })
 })
 
+router.get('/get_apponitment_p', authenticate.verifyUser, (req, res) => {
+    Appointment.find({ p_id: req.user._id, date: { '$gte': Date.now(), } }, (err, data) => {
+        if (err) {
+            res.json({
+                success: false,
+                err: err.name
+            })
+        } else if (data.length > 0) {
+            res.json({
+                success: true,
+                data
+            })
+        } else {
+            res.json({
+                success: false,
+                data
+            })
+        }
+    })
+})
+
 router.get('/patient/get_chat', authenticate.verifyUser, (req, res) => {
     Chat.find({ p_id: req.user._id })
         .populate('d_id')

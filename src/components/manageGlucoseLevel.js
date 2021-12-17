@@ -28,6 +28,9 @@ import { useFormik } from "formik";
 import { validationSchemaBG as validationSchema } from "../Services/validations";
 import { questions, answers } from "../Services/questions";
 
+import * as model from "../Services/model"
+
+
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
@@ -212,6 +215,7 @@ export function ManageGL() {
   const [GLunit, setGLunit] = React.useState("mg/dl");
   const [index, setindex] = React.useState(0);
   const [fast, setfast] = React.useState("");
+  const [result, setresult] = React.useState(null)
 
   const theme = createTheme({
     palette: {
@@ -296,6 +300,20 @@ export function ManageGL() {
     getfastavg();
     getrandavg();
   }, [token])
+
+  const getSymPred = () => {
+    model.get_symp_pred(token, ans)
+      .then(res => {
+        if (res.data.request) {
+          if (res.data.prediction > 0 && res.data.prediction < 0.51) {
+            setresult('Diabetic')
+          } else {
+            setresult('Not Diabetic')
+          }
+        }
+      })
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -414,7 +432,7 @@ export function ManageGL() {
                   aria-label="previous question"
                   component="span"
                   onClick={() => {
-                    if (index > 0 && mark !== "") {
+                    if (index > 0) {
                       setindex(index - 1);
                       setmark("");
                     }
@@ -427,9 +445,9 @@ export function ManageGL() {
                 {
                   index === questions.length - 1 ?
                     <Button
-                      onClick={() =>
-                        alert(JSON.stringify(ans))
-                      }
+                      onClick={() => {
+                        getSymPred()
+                      }}
                     >
                       Submit
                     </Button>
@@ -448,6 +466,12 @@ export function ManageGL() {
                       <Typography variant="caption">Next</Typography>
                       <ArrowForwardIosIcon />
                     </IconButton>}
+                {result ?
+                  <Typography variant="body1">Result Your Symptoms are {result}</Typography>
+                  :
+                  <Typography variant="body1"></Typography>
+                }
+
               </Grid>
             </Grid>
           </Grid>

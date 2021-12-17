@@ -173,7 +173,7 @@ export function ManageBP() {
   const [ans] = React.useState(answers);
   const [mark, setmark] = React.useState('')
   const [index, setindex] = React.useState(0);
-
+  const [result, setresult] = React.useState(null)
 
   const formik = useFormik({
     initialValues: {
@@ -240,7 +240,13 @@ export function ManageBP() {
   const getSymPred = () => {
     model.get_symp_pred(token, ans)
       .then(res => {
-        alert(JSON.stringify(res.data))
+        if (res.data.request) {
+          if (res.data.prediction > 0.5 && res.data.prediction < 1) {
+            setresult('Hypertensive')
+          } else {
+            setresult('Not Hypertensive')
+          }
+        }
       })
   }
 
@@ -352,7 +358,6 @@ export function ManageBP() {
                 index === questions.length - 1 ?
                   <Button
                     onClick={() => {
-                      alert(JSON.stringify(ans))
                       getSymPred()
                     }}
                   >
@@ -373,6 +378,12 @@ export function ManageBP() {
                     <Typography variant="caption">Next</Typography>
                     <ArrowForwardIosIcon />
                   </IconButton>}
+
+              {result ?
+                <Typography variant="body1">Your Symptoms are {result}</Typography>
+                :
+                <Typography variant="body1"></Typography>
+              }
             </Grid>
           </Grid>
         </Grid>

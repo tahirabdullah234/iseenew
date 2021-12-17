@@ -10,6 +10,8 @@ import { GraphGlocuse, GraphBp } from "./graphsUserid";
 import { useSelector } from "react-redux";
 
 import { Doughnut } from "react-chartjs-2";
+import * as chart from "../Services/graphsdata";
+import * as apts from "../Services/appointment";
 
 const useStyles = makeStyles({
   DashboardHead: {
@@ -133,10 +135,55 @@ const useStyles = makeStyles({
 export function PatientDashboard() {
   const classes = useStyles();
   const name = useSelector((state) => state.states.name);
+  const token = useSelector((state) => state.states.token);
   const date = new Date(Date.now()).toLocaleDateString();
   var olddate = new Date();
   olddate.setDate(olddate.getDate() - 7);
   olddate = olddate.toLocaleDateString();
+  const [health, sethealth] = React.useState(null)
+  const [apt, setapt] = React.useState(null)
+  React.useEffect(() => {
+    chart.getbpavg(token)
+      .then(res => {
+        if (res.data.success) {
+          const bp_avg = res.data.avg;
+          chart.getfastingavg(token)
+            .then(res => {
+              if (res.data.success) {
+                const fastavg = res.data.avg
+                chart.getrandomavg(token)
+                  .then(res => {
+                    const randomavg = res.data.avg
+                    var checker = (bp_avg.sysAvg - 120) + (bp_avg.dysAvg - 80) + (randomavg.randomAvg - 200) + (fastavg.fastingAvg - 120)
+                    // alert(checker, bp_avg.sysAvg, bp_avg.dysAvg, randomavg.randomAvg, fastavg.fastingAvg)
+                    // alert(fastavg.fastingAvg)
+                    if (checker <= 0) {
+                      sethealth({ value: 100, color: "#85fcbc" })
+                    } else {
+                      checker /= 100
+                      checker = 100 - checker
+                      if (checker > 70) {
+                        sethealth({ value: checker, color: "#85fcbc" })
+                      } else if (checker > 50) {
+                        sethealth({ value: checker, color: "#ffbf6b" })
+                      } else {
+                        sethealth({ value: checker > 10 ? checker : 10, color: "#fa6b6b" })
+                      }
+                    }
+                  })
+              }
+            })
+        }
+      })
+  }, [])
+  React.useEffect(() => {
+    apts.get_apponitment_p(token)
+      .then(res => {
+        if (res.data.success) {
+          setapt(res.data.data)
+        }
+      })
+  }, [])
 
   return (
     <div className="dashdiv">
@@ -168,10 +215,10 @@ export function PatientDashboard() {
                       datasets: [
                         {
                           label: ["Health LEVEL"],
-                          backgroundColor: ['#85fcbc', "transparent"],
+                          backgroundColor: [health ? health.color : "#85fcbc", "transparent"],
                           borderColor: "transparent",
                           borderRadius: 5,
-                          data: [85, 15]
+                          data: health ? [health.value, 100 - health.value] : [85, 15]
                         },
                       ]
                     }
@@ -215,10 +262,16 @@ export function PatientDashboard() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Notifications />
-            <Each />
-            <Each />
-            <Each />
-            <Each />
+            {
+              apt ?
+                apt.map((item) => {
+                  return (
+                    <Each data={item} />
+                  )
+                })
+                :
+                <Each />
+            }
           </Grid>
         </Grid>
       </Grid>

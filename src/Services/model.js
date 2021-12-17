@@ -32,8 +32,9 @@ export const new_dataset = (token, payload) => {
 
 export const get_symp_pred = (token, payload) => {
     var symptoms = ''
-    for (var i = 0; i < payload.length; i++)
+    for (var i = 0; i < payload.length - 1; i++)
         symptoms += payload[i] + ','
+    symptoms += payload[payload.length - 1]
     return axios.post('http://127.0.0.1:5001/symptom', { symptoms: symptoms }, {
         headers: {
             'Access-Control-Allow-Origin': '*',
