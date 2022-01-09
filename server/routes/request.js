@@ -19,7 +19,7 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
             Doctor.findById(req.body.d_id, (err, data) => {
                 console.log("Sample Data:" + data);
                 const d_id = data.userid;
-                Chat.find({ p_od: req.user._id, d_id }, (err, data) => {
+                Chat.find({ p_id: req.user._id, d_id }, (err, data) => {
                     if (err) {
                         res.json({ success: false, err: err.name })
                     } else if (data) {
@@ -168,7 +168,7 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
         else {
             var appointment = new Appointment({
                 p_id: req.body.p_id,
-                d_id: req.body.d_id,
+                d_id: req.user._id,
                 date: req.body.date,
                 time: req.body.time,
                 name: req.body.name,
