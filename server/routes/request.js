@@ -19,16 +19,10 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
             Doctor.findById(req.body.d_id, (err, data) => {
                 console.log("Sample Data:" + data);
                 const d_id = data.userid;
-                Chat.create({
-                    p_id: req.user._id,
-                    d_id,
-                }, (err, data) => {
+                Chat.find({ p_od: req.user._id, d_id }, (err, data) => {
                     if (err) {
-                        res.json({
-                            err: err.name,
-                            success: false
-                        })
-                    } else {
+                        res.json({ success: false, err: err.name })
+                    } else if (data) {
                         Message.create({
                             p_id: req.body.p_id,
                             d_id,
@@ -44,6 +38,37 @@ router.post('/add_request', authenticate.verifyUser, (req, res) => {
                                 res.json({
                                     success: true,
                                     data: data
+                                })
+                            }
+                        })
+                    } else {
+                        Chat.create({
+                            p_id: req.user._id,
+                            d_id,
+                        }, (err, data) => {
+                            if (err) {
+                                res.json({
+                                    err: err.name,
+                                    success: false
+                                })
+                            } else {
+                                Message.create({
+                                    p_id: req.body.p_id,
+                                    d_id,
+                                    msg: req.body.msg,
+                                    patient: true,
+                                }, (err, msg) => {
+                                    if (err) {
+                                        res.json({
+                                            success: false,
+                                            err: err.name,
+                                        })
+                                    } else {
+                                        res.json({
+                                            success: true,
+                                            data: data
+                                        })
+                                    }
                                 })
                             }
                         })
@@ -155,9 +180,23 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
                         err: err.name,
                     })
                 } else {
-                    res.json({
-                        success: true,
-                        apt,
+                    Message.create({
+                        p_id: req.body.p_id,
+                        d_id: req.body.d_id,
+                        msg: "Your Appointment is Scheduled on " + String(req.body.date.split('T')[0]) + " @ " + String(req.body.time),
+                        patient: false,
+                    }, (err, msg) => {
+                        if (err) {
+                            res.json({
+                                err: err.name,
+                                success: false
+                            })
+                        } else {
+                            res.json({
+                                success: true,
+                                apt,
+                            })
+                        }
                     })
                 }
             })
@@ -168,6 +207,7 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
 
 router.get('/get_apponitment', authenticate.verifyUser, (req, res) => {
     Appointment.find({ d_id: req.user._id, date: { '$gte': Date.now(), } }, (err, data) => {
+        console.log(data)
         if (err) {
             res.json({
                 success: false,
@@ -207,7 +247,6 @@ router.get('/patient/get_chat', authenticate.verifyUser, (req, res) => {
     Chat.find({ p_id: req.user._id })
         .populate('d_id')
         .then((data, err) => {
-            console.log(err)
             console.log(data)
             if (err) {
                 res.json({
@@ -246,7 +285,7 @@ router.get('/doctor/get_chat', authenticate.verifyUser, (req, res) => {
 router.get('/patient/messages/:d_id', authenticate.verifyUser, (req, res) => {
     console.log(req.body)
     Message.find({ d_id: req.params.d_id }, (err, msgs) => {
-        console.log(msgs)
+        // console.log(msgs)
         if (err) {
             res.json({
                 success: false,

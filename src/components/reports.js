@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -53,8 +53,8 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: "35px",
-    padding: "0px 15px 0px 15px",
+    // marginTop: "35px",
+    padding: "10px 15px 10px 15px",
     margin: "auto",
   },
   Reportheader: {
@@ -111,20 +111,21 @@ function Report({ name, date, index, data }) {
           <Typography className={classes.TableContentFont}>{date.split('T')[1]}</Typography>
         </Grid>
         <Grid item xs={4} sm={2} style={{ textAlign: 'start' }}>
-          <IconButton>
-            <CloudDownloadOutlinedIcon style={{ color: "#fff" }} />
-          </IconButton>
-          <Typography display="inline" style={{ color: "#fff", fontWeight: "bold" }}>|</Typography>
-          <IconButton
+          <Button
+            className={classes.TableContentFont}
+            style={{ color: "white" }}
             onClick={handleClick}
           >
-            <VisibilityOutlinedIcon style={{ color: "#fff" }} />
-          </IconButton>
+            View Report
+          </Button>
         </Grid>
       </Grid>
     </Grid>
   );
 }
+
+// <Typography className={classes.TableContentFont} style={{ textDecoration: "underline", cursor: "pointer" }}>View Report</Typography>
+
 export function Reports() {
   const classes = useStyles();
   const token = useSelector((state) => state.states.token);
