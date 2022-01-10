@@ -182,7 +182,7 @@ router.post('/accept_req', authenticate.verifyUser, (req, res) => {
                 } else {
                     Message.create({
                         p_id: req.body.p_id,
-                        d_id: req.body.d_id,
+                        d_id: req.user._id,
                         msg: "Your Appointment is Scheduled on " + String(req.body.date.split('T')[0]) + " @ " + String(req.body.time),
                         patient: false,
                     }, (err, msg) => {
