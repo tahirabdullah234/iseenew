@@ -273,7 +273,7 @@ function Appointments({ data }) {
     <Grid container className={classes.AppAdjust1}>
       <Grid item xs={6} className={classes.Apptxt}>
         <Typography className={classes.sameinfont1}>
-          {data.date.split('T')[0] + " " + data.time}
+          {data.date.split('T')[0] + " @ " + data.time}
         </Typography>
       </Grid>
       <Grid item xs={6}>

@@ -135,6 +135,7 @@ const useStyles = makeStyles({
 export function PatientDashboard() {
   const classes = useStyles();
   const name = useSelector((state) => state.states.name);
+  const userId = useSelector((state) => state.states.user._id);
   const token = useSelector((state) => state.states.token);
   const date = new Date(Date.now()).toLocaleDateString();
   var olddate = new Date();
