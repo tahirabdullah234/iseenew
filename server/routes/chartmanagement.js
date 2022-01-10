@@ -405,12 +405,13 @@ router.get("/databg", authenticate.verifyUser, (req, res) => {
   var olddate = new Date();
   olddate.setDate(olddate.getDate() - 7);
   BG.find({ patient: req.user._id, dateAdded: { '$gte': olddate } }, (err, record) => {
+    console.log()
     if (err)
       res.json({
         err: err.name,
         success: false
       })
-    else if (record.lenght > 0) {
+    else if (record.length > 0) {
       var fasting = [];
       var random = [];
       var fdates = [];
@@ -447,7 +448,7 @@ router.get("/databg", authenticate.verifyUser, (req, res) => {
   })
 })
 
-router.get("/databp/_id", authenticate.verifyUser, (req, res) => {
+router.get("/databp/:_id", authenticate.verifyUser, (req, res) => {
   var olddate = new Date();
   olddate.setDate(olddate.getDate() - 7);
   BP.find({ patient: req.params._id, dateAdded: { '$gte': olddate } }, (err, record) => {

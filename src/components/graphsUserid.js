@@ -34,25 +34,24 @@ export function GraphGlocuse({ userId }) {
 
 
     React.useEffect(() => {
-        setTimeout(
-            () =>
-                getdata.getglocusedatauser(token, userId)
-                    .then(res => {
-                        if (res.data.success) {
-                            console.log(res.data)
-                            setdata(res.data.record)
-                        } else {
-                            setdata(res.data.record)
-                            setsnackbar({
-                                ...snackbar,
-                                open: true,
-                                msg: "No Blood Glocuse Data Found",
-                                type: "info"
-                            })
-                        }
+        getdata.getglocusedatauser(token, userId)
+            .then(res => {
+                alert(res.data)
+                if (res.data.success) {
+                    setdata(res.data.record)
+                } else {
+                    // console.log(res.data)
+                    setdata(res.data.record)
+                    setsnackbar({
+                        ...snackbar,
+                        open: true,
+                        msg: "No Blood Glocuse Data Found",
+                        type: "info"
                     })
-            , 150)
-    }, [])
+                }
+            })
+            .catch(res => console.log(res))
+    }, [snackbar, token, userId])
 
     return (
         <div style={{ margin: "auto" }}>
@@ -110,7 +109,7 @@ export function GraphGlocuse({ userId }) {
                     />
             }
             <Snackbar open={snackbar.open}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={handleClose}
             >
                 <Alert severity={snackbar.type}>
@@ -140,25 +139,22 @@ export function GraphBp({ userId }) {
 
 
     React.useEffect(() => {
-        setTimeout(
-            () =>
-                getdata.getbpdatauser(token, userId)
-                    .then(res => {
-                        if (res.data.success) {
-                            console.log(res.data)
-                            setdata(res.data.record)
-                        } else {
-                            setdata(res.data.record)
-                            setsnackbar({
-                                ...snackbar,
-                                open: true,
-                                msg: "No Blood Pressure Data Found",
-                                type: "info"
-                            })
-                        }
+        getdata.getbpdatauser(token, userId)
+            .then(res => {
+                if (res.data.success) {
+                    console.log(res.data)
+                    setdata(res.data.record)
+                } else {
+                    setdata(res.data.record)
+                    setsnackbar({
+                        ...snackbar,
+                        open: true,
+                        msg: "No Blood Pressure Data Found",
+                        type: "info"
                     })
-            , 50)
-    }, [token])
+                }
+            })
+    }, [snackbar, token, userId])
     // systolic upper - 120 ideal
     // distlic lower - 80 ideal
 
@@ -218,7 +214,7 @@ export function GraphBp({ userId }) {
                     />
             }
             <Snackbar open={snackbar.open}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={handleClose}
             >
                 <Alert severity={snackbar.type}>
