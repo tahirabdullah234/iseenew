@@ -90,7 +90,6 @@ export const get_users = (token, isdoctor) => {
 }
 
 export const get_msgs = (token, isdoctor, payload) => {
-    console.log(payload)
     if (isdoctor)
         return axios.get('/request/doctor/messages/' + payload.p_id._id, {
             headers: {

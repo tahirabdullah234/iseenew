@@ -36,7 +36,6 @@ export function GraphGlocuse({ userId }) {
     React.useEffect(() => {
         getdata.getglocusedatauser(token, userId)
             .then(res => {
-                alert(res.data)
                 if (res.data.success) {
                     setdata(res.data.record)
                 } else {
@@ -51,7 +50,7 @@ export function GraphGlocuse({ userId }) {
                 }
             })
             .catch(res => console.log(res))
-    }, [snackbar, token, userId])
+    }, [token, userId])
 
     return (
         <div style={{ margin: "auto" }}>

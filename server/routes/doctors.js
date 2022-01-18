@@ -54,8 +54,8 @@ router.get('/get_doc', authenticate.verifyUser, (req, res) => {
     Doctor.find({})
         .populate('userid')
         .then((err, user) => {
-            console.log(err)
-            console.log(user)
+            // console.log(err)
+            // console.log(user)
             if (err)
                 res.send(err)
             else {

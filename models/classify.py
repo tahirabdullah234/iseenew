@@ -16,9 +16,9 @@ app = Flask(__name__)
 CORS(app)
 print(os.getcwd())
 model = load_model(
-    r'C:\Users\abdul\Desktop\iseenew\models\model_dr.h5', compile=True)
+    r'E:\ReactJS\iseenew\models\model_dr.h5', compile=True)
 symptoms = load_model(
-    r'C:\Users\abdul\Desktop\iseenew\models\symptoms training\mode_symp.h5', compile=True)
+    r'E:\ReactJS\iseenew\models\symptoms training\mode_symp.h5', compile=True)
 
 
 def crop_image_from_gray(img, tol=7):

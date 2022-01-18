@@ -63,8 +63,8 @@ export function RetinaScan() {
   const classes = useStyles();
   const [fileInput, setfileinput] = React.useState(React.createRef());
   const [scan, setscan] = React.useState(null);
-  const token = useSelector((state) => state.states.token)
-  const user = useSelector((state) => state.states.user)
+  const token = useSelector((state) => state.states.token);
+  const user = useSelector((state) => state.states.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const [loader, setloader] = React.useState(false);
@@ -73,40 +73,36 @@ export function RetinaScan() {
     fileInput.current.click();
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     event.preventDefault();
     const data = new FormData();
-    data.append('file', fileInput.current.files[0]);
-    model.upload_file(token, data)
-      .then((res) => {
-        setscan(res.data)
-      });
-  }
+    data.append("file", fileInput.current.files[0]);
+    model.upload_file(token, data).then((res) => {
+      setscan(res.data);
+    });
+  };
 
   const handleClassifyImage = () => {
     const data = new FormData();
-    data.append('file', fileInput.current.files[0]);
-    setloader(!loader)
-    model.get_prediction(token, data)
-      .then(res => {
-        if (res.data.success) {
-          const result = {
-            'u_id': user._id,
-            'scan': fileInput.current.files[0].name,
-            'prediction': res.data.label[0],
-            'probability': res.data.accuracy
+    data.append("file", fileInput.current.files[0]);
+    setloader(!loader);
+    model.get_prediction(token, data).then((res) => {
+      if (res.data.success) {
+        const result = {
+          u_id: user._id,
+          scan: fileInput.current.files[0].name,
+          prediction: res.data.label[0],
+          probability: res.data.accuracy,
+        };
+        model.new_dataset(token, result).then((res_data) => {
+          if (res_data.data.success) {
+            dispatch(setdata(res_data.data.data));
+            history.push("/result");
           }
-          model.new_dataset(token, result)
-            .then(res_data => {
-              if (res_data.data.success) {
-                dispatch(setdata(res_data.data.data))
-                history.push("/result")
-              }
-            })
-        }
-      })
-  }
-
+        });
+      }
+    });
+  };
 
   return (
     <div className="dashdiv">
@@ -115,25 +111,38 @@ export function RetinaScan() {
         <Typography className={classes.headerfont}>
           DISEASE DETECTION SYSTEM
         </Typography>
-        {
-          loader ?
-            <CircularProgress
-              style={{ marginRight: "20px", width: "103px", height: "101px" }}
-            />
-            :
-            <img src={scan ? `/${scan.filename}` : view} className="view" alt="error found"></img>
-        }
+        {loader ? (
+          <CircularProgress
+            style={{ marginRight: "20px", width: "103px", height: "101px" }}
+          />
+        ) : (
+          <img
+            src={scan ? `/${scan.filename}` : view}
+            className="view"
+            alt="error found"
+          ></img>
+        )}
         <Grid item md={4} className={classes.butpos}>
-          <Button className={classes.Button} onClick={handleClick}>UPLOAD IMAGE</Button>
-          <input type='file' ref={fileInput} accept="image/*" onChange={handleChange} style={{ display: "none" }} />
-          <Button className={classes.Button} onClick={handleClassifyImage}>CLASSIFY IMAGE</Button>
+          <Button className={classes.Button} onClick={handleClick}>
+            UPLOAD IMAGE
+          </Button>
+          <input
+            type="file"
+            ref={fileInput}
+            accept="image/*"
+            onChange={handleChange}
+            style={{ display: "none" }}
+          />
+          <Button className={classes.Button} onClick={handleClassifyImage}>
+            CLASSIFY IMAGE
+          </Button>
         </Grid>
-        <div className={classes.guidepos}>
+        {/* <div className={classes.guidepos}>
           <img src={guideline} className="guideimg" alt="error found"></img>
           <Typography className={classes.guideline}>
             HOW TO USE ISEE.
           </Typography>
-        </div>
+        </div> */}
       </Grid>
     </div>
   );

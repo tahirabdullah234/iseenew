@@ -20,7 +20,7 @@ export default function Scan() {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={1}>
-                <Drawer />
+               <Drawer />
             </Grid>
             <Grid item xs={10} className={classes.rightgrid}>
                 <RetinaScan />

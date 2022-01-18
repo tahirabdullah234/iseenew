@@ -16,9 +16,9 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import IconButton from "@material-ui/core/IconButton";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 import { useSelector } from "react-redux";
 
@@ -28,8 +28,7 @@ import { useFormik } from "formik";
 import { validationSchemaBG as validationSchema } from "../Services/validations";
 import { questions, answers } from "../Services/questions";
 
-import * as model from "../Services/model"
-
+import * as model from "../Services/model";
 
 const useStyles = makeStyles({
   DialogBox: {
@@ -69,7 +68,7 @@ const useStyles = makeStyles({
     marginTop: "13px",
     "&:hover": {
       background: "rgba(53,133,218,0.7)",
-    }
+    },
   },
   TDialogbox: {
     width: "900px",
@@ -159,7 +158,7 @@ const useStyles = makeStyles({
   bloodpressuretablecontainer: {
     height: 300,
     overflowY: "scroll",
-  }
+  },
 });
 
 function Glucoselevelrecord({ value, type, date, unit }) {
@@ -167,16 +166,22 @@ function Glucoselevelrecord({ value, type, date, unit }) {
   return (
     <Grid item xs={11} className={classes.Tablecontentbox}>
       <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>{value + " " + unit}</Typography>
+        <Typography className={classes.TableContentFont}>
+          {value + " " + unit}
+        </Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
         <Typography className={classes.TableContentFont}>{type}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>{date.split("T")[1].split(".")[0]}</Typography>
+        <Typography className={classes.TableContentFont}>
+          {date.split("T")[1].split(".")[0]}
+        </Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>{date.split("T")[0]}</Typography>
+        <Typography className={classes.TableContentFont}>
+          {date.split("T")[0]}
+        </Typography>
       </Grid>
     </Grid>
   );
@@ -205,17 +210,17 @@ function Glucoselevelhead() {
 export function ManageGL() {
   const classes = useStyles();
   const token = useSelector((state) => state.states.token);
-  const id = useSelector((state) => state.states.user._id)
+  const id = useSelector((state) => state.states.user._id);
   const [data, setdata] = React.useState(null);
   const [fasting, setfasting] = React.useState(null);
   const [rand, setrand] = React.useState(null);
   const [check, setcheck] = React.useState(true);
   const [ans] = React.useState(answers);
-  const [mark, setmark] = React.useState('')
+  const [mark, setmark] = React.useState("");
   const [GLunit, setGLunit] = React.useState("mg/dl");
   const [index, setindex] = React.useState(0);
   const [fast, setfast] = React.useState("");
-  const [result, setresult] = React.useState(null)
+  const [result, setresult] = React.useState(null);
 
   const theme = createTheme({
     palette: {
@@ -234,86 +239,88 @@ export function ManageGL() {
 
   const formik = useFormik({
     initialValues: {
-      value: '',
+      value: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      values = { ...values, patient: id, isFasting: fast === "Fasting" ? true : false, unit: GLunit }
-      getdata.savebgrecord(token, values)
-        .then(res => {
-          if (res.data.success) {
-            rows();
-            getfastavg();
-            getrandavg();
-            setcheck(!check);
-            formik.resetForm()
-          }
-        })
-    }
-  })
+      values = {
+        ...values,
+        patient: id,
+        isFasting: fast === "Fasting" ? true : false,
+        unit: GLunit,
+      };
+      getdata.savebgrecord(token, values).then((res) => {
+        if (res.data.success) {
+          rows();
+          getfastavg();
+          getrandavg();
+          setcheck(!check);
+          formik.resetForm();
+        }
+      });
+    },
+  });
 
   const rows = () => {
-    getdata.getbgrecord(token)
-      .then(res => {
-        if (res.data.success) {
-          if (res.data.record.length > 0)
-            setdata(res.data.record)
-          else
-            setdata([{
-              value: 'No Record Found ',
+    getdata.getbgrecord(token).then((res) => {
+      if (res.data.success) {
+        if (res.data.record.length > 0) setdata(res.data.record);
+        else
+          setdata([
+            {
+              value: "No Record Found ",
               unit: "",
               dateAdded: "N/ATN/A",
-              type: ""
-            }])
-        } else {
-          setdata([{
-            value: 'No Record Found ',
+              type: "",
+            },
+          ]);
+      } else {
+        setdata([
+          {
+            value: "No Record Found ",
             unit: "",
             dateAdded: "N/ATN/A",
-            type: ""
-          }])
-        }
-      })
-  }
+            type: "",
+          },
+        ]);
+      }
+    });
+  };
 
   const getfastavg = () => {
-    getdata.getfastingavg(token)
-      .then(res => {
-        // alert(JSON.stringify(res.data))
-        if (res.data.success) {
-          setfasting(res.data.avg);
-        }
-      })
-  }
+    getdata.getfastingavg(token).then((res) => {
+      // alert(JSON.stringify(res.data))
+      if (res.data.success) {
+        setfasting(res.data.avg);
+      }
+    });
+  };
 
   const getrandavg = () => {
-    getdata.getrandomavg(token)
-      .then(res => {
-        if (res.data.success) {
-          setrand(res.data.avg)
-        }
-      })
-  }
+    getdata.getrandomavg(token).then((res) => {
+      if (res.data.success) {
+        setrand(res.data.avg);
+      }
+    });
+  };
 
   React.useEffect(() => {
     rows();
     getfastavg();
     getrandavg();
-  }, [token])
+  }, [token]);
 
   const getSymPred = () => {
-    model.get_symp_pred(token, ans)
-      .then(res => {
-        if (res.data.request) {
-          if (res.data.prediction > 0 && res.data.prediction < 0.51) {
-            setresult('Diabetic')
-          } else {
-            setresult('Not Diabetic')
-          }
+    model.get_symp_pred(token, ans).then((res) => {
+      if (res.data.request) {
+        if (res.data.prediction > 0 && res.data.prediction < 0.51) {
+          setresult("Diabetic");
+        } else {
+          setresult("Not Diabetic");
         }
-      })
-  }
-
+      }
+    });
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -323,7 +330,7 @@ export function ManageGL() {
             style={{ fontSize: "32px" }}
             className={classes.sameinfont}
           >
-            MANAGE GLUCOSE LEVEL
+            MANAGE BLOOD GLUCOSE
           </Typography>
           <Grid item xs={11} className={classes.DEDialogBox}>
             <form onSubmit={formik.handleSubmit}>
@@ -356,7 +363,10 @@ export function ManageGL() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={11} md={3} className={classes.radiopos}>
-                  <FormControl component="fieldset" className={classes.radiosize}>
+                  <FormControl
+                    component="fieldset"
+                    className={classes.radiosize}
+                  >
                     <RadioGroup
                       aria-label="isFasting"
                       name="isFasting"
@@ -378,7 +388,9 @@ export function ManageGL() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={5} sm={2}>
-                  <Button type="submit" className={classes.DEDial}>ADD</Button>
+                  <Button type="submit" className={classes.DEDial}>
+                    ADD
+                  </Button>
                 </Grid>
               </Grid>
             </form>
@@ -386,13 +398,21 @@ export function ManageGL() {
           <Grid item xs={11} className={classes.DEDialogBox}>
             <Grid container className={classes.DEDialpos}>
               <Grid item xs={6}>
-                <Typography variant="h6">Fasting Sugar Level Average:
-                  <Typography variant="body1"> {fasting ? fasting.fastingAvg : "No Record Avaliable"}</Typography>
+                <Typography variant="h6">
+                  Fasting Sugar Level Average:
+                  <Typography variant="body1">
+                    {" "}
+                    {fasting ? fasting.fastingAvg : "No Record Avaliable"}
+                  </Typography>
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="h6">Random Sugar Level Average:
-                  <Typography variant="body1"> {rand ? rand.randomAvg : "No Record Avaliable"}</Typography>
+                <Typography variant="h6">
+                  Random Sugar Level Average:
+                  <Typography variant="body1">
+                    {" "}
+                    {rand ? rand.randomAvg : "No Record Avaliable"}
+                  </Typography>
                 </Typography>
               </Grid>
             </Grid>
@@ -401,27 +421,33 @@ export function ManageGL() {
           <Grid item xs={11} className={classes.DEDialogBox}>
             <Grid container className={classes.DEDialpos}>
               <Grid item xs={12}>
-                <Typography variant="h6">Symptoms Based Check for Diabeties: </Typography>
-                <Typography variant="subtitle">Please Answer the following Question:</Typography>
+                <Typography variant="h6">
+                  Symptoms Based Check for Diabeties:{" "}
+                </Typography>
+                <Typography variant="subtitle">
+                  Please Answer the following Question:
+                </Typography>
               </Grid>
               <Grid item xs={11} style={{ width: "100%", margin: "auto" }}>
-                <Typography variant="h6">{questions ? questions[index] : ''} </Typography>
+                <Typography variant="h6">
+                  {questions ? questions[index] : ""}{" "}
+                </Typography>
                 <Grid item xs={11} style={{ margin: "auto" }}>
                   <FormControl component="fieldset">
                     <RadioGroup
                       value={mark}
-                      onChange={e => {
+                      onChange={(e) => {
                         ans[index] = Number(e.target.value);
-                        setmark(e.target.value)
+                        setmark(e.target.value);
                       }}
                     >
                       <FormControlLabel
-                        value='0'
+                        value="0"
                         control={<Radio />}
                         label="No"
                       />
                       <FormControlLabel
-                        value='1'
+                        value="1"
                         control={<Radio />}
                         label="Yes"
                       />
@@ -442,64 +468,77 @@ export function ManageGL() {
                   <ArrowBackIosIcon />
                   <Typography variant="caption">Prevoius</Typography>
                 </IconButton>
-                {
-                  index === questions.length - 1 ?
-                    <Button
-                      onClick={() => {
-                        getSymPred()
-                      }}
-                    >
-                      Submit
-                    </Button>
-                    :
-                    <IconButton
-                      aria-label="next question"
-                      component="span"
-                      onClick={() => {
-                        if (index < questions.length - 1 && mark !== "") {
-                          setindex(index + 1);
-                          setmark("");
-                        }
-                      }}
-                      disabled={index === questions.length - 1}
-                    >
-                      <Typography variant="caption">Next</Typography>
-                      <ArrowForwardIosIcon />
-                    </IconButton>}
-                {result ?
-                  <Typography variant="body1">Result Your Symptoms are {result}</Typography>
-                  :
+                {index === questions.length - 1 ? (
+                  <Button
+                    onClick={() => {
+                      getSymPred();
+                    }}
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <IconButton
+                    aria-label="next question"
+                    component="span"
+                    onClick={() => {
+                      if (index < questions.length - 1 && mark !== "") {
+                        setindex(index + 1);
+                        setmark("");
+                      }
+                    }}
+                    disabled={index === questions.length - 1}
+                  >
+                    <Typography variant="caption">Next</Typography>
+                    <ArrowForwardIosIcon />
+                  </IconButton>
+                )}
+                {result ? (
+                  <Typography variant="body1">
+                    Result Your Symptoms are {result}
+                  </Typography>
+                ) : (
                   <Typography variant="body1"></Typography>
-                }
-
+                )}
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={11} className={classes.Gridadjust}>
             <Grid container className={classes.GridAdjust}>
               <Grid item xs={12} md={5} className={classes.TDialogbox}>
-                <Typography
-                  variant="body1"
-                  className={classes.sameinfont}
-                >
+                <Typography variant="body1" className={classes.sameinfont}>
                   GLUCOSE LEVEL TABLE
                 </Typography>
                 <Grid container>
                   <Glucoselevelhead />
                 </Grid>
                 <Grid container className={classes.bloodpressuretablecontainer}>
-                  {
-                    data ? data.map((item, index) => {
+                  {data ? (
+                    data.map((item, index) => {
                       return (
-                        <Grid item xs={11} className={classes.bloodpressuretableitem} key={index}>
-                          <Glucoselevelrecord date={item.dateAdded} value={item.value} type={item.isFasting ? 'Fasting' : 'Random'} unit={item.unit} />
+                        <Grid
+                          item
+                          xs={11}
+                          className={classes.bloodpressuretableitem}
+                          key={index}
+                        >
+                          <Glucoselevelrecord
+                            date={item.dateAdded}
+                            value={item.value}
+                            type={item.isFasting ? "Fasting" : "Random"}
+                            unit={item.unit}
+                          />
                         </Grid>
-                      )
+                      );
                     })
-                      : <CircularProgress
-                        style={{ marginRight: "20px", width: "50px", height: "50px" }}
-                      />
-                  }
+                  ) : (
+                    <CircularProgress
+                      style={{
+                        marginRight: "20px",
+                        width: "50px",
+                        height: "50px",
+                      }}
+                    />
+                  )}
                 </Grid>
               </Grid>
               <Grid item xs={12} md={6} className={classes.GLGDialogbox}>
