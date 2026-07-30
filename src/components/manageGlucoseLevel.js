@@ -3,8 +3,6 @@ import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import {
   makeStyles,
-  createTheme,
-  ThemeProvider,
 } from "@material-ui/core/styles";
 import {
   Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
@@ -226,14 +224,6 @@ export function ManageGL() {
   const [fast, setfast] = React.useState("");
   const [result, setresult] = React.useState(null);
 
-  const theme = createTheme({
-    palette: {
-      secondary: {
-        main: "#3585da",
-      },
-    },
-  });
-
   const handleChange = (event) => {
     setGLunit(event.target.value);
   };
@@ -327,7 +317,6 @@ export function ManageGL() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
       <div className="dashdiv">
         <Grid item xs={12} className={classes.DialogBox}>
           <Typography variant="h4" className={classes.sameinfont}>
@@ -543,6 +532,5 @@ export function ManageGL() {
           </Grid>
         </Grid>
       </div>
-    </ThemeProvider>
   );
 }
