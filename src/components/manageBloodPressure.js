@@ -25,7 +25,7 @@ import { questions, answers } from "../Services/questions";
 
 import * as model from "../Services/model"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   DialogBox: {
     width: "100%",
     borderRadius: "30px",
@@ -109,6 +109,13 @@ const useStyles = makeStyles({
     borderRadius: "12px",
     padding: "16px",
     boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+  },
+  graphWrapper: {
+    flex: 1,
+    minHeight: 0,
+    width: "100%",
   },
   bpTable: {
     borderCollapse: "separate",
@@ -180,9 +187,12 @@ const useStyles = makeStyles({
     width: "100%",
   },
   tableGraphItem: {
-    flex: "1 1 calc(50% - 8px)",
+    flex: "1 1 100%",
     minWidth: 0,
     boxSizing: "border-box",
+    [theme.breakpoints.up("md")]: {
+      flex: "1 1 calc(50% - 8px)",
+    },
   },
 
 
@@ -192,7 +202,7 @@ const useStyles = makeStyles({
     overflowY: "auto",
     overflowX: "auto",
   }
-});
+}));
 
 
 
@@ -434,7 +444,7 @@ export function ManageBP() {
               <Box className={classes.TDialogbox}>
                 <Typography
                   variant="body1"
-                  className={classes.sameinfont}
+                  className={classes.cardTitle}
                 >
                   BLOOD PRESSURE TABLE
                 </Typography>
@@ -475,9 +485,9 @@ export function ManageBP() {
                 <Typography variant="body2" className={classes.BPGTitle}>
                   BLOOD PRESSURE GRAPH
                 </Typography>
-                <Grid container className={classes.graphctn}>
+                <Box className={classes.graphWrapper}>
                   <GraphBp check={check} />
-                </Grid>
+                </Box>
               </Box>
             </Box>
           </Box>

@@ -163,55 +163,53 @@ export function GraphBp({ check }) {
     // distlic lower - 80 ideal
 
     return (
-        <div style={{ margin: "auto" }}>
+        <div style={{ width: "100%", height: "100%" }}>
             {
                 data ?
-                    <Grid item xs={12}>
-                        <Line
-                            data={
-                                {
-                                    labels: data.dates,
-                                    datasets: [
-                                        {
-                                            label: 'SYSTOLIC LEVEL',
-                                            backgroundColor: 'rgba(20, 122, 214, 0.3)',
-                                            borderColor: 'rgba(20, 122, 214, 0.5)',
-                                            borderWidth: 2,
-                                            data: data.systolic
-                                        },
-                                        {
-                                            label: 'DISTOLIC LEVEL',
-                                            backgroundColor: 'rgba(236, 102, 102, 0.3)',
-                                            borderColor: 'rgba(236, 102, 102, 0.5)',
-                                            borderWidth: 2,
-                                            data: data.dystolic
-                                        },
-                                    ]
-                                }
-                            }
-                            height={300}
-                            options={{
-                                scales: {
-                                    yAxes: [
-                                        {
-                                            ticks: {
-                                                beginAtZero: true,
-                                            },
-                                        },
-                                    ],
-                                },
-                                plugins: {
-                                    legend: {
-                                        labels: {
-                                            fontSize: 25,
-                                        },
-                                        position: "bottom"
+                    <Line
+                        data={
+                            {
+                                labels: data.dates,
+                                datasets: [
+                                    {
+                                        label: 'SYSTOLIC LEVEL',
+                                        backgroundColor: 'rgba(20, 122, 214, 0.3)',
+                                        borderColor: 'rgba(20, 122, 214, 0.5)',
+                                        borderWidth: 2,
+                                        data: data.systolic
                                     },
-                                    fullSize: true
+                                    {
+                                        label: 'DISTOLIC LEVEL',
+                                        backgroundColor: 'rgba(236, 102, 102, 0.3)',
+                                        borderColor: 'rgba(236, 102, 102, 0.5)',
+                                        borderWidth: 2,
+                                        data: data.dystolic
+                                    },
+                                ]
+                            }
+                        }
+                        options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            beginAtZero: true,
+                                        },
+                                    },
+                                ],
+                            },
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        fontSize: 18,
+                                    },
+                                    position: "bottom"
                                 },
-                            }}
-                        />
-                    </Grid>
+                            },
+                        }}
+                    />
                     :
                     <CircularProgress
                         style={{ marginRight: "20px", width: "103px", height: "101px" }}
