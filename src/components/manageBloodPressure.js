@@ -347,7 +347,7 @@ export function ManageBP() {
                 Systolic Average
               </Typography>
               <Typography className={classes.sectionValue}>
-                {avg ? avg.sysAvg : "No Record Available"}
+                {avg ? Number(avg.sysAvg).toFixed(3) : "No Record Available"}
               </Typography>
             </Box>
             <Box flex="1 1 200px">
@@ -355,7 +355,7 @@ export function ManageBP() {
                 Diastolic Average
               </Typography>
               <Typography className={classes.sectionValue}>
-                {avg ? avg.dysAvg : "No Record Available"}
+                {avg ? Number(avg.dysAvg).toFixed(3) : "No Record Available"}
               </Typography>
             </Box>
           </Box>
@@ -386,7 +386,7 @@ export function ManageBP() {
               <FormControlLabel value='1' control={<Radio />} label="Yes" />
             </RadioGroup>
           </FormControl>
-          <Box display="flex" alignItems="center" mt={1} gap="8px">
+          <Box display="flex" alignItems="center" justifyContent="center" mt={1} gap="8px">
             <IconButton
               aria-label="previous question"
               component="span"

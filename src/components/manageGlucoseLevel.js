@@ -6,7 +6,9 @@ import {
   createTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import {
+  Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -90,33 +92,53 @@ const useStyles = makeStyles({
     padding: "10px",
     marginTop: "35px",
   },
-  Tablecontentbox: {
-    width: "100%",
-    borderRadius: "28px",
-    background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: "30px",
-    padding: "12px",
+  glucoseTable: {
+    borderCollapse: "separate",
+    borderSpacing: "0 4px",
+    minWidth: 500,
   },
-  Tablecontenthead: {
-    width: "100%",
-    borderRadius: "28px",
-    background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: "30px",
-    padding: "10px",
+  glucoseTableHeadRow: {
+    "& th": {
+      background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
+      color: "#fff",
+      fontWeight: "bold",
+      fontFamily: "Montserrat",
+      fontSize: 18,
+      padding: "12px 16px",
+      borderBottom: "none",
+    },
+    "& th:first-child": {
+      borderTopLeftRadius: 28,
+      borderBottomLeftRadius: 28,
+    },
+    "& th:last-child": {
+      borderTopRightRadius: 28,
+      borderBottomRightRadius: 28,
+    },
   },
-  TableContentFont: {
-    fontWeight: "bold",
-    fontSize: "14px",
-    color: "#fff",
-    fontFamily: "Montserrat",
+  glucoseTableBodyRow: {
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.06)",
+    borderRadius: 8,
+    "& td": {
+      background: "#fff",
+      color: "#444",
+      fontFamily: "Montserrat",
+      fontWeight: 500,
+      fontSize: 17,
+      padding: "10px 16px",
+      borderBottom: "none",
+    },
+    "& td:first-child": {
+      borderTopLeftRadius: 8,
+      borderBottomLeftRadius: 8,
+    },
+    "& td:last-child": {
+      borderTopRightRadius: 8,
+      borderBottomRightRadius: 8,
+    },
+    "&:hover td": {
+      background: "#f0f7fc",
+    },
   },
   BPGTitle: {
     fontWeight: "bold",
@@ -156,56 +178,14 @@ const useStyles = makeStyles({
     margin: "auto",
   },
   bloodpressuretablecontainer: {
-    height: 300,
-    overflowY: "scroll",
+    width: "100%",
+    maxHeight: 300,
+    overflowY: "auto",
+    overflowX: "auto",
   },
 });
 
-function Glucoselevelrecord({ value, type, date, unit }) {
-  const classes = useStyles();
-  return (
-    <Grid item xs={11} className={classes.Tablecontentbox}>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>
-          {value + " " + unit}
-        </Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>{type}</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>
-          {date.split("T")[1].split(".")[0]}
-        </Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>
-          {date.split("T")[0]}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-}
 
-function Glucoselevelhead() {
-  const classes = useStyles();
-  return (
-    <Grid item xs={11} className={classes.Tablecontenthead}>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>Value</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>Type</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>Time</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography className={classes.TableContentFont}>Date</Typography>
-      </Grid>
-    </Grid>
-  );
-}
 
 export function ManageGL() {
   const classes = useStyles();
@@ -402,7 +382,7 @@ export function ManageGL() {
                   Fasting Sugar Level Average:
                   <Typography variant="body1">
                     {" "}
-                    {fasting ? fasting.fastingAvg : "No Record Avaliable"}
+                    {fasting ? Number(fasting.fastingAvg).toFixed(3) : "No Record Avaliable"}
                   </Typography>
                 </Typography>
               </Grid>
@@ -411,7 +391,7 @@ export function ManageGL() {
                   Random Sugar Level Average:
                   <Typography variant="body1">
                     {" "}
-                    {rand ? rand.randomAvg : "No Record Avaliable"}
+                    {rand ? Number(rand.randomAvg).toFixed(3) : "No Record Avaliable"}
                   </Typography>
                 </Typography>
               </Grid>
@@ -508,38 +488,36 @@ export function ManageGL() {
                 <Typography variant="body1" className={classes.sameinfont}>
                   GLUCOSE LEVEL TABLE
                 </Typography>
-                <Grid container>
-                  <Glucoselevelhead />
-                </Grid>
-                <Grid container className={classes.bloodpressuretablecontainer}>
-                  {data ? (
-                    data.map((item, index) => {
-                      return (
-                        <Grid
-                          item
-                          xs={11}
-                          className={classes.bloodpressuretableitem}
-                          key={index}
-                        >
-                          <Glucoselevelrecord
-                            date={item.dateAdded}
-                            value={item.value}
-                            type={item.isFasting ? "Fasting" : "Random"}
-                            unit={item.unit}
-                          />
-                        </Grid>
-                      );
-                    })
-                  ) : (
-                    <CircularProgress
-                      style={{
-                        marginRight: "20px",
-                        width: "50px",
-                        height: "50px",
-                      }}
-                    />
-                  )}
-                </Grid>
+                <TableContainer className={classes.bloodpressuretablecontainer}>
+                  <Table className={classes.glucoseTable}>
+                    <TableHead>
+                      <TableRow className={classes.glucoseTableHeadRow}>
+                        <TableCell align="center">Value</TableCell>
+                        <TableCell align="center">Type</TableCell>
+                        <TableCell>Time</TableCell>
+                        <TableCell>Date</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data ? (
+                        data.map((item, index) => (
+                          <TableRow key={index} className={classes.glucoseTableBodyRow}>
+                            <TableCell align="center">{item.value + " " + item.unit}</TableCell>
+                            <TableCell align="center">{item.isFasting ? "Fasting" : "Random"}</TableCell>
+                            <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
+                            <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
+                            <CircularProgress />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
               <Grid item xs={12} md={6} className={classes.GLGDialogbox}>
                 <Typography variant="body2" className={classes.BPGTitle}>
