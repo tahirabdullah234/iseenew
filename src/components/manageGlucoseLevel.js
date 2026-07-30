@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   },
   glucoseTableHeadRow: {
     "& th": {
-      background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
+      background: "linear-gradient(45deg,#59c1e8 0%, #3585da 100%)",
       color: "#fff",
       fontWeight: "bold",
       fontFamily: "Montserrat",
@@ -424,7 +424,7 @@ export function ManageGL() {
                 <FormControlLabel value="1" control={<Radio />} label="Yes" />
               </RadioGroup>
             </FormControl>
-            <Box display="flex" alignItems="center" justifyContent="center" mt={1} gap="8px">
+            <Box display="flex" alignItems="center" justifyContent="center" mt={1} style={{ gap: 16 }}>
               <IconButton
                 aria-label="previous question"
                 component="span"
