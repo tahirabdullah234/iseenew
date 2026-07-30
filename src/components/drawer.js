@@ -63,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
       }),
     },
   },
+  drawerOpen: {
+    backgroundColor: "#1061B0",
+    color: "#fff",
+    width: drawerWidth,
+    overflowX: "hidden",
+  },
   toolbar: {
     backgroundColor: '#003C72',
     display: 'flex',
@@ -97,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MainDrawer() {
+export default function MainDrawer({ expanded }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const isdoctor = useSelector((state) => state.states.isdoctor)
@@ -106,10 +112,12 @@ export default function MainDrawer() {
     setOpen(!open);
   };
 
+  const paperClass = expanded ? classes.drawerOpen : classes.drawerClose;
+
   return (
     <div className={classes.root}>
       <Grid container>
-        <Drawer variant="permanent" className={classes.drawer} classes={{ paper: classes.drawerClose }}>
+        <Drawer variant="permanent" className={classes.drawer} classes={{ paper: paperClass }}>
           <Grid item className={classes.toolbar}>
             <img src={iseeLogo}
               alt="ISEE Logo"

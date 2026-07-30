@@ -3,14 +3,19 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import { useTheme, makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import Drawer from "@material-ui/core/Drawer";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
 
-import Drawer from "../components/drawer";
+import SideDrawer from "../components/drawer";
 import ReportTemplate from "../components/report_template";
 
 import { useHistory } from "react-router-dom";
@@ -39,6 +44,27 @@ const useStyles = makeStyles((theme) => ({
     transition: "max-width 0.3s ease",
     margin: "auto",
   },
+  menuBtn: {
+    background: "#1061B0",
+    color: "#fff",
+    borderRadius: 8,
+    marginBottom: 12,
+    alignSelf: "flex-start",
+    "&:hover": { background: "#0d4d8f" },
+  },
+  mobileDrawer: {
+    "& .MuiDrawer-paper": {
+      width: 280,
+      background: "#1061B0",
+    },
+  },
+  closeBtn: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    zIndex: 1300,
+    color: "#fff",
+  },
   button: {
     width: "95%",
     background: "#003C72",
@@ -56,7 +82,10 @@ function Alert(props) {
 
 export default function Result() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const current = drawerOpen ? drawerExpanded : drawerCollapsed;
   const history = useHistory();
   const isdoctor = useSelector((state) => state.states.isdoctor)
@@ -108,56 +137,120 @@ export default function Result() {
   }
   return (
     <Box className={classes.root}>
-      <Box
-        className={classes.drawerWrapper}
-        style={{ width: current }}
-        onMouseEnter={() => setDrawerOpen(true)}
-        onMouseLeave={() => setDrawerOpen(false)}
-      >
-        <Drawer />
-      </Box>
-      <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
-        <Grid container>
-          <Grid item xs={2}>
-            <Button
-              variant="container"
-              startIcon={<ArrowBackIcon />}
-              className={classes.button}
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-          </Grid>
-          <Grid item xs={4}>
-            {
-              !isdoctor ?
+      {isMobile ? (
+        <>
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={() => setMobileOpen(false)}
+            className={classes.mobileDrawer}
+            classes={{ paper: classes.mobileDrawer }}
+          >
+            <IconButton className={classes.closeBtn} onClick={() => setMobileOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+            <SideDrawer expanded />
+          </Drawer>
+          <Box className={classes.content}>
+            <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
+              <MenuIcon />
+            </IconButton>
+            <Grid container>
+              <Grid item xs={2}>
                 <Button
                   variant="container"
-                  startIcon={<SaveIcon />}
+                  startIcon={<ArrowBackIcon />}
                   className={classes.button}
-                  onClick={saveReport}
+                  onClick={() => history.goBack()}
                 >
-                  Save Report
+                  Back
                 </Button>
-                : <div></div>}
-          </Grid>
-          <Grid item xs={4}>
-            <Button
-              variant="container"
-              startIcon={<DownloadIcon />}
-              className={classes.button}
-              onClick={handleExportWithComponent}
-            >
-              Download Report
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <PDFExport ref={pdfExportComponent} paperSize="A4">
-            <ReportTemplate />
-          </PDFExport>
-        </Grid>
-      </Box>
+              </Grid>
+              <Grid item xs={4}>
+                {
+                  !isdoctor ?
+                    <Button
+                      variant="container"
+                      startIcon={<SaveIcon />}
+                      className={classes.button}
+                      onClick={saveReport}
+                    >
+                      Save Report
+                    </Button>
+                    : <div></div>}
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="container"
+                  startIcon={<DownloadIcon />}
+                  className={classes.button}
+                  onClick={handleExportWithComponent}
+                >
+                  Download Report
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <PDFExport ref={pdfExportComponent} paperSize="A4">
+                <ReportTemplate />
+              </PDFExport>
+            </Grid>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Box
+            className={classes.drawerWrapper}
+            style={{ width: current }}
+            onMouseEnter={() => setDrawerOpen(true)}
+            onMouseLeave={() => setDrawerOpen(false)}
+          >
+            <SideDrawer />
+          </Box>
+          <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
+            <Grid container>
+              <Grid item xs={2}>
+                <Button
+                  variant="container"
+                  startIcon={<ArrowBackIcon />}
+                  className={classes.button}
+                  onClick={() => history.goBack()}
+                >
+                  Back
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                {
+                  !isdoctor ?
+                    <Button
+                      variant="container"
+                      startIcon={<SaveIcon />}
+                      className={classes.button}
+                      onClick={saveReport}
+                    >
+                      Save Report
+                    </Button>
+                    : <div></div>}
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="container"
+                  startIcon={<DownloadIcon />}
+                  className={classes.button}
+                  onClick={handleExportWithComponent}
+                >
+                  Download Report
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <PDFExport ref={pdfExportComponent} paperSize="A4">
+                <ReportTemplate />
+              </PDFExport>
+            </Grid>
+          </Box>
+        </>
+      )}
       <Snackbar open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleClose}
