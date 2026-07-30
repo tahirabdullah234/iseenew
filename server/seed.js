@@ -189,6 +189,64 @@ async function seed() {
       date: new Date('2026-07-28')
     });
 
+    // Create additional reports for patient1
+    await Report.create([
+      {
+        u_id: patient1._id,
+        title: 'Retina Screening - Dec 2025',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '1.jpeg', prediction: 1, date: '2025-12-15T10:00:00Z' },
+        date: new Date('2025-12-15')
+      },
+      {
+        u_id: patient1._id,
+        title: 'Retina Screening - Mar 2026',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '4.jpeg', prediction: 0, date: '2026-03-10T09:30:00Z' },
+        date: new Date('2026-03-10')
+      },
+      {
+        u_id: patient1._id,
+        title: 'Retina Screening - Jun 2026',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '7.jpeg', prediction: 1, date: '2026-06-20T14:00:00Z' },
+        date: new Date('2026-06-20')
+      },
+      {
+        u_id: patient1._id,
+        title: 'Retina Screening - Sep 2025',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '3.jpeg', prediction: 0, date: '2025-09-08T10:00:00Z' },
+        date: new Date('2025-09-08')
+      },
+      {
+        u_id: patient1._id,
+        title: 'Retina Screening - Apr 2025',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '6.jpeg', prediction: 1, date: '2025-04-22T14:30:00Z' },
+        date: new Date('2025-04-22')
+      },
+      {
+        u_id: patient1._id,
+        title: 'Retina Screening - Jan 2025',
+        report: { _id: new mongoose.Types.ObjectId(), scan: 'human-eye.webp', prediction: 0, date: '2025-01-12T09:00:00Z' },
+        date: new Date('2025-01-12')
+      },
+      {
+        u_id: patient2._id,
+        title: 'Retina Screening - Nov 2025',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '2.jpeg', prediction: 0, date: '2025-11-05T11:15:00Z' },
+        date: new Date('2025-11-05')
+      },
+      {
+        u_id: patient2._id,
+        title: 'Retina Screening - Feb 2026',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '5.jpeg', prediction: 0, date: '2026-02-18T08:45:00Z' },
+        date: new Date('2026-02-18')
+      },
+      {
+        u_id: patient2._id,
+        title: 'Retina Screening - May 2026',
+        report: { _id: new mongoose.Types.ObjectId(), scan: '8.jpeg', prediction: 1, date: '2026-05-12T16:30:00Z' },
+        date: new Date('2026-05-12')
+      }
+    ]);
+
     console.log('Created report');
 
     // Create dataset entry (retina scan record)
