@@ -1,7 +1,6 @@
 import React from "react";
 
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,7 +19,7 @@ import ReportTemplate from "../components/report_template";
 
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+import { PDFExport } from '@progress/kendo-react-pdf';
 
 import * as reps from "../Services/reports";
 
@@ -42,13 +41,14 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     minWidth: 0,
     transition: "max-width 0.3s ease",
+    padding: "24px",
+    boxSizing: "border-box",
   },
   menuBtn: {
     background: "#1061B0",
     color: "#fff",
     borderRadius: 8,
-    marginBottom: 12,
-    alignSelf: "flex-start",
+    marginBottom: 16,
     "&:hover": { background: "#0d4d8f" },
   },
   mobileDrawer: {
@@ -64,14 +64,32 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1300,
     color: "#fff",
   },
-  button: {
-    width: "95%",
-    background: "#003C72",
-    marginBottom: 10,
-    color: "#fff",
-    fontWeight: "bold",
-    marginTop: 10,
-  }
+  actionBar: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 20,
+    flexWrap: "wrap",
+  },
+  actionBtn: {
+    background: "#fff",
+    color: "#3585da",
+    fontWeight: 600,
+    fontSize: 15,
+    textTransform: "none",
+    borderRadius: 8,
+    padding: "8px 20px",
+    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+    border: "1px solid #e0e0e0",
+    "&:hover": {
+      background: "#f0f7fc",
+      borderColor: "#3585da",
+    },
+  },
+  reportContainer: {
+    maxWidth: 900,
+    margin: "0 auto",
+  },
 }));
 
 function Alert(props) {
@@ -91,7 +109,6 @@ export default function Result() {
   const token = useSelector((state) => state.states.token)
   const data = useSelector((state) => state.states.data)
   const pdfExportComponent = React.useRef(null);
-  const contentArea = React.useRef(null);
 
   const [snackbar, setsnackbar] = React.useState({
     open: false,
@@ -114,14 +131,14 @@ export default function Result() {
             ...snackbar,
             open: true,
             msg: "Report Saved Successfully",
-            type: "Success"
+            type: "success"
           })
         } else {
           setsnackbar({
             ...snackbar,
             open: true,
-            msg: "Report Save Not Successfully",
-            type: "info"
+            msg: "Report Not Saved Successfully",
+            type: "warning"
           })
         }
       })
@@ -131,9 +148,6 @@ export default function Result() {
     pdfExportComponent.current.save();
   }
 
-  const handleExportWithFunction = (event) => {
-    savePDF(contentArea.current, {fileName:"DR-Report", paperSize: "Legal" });
-  }
   return (
     <Box className={classes.root}>
       {isMobile ? (
@@ -154,46 +168,36 @@ export default function Result() {
             <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
               <MenuIcon />
             </IconButton>
-            <Grid container>
-              <Grid item xs={2}>
+            <Box className={classes.actionBar}>
+              <Button
+                startIcon={<ArrowBackIcon />}
+                className={classes.actionBtn}
+                onClick={() => history.goBack()}
+              >
+                Back
+              </Button>
+              {!isdoctor && (
                 <Button
-                  variant="container"
-                  startIcon={<ArrowBackIcon />}
-                  className={classes.button}
-                  onClick={() => history.goBack()}
+                  startIcon={<SaveIcon />}
+                  className={classes.actionBtn}
+                  onClick={saveReport}
                 >
-                  Back
+                  Save Report
                 </Button>
-              </Grid>
-              <Grid item xs={4}>
-                {
-                  !isdoctor ?
-                    <Button
-                      variant="container"
-                      startIcon={<SaveIcon />}
-                      className={classes.button}
-                      onClick={saveReport}
-                    >
-                      Save Report
-                    </Button>
-                    : <div></div>}
-              </Grid>
-              <Grid item xs={4}>
-                <Button
-                  variant="container"
-                  startIcon={<DownloadIcon />}
-                  className={classes.button}
-                  onClick={handleExportWithComponent}
-                >
-                  Download Report
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid container>
+              )}
+              <Button
+                startIcon={<DownloadIcon />}
+                className={classes.actionBtn}
+                onClick={handleExportWithComponent}
+              >
+                Download Report
+              </Button>
+            </Box>
+            <Box className={classes.reportContainer}>
               <PDFExport ref={pdfExportComponent} paperSize="A4">
                 <ReportTemplate />
               </PDFExport>
-            </Grid>
+            </Box>
           </Box>
         </>
       ) : (
@@ -207,46 +211,36 @@ export default function Result() {
             <SideDrawer />
           </Box>
           <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
-            <Grid container>
-              <Grid item xs={2}>
+            <Box className={classes.actionBar}>
+              <Button
+                startIcon={<ArrowBackIcon />}
+                className={classes.actionBtn}
+                onClick={() => history.goBack()}
+              >
+                Back
+              </Button>
+              {!isdoctor && (
                 <Button
-                  variant="container"
-                  startIcon={<ArrowBackIcon />}
-                  className={classes.button}
-                  onClick={() => history.goBack()}
+                  startIcon={<SaveIcon />}
+                  className={classes.actionBtn}
+                  onClick={saveReport}
                 >
-                  Back
+                  Save Report
                 </Button>
-              </Grid>
-              <Grid item xs={4}>
-                {
-                  !isdoctor ?
-                    <Button
-                      variant="container"
-                      startIcon={<SaveIcon />}
-                      className={classes.button}
-                      onClick={saveReport}
-                    >
-                      Save Report
-                    </Button>
-                    : <div></div>}
-              </Grid>
-              <Grid item xs={4}>
-                <Button
-                  variant="container"
-                  startIcon={<DownloadIcon />}
-                  className={classes.button}
-                  onClick={handleExportWithComponent}
-                >
-                  Download Report
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid container>
+              )}
+              <Button
+                startIcon={<DownloadIcon />}
+                className={classes.actionBtn}
+                onClick={handleExportWithComponent}
+              >
+                Download Report
+              </Button>
+            </Box>
+            <Box className={classes.reportContainer}>
               <PDFExport ref={pdfExportComponent} paperSize="A4">
                 <ReportTemplate />
               </PDFExport>
-            </Grid>
+            </Box>
           </Box>
         </>
       )}
@@ -258,7 +252,6 @@ export default function Result() {
           {snackbar.msg}
         </Alert>
       </Snackbar>
-
     </Box>
   );
 }
