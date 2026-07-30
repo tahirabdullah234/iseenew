@@ -2,7 +2,9 @@ import React from "react";
 import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box } from "@material-ui/core";
+import {
+  Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { GraphBp } from "./graphs";
@@ -39,42 +41,62 @@ const useStyles = makeStyles({
   sameinfont: {
     fontFamily: "Montserrat",
     fontWeight: "bold",
-    textDecoration: "underline",
     color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    textAlign: "center",
+    textDecoration: "underline",
   },
-
+  cardTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#3585da",
+    marginBottom: 12,
+  },
+  sectionLabel: {
+    fontFamily: "Montserrat",
+    fontWeight: 600,
+    color: "#3585da",
+    fontSize: 18,
+  },
+  sectionValue: {
+    fontFamily: "Montserrat",
+    color: "#444",
+    fontSize: 18,
+  },
   DEDialogBox: {
     width: "100%",
     borderRadius: "12px",
     background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     padding: "20px",
-    marginTop: "10px",
+    marginTop: "12px",
+    boxSizing: "border-box",
   },
   DEDialogBox1: {
     width: "100%",
-    marginTop: "10px",
+    marginTop: "12px",
+    boxSizing: "border-box",
   },
   DEDial: {
-    width: "100%",
     borderRadius: "20px",
     background: "#3585da",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 6px rgba(53, 133, 218, 0.3)",
     color: "white",
-    marginTop: "10px",
     fontFamily: "Montserrat",
+    fontWeight: 600,
+    fontSize: 18,
+    padding: "10px 36px",
+    textTransform: "none",
+    "&:hover": {
+      background: "#2a6db8",
+    },
   },
   TDialogbox: {
     width: "100%",
     background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     borderRadius: "12px",
     padding: "16px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
     boxSizing: "border-box",
     height: "100%",
   },
@@ -83,47 +105,69 @@ const useStyles = makeStyles({
     height: "100%",
     background: "#fff",
     fontFamily: "Montserrat",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     borderRadius: "12px",
     padding: "16px",
     boxSizing: "border-box",
   },
-  tableHeader: {
-    borderRadius: "28px",
-    background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    justifyContent: "space-between",
-    padding: "10px 12px",
-    position: "sticky",
-    top: 0,
-    zIndex: 1,
-    width: "100%",
+  bpTable: {
+    borderCollapse: "separate",
+    borderSpacing: "0 8px",
+    minWidth: 500,
   },
-  tableRow: {
-    borderRadius: "28px",
-    background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    justifyContent: "space-between",
-    marginTop: "8px",
-    padding: "12px",
-    width: "100%",
+  bpTableHeadRow: {
+    "& th": {
+      background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
+      color: "#fff",
+      fontWeight: "bold",
+      fontFamily: "Montserrat",
+      fontSize: 18,
+      padding: "10px 16px",
+      borderBottom: "none",
+    },
+    "& th:first-child": {
+      borderTopLeftRadius: 28,
+      borderBottomLeftRadius: 28,
+    },
+    "& th:last-child": {
+      borderTopRightRadius: 28,
+      borderBottomRightRadius: 28,
+    },
   },
-  TableContentFont: {
-    fontWeight: "bold",
-    fontFamily: "Montserrat",
-    color: "#fff",
+  bpTableBodyRow: {
+    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+    "& td": {
+      background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
+      color: "#fff",
+      fontWeight: "bold",
+      fontFamily: "Montserrat",
+      fontSize: 18,
+      padding: "12px 16px",
+      borderBottom: "none",
+    },
+    "& td:first-child": {
+      borderTopLeftRadius: 28,
+      borderBottomLeftRadius: 28,
+    },
+    "& td:last-child": {
+      borderTopRightRadius: 28,
+      borderBottomRightRadius: 28,
+    },
   },
   BPGTitle: {
     fontFamily: "Montserrat",
     fontWeight: "bold",
+    fontSize: 18,
     color: "#3585da",
+    marginBottom: 12,
+    textAlign: "center",
   },
-  DEDialpos: {
+  formRow: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    gap: "16px",
+    flexWrap: "wrap",
   },
-  setTextField: { marginTop: "10px", width: "100%" },
   tableGraphWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -142,47 +186,11 @@ const useStyles = makeStyles({
     width: "100%",
     maxHeight: 300,
     overflowY: "auto",
+    overflowX: "auto",
   }
 });
 
-function BPRecord({ sys, dys, date }) {
-  const classes = useStyles();
-  return (
-    <Grid container className={classes.tableRow}>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>{sys + " mmHg"}</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>{dys + " mmHg"}</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[1].split(".")[0]}</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[0]}</Typography>
-      </Grid>
-    </Grid>
-  );
-}
-function BPRecordhead() {
-  const classes = useStyles();
-  return (
-    <Grid container className={classes.tableHeader}>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>SYS</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>DYS</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>Time</Typography>
-      </Grid>
-      <Grid item xs={6} sm={3}>
-        <Typography variant="body1" className={classes.TableContentFont}>Date</Typography>
-      </Grid>
-    </Grid>
-  );
-}
+
 
 export function ManageBP() {
   const classes = useStyles();
@@ -278,135 +286,143 @@ export function ManageBP() {
           MANAGE BLOOD PRESSURE
         </Typography>
         <Grid item xs={11} className={classes.DEDialogBox}>
+          <Typography className={classes.cardTitle}>
+            Add Blood Pressure Record
+          </Typography>
           <form onSubmit={formik.handleSubmit}>
-            <Grid container className={classes.DEDialpos}>
-              <Grid item xs={9} sm={4} md={3}>
+            <Box className={classes.formRow}>
+              <Box flex="1 1 200px" minWidth={0}>
                 <TextField
                   label="Diastolic value"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  className={classes.setTextField}
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
                   id="dystolic"
                   name="dystolic"
                   value={formik.values.dystolic}
                   onChange={formik.handleChange}
                   error={formik.touched.dystolic && Boolean(formik.errors.dystolic)}
                   helperText={formik.touched.dystolic && formik.errors.dystolic}
-                ></TextField>
-              </Grid>
-              <Grid item xs={9} sm={4} md={3}>
+                />
+              </Box>
+              <Box flex="1 1 200px" minWidth={0}>
                 <TextField
                   label="Systolic value"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  className={classes.setTextField}
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
                   id="systolic"
                   name="systolic"
                   value={formik.values.systolic}
                   onChange={formik.handleChange}
                   error={formik.touched.systolic && Boolean(formik.errors.systolic)}
                   helperText={formik.touched.systolic && formik.errors.systolic}
-                ></TextField>
-              </Grid>
-              <Grid item xs={5} sm={2}>
-                <Button type="submit" className={classes.DEDial}>ADD</Button>
-              </Grid>
-            </Grid>
+                />
+              </Box>
+              <Button type="submit" className={classes.DEDial}>
+                ADD
+              </Button>
+            </Box>
           </form>
         </Grid>
         <Grid item xs={11} className={classes.DEDialogBox}>
-          <Grid container className={classes.DEDialpos}>
-            <Grid item xs={6}>
-              <Typography variant="h6">Systolic Blood Pressure Average:
-                <Typography variant="body1"> {avg ? avg.sysAvg : "No Record Avaliable"}</Typography>
+          <Typography className={classes.cardTitle}>
+            Blood Pressure Averages
+          </Typography>
+          <Box display="flex" flexWrap="wrap" gap="16px">
+            <Box flex="1 1 200px">
+              <Typography className={classes.sectionLabel}>
+                Systolic Average
               </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h6">Diastolic Blood Pressure Average:
-                <Typography variant="body1"> {avg ? avg.dysAvg : "No Record Avaliable"}</Typography>
+              <Typography className={classes.sectionValue}>
+                {avg ? avg.sysAvg : "No Record Available"}
               </Typography>
-            </Grid>
-          </Grid>
+            </Box>
+            <Box flex="1 1 200px">
+              <Typography className={classes.sectionLabel}>
+                Diastolic Average
+              </Typography>
+              <Typography className={classes.sectionValue}>
+                {avg ? avg.dysAvg : "No Record Available"}
+              </Typography>
+            </Box>
+          </Box>
         </Grid>
         {/*Questions grid */}
         <Grid item xs={11} className={classes.DEDialogBox}>
-          <Grid container className={classes.DEDialpos}>
-            <Grid item xs={12}>
-              <Typography variant="h6">Symptoms Based Check for Hypertension: </Typography>
-              <Typography variant="subtitle">Please Answer the following Question:</Typography>
-            </Grid>
-            <Grid item xs={11} style={{ width: "100%", margin: "auto" }}>
-              <Typography variant="h6">{questions ? questions[index] : ''} </Typography>
-              <Grid item xs={11} style={{ margin: "auto" }}>
-                <FormControl component="fieldset">
-                  <RadioGroup
-                    value={mark}
-                    onChange={e => {
-                      ans[index] = Number(e.target.value);
-                      setmark(e.target.value)
-                    }}
-                  >
-                    <FormControlLabel
-                      value='0'
-                      control={<Radio />}
-                      label="No"
-                    />
-                    <FormControlLabel
-                      value='1'
-                      control={<Radio />}
-                      label="Yes"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <IconButton
-                aria-label="previous question"
-                component="span"
-                onClick={() => {
-                  if (index > 0) {
-                    setindex(index - 1);
-                    setmark("");
-                  }
-                }}
-                disabled={index === 0}
-              >
-                <ArrowBackIosIcon />
-                <Typography variant="caption">Prevoius</Typography>
-              </IconButton>
-              {
-                index === questions.length - 1 ?
-                  <Button
-                    onClick={() => {
-                      getSymPred()
-                    }}
-                  >
-                    Submit
-                  </Button>
-                  :
-                  <IconButton
-                    aria-label="next question"
-                    component="span"
-                    onClick={() => {
-                      if (index < questions.length - 1 && mark !== "") {
-                        setindex(index + 1);
-                        setmark("");
-                      }
-                    }}
-                    disabled={index === questions.length - 1}
-                  >
-                    <Typography variant="caption">Next</Typography>
-                    <ArrowForwardIosIcon />
-                  </IconButton>}
-
-              {result ?
-                <Typography variant="body1">Your Symptoms are {result}</Typography>
+          <Typography className={classes.cardTitle}>
+            Symptoms Based Check for Hypertension
+          </Typography>
+          <Typography style={{ marginBottom: 8, color: "#666", fontSize: 18 }}>
+            Please answer the following questions:
+          </Typography>
+          <Box mt={1} mb={1}>
+            <Typography style={{ fontWeight: 600, fontSize: 18, color: "#333" }}>
+              {questions ? questions[index] : ''}
+            </Typography>
+          </Box>
+          <FormControl component="fieldset">
+            <RadioGroup
+              value={mark}
+              onChange={e => {
+                ans[index] = Number(e.target.value);
+                setmark(e.target.value)
+              }}
+              row
+            >
+              <FormControlLabel value='0' control={<Radio />} label="No" />
+              <FormControlLabel value='1' control={<Radio />} label="Yes" />
+            </RadioGroup>
+          </FormControl>
+          <Box display="flex" alignItems="center" mt={1} gap="8px">
+            <IconButton
+              aria-label="previous question"
+              component="span"
+              onClick={() => {
+                if (index > 0) {
+                  setindex(index - 1);
+                  setmark("");
+                }
+              }}
+              disabled={index === 0}
+              size="small"
+            >
+              <ArrowBackIosIcon fontSize="small" />
+              <Typography variant="body2" style={{ marginLeft: 2, fontSize: 18 }}>Previous</Typography>
+            </IconButton>
+            {
+              index === questions.length - 1 ?
+                <Button
+                  onClick={() => { getSymPred() }}
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  style={{ textTransform: "none", borderRadius: 20, fontSize: 18 }}
+                >
+                  Submit
+                </Button>
                 :
-                <Typography variant="body1"></Typography>
-              }
-            </Grid>
-          </Grid>
+                <IconButton
+                  aria-label="next question"
+                  component="span"
+                  onClick={() => {
+                    if (index < questions.length - 1 && mark !== "") {
+                      setindex(index + 1);
+                      setmark("");
+                    }
+                  }}
+                  disabled={index === questions.length - 1}
+                  size="small"
+                >
+                  <Typography variant="body2" style={{ marginRight: 2, fontSize: 18 }}>Next</Typography>
+                  <ArrowForwardIosIcon fontSize="small" />
+                </IconButton>}
+          </Box>
+          {result && (
+            <Box mt={1}>
+              <Typography style={{ fontWeight: 600, color: "#3585da", fontSize: 18 }}>
+                Result: Your symptoms indicate you are {result}
+              </Typography>
+            </Box>
+          )}
         </Grid>
         <Grid item xs={11} className={classes.DEDialogBox1}>
           <Box className={classes.tableGraphWrapper}>
@@ -418,19 +434,36 @@ export function ManageBP() {
                 >
                   BLOOD PRESSURE TABLE
                 </Typography>
-                <Box className={classes.bloodpressuretablecontainer}>
-                  <BPRecordhead />
-                  {
-                    data ? data.map((item, index) => {
-                      return (
-                        <BPRecord date={item.dateAdded} dys={item.dystolic} sys={item.systolic} key={index} />
-                      )
-                    })
-                      : <Box display="flex" justifyContent="center" py={2}>
-                          <CircularProgress />
-                        </Box>
-                  }
-                </Box>
+                <TableContainer className={classes.bloodpressuretablecontainer}>
+                  <Table className={classes.bpTable}>
+                    <TableHead>
+                      <TableRow className={classes.bpTableHeadRow}>
+                        <TableCell>SYS</TableCell>
+                        <TableCell>DYS</TableCell>
+                        <TableCell>Time</TableCell>
+                        <TableCell>Date</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data ? (
+                        data.map((item, index) => (
+                          <TableRow key={index} className={classes.bpTableBodyRow}>
+                            <TableCell>{item.systolic + " mmHg"}</TableCell>
+                            <TableCell>{item.dystolic + " mmHg"}</TableCell>
+                            <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
+                            <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
+                            <CircularProgress />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Box>
             </Box>
             <Box className={classes.tableGraphItem}>
