@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#fff",
     boxShadow: "0 4px 16px rgba(0, 0, 0, 0.08)",
     padding: "32px 36px",
+    height: 500,
     boxSizing: "border-box",
     overflow: "hidden",
   },
@@ -267,55 +268,51 @@ export function PatientDashboard() {
         </Grid>
 
         <Grid item xs={12} md={4} style={{ display: "flex" }}>
-          <Grid container spacing={2} direction="column" style={{ width: "100%" }}>
-            <Grid item>
-              <div className={classes.infoCard}>
-                <Typography className={classes.infoCardTitle}>
-                  <CalendarTodayIcon style={{ fontSize: 18 }} />
-                  Latest Appointment
-                </Typography>
-                {apt && apt.length > 0 ? (
-                  <>
-                    <Typography className={classes.infoValue}>
-                      {apt[0].doctorName || "Doctor"}
-                    </Typography>
-                    <Typography className={classes.infoSub}>
-                      {new Date(apt[0].date).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" })} @ {apt[0].time}
-                    </Typography>
-                  </>
-                ) : (
-                  <Typography className={classes.infoEmpty}>
-                    No upcoming appointments
+          <Box display="flex" flexDirection="column" style={{ gap: 16, width: "100%" }}>
+            <div className={classes.infoCard}>
+              <Typography className={classes.infoCardTitle}>
+                <CalendarTodayIcon style={{ fontSize: 18 }} />
+                Latest Appointment
+              </Typography>
+              {apt && apt.length > 0 ? (
+                <>
+                  <Typography className={classes.infoValue}>
+                    {apt[0].doctorName || "Doctor"}
                   </Typography>
-                )}
-              </div>
-            </Grid>
-            <Grid item>
-              <div className={classes.infoCard}>
-                <Typography className={classes.infoCardTitle}>
-                  <MessageIcon style={{ fontSize: 18 }} />
-                  Latest Message
-                </Typography>
-                {latestMsg ? (
-                  <>
-                    <Typography className={classes.infoValue}>
-                      {latestMsg.d_id ? "Dr. " + latestMsg.d_id.fname + " " + latestMsg.d_id.lname : "Doctor"}
-                    </Typography>
-                    <Typography className={classes.infoSub} style={{ wordBreak: "break-word" }}>
-                      {latestMsg.msg}
-                    </Typography>
-                    <Typography className={classes.infoDate}>
-                      {new Date(latestMsg.createdAt).toLocaleDateString([], { month: "short", day: "numeric" }) + " " + new Date(latestMsg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </Typography>
-                  </>
-                ) : (
-                  <Typography className={classes.infoEmpty}>
-                    No messages from doctor
+                  <Typography className={classes.infoSub}>
+                    {new Date(apt[0].date).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" })} @ {apt[0].time}
                   </Typography>
-                )}
-              </div>
-            </Grid>
-          </Grid>
+                </>
+              ) : (
+                <Typography className={classes.infoEmpty}>
+                  No upcoming appointments
+                </Typography>
+              )}
+            </div>
+            <div className={classes.infoCard}>
+              <Typography className={classes.infoCardTitle}>
+                <MessageIcon style={{ fontSize: 18 }} />
+                Latest Message
+              </Typography>
+              {latestMsg ? (
+                <>
+                  <Typography className={classes.infoValue}>
+                    {latestMsg.d_id ? "Dr. " + latestMsg.d_id.fname + " " + latestMsg.d_id.lname : "Doctor"}
+                  </Typography>
+                  <Typography className={classes.infoSub} style={{ wordBreak: "break-word" }}>
+                    {latestMsg.msg}
+                  </Typography>
+                  <Typography className={classes.infoDate}>
+                    {new Date(latestMsg.createdAt).toLocaleDateString([], { month: "short", day: "numeric" }) + " " + new Date(latestMsg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </Typography>
+                </>
+              ) : (
+                <Typography className={classes.infoEmpty}>
+                  No messages from doctor
+                </Typography>
+              )}
+            </div>
+          </Box>
         </Grid>
 
         <Grid item xs={12}>
@@ -333,13 +330,13 @@ export function PatientDashboard() {
                 <Typography className={classes.graphLabel}>
                   BLOOD PRESSURE
                 </Typography>
-                <GraphBp height={400} />
+                <GraphBp height={340} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <Typography className={classes.graphLabel}>
                   GLUCOSE LEVEL
                 </Typography>
-                <GraphGlocuse height={400} />
+                <GraphGlocuse height={340} />
               </Grid>
             </Grid>
           </div>

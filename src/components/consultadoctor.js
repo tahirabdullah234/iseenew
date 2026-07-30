@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "30px",
     display: "flex",
     flexDirection: "column",
+    boxSizing: "border-box",
   },
   sameinfont: {
     textDecorationLine: "underline",
@@ -75,8 +76,8 @@ export default function ConsultDoctor() {
   }, [dispatch, token])
 
   return (
-    <Grid container className="dashdiv1">
-      <Grid item xs={12} className={classes.DialogBox}>
+    <div className="dashdiv">
+      <div className={classes.DialogBox}>
         <Typography
           style={{
             textAlign: "center",
@@ -143,7 +144,7 @@ export default function ConsultDoctor() {
               />
           }
         </Grid>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }

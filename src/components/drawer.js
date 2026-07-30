@@ -37,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   drawer: {
-    width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
+    width: "100%",
   },
   drawerClose: {
     backgroundColor: "#1061B0",

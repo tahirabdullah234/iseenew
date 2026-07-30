@@ -1,5 +1,6 @@
 import React from "react";
 
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,11 +19,24 @@ import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 
 import * as reps from "../Services/reports";
 
+const drawerCollapsed = 97;
+const drawerExpanded = 280;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
+    minHeight: "100vh",
+    overflowX: "hidden",
+    display: "flex",
   },
-  rightgrid: {
+  drawerWrapper: {
+    flexShrink: 0,
+    transition: "width 0.3s ease",
+  },
+  content: {
+    flex: 1,
+    minWidth: 0,
+    transition: "max-width 0.3s ease",
     margin: "auto",
   },
   button: {
@@ -42,6 +56,8 @@ function Alert(props) {
 
 export default function Result() {
   const classes = useStyles();
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const current = drawerOpen ? drawerExpanded : drawerCollapsed;
   const history = useHistory();
   const isdoctor = useSelector((state) => state.states.isdoctor)
   const token = useSelector((state) => state.states.token)
@@ -91,11 +107,16 @@ export default function Result() {
     savePDF(contentArea.current, {fileName:"DR-Report", paperSize: "Legal" });
   }
   return (
-    <Grid container className={classes.root}>
-      <Grid item xs={1}>
+    <Box className={classes.root}>
+      <Box
+        className={classes.drawerWrapper}
+        style={{ width: current }}
+        onMouseEnter={() => setDrawerOpen(true)}
+        onMouseLeave={() => setDrawerOpen(false)}
+      >
         <Drawer />
-      </Grid>
-      <Grid item xs={8} className={classes.rightgrid}>
+      </Box>
+      <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
         <Grid container>
           <Grid item xs={2}>
             <Button
@@ -136,7 +157,7 @@ export default function Result() {
             <ReportTemplate />
           </PDFExport>
         </Grid>
-      </Grid>
+      </Box>
       <Snackbar open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleClose}
@@ -146,6 +167,6 @@ export default function Result() {
         </Alert>
       </Snackbar>
 
-    </Grid>
+    </Box>
   );
 }
