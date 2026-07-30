@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
@@ -33,10 +33,9 @@ const useStyles = makeStyles({
     borderRadius: "30px",
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    padding: "30px",
+    padding: "16px 24px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
   },
   sameinfont: {
@@ -176,111 +175,72 @@ export function UserSettings() {
         </Typography>
         <Grid item xs={12} className={classes.DEDialogBox}>
           <form onSubmit={formikBasicInfo.handleSubmit}>
-            <Grid container className={classes.DEDialpos}>
-              <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="First Name"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                   className={classes.Glucoselevel}
                   name="fname"
                   value={formikBasicInfo.values.fname}
                   onChange={formikBasicInfo.handleChange}
-                  error={
-                    formikBasicInfo.touched.fname &&
-                    Boolean(formikBasicInfo.errors.fname)
-                  }
-                  helperText={
-                    formikBasicInfo.touched.fname &&
-                    formikBasicInfo.errors.fname
-                  }
+                  error={formikBasicInfo.touched.fname && Boolean(formikBasicInfo.errors.fname)}
+                  helperText={formikBasicInfo.touched.fname && formikBasicInfo.errors.fname}
                 />
               </Grid>
-              <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Last Name"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                   className={classes.Glucoselevel}
                   name="lname"
                   value={formikBasicInfo.values.lname}
                   onChange={formikBasicInfo.handleChange}
-                  error={
-                    formikBasicInfo.touched.lname &&
-                    Boolean(formikBasicInfo.errors.lname)
-                  }
-                  helperText={
-                    formikBasicInfo.touched.lname &&
-                    formikBasicInfo.errors.lname
-                  }
+                  error={formikBasicInfo.touched.lname && Boolean(formikBasicInfo.errors.lname)}
+                  helperText={formikBasicInfo.touched.lname && formikBasicInfo.errors.lname}
                 />
               </Grid>
-              <Grid item xs={11} md={2} style={{ marginTop: "5px" }}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Date of Birth"
                   type="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                   className={classes.Glucoselevel}
                   name="dob"
                   value={formikBasicInfo.values.dob}
                   onChange={formikBasicInfo.handleChange}
-                  error={
-                    formikBasicInfo.touched.dob &&
-                    Boolean(formikBasicInfo.errors.dob)
-                  }
-                  helperText={
-                    formikBasicInfo.touched.dob && formikBasicInfo.errors.dob
-                  }
+                  error={formikBasicInfo.touched.dob && Boolean(formikBasicInfo.errors.dob)}
+                  helperText={formikBasicInfo.touched.dob && formikBasicInfo.errors.dob}
                 />
               </Grid>
-              <Grid item xs={11} md={3} className={classes.radiopos}>
-                <FormControl component="fieldset" className={classes.radiosize}>
-                  <FormLabel component="legend" style={{ fontSize: "12px" }}>
-                    Gender
-                  </FormLabel>
+              <Grid item xs={12} sm={6}>
+                <FormControl component="fieldset" style={{ width: "100%", marginTop: 8 }}>
+                  <FormLabel component="legend" style={{ fontSize: "12px" }}>Gender</FormLabel>
                   <RadioGroup
                     aria-label="gender"
                     name="gender"
                     className={classes.radiogrp}
                     value={formikBasicInfo.values.gender}
                     onChange={formikBasicInfo.handleChange}
-                    error={
-                      formikBasicInfo.touched.gender &&
-                      Boolean(formikBasicInfo.errors.gender)
-                    }
-                    helperText={
-                      formikBasicInfo.touched.gender &&
-                      formikBasicInfo.errors.gender
-                    }
                   >
-                    <FormControlLabel
-                      value="Male"
-                      control={<Radio />}
-                      label="Male"
-                    />
-                    <FormControlLabel
-                      value="Female"
-                      control={<Radio />}
-                      label="Female"
-                    />
+                    <FormControlLabel value="Male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="Female" control={<Radio />} label="Female" />
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              <Grid item xs={6} sm={2}>
-                <Button className={classes.DEDial} type="submit">
-                  UPDATE
-                </Button>
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center" mt={1}>
+                  <Button className={classes.DEDial} type="submit" style={{ width: 200, marginTop: 0 }}>
+                    UPDATE
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
           </form>
         </Grid>
-        <Grid container style={{ marginTop: "50px" }}>
+        <Grid container style={{ marginTop: "24px" }}>
           <Typography
-            style={{ fontSize: "28px" }}
+            style={{ fontSize: "20px" }}
             className={classes.sameinfont}
           >
             CHANGE PASSWORD
@@ -288,74 +248,52 @@ export function UserSettings() {
         </Grid>
         <Grid item xs={12} className={classes.DEDialogBox}>
           <form onSubmit={formikchangepass.handleSubmit}>
-            <Grid container className={classes.DEDialpos}>
-              <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Old Password"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                   className={classes.Glucoselevel}
                   type="password"
                   name="oldpassword"
                   value={formikchangepass.values.oldpassword}
                   onChange={formikchangepass.handleChange}
-                  error={
-                    formikchangepass.touched.oldpassword &&
-                    Boolean(formikchangepass.errors.oldpassword)
-                  }
-                  helperText={
-                    formikchangepass.touched.oldpassword &&
-                    formikchangepass.errors.oldpassword
-                  }
+                  error={formikchangepass.touched.oldpassword && Boolean(formikchangepass.errors.oldpassword)}
+                  helperText={formikchangepass.touched.oldpassword && formikchangepass.errors.oldpassword}
                 />
               </Grid>
-              <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="New Password"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                   className={classes.Glucoselevel}
                   type="password"
                   name="newpassword"
                   value={formikchangepass.values.newpassword}
                   onChange={formikchangepass.handleChange}
-                  error={
-                    formikchangepass.touched.newpassword &&
-                    Boolean(formikchangepass.errors.newpassword)
-                  }
-                  helperText={
-                    formikchangepass.touched.newpassword &&
-                    formikchangepass.errors.newpassword
-                  }
+                  error={formikchangepass.touched.newpassword && Boolean(formikchangepass.errors.newpassword)}
+                  helperText={formikchangepass.touched.newpassword && formikchangepass.errors.newpassword}
                 />
               </Grid>
-              <Grid item xs={11} md={3} style={{ marginTop: "5px" }}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Confirm New Password"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                   className={classes.Glucoselevel}
                   type="password"
                   name="confirmpassword"
                   value={formikchangepass.values.confirmpassword}
                   onChange={formikchangepass.handleChange}
-                  error={
-                    formikchangepass.touched.confirmpassword &&
-                    Boolean(formikchangepass.errors.confirmpassword)
-                  }
-                  helperText={
-                    formikchangepass.touched.confirmpassword &&
-                    formikchangepass.errors.confirmpassword
-                  }
+                  error={formikchangepass.touched.confirmpassword && Boolean(formikchangepass.errors.confirmpassword)}
+                  helperText={formikchangepass.touched.confirmpassword && formikchangepass.errors.confirmpassword}
                 />
               </Grid>
-              <Grid item xs={6} sm={2}>
-                <Button className={classes.DEDial} type="submit">
-                  UPDATE
-                </Button>
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center" mt={1}>
+                  <Button className={classes.DEDial} type="submit" style={{ width: 200, marginTop: 0 }}>
+                    UPDATE
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
           </form>
