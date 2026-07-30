@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { GraphBp } from "./graphs";
@@ -52,6 +52,10 @@ const useStyles = makeStyles({
     padding: "20px",
     marginTop: "10px",
   },
+  DEDialogBox1: {
+    width: "100%",
+    marginTop: "10px",
+  },
   DEDial: {
     width: "100%",
     borderRadius: "20px",
@@ -62,33 +66,47 @@ const useStyles = makeStyles({
     fontFamily: "Montserrat",
   },
   TDialogbox: {
-    width: "900px",
+    width: "100%",
     background: "#fff",
     boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
     borderRadius: "12px",
-    padding: "10px",
+    padding: "16px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "35px",
+    boxSizing: "border-box",
+    height: "100%",
   },
   BPGDialogbox: {
     width: "100%",
+    height: "100%",
     background: "#fff",
     fontFamily: "Montserrat",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     borderRadius: "12px",
-    padding: "10px",
-    marginTop: "35px",
+    padding: "16px",
+    boxSizing: "border-box",
   },
-  Tablecontentbox: {
+  tableHeader: {
     borderRadius: "28px",
     background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
     boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
     justifyContent: "space-between",
-    marginTop: "30px",
+    padding: "10px 12px",
+    position: "sticky",
+    top: 0,
+    zIndex: 1,
+    width: "100%",
+  },
+  tableRow: {
+    borderRadius: "28px",
+    background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
+    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    justifyContent: "space-between",
+    marginTop: "8px",
     padding: "12px",
+    width: "100%",
   },
   TableContentFont: {
     fontWeight: "bold",
@@ -106,35 +124,38 @@ const useStyles = makeStyles({
     justifyContent: "space-around",
   },
   setTextField: { marginTop: "10px", width: "100%" },
-  Gridadjust: {
-    display: "flex",
-    alignItems: "center",
-  },
-  GridAjust: {
+  tableGraphWrapper: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: "16px",
+    width: "100%",
+  },
+  tableGraphItem: {
+    flex: "1 1 calc(50% - 8px)",
+    minWidth: 0,
+    boxSizing: "border-box",
   },
 
 
   bloodpressuretablecontainer: {
-    height: 300,
-    overflowY: "scroll",
-    marginTop: 30,
+    width: "100%",
+    maxHeight: 300,
+    overflowY: "auto",
   }
 });
 
 function BPRecord({ sys, dys, date }) {
   const classes = useStyles();
   return (
-    <Grid container className={classes.Tablecontentbox}>
+    <Grid container className={classes.tableRow}>
       <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>{sys + " mmHg"}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>{dys + " mmHg"}</Typography>
       </Grid>
-      <Grid xs={6} sm={3}>
+      <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>{date.split("T")[1].split(".")[0]}</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
@@ -146,14 +167,14 @@ function BPRecord({ sys, dys, date }) {
 function BPRecordhead() {
   const classes = useStyles();
   return (
-    <Grid container className={classes.Tablecontentbox}>
+    <Grid container className={classes.tableHeader}>
       <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>SYS</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>DYS</Typography>
       </Grid>
-      <Grid xs={6} sm={3}>
+      <Grid item xs={6} sm={3}>
         <Typography variant="body1" className={classes.TableContentFont}>Time</Typography>
       </Grid>
       <Grid item xs={6} sm={3}>
@@ -387,42 +408,42 @@ export function ManageBP() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={11} className={classes.Gridadjust}>
-          <Grid container className={classes.GridAjust}>
-            <Grid item xs={12} md={5} className={classes.TDialogbox}>
-              <Typography
-                variant="body1"
-                className={classes.sameinfont}
-              >
-                BLOOD PRESSURE TABLE
-              </Typography>
-              <Grid container>
-                <BPRecordhead />
-              </Grid>
-              <Grid container className={classes.bloodpressuretablecontainer}>
-                {
-                  data ? data.map((item, index) => {
-                    return (
-                      <Grid item xs={11} className={classes.bloodpressuretableitem}>
+        <Grid item xs={11} className={classes.DEDialogBox1}>
+          <Box className={classes.tableGraphWrapper}>
+            <Box className={classes.tableGraphItem}>
+              <Box className={classes.TDialogbox}>
+                <Typography
+                  variant="body1"
+                  className={classes.sameinfont}
+                >
+                  BLOOD PRESSURE TABLE
+                </Typography>
+                <Box className={classes.bloodpressuretablecontainer}>
+                  <BPRecordhead />
+                  {
+                    data ? data.map((item, index) => {
+                      return (
                         <BPRecord date={item.dateAdded} dys={item.dystolic} sys={item.systolic} key={index} />
-                      </Grid>
-                    )
-                  })
-                    : <CircularProgress
-                      style={{ marginRight: "20px", width: "50px", height: "50px" }}
-                    />
-                }
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={6} className={classes.BPGDialogbox}>
-              <Typography variant="body2" className={classes.BPGTitle}>
-                BLOOD PRESSURE GRAPH
-              </Typography>
-              <Grid container className={classes.graphctn}>
-                <GraphBp check={check} />
-              </Grid>
-            </Grid>
-          </Grid>
+                      )
+                    })
+                      : <Box display="flex" justifyContent="center" py={2}>
+                          <CircularProgress />
+                        </Box>
+                  }
+                </Box>
+              </Box>
+            </Box>
+            <Box className={classes.tableGraphItem}>
+              <Box className={classes.BPGDialogbox}>
+                <Typography variant="body2" className={classes.BPGTitle}>
+                  BLOOD PRESSURE GRAPH
+                </Typography>
+                <Grid container className={classes.graphctn}>
+                  <GraphBp check={check} />
+                </Grid>
+              </Box>
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     </div >
