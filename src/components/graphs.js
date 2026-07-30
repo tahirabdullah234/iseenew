@@ -4,7 +4,6 @@ import { Bar as Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import * as getdata from "../Services/graphsdata";
 
-import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Snackbar from "@material-ui/core/Snackbar";
@@ -55,11 +54,10 @@ export function GraphGlocuse({ check }) {
     }, [token, check])
 
     return (
-        <div style={{ margin: "auto" }}>
+        <div style={{ width: "100%", height: "100%" }}>
             {
                 data ?
-                    <Grid item xs={12}>
-                        <Line
+                    <Line
                             data={
                                 {
                                     labels: data.fdates,
@@ -81,8 +79,9 @@ export function GraphGlocuse({ check }) {
                                     ]
                                 }
                             }
-                            height={300}
                             options={{
+                                responsive: true,
+                                maintainAspectRatio: false,
                                 scales: {
                                     yAxes: [
                                         {
@@ -95,15 +94,13 @@ export function GraphGlocuse({ check }) {
                                 plugins: {
                                     legend: {
                                         labels: {
-                                            fontSize: 25,
+                                            fontSize: 18,
                                         },
                                         position: "bottom"
                                     },
-                                    fullSize: true
                                 },
-                            }}
-                        />
-                    </Grid>
+                        }}
+                    />
                     :
                     <CircularProgress
                         style={{ marginRight: "20px", width: "103px", height: "101px" }}

@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 import {
-  Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -32,7 +32,7 @@ import { questions, answers } from "../Services/questions";
 
 import * as model from "../Services/model";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   DialogBox: {
     width: "100%",
     borderRadius: "30px",
@@ -46,51 +46,83 @@ const useStyles = makeStyles({
   },
 
   sameinfont: {
-    fontWeight: "bold",
-    textDecoration: "underline",
-    color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     fontFamily: "Montserrat",
+    fontWeight: "bold",
+    color: "#3585da",
+    textDecoration: "underline",
+    textAlign: "center",
   },
-
+  cardTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#3585da",
+    marginBottom: 12,
+  },
+  sectionLabel: {
+    fontFamily: "Montserrat",
+    fontWeight: 600,
+    color: "#3585da",
+    fontSize: 18,
+  },
+  sectionValue: {
+    fontFamily: "Montserrat",
+    color: "#444",
+    fontSize: 18,
+  },
   DEDialogBox: {
     width: "100%",
     borderRadius: "12px",
     background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     padding: "20px",
-    marginTop: "10px",
+    marginTop: "12px",
+    boxSizing: "border-box",
+  },
+  DEDialogBox1: {
+    width: "100%",
+    marginTop: "12px",
+    boxSizing: "border-box",
   },
   DEDial: {
-    width: "100%",
     borderRadius: "20px",
     background: "#3585da",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 6px rgba(53, 133, 218, 0.3)",
     color: "white",
-    marginTop: "13px",
+    fontFamily: "Montserrat",
+    fontWeight: 600,
+    fontSize: 18,
+    padding: "10px 36px",
+    textTransform: "none",
     "&:hover": {
-      background: "rgba(53,133,218,0.7)",
+      background: "#2a6db8",
     },
   },
   TDialogbox: {
-    width: "900px",
+    width: "100%",
     background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     borderRadius: "12px",
-    padding: "10px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "35px",
+    padding: "16px",
+    boxSizing: "border-box",
+    height: "100%",
   },
   GLGDialogbox: {
     width: "100%",
+    height: "100%",
     background: "#fff",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    fontFamily: "Montserrat",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     borderRadius: "12px",
-    padding: "10px",
-    marginTop: "35px",
+    padding: "16px",
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+  },
+  graphWrapper: {
+    flex: 1,
+    minHeight: 0,
+    width: "100%",
   },
   glucoseTable: {
     borderCollapse: "separate",
@@ -141,41 +173,33 @@ const useStyles = makeStyles({
     },
   },
   BPGTitle: {
-    fontWeight: "bold",
-    color: "#3585da",
     fontFamily: "Montserrat",
-  },
-  DEDialpos: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  Glucoselevel: { width: "100%" },
-  radiopos: {
-    display: "flex",
-    justifyContent: "space-around",
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#3585da",
+    marginBottom: 12,
     textAlign: "center",
   },
-  radiosize: {
-    marginTop: "16px",
-    width: "100%",
+  formRow: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+    gap: "16px",
+    flexWrap: "wrap",
   },
-  radiogrp: { display: "flex", flexDirection: "row" },
-  Gridadjust: {
-    display: "flex",
-    alignItems: "center",
-  },
-  GridAdjust: {
+  tableGraphWrapper: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: "16px",
+    width: "100%",
   },
-  bloodpressuretableitem: {
-    margin: "auto",
+  tableGraphItem: {
+    flex: "1 1 100%",
+    minWidth: 0,
+    boxSizing: "border-box",
+    [theme.breakpoints.up("md")]: {
+      flex: "1 1 calc(50% - 8px)",
+    },
   },
   bloodpressuretablecontainer: {
     width: "100%",
@@ -183,7 +207,7 @@ const useStyles = makeStyles({
     overflowY: "auto",
     overflowX: "auto",
   },
-});
+}));
 
 
 
@@ -306,53 +330,43 @@ export function ManageGL() {
     <ThemeProvider theme={theme}>
       <div className="dashdiv">
         <Grid item xs={12} className={classes.DialogBox}>
-          <Typography
-            style={{ fontSize: "32px" }}
-            className={classes.sameinfont}
-          >
+          <Typography variant="h4" className={classes.sameinfont}>
             MANAGE BLOOD GLUCOSE
           </Typography>
           <Grid item xs={11} className={classes.DEDialogBox}>
+            <Typography className={classes.cardTitle}>
+              Add Blood Glucose Record
+            </Typography>
             <form onSubmit={formik.handleSubmit}>
-              <Grid container className={classes.DEDialpos}>
-                <Grid item xs={5} md={3}>
+              <Box className={classes.formRow}>
+                <Box flex="1 1 200px" minWidth={0}>
                   <TextField
-                    label="GLUCOSE LEVEL"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    className={classes.Glucoselevel}
+                    label="Glucose Value"
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
                     id="value"
                     name="value"
                     value={formik.values.value}
                     onChange={formik.handleChange}
                     error={formik.touched.value && Boolean(formik.errors.value)}
                     helperText={formik.touched.value && formik.errors.value}
-                  ></TextField>
-                </Grid>
-                <Grid item xs={6} md={2}>
-                  <FormControl
-                    className={classes.formControl}
-                    style={{ marginTop: "16px", width: "100%" }}
-                  >
+                  />
+                </Box>
+                <Box flex="1 1 140px" minWidth={0}>
+                  <FormControl fullWidth style={{ marginTop: 0 }}>
                     <Select value={GLunit} onChange={handleChange}>
                       <MenuItem value="mg/dl">
                         <em>mg/dl</em>
                       </MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
-                <Grid item xs={11} md={3} className={classes.radiopos}>
-                  <FormControl
-                    component="fieldset"
-                    className={classes.radiosize}
-                  >
+                </Box>
+                <Box display="flex" alignItems="center" gap="8px">
+                  <FormControl component="fieldset">
                     <RadioGroup
-                      aria-label="isFasting"
-                      name="isFasting"
                       value={fast}
                       onChange={handleChang}
-                      className={classes.radiogrp}
+                      row
                     >
                       <FormControlLabel
                         value="Random"
@@ -366,168 +380,166 @@ export function ManageGL() {
                       />
                     </RadioGroup>
                   </FormControl>
-                </Grid>
-                <Grid item xs={5} sm={2}>
-                  <Button type="submit" className={classes.DEDial}>
-                    ADD
-                  </Button>
-                </Grid>
-              </Grid>
+                </Box>
+                <Button type="submit" className={classes.DEDial}>
+                  ADD
+                </Button>
+              </Box>
             </form>
           </Grid>
           <Grid item xs={11} className={classes.DEDialogBox}>
-            <Grid container className={classes.DEDialpos}>
-              <Grid item xs={6}>
-                <Typography variant="h6">
-                  Fasting Sugar Level Average:
-                  <Typography variant="body1">
-                    {" "}
-                    {fasting ? Number(fasting.fastingAvg).toFixed(3) : "No Record Avaliable"}
-                  </Typography>
+            <Typography className={classes.cardTitle}>
+              Blood Glucose Averages
+            </Typography>
+            <Box display="flex" flexWrap="wrap" gap="16px">
+              <Box flex="1 1 200px">
+                <Typography className={classes.sectionLabel}>
+                  Fasting Average
                 </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6">
-                  Random Sugar Level Average:
-                  <Typography variant="body1">
-                    {" "}
-                    {rand ? Number(rand.randomAvg).toFixed(3) : "No Record Avaliable"}
-                  </Typography>
+                <Typography className={classes.sectionValue}>
+                  {fasting ? Number(fasting.fastingAvg).toFixed(3) : "No Record Available"}
                 </Typography>
-              </Grid>
-            </Grid>
+              </Box>
+              <Box flex="1 1 200px">
+                <Typography className={classes.sectionLabel}>
+                  Random Average
+                </Typography>
+                <Typography className={classes.sectionValue}>
+                  {rand ? Number(rand.randomAvg).toFixed(3) : "No Record Available"}
+                </Typography>
+              </Box>
+            </Box>
           </Grid>
-          {/*questions grid*/}
           <Grid item xs={11} className={classes.DEDialogBox}>
-            <Grid container className={classes.DEDialpos}>
-              <Grid item xs={12}>
-                <Typography variant="h6">
-                  Symptoms Based Check for Diabeties:{" "}
-                </Typography>
-                <Typography variant="subtitle">
-                  Please Answer the following Question:
-                </Typography>
-              </Grid>
-              <Grid item xs={11} style={{ width: "100%", margin: "auto" }}>
-                <Typography variant="h6">
-                  {questions ? questions[index] : ""}{" "}
-                </Typography>
-                <Grid item xs={11} style={{ margin: "auto" }}>
-                  <FormControl component="fieldset">
-                    <RadioGroup
-                      value={mark}
-                      onChange={(e) => {
-                        ans[index] = Number(e.target.value);
-                        setmark(e.target.value);
-                      }}
-                    >
-                      <FormControlLabel
-                        value="0"
-                        control={<Radio />}
-                        label="No"
-                      />
-                      <FormControlLabel
-                        value="1"
-                        control={<Radio />}
-                        label="Yes"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
+            <Typography className={classes.cardTitle}>
+              Symptoms Based Check for Diabetes
+            </Typography>
+            <Typography style={{ marginBottom: 8, color: "#666", fontSize: 18 }}>
+              Please answer the following questions:
+            </Typography>
+            <Box mt={1} mb={1}>
+              <Typography style={{ fontWeight: 600, fontSize: 18, color: "#333" }}>
+                {questions ? questions[index] : ""}
+              </Typography>
+            </Box>
+            <FormControl component="fieldset">
+              <RadioGroup
+                value={mark}
+                onChange={(e) => {
+                  ans[index] = Number(e.target.value);
+                  setmark(e.target.value);
+                }}
+                row
+              >
+                <FormControlLabel value="0" control={<Radio />} label="No" />
+                <FormControlLabel value="1" control={<Radio />} label="Yes" />
+              </RadioGroup>
+            </FormControl>
+            <Box display="flex" alignItems="center" justifyContent="center" mt={1} gap="8px">
+              <IconButton
+                aria-label="previous question"
+                component="span"
+                onClick={() => {
+                  if (index > 0) {
+                    setindex(index - 1);
+                    setmark("");
+                  }
+                }}
+                disabled={index === 0}
+                size="small"
+              >
+                <ArrowBackIosIcon fontSize="small" />
+                <Typography variant="body2" style={{ marginLeft: 2, fontSize: 18 }}>Previous</Typography>
+              </IconButton>
+              {index === questions.length - 1 ? (
+                <Button
+                  onClick={() => { getSymPred() }}
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  style={{ textTransform: "none", borderRadius: 20, fontSize: 18 }}
+                >
+                  Submit
+                </Button>
+              ) : (
                 <IconButton
-                  aria-label="previous question"
+                  aria-label="next question"
                   component="span"
                   onClick={() => {
-                    if (index > 0) {
-                      setindex(index - 1);
+                    if (index < questions.length - 1 && mark !== "") {
+                      setindex(index + 1);
                       setmark("");
                     }
                   }}
-                  disabled={index === 0}
+                  disabled={index === questions.length - 1}
+                  size="small"
                 >
-                  <ArrowBackIosIcon />
-                  <Typography variant="caption">Prevoius</Typography>
+                  <Typography variant="body2" style={{ marginRight: 2, fontSize: 18 }}>Next</Typography>
+                  <ArrowForwardIosIcon fontSize="small" />
                 </IconButton>
-                {index === questions.length - 1 ? (
-                  <Button
-                    onClick={() => {
-                      getSymPred();
-                    }}
-                  >
-                    Submit
-                  </Button>
-                ) : (
-                  <IconButton
-                    aria-label="next question"
-                    component="span"
-                    onClick={() => {
-                      if (index < questions.length - 1 && mark !== "") {
-                        setindex(index + 1);
-                        setmark("");
-                      }
-                    }}
-                    disabled={index === questions.length - 1}
-                  >
-                    <Typography variant="caption">Next</Typography>
-                    <ArrowForwardIosIcon />
-                  </IconButton>
-                )}
-                {result ? (
-                  <Typography variant="body1">
-                    Result Your Symptoms are {result}
-                  </Typography>
-                ) : (
-                  <Typography variant="body1"></Typography>
-                )}
-              </Grid>
-            </Grid>
+              )}
+            </Box>
+            {result && (
+              <Box mt={1}>
+                <Typography style={{ fontWeight: 600, color: "#3585da", fontSize: 18 }}>
+                  Result: Your symptoms indicate you are {result}
+                </Typography>
+              </Box>
+            )}
           </Grid>
-          <Grid item xs={11} className={classes.Gridadjust}>
-            <Grid container className={classes.GridAdjust}>
-              <Grid item xs={12} md={5} className={classes.TDialogbox}>
-                <Typography variant="body1" className={classes.sameinfont}>
-                  GLUCOSE LEVEL TABLE
-                </Typography>
-                <TableContainer className={classes.bloodpressuretablecontainer}>
-                  <Table className={classes.glucoseTable}>
-                    <TableHead>
-                      <TableRow className={classes.glucoseTableHeadRow}>
-                        <TableCell align="center">Value</TableCell>
-                        <TableCell align="center">Type</TableCell>
-                        <TableCell>Time</TableCell>
-                        <TableCell>Date</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data ? (
-                        data.map((item, index) => (
-                          <TableRow key={index} className={classes.glucoseTableBodyRow}>
-                            <TableCell align="center">{item.value + " " + item.unit}</TableCell>
-                            <TableCell align="center">{item.isFasting ? "Fasting" : "Random"}</TableCell>
-                            <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
-                            <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
-                          </TableRow>
-                        ))
-                      ) : (
-                        <TableRow>
-                          <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
-                            <CircularProgress />
-                          </TableCell>
+          <Grid item xs={11} className={classes.DEDialogBox1}>
+            <Box className={classes.tableGraphWrapper}>
+              <Box className={classes.tableGraphItem}>
+                <Box className={classes.TDialogbox}>
+                  <Typography
+                    variant="body1"
+                    className={classes.cardTitle}
+                  >
+                    BLOOD GLUCOSE TABLE
+                  </Typography>
+                  <TableContainer className={classes.bloodpressuretablecontainer}>
+                    <Table className={classes.glucoseTable}>
+                      <TableHead>
+                        <TableRow className={classes.glucoseTableHeadRow}>
+                          <TableCell align="center">Value</TableCell>
+                          <TableCell align="center">Type</TableCell>
+                          <TableCell>Time</TableCell>
+                          <TableCell>Date</TableCell>
                         </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Grid>
-              <Grid item xs={12} md={6} className={classes.GLGDialogbox}>
-                <Typography variant="body2" className={classes.BPGTitle}>
-                  GLUCOSE LEVEL GRAPH
-                </Typography>
-                <Grid container style={{ margin: "auto" }}>
-                  <GraphGlocuse check={check} />
-                </Grid>
-              </Grid>
-            </Grid>
+                      </TableHead>
+                      <TableBody>
+                        {data ? (
+                          data.map((item, index) => (
+                            <TableRow key={index} className={classes.glucoseTableBodyRow}>
+                              <TableCell align="center">{item.value + " " + item.unit}</TableCell>
+                              <TableCell align="center">{item.isFasting ? "Fasting" : "Random"}</TableCell>
+                              <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
+                              <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
+                              <CircularProgress />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </Box>
+              <Box className={classes.tableGraphItem}>
+                <Box className={classes.GLGDialogbox}>
+                  <Typography variant="body2" className={classes.BPGTitle}>
+                    BLOOD GLUCOSE GRAPH
+                  </Typography>
+                  <Box className={classes.graphWrapper}>
+                    <GraphGlocuse check={check} />
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
           </Grid>
         </Grid>
       </div>
