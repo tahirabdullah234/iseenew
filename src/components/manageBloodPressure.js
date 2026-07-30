@@ -112,7 +112,7 @@ const useStyles = makeStyles({
   },
   bpTable: {
     borderCollapse: "separate",
-    borderSpacing: "0 8px",
+    borderSpacing: "0 4px",
     minWidth: 500,
   },
   bpTableHeadRow: {
@@ -122,7 +122,7 @@ const useStyles = makeStyles({
       fontWeight: "bold",
       fontFamily: "Montserrat",
       fontSize: 18,
-      padding: "10px 16px",
+      padding: "12px 16px",
       borderBottom: "none",
     },
     "& th:first-child": {
@@ -135,23 +135,27 @@ const useStyles = makeStyles({
     },
   },
   bpTableBodyRow: {
-    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.06)",
+    borderRadius: 8,
     "& td": {
-      background: "linear-gradient(#abd7ec 0%, #88ceea 50.42%, #59c1e8 100%)",
-      color: "#fff",
-      fontWeight: "bold",
+      background: "#fff",
+      color: "#444",
       fontFamily: "Montserrat",
-      fontSize: 18,
-      padding: "12px 16px",
+      fontWeight: 500,
+      fontSize: 17,
+      padding: "10px 16px",
       borderBottom: "none",
     },
     "& td:first-child": {
-      borderTopLeftRadius: 28,
-      borderBottomLeftRadius: 28,
+      borderTopLeftRadius: 8,
+      borderBottomLeftRadius: 8,
     },
     "& td:last-child": {
-      borderTopRightRadius: 28,
-      borderBottomRightRadius: 28,
+      borderTopRightRadius: 8,
+      borderBottomRightRadius: 8,
+    },
+    "&:hover td": {
+      background: "#f0f7fc",
     },
   },
   BPGTitle: {
@@ -438,8 +442,8 @@ export function ManageBP() {
                   <Table className={classes.bpTable}>
                     <TableHead>
                       <TableRow className={classes.bpTableHeadRow}>
-                        <TableCell>SYS</TableCell>
-                        <TableCell>DYS</TableCell>
+                        <TableCell align="center">SYS</TableCell>
+                        <TableCell align="center">DYS</TableCell>
                         <TableCell>Time</TableCell>
                         <TableCell>Date</TableCell>
                       </TableRow>
@@ -448,8 +452,8 @@ export function ManageBP() {
                       {data ? (
                         data.map((item, index) => (
                           <TableRow key={index} className={classes.bpTableBodyRow}>
-                            <TableCell>{item.systolic + " mmHg"}</TableCell>
-                            <TableCell>{item.dystolic + " mmHg"}</TableCell>
+                            <TableCell align="center">{item.systolic + " mmHg"}</TableCell>
+                            <TableCell align="center">{item.dystolic + " mmHg"}</TableCell>
                             <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
                             <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
                           </TableRow>
