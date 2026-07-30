@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Hidden } from "@material-ui/core";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
 import { GraphGlocuse, GraphBp } from "./graphsUserid";
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     marginBottom: 24,
     textAlign: "left",
+    [theme.breakpoints.down("sm")]: { fontSize: "28px" },
   },
   healthCard: {
     width: "100%",
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     textShadow: "0 2px 4px rgba(0,0,0,0.12)",
     marginBottom: 16,
     textAlign: "left",
+    [theme.breakpoints.down("sm")]: { fontSize: 26 },
   },
   healthStatus: {
     fontWeight: 700,
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     textShadow: "0 2px 4px rgba(0,0,0,0.12)",
     textAlign: "left",
     marginLeft: 16,
+    [theme.breakpoints.down("sm")]: { fontSize: 22 },
   },
   healthDot: {
     height: 14,
@@ -61,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 22,
     color: "#fff",
     textShadow: "0 2px 4px rgba(0,0,0,0.12)",
+    [theme.breakpoints.down("sm")]: { fontSize: 16 },
   },
   healthLegend: {
     display: "flex",
@@ -80,20 +84,23 @@ const useStyles = makeStyles((theme) => ({
     background: "#fff",
     boxShadow: "0 4px 16px rgba(0, 0, 0, 0.08)",
     padding: "32px 36px",
-    height: 500,
+    minHeight: 500,
     boxSizing: "border-box",
     overflow: "hidden",
+    [theme.breakpoints.down("sm")]: { padding: "20px 16px", minHeight: 400 },
   },
   statTitle: {
     fontWeight: 700,
     fontSize: 32,
     color: "#3585da",
+    [theme.breakpoints.down("sm")]: { fontSize: 22 },
   },
   dateRange: {
     fontWeight: 600,
     fontSize: 20,
     color: "#3585da",
     textAlign: "right",
+    [theme.breakpoints.down("sm")]: { fontSize: 14 },
   },
   graphLabel: {
     fontWeight: 700,
@@ -101,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#3585da",
     textAlign: "center",
     marginBottom: 8,
+    [theme.breakpoints.down("sm")]: { fontSize: 17 },
   },
   infoCard: {
     padding: "16px 20px",
@@ -119,25 +127,30 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     gap: 8,
+    [theme.breakpoints.down("sm")]: { fontSize: 20 },
   },
   infoValue: {
     fontSize: 22,
     fontWeight: 600,
     color: "#3585da",
+    [theme.breakpoints.down("sm")]: { fontSize: 16 },
   },
   infoSub: {
     fontSize: 20,
     color: "#3585da",
     marginTop: 4,
+    [theme.breakpoints.down("sm")]: { fontSize: 14 },
   },
   infoDate: {
     fontSize: 18,
     color: "#5a9bd5",
     marginTop: 8,
+    [theme.breakpoints.down("sm")]: { fontSize: 13 },
   },
   infoEmpty: {
     fontSize: 20,
     color: "#5a9bd5",
+    [theme.breakpoints.down("sm")]: { fontSize: 14 },
   },
 }));
 
@@ -209,66 +222,65 @@ export function PatientDashboard() {
       </Typography>
 
       <Grid container spacing={3} alignItems="stretch">
-        <Grid item xs={12} md={8} style={{ display: "flex" }}>
-          <div className={classes.healthCard}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
-                <Typography className={classes.healthTitle} variant="h4">
-                  Health
-                </Typography>
-                <Box display="flex" alignItems="center">
-                  <Box width="45%" style={{ maxWidth: 160 }}>
-                    <Doughnut
-                      data={{
-                        datasets: [
-                          {
-                            label: ["Health LEVEL"],
-                            backgroundColor: [health ? health.color : "#85fcbc", "rgba(255,255,255,0.15)"],
-                            borderColor: "transparent",
-                            borderRadius: 6,
-                            data: health ? [health.value, 100 - health.value] : [85, 15]
-                          },
-                        ]
-                      }}
-                    />
-                  </Box>
-                  <Typography className={classes.healthStatus} variant="h5">
-                    You are healthy!
+        <Hidden lgUp>
+          <Grid item xs={12} style={{ display: "flex" }}>
+            <div className={classes.healthCard}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Typography className={classes.healthTitle} variant="h4">
+                    Health
                   </Typography>
-                </Box>
-                <div className={classes.healthLegend}>
                   <Box display="flex" alignItems="center">
-                    <Box className={classes.healthDot} style={{ background: "#85fcbc" }} />
-                    <Typography className={classes.healthLabel}>Safe</Typography>
+                    <Box width="45%" style={{ maxWidth: 160 }}>
+                      <Doughnut
+                        data={{
+                          datasets: [
+                            {
+                              label: ["Health LEVEL"],
+                              backgroundColor: [health ? health.color : "#85fcbc", "rgba(255,255,255,0.15)"],
+                              borderColor: "transparent",
+                              borderRadius: 6,
+                              data: health ? [health.value, 100 - health.value] : [85, 15]
+                            },
+                          ]
+                        }}
+                      />
+                    </Box>
+                    <Typography className={classes.healthStatus} variant="h5">
+                      You are healthy!
+                    </Typography>
                   </Box>
-                  <Box display="flex" alignItems="center">
-                    <Box className={classes.healthDot} style={{ background: "#ffbf6b" }} />
-                    <Typography className={classes.healthLabel}>Be cautious</Typography>
+                  <div className={classes.healthLegend}>
+                    <Box display="flex" alignItems="center">
+                      <Box className={classes.healthDot} style={{ background: "#85fcbc" }} />
+                      <Typography className={classes.healthLabel}>Safe</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      <Box className={classes.healthDot} style={{ background: "#ffbf6b" }} />
+                      <Typography className={classes.healthLabel}>Be cautious</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      <Box className={classes.healthDot} style={{ background: "#fa6b6b" }} />
+                      <Typography className={classes.healthLabel}>See doctor</Typography>
+                    </Box>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Notifications />
+                  <Box mt={1}>
+                    {apt ? (
+                      apt.map((item) => (
+                        <Each key={item._id} data={item} />
+                      ))
+                    ) : (
+                      <Each />
+                    )}
                   </Box>
-                  <Box display="flex" alignItems="center">
-                    <Box className={classes.healthDot} style={{ background: "#fa6b6b" }} />
-                    <Typography className={classes.healthLabel}>See doctor</Typography>
-                  </Box>
-                </div>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <Notifications />
-                <Box mt={1}>
-                  {apt ? (
-                    apt.map((item) => (
-                      <Each key={item._id} data={item} />
-                    ))
-                  ) : (
-                    <Each />
-                  )}
-                </Box>
-              </Grid>
-            </Grid>
-          </div>
-        </Grid>
-
-        <Grid item xs={12} md={4} style={{ display: "flex" }}>
-          <Box display="flex" flexDirection="column" style={{ gap: 16, width: "100%" }}>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={6} style={{ display: "flex" }}>
             <div className={classes.infoCard}>
               <Typography className={classes.infoCardTitle}>
                 <CalendarTodayIcon style={{ fontSize: 18 }} />
@@ -289,6 +301,8 @@ export function PatientDashboard() {
                 </Typography>
               )}
             </div>
+          </Grid>
+          <Grid item xs={12} md={6} style={{ display: "flex" }}>
             <div className={classes.infoCard}>
               <Typography className={classes.infoCardTitle}>
                 <MessageIcon style={{ fontSize: 18 }} />
@@ -312,8 +326,114 @@ export function PatientDashboard() {
                 </Typography>
               )}
             </div>
-          </Box>
-        </Grid>
+          </Grid>
+        </Hidden>
+        <Hidden mdDown>
+          <Grid item md={8} style={{ display: "flex" }}>
+            <div className={classes.healthCard}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Typography className={classes.healthTitle} variant="h4">
+                    Health
+                  </Typography>
+                  <Box display="flex" alignItems="center">
+                    <Box width="45%" style={{ maxWidth: 160 }}>
+                      <Doughnut
+                        data={{
+                          datasets: [
+                            {
+                              label: ["Health LEVEL"],
+                              backgroundColor: [health ? health.color : "#85fcbc", "rgba(255,255,255,0.15)"],
+                              borderColor: "transparent",
+                              borderRadius: 6,
+                              data: health ? [health.value, 100 - health.value] : [85, 15]
+                            },
+                          ]
+                        }}
+                      />
+                    </Box>
+                    <Typography className={classes.healthStatus} variant="h5">
+                      You are healthy!
+                    </Typography>
+                  </Box>
+                  <div className={classes.healthLegend}>
+                    <Box display="flex" alignItems="center">
+                      <Box className={classes.healthDot} style={{ background: "#85fcbc" }} />
+                      <Typography className={classes.healthLabel}>Safe</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      <Box className={classes.healthDot} style={{ background: "#ffbf6b" }} />
+                      <Typography className={classes.healthLabel}>Be cautious</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      <Box className={classes.healthDot} style={{ background: "#fa6b6b" }} />
+                      <Typography className={classes.healthLabel}>See doctor</Typography>
+                    </Box>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Notifications />
+                  <Box mt={1}>
+                    {apt ? (
+                      apt.map((item) => (
+                        <Each key={item._id} data={item} />
+                      ))
+                    ) : (
+                      <Each />
+                    )}
+                  </Box>
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item md={4} style={{ display: "flex" }}>
+            <Box display="flex" flexDirection="column" style={{ gap: 16, width: "100%" }}>
+              <div className={classes.infoCard}>
+                <Typography className={classes.infoCardTitle}>
+                  <CalendarTodayIcon style={{ fontSize: 18 }} />
+                  Latest Appointment
+                </Typography>
+                {apt && apt.length > 0 ? (
+                  <>
+                    <Typography className={classes.infoValue}>
+                      {apt[0].doctorName || "Doctor"}
+                    </Typography>
+                    <Typography className={classes.infoSub}>
+                      {new Date(apt[0].date).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" })} @ {apt[0].time}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography className={classes.infoEmpty}>
+                    No upcoming appointments
+                  </Typography>
+                )}
+              </div>
+              <div className={classes.infoCard}>
+                <Typography className={classes.infoCardTitle}>
+                  <MessageIcon style={{ fontSize: 18 }} />
+                  Latest Message
+                </Typography>
+                {latestMsg ? (
+                  <>
+                    <Typography className={classes.infoValue}>
+                      {latestMsg.d_id ? "Dr. " + latestMsg.d_id.fname + " " + latestMsg.d_id.lname : "Doctor"}
+                    </Typography>
+                    <Typography className={classes.infoSub} style={{ wordBreak: "break-word" }}>
+                      {latestMsg.msg}
+                    </Typography>
+                    <Typography className={classes.infoDate}>
+                      {new Date(latestMsg.createdAt).toLocaleDateString([], { month: "short", day: "numeric" }) + " " + new Date(latestMsg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography className={classes.infoEmpty}>
+                    No messages from doctor
+                  </Typography>
+                )}
+              </div>
+            </Box>
+          </Grid>
+        </Hidden>
 
         <Grid item xs={12}>
           <div className={classes.cardWhite}>
