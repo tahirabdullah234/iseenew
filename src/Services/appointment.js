@@ -117,3 +117,63 @@ export const get_apponitment_p = (token) => {
         }
     })
 }
+
+export const delete_msg = (token, msg_id) => {
+    return axios.delete('/request/message/' + msg_id, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const edit_msg = (token, msg_id, newMsg) => {
+    return axios.put('/request/message/' + msg_id, { msg: newMsg }, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const bulk_delete_msgs = (token, ids) => {
+    return axios.post('/request/messages/bulk-delete', { ids }, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const newMessage = (token, data) => {
+    return axios.post('/request/newmessage', { data }, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const get_latest_message = (token) => {
+    return axios.get('/request/patient/latest-message', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const delete_conversation = (token, otherUserId) => {
+    return axios.delete('/request/conversation/' + otherUserId, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

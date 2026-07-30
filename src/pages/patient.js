@@ -8,10 +8,13 @@ import { PatientDashboard } from "../components/PatientDashboard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
+    background: "linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%)",
+    minHeight: "100vh",
+    overflowX: "hidden",
+    maxWidth: "100%",
   },
-  rightgrid: {
-    margin: "auto",
+  content: {
+    padding: 0,
   },
 }));
 
@@ -22,7 +25,7 @@ export default function Patient() {
             <Grid item xs={1}>
                 <Drawer />
             </Grid>
-            <Grid item xs={10} className={classes.rightgrid}>
+            <Grid item xs={11} className={classes.content}>
                 <PatientDashboard />
             </Grid>
         </Grid>

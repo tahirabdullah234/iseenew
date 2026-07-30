@@ -243,28 +243,28 @@ router.get("/get_apponitment", authenticate.verifyUser, (req, res) => {
   );
 });
 
-router.get("/get_apponitment_p", authenticate.verifyUser, (req, res) => {
-  Appointment.find(
-    { p_id: req.user._id, date: { $gte: Date.now() } },
-    (err, data) => {
-      if (err) {
-        res.json({
-          success: false,
-          err: err.name,
-        });
-      } else if (data.length > 0) {
-        res.json({
-          success: true,
-          data,
-        });
-      } else {
-        res.json({
-          success: false,
-          data,
-        });
+router.get("/get_apponitment_p", authenticate.verifyUser, async (req, res) => {
+  try {
+    const appointments = await Appointment.find({ p_id: req.user._id, date: { $gte: Date.now() } }).lean();
+    const result = await Promise.all(appointments.map(async (apt) => {
+      let doctorName = "Doctor";
+      if (apt.d_id) {
+        const doctor = await Doctor.findById(apt.d_id).populate("userid", "fname lname");
+        if (doctor && doctor.userid) {
+          doctorName = "Dr. " + doctor.userid.fname + " " + doctor.userid.lname;
+        } else {
+          const user = await User.findById(apt.d_id, "fname lname");
+          if (user) {
+            doctorName = "Dr. " + user.fname + " " + user.lname;
+          }
+        }
       }
-    }
-  );
+      return { ...apt, doctorName };
+    }));
+    res.json({ success: true, data: result });
+  } catch (err) {
+    res.json({ success: false, err: err.name });
+  }
 });
 
 router.get("/patient/get_chat", authenticate.verifyUser, (req, res) => {
@@ -308,7 +308,7 @@ router.get("/doctor/get_chat", authenticate.verifyUser, (req, res) => {
 
 router.get("/patient/messages/:d_id", authenticate.verifyUser, (req, res) => {
   console.log(req.body);
-  Message.find({ d_id: req.params.d_id }, (err, msgs) => {
+  Message.find({ p_id: req.user._id, d_id: req.params.d_id, deletedBy: { $nin: [req.user._id] } }, (err, msgs) => {
     // console.log(msgs)
     if (err) {
       res.json({
@@ -325,7 +325,7 @@ router.get("/patient/messages/:d_id", authenticate.verifyUser, (req, res) => {
 });
 
 router.get("/doctor/messages/:p_id", authenticate.verifyUser, (req, res) => {
-  Message.find({ p_id: req.params.p_id }, (err, msgs) => {
+  Message.find({ d_id: req.user._id, p_id: req.params.p_id, deletedBy: { $nin: [req.user._id] } }, (err, msgs) => {
     if (err) {
       res.json({
         success: false,
@@ -340,6 +340,19 @@ router.get("/doctor/messages/:p_id", authenticate.verifyUser, (req, res) => {
   });
 });
 
+router.get("/patient/latest-message", authenticate.verifyUser, (req, res) => {
+  Message.findOne({ p_id: req.user._id, patient: false, deletedBy: { $nin: [req.user._id] } })
+    .sort({ createdAt: -1 })
+    .populate("d_id", "fname lname")
+    .exec((err, msg) => {
+      if (err) {
+        res.json({ success: false, err: err.name });
+      } else {
+        res.json({ success: true, msg });
+      }
+    });
+});
+
 router.post("/newmessage", authenticate.verifyUser, (req, res) => {
   Message.create(req.body.data, (err, msg) => {
     if (err) {
@@ -352,6 +365,57 @@ router.post("/newmessage", authenticate.verifyUser, (req, res) => {
         success: true,
         msg,
       });
+    }
+  });
+});
+
+router.put("/message/:msg_id", authenticate.verifyUser, (req, res) => {
+  Message.findByIdAndUpdate(req.params.msg_id, { msg: req.body.msg }, { new: true }, (err, msg) => {
+    if (err) {
+      res.json({ success: false, err: err.name });
+    } else if (msg) {
+      res.json({ success: true, msg });
+    } else {
+      res.json({ success: false, err: "Message not found" });
+    }
+  });
+});
+
+router.delete("/message/:msg_id", authenticate.verifyUser, (req, res) => {
+  Message.findByIdAndUpdate(req.params.msg_id, { $addToSet: { deletedBy: req.user._id } }, (err, msg) => {
+    if (err) {
+      res.json({ success: false, err: err.name });
+    } else if (msg) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false, err: "Message not found" });
+    }
+  });
+});
+
+router.post("/messages/bulk-delete", authenticate.verifyUser, (req, res) => {
+  Message.updateMany(
+    { _id: { $in: req.body.ids } },
+    { $addToSet: { deletedBy: req.user._id } },
+    (err, result) => {
+      if (err) {
+        res.json({ success: false, err: err.name });
+      } else {
+        res.json({ success: true, modified: result.nModified });
+      }
+    }
+  );
+});
+
+router.delete("/conversation/:otherUserId", authenticate.verifyUser, (req, res) => {
+  const filter = req.user.isDoctor
+    ? { d_id: req.user._id, p_id: req.params.otherUserId }
+    : { p_id: req.user._id, d_id: req.params.otherUserId };
+  Message.updateMany(filter, { $addToSet: { deletedBy: req.user._id } }, (err, result) => {
+    if (err) {
+      res.json({ success: false, err: err.name });
+    } else {
+      res.json({ success: true, modified: result.nModified });
     }
   });
 });

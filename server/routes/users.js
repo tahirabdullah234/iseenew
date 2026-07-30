@@ -64,6 +64,8 @@ router.post('/register', (req, res, next) => {
           user.city = req.body.city
         if (req.body.isDoctor)
           user.isDoctor = req.body.isDoctor
+        if (!user.photo)
+          user.photo = Math.floor(Math.random() * 5) + 1;
         user.save((err, user) => {
           if (err) {
             res.statusCode = 500;
@@ -209,5 +211,21 @@ router.post('/forgotpass', (req, res, next) => {
     }
   })
 })
+
+router.post('/assign-photos', authenticate.verifyUser, (req, res) => {
+  User.find({ photo: { $exists: false } }, (err, users) => {
+    if (err) return res.json({ success: false, err: err.name });
+    let pending = users.length;
+    if (pending === 0) return res.json({ success: true, updated: 0 });
+    users.forEach(user => {
+      user.photo = Math.floor(Math.random() * 5) + 1;
+      user.save((err) => {
+        if (err) console.log(err);
+        pending--;
+        if (pending === 0) res.json({ success: true, updated: users.length });
+      });
+    });
+  });
+});
 
 module.exports = router;

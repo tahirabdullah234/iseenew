@@ -287,7 +287,7 @@ router.get('/bp_avg', authenticate.verifyUser, (req, res) => {
       } else {
         res.json({
           success: true,
-          avg: avg[0],
+          avg: avg[0] || { sysAvg: 120, dysAvg: 80 },
         })
       }
     })
@@ -321,7 +321,7 @@ router.get('/bg_avg_fasting', authenticate.verifyUser, (req, res) => {
       } else {
         res.json({
           success: true,
-          avg: avg[0]
+          avg: avg[0] || { fastingAvg: 120 },
         })
       }
     })
@@ -355,7 +355,7 @@ router.get('/bg_avg_random', authenticate.verifyUser, (req, res) => {
       } else {
         res.json({
           success: true,
-          avg: avg[0],
+          avg: avg[0] || { randomAvg: 200 },
         })
       }
     })

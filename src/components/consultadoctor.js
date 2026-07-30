@@ -113,6 +113,7 @@ export default function ConsultDoctor() {
                             name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()}
                             id={item._id}
                             requested={true}
+                            photo={item.userid.photo}
                           />
                         </Grid>
                       )
@@ -126,6 +127,7 @@ export default function ConsultDoctor() {
                           <DoctorCard
                             name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()}
                             id={item._id}
+                            photo={item.userid.photo}
                           />
                         </Grid>
                       )

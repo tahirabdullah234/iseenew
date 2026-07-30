@@ -8,6 +8,11 @@ import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 
 import maleDoc from "../Assets/doctor_logo.svg";
+import photo1 from "../Assets/user1-photo.png";
+import photo2 from "../Assets/user2-photo.png";
+import photo3 from "../Assets/user3-photo.png";
+import photo4 from "../Assets/user4-photo.png";
+import photo5 from "../Assets/user5-photo.png";
 import Appoint from "./doctorAppoint";
 
 import * as apt from "../Services/appointment";
@@ -15,6 +20,8 @@ import * as apt from "../Services/appointment";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setrequesteddoc, setdoctors } from "../pages/statesSlice";
+
+const userPhotos = [null, photo1, photo2, photo3, photo4, photo5];
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function DoctorCard({ name, id, requested }) {
+export default function DoctorCard({ name, id, requested, photo }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const p_id = useSelector((state) => state.states.user._id);
@@ -138,9 +145,10 @@ export default function DoctorCard({ name, id, requested }) {
         <Grid item className={classes.innerGrid}>
           <Grid container>
             <Avatar
-              src={maleDoc}
+              src={photo && photo >= 1 && photo <= 5 ? userPhotos[photo] : maleDoc}
               alt="Male Doctor Avatar"
               className={classes.docIcon}
+              style={{ backgroundColor: "rgba(53,133,218,0.15)" }}
             />
             <Grid item className={classes.innerGriditem}>
               <Typography

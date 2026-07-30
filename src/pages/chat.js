@@ -1,6 +1,5 @@
-import React from "react";
+﻿import React from "react";
 
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Drawer from "../components/drawer";
@@ -8,24 +7,34 @@ import Chat from "../components/chat";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
         height: "100vh",
+        display: "flex",
     },
-    rightgrid: {
-        margin: "auto",
+    drawerWrapper: {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 1200,
+    },
+    chatArea: {
+        flex: 1,
+        display: "flex",
+        minWidth: 0,
+        marginLeft: `calc(${theme.spacing(12)}px + 1px)`,
     },
 }));
 
 export default function ChatMsg() {
     const classes = useStyles();
     return (
-        <Grid container className={classes.root}>
-            <Grid item xs={1}>
+        <div className={classes.root}>
+            <div className={classes.drawerWrapper}>
                 <Drawer />
-            </Grid>
-            <Grid item xs={10} className={classes.rightgrid}>
+            </div>
+            <div className={classes.chatArea}>
                 <Chat />
-            </Grid>
-        </Grid>
+            </div>
+        </div>
     );
 }

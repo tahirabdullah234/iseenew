@@ -22,6 +22,10 @@ var User = new Schema({
     city: {
         type: String,
     },
+    photo: {
+        type: Number,
+        default: () => Math.floor(Math.random() * 5) + 1,
+    },
 });
 
 User.plugin(passportLocalMongoose);

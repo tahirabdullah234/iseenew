@@ -11,7 +11,6 @@ const io = new Server(httpServer, {
 });
 var cors = require('cors');
 
-const axios = require('axios');
 app.use(cors());
 
 let users = [];
@@ -38,24 +37,11 @@ io.on("connection", (socket) => {
   });
 
   //send and get message
-  socket.on('sendmsg', (data, token) => {
-    const user = getUser(!data.patient ? data.p_id : data.d_id)
-    console.log(data, token)
-    console.log(user)
-    axios.post('http://localhost:5000/request/newmessage', { data }, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(res => {
-        if (res.data.success) {
-          if (user) {
-            io.to(user.socketId).emit('newmsg', res.data.msg)
-          }
-        }
-      })
+  socket.on('sendmsg', (msg) => {
+    const user = getUser(!msg.patient ? msg.p_id : msg.d_id)
+    if (user) {
+      io.to(user.socketId).emit('newmsg', msg)
+    }
   })
   //when disconnect
   socket.on("disconnect", () => {

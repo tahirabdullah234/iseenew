@@ -15,7 +15,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export function GraphGlocuse({ userId }) {
+export function GraphGlocuse({ userId, height = 300 }) {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
 
@@ -53,54 +53,57 @@ export function GraphGlocuse({ userId }) {
     }, [token, userId])
 
     return (
-        <div style={{ margin: "auto" }}>
+        <div style={{ width: "100%", overflow: "hidden" }}>
             {
                 data ?
-                    <Grid item xs={12}>
-                        <Line
-                            data={
-                                {
-                                    labels: data.fdates,
-                                    datasets: [
-                                        {
-                                            label: 'FASTING LEVEL',
-                                            backgroundColor: 'rgba(20, 122, 214, 0.3)',
-                                            borderColor: 'rgba(20, 122, 214, 0.5)',
-                                            borderWidth: 2,
-                                            data: data.fasting
-                                        },
-                                        {
-                                            label: 'RANDOM LEVEL',
-                                            backgroundColor: 'rgba(121, 210, 222, 0.3)',
-                                            borderColor: 'rgba(121, 210, 222, 0.5)',
-                                            borderWidth: 2,
-                                            data: data.random
-                                        },
-                                    ]
-                                }
-                            }
-                            height={300}
-                            options={{
-                                scales: {
-                                    yAxes: [
-                                        {
-                                            ticks: {
-                                                beginAtZero: true,
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Line
+                                data={
+                                    {
+                                        labels: data.fdates,
+                                        datasets: [
+                                            {
+                                                label: 'FASTING LEVEL',
+                                                backgroundColor: 'rgba(20, 122, 214, 0.3)',
+                                                borderColor: 'rgba(20, 122, 214, 0.5)',
+                                                borderWidth: 2,
+                                                data: data.fasting
                                             },
-                                        },
-                                    ],
-                                },
-                                plugins: {
-                                    legend: {
-                                        labels: {
-                                            fontSize: 25,
-                                        },
-                                        position: "bottom"
+                                            {
+                                                label: 'RANDOM LEVEL',
+                                                backgroundColor: 'rgba(121, 210, 222, 0.3)',
+                                                borderColor: 'rgba(121, 210, 222, 0.5)',
+                                                borderWidth: 2,
+                                                data: data.random
+                                            },
+                                        ]
+                                    }
+                                }
+                                height={height}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        yAxes: [
+                                            {
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                },
+                                            },
+                                        ],
                                     },
-                                    fullSize: true
-                                },
-                            }}
-                        />
+                                    plugins: {
+                                        legend: {
+                                            labels: {
+                                                fontSize: 25,
+                                            },
+                                            position: "bottom"
+                                        },
+                                        fullSize: true
+                                    },
+                                }}
+                            />
+                        </Grid>
                     </Grid>
                     :
                     <CircularProgress
@@ -119,7 +122,7 @@ export function GraphGlocuse({ userId }) {
     )
 }
 
-export function GraphBp({ userId }) {
+export function GraphBp({ userId, height = 300 }) {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
 
@@ -158,54 +161,57 @@ export function GraphBp({ userId }) {
     // distlic lower - 80 ideal
 
     return (
-        <div style={{ margin: "auto" }}>
+        <div style={{ width: "100%", overflow: "hidden" }}>
             {
                 data ?
-                    <Grid item xs={12}>
-                        <Line
-                            data={
-                                {
-                                    labels: data.dates,
-                                    datasets: [
-                                        {
-                                            label: 'SYSTOLIC LEVEL',
-                                            backgroundColor: 'rgba(20, 122, 214, 0.3)',
-                                            borderColor: 'rgba(20, 122, 214, 0.5)',
-                                            borderWidth: 2,
-                                            data: data.systolic
-                                        },
-                                        {
-                                            label: 'DISTOLIC LEVEL',
-                                            backgroundColor: 'rgba(236, 102, 102, 0.3)',
-                                            borderColor: 'rgba(236, 102, 102, 0.5)',
-                                            borderWidth: 2,
-                                            data: data.dystolic
-                                        },
-                                    ]
-                                }
-                            }
-                            height={300}
-                            options={{
-                                scales: {
-                                    yAxes: [
-                                        {
-                                            ticks: {
-                                                beginAtZero: true,
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Line
+                                data={
+                                    {
+                                        labels: data.dates,
+                                        datasets: [
+                                            {
+                                                label: 'SYSTOLIC LEVEL',
+                                                backgroundColor: 'rgba(20, 122, 214, 0.3)',
+                                                borderColor: 'rgba(20, 122, 214, 0.5)',
+                                                borderWidth: 2,
+                                                data: data.systolic
                                             },
-                                        },
-                                    ],
-                                },
-                                plugins: {
-                                    legend: {
-                                        labels: {
-                                            fontSize: 25,
-                                        },
-                                        position: "bottom"
+                                            {
+                                                label: 'DISTOLIC LEVEL',
+                                                backgroundColor: 'rgba(236, 102, 102, 0.3)',
+                                                borderColor: 'rgba(236, 102, 102, 0.5)',
+                                                borderWidth: 2,
+                                                data: data.dystolic
+                                            },
+                                        ]
+                                    }
+                                }
+                                height={height}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        yAxes: [
+                                            {
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                },
+                                            },
+                                        ],
                                     },
-                                    fullSize: true
-                                },
-                            }}
-                        />
+                                    plugins: {
+                                        legend: {
+                                            labels: {
+                                                fontSize: 25,
+                                            },
+                                            position: "bottom"
+                                        },
+                                        fullSize: true
+                                    },
+                                }}
+                            />
+                        </Grid>
                     </Grid>
                     :
                     <CircularProgress

@@ -2,135 +2,143 @@ import React from "react";
 import "./style.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import { Notifications } from "./Notification";
 import { Each } from "./eachnotification";
-import { Message } from "./message";
 import { GraphGlocuse, GraphBp } from "./graphsUserid";
 import { useSelector } from "react-redux";
 
 import { Doughnut } from "react-chartjs-2";
 import * as chart from "../Services/graphsdata";
 import * as apts from "../Services/appointment";
+import Chip from "@material-ui/core/Chip";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import MessageIcon from "@material-ui/icons/Message";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 
-const useStyles = makeStyles({
-  DashboardHead: {
-    width: "100%",
-    borderRadius: "12px",
-    background: "linear-gradient(#3585da 0%, #59c1e8 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    display: "flex",
-    padding: "10px",
+const useStyles = makeStyles((theme) => ({
+  welcome: {
+    color: "#1061B0",
+    fontSize: "48px",
+    fontWeight: 700,
+    marginBottom: 24,
+    textAlign: "left",
   },
-  NotificationsFont: {
+  healthCard: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 16,
+    background: "linear-gradient(135deg, #3585da 0%, #59c1e8 100%)",
+    boxShadow: "0 8px 24px rgba(53, 133, 218, 0.25)",
+    padding: "24px 28px",
+    boxSizing: "border-box",
+    overflow: "hidden",
+  },
+  healthTitle: {
+    fontWeight: 700,
+    fontSize: 42,
     color: "#fff",
+    textShadow: "0 2px 4px rgba(0,0,0,0.12)",
+    marginBottom: 16,
+    textAlign: "left",
   },
-  BellIcon: {
-    width: "50%",
-    justifyContent: "flex-start",
-  },
-  dialogBox: {
-    width: "100%",
-    borderRadius: "12px",
-    background: "#fff",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-  },
-  fonttxt: {
-    fontWeight: "bold",
-    color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-  },
-
-  timeline: {
-    fontWeight: "600",
-    fontSize: "21px",
-    textAlign: "center",
-    color: "#3585da",
-  },
-  messageDisplay: {
-    width: "100%",
-    borderRadius: "10px",
-    background: "#fff",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    padding: "5px",
-  },
-  sameinfont: {
-    fontWeight: "bold",
+  healthStatus: {
+    fontWeight: 700,
+    fontSize: 36,
     color: "#fff",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    textAlign: "start",
+    textShadow: "0 2px 4px rgba(0,0,0,0.12)",
+    textAlign: "left",
+    marginLeft: 16,
   },
-  percir: {
-    display: "flex",
-    justifyContent: "flex-start",
+  healthDot: {
+    height: 14,
+    width: 14,
+    borderRadius: "50%",
+    marginRight: 8,
   },
-  healthconcol: {
-    display: "flex",
-    flexDirection: "row",
+  healthLabel: {
+    fontWeight: 600,
+    fontSize: 22,
+    color: "#fff",
+    textShadow: "0 2px 4px rgba(0,0,0,0.12)",
   },
-  healthcolset: {
+  healthLegend: {
     display: "flex",
     alignItems: "center",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 12,
   },
-  healthcol: {
-    height: "15px",
-    width: "15px",
+  sectionTitle: {
+    fontWeight: 700,
+    fontSize: 20,
+    color: "#3585da",
   },
-  healthcontxt: {
-    fontWeight: "bold",
-    fontSize: "17.5px",
-    color: "#fff",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    textAlign: "start",
+  cardWhite: {
+    width: "100%",
+    borderRadius: 16,
+    background: "#fff",
+    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.08)",
+    padding: "32px 36px",
+    boxSizing: "border-box",
+    overflow: "hidden",
   },
-  notifications: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+  statTitle: {
+    fontWeight: 700,
+    fontSize: 32,
+    color: "#3585da",
   },
-  boxdis: {
-    display: "flex",
+  dateRange: {
+    fontWeight: 600,
+    fontSize: 20,
+    color: "#3585da",
+    textAlign: "right",
   },
-  BPGLtitle: {
-    display: "flex",
-    justifyContent: "space-around",
-    marginTop: "10px",
-  },
-  BPGLgraph: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  setappointtxt: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  appmsg: {
-    marginTop: "20px",
-    display: "flex",
-    flexDirection: "column",
-  },
-  msg: {
-    fontWeight: "bold",
-    fontSize: "19px",
+  graphLabel: {
+    fontWeight: 700,
+    fontSize: 24,
+    color: "#3585da",
     textAlign: "center",
+    marginBottom: 8,
+  },
+  infoCard: {
+    padding: "16px 20px",
+    borderRadius: 16,
+    background: "#fff",
+    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.08)",
+    boxSizing: "border-box",
+    width: "100%",
+    overflow: "hidden",
+  },
+  infoCardTitle: {
+    fontSize: 30,
+    fontWeight: 700,
     color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    marginBottom: 12,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
   },
-  readnow: {
-    fontWeight: "bold",
-    fontSize: "13px",
-    textAlign: "end",
+  infoValue: {
+    fontSize: 22,
+    fontWeight: 600,
     color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    textDecorationLine: "underline",
   },
-  msgimg: {
-    width: "10%",
-    marginTop: "2px",
+  infoSub: {
+    fontSize: 20,
+    color: "#3585da",
+    marginTop: 4,
   },
-});
+  infoDate: {
+    fontSize: 18,
+    color: "#5a9bd5",
+    marginTop: 8,
+  },
+  infoEmpty: {
+    fontSize: 20,
+    color: "#5a9bd5",
+  },
+}));
 
 export function PatientDashboard() {
   const classes = useStyles();
@@ -143,6 +151,7 @@ export function PatientDashboard() {
   olddate = olddate.toLocaleDateString();
   const [health, sethealth] = React.useState(null)
   const [apt, setapt] = React.useState(null)
+  const [latestMsg, setLatestMsg] = React.useState(null)
   React.useEffect(() => {
     chart.getbpavg(token)
       .then(res => {
@@ -156,8 +165,6 @@ export function PatientDashboard() {
                   .then(res => {
                     const randomavg = res.data.avg
                     var checker = (bp_avg.sysAvg - 120) + (bp_avg.dysAvg - 80) + (randomavg.randomAvg - 200) + (fastavg.fastingAvg - 120)
-                    // alert(checker, bp_avg.sysAvg, bp_avg.dysAvg, randomavg.randomAvg, fastavg.fastingAvg)
-                    // alert(fastavg.fastingAvg)
                     if (checker <= 0) {
                       sethealth({ value: 100, color: "#85fcbc" })
                     } else {
@@ -185,145 +192,157 @@ export function PatientDashboard() {
         }
       })
   }, [])
+  React.useEffect(() => {
+    apts.get_latest_message(token)
+      .then(res => {
+        if (res.data.success && res.data.msg) {
+          setLatestMsg(res.data.msg)
+        }
+      })
+  }, [])
 
   return (
     <div className="dashdiv">
-      <Typography
-        style={{ color: "#1061B0", fontSize: "30px", fontWeight: "bold" }}
-      >
-        Welcome , {name}
+      <Typography className={classes.welcome}>
+        Welcome, {name}
       </Typography>
-      <Grid container>
-        <Grid container className={classes.DashboardHead}>
-          <Grid item xs={12} sm={6}>
-            <Typography
-              variant="h3"
-              style={{ marginBottom: "30px" }}
-              className={classes.sameinfont}
-            >
-              Health
-            </Typography>
-            <Grid
-              container
-              style={{ marginBottom: "40px" }}
-              className={classes.healthcolset}
-            >
-              <Grid container style={{ width: "20vh" }}>
-                <Doughnut
-                  data={
-                    {
-                      label: ['Health'],
-                      datasets: [
-                        {
-                          label: ["Health LEVEL"],
-                          backgroundColor: [health ? health.color : "#85fcbc", "transparent"],
-                          borderColor: "transparent",
-                          borderRadius: 5,
-                          data: health ? [health.value, 100 - health.value] : [85, 15]
-                        },
-                      ]
-                    }
-                  }
-                />
-              </Grid>
-              <Typography className={classes.sameinfont} variant="h4">
-                You are healthy!
-              </Typography>
-            </Grid>
-            <Grid container className={classes.heathconcol}>
-              <Grid item xs={12} md={2} className={classes.healthcolset}>
-                <Grid
-                  item
-                  style={{ background: "#85fcbc", marginRight: "5px" }}
-                  className={classes.healthcol}
-                />
-                <Typography className={classes.healthcontxt}>Safe</Typography>
-              </Grid>
-              <Grid item xs={12} md={3} className={classes.healthcolset}>
-                <Grid
-                  item
-                  style={{ background: "#ffbf6b", marginRight: "5px" }}
-                  className={classes.healthcol}
-                />
-                <Typography className={classes.healthcontxt}>
-                  Be cautious
+
+      <Grid container spacing={3} alignItems="stretch">
+        <Grid item xs={12} md={8} style={{ display: "flex" }}>
+          <div className={classes.healthCard}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <Typography className={classes.healthTitle} variant="h4">
+                  Health
                 </Typography>
+                <Box display="flex" alignItems="center">
+                  <Box width="45%" style={{ maxWidth: 160 }}>
+                    <Doughnut
+                      data={{
+                        datasets: [
+                          {
+                            label: ["Health LEVEL"],
+                            backgroundColor: [health ? health.color : "#85fcbc", "rgba(255,255,255,0.15)"],
+                            borderColor: "transparent",
+                            borderRadius: 6,
+                            data: health ? [health.value, 100 - health.value] : [85, 15]
+                          },
+                        ]
+                      }}
+                    />
+                  </Box>
+                  <Typography className={classes.healthStatus} variant="h5">
+                    You are healthy!
+                  </Typography>
+                </Box>
+                <div className={classes.healthLegend}>
+                  <Box display="flex" alignItems="center">
+                    <Box className={classes.healthDot} style={{ background: "#85fcbc" }} />
+                    <Typography className={classes.healthLabel}>Safe</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    <Box className={classes.healthDot} style={{ background: "#ffbf6b" }} />
+                    <Typography className={classes.healthLabel}>Be cautious</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    <Box className={classes.healthDot} style={{ background: "#fa6b6b" }} />
+                    <Typography className={classes.healthLabel}>See doctor</Typography>
+                  </Box>
+                </div>
               </Grid>
-              <Grid item xs={12} md={3} className={classes.healthcolset}>
-                <Grid
-                  item
-                  style={{ background: "#fa6b6b", marginRight: "5px" }}
-                  className={classes.healthcol}
-                />
-                <Typography className={classes.healthcontxt}>
-                  See doctor
-                </Typography>
+              <Grid item xs={12} md={6}>
+                <Notifications />
+                <Box mt={1}>
+                  {apt ? (
+                    apt.map((item) => (
+                      <Each key={item._id} data={item} />
+                    ))
+                  ) : (
+                    <Each />
+                  )}
+                </Box>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Notifications />
-            {
-              apt ?
-                apt.map((item) => {
-                  return (
-                    <Each data={item} />
-                  )
-                })
-                :
-                <Each />
-            }
+          </div>
+        </Grid>
+
+        <Grid item xs={12} md={4} style={{ display: "flex" }}>
+          <Grid container spacing={2} direction="column" style={{ width: "100%" }}>
+            <Grid item>
+              <div className={classes.infoCard}>
+                <Typography className={classes.infoCardTitle}>
+                  <CalendarTodayIcon style={{ fontSize: 18 }} />
+                  Latest Appointment
+                </Typography>
+                {apt && apt.length > 0 ? (
+                  <>
+                    <Typography className={classes.infoValue}>
+                      {apt[0].doctorName || "Doctor"}
+                    </Typography>
+                    <Typography className={classes.infoSub}>
+                      {new Date(apt[0].date).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" })} @ {apt[0].time}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography className={classes.infoEmpty}>
+                    No upcoming appointments
+                  </Typography>
+                )}
+              </div>
+            </Grid>
+            <Grid item>
+              <div className={classes.infoCard}>
+                <Typography className={classes.infoCardTitle}>
+                  <MessageIcon style={{ fontSize: 18 }} />
+                  Latest Message
+                </Typography>
+                {latestMsg ? (
+                  <>
+                    <Typography className={classes.infoValue}>
+                      {latestMsg.d_id ? "Dr. " + latestMsg.d_id.fname + " " + latestMsg.d_id.lname : "Doctor"}
+                    </Typography>
+                    <Typography className={classes.infoSub} style={{ wordBreak: "break-word" }}>
+                      {latestMsg.msg}
+                    </Typography>
+                    <Typography className={classes.infoDate}>
+                      {new Date(latestMsg.createdAt).toLocaleDateString([], { month: "short", day: "numeric" }) + " " + new Date(latestMsg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography className={classes.infoEmpty}>
+                    No messages from doctor
+                  </Typography>
+                )}
+              </div>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid container>
-        <Grid container className={classes.boxdis}>
-          <Grid
-            item
-            xs={12}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              padding: "10px",
-              marginTop: "20px",
-            }}
-            className={classes.dialogBox}
-          >
-            <Grid
-              container
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Typography
-                style={{ fontSize: "23px" }}
-                className={classes.fonttxt}
-              >
+
+        <Grid item xs={12}>
+          <div className={classes.cardWhite}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+              <Typography className={classes.statTitle}>
                 WEEKLY STATISTICS
               </Typography>
-              <Typography className={classes.timeline}>
+              <Typography className={classes.dateRange}>
                 {olddate + " to " + date}
               </Typography>
-            </Grid>
-            <Grid container className={classes.BPGLtitle}>
+            </Box>
+            <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <Typography className={classes.timeline}>
+                <Typography className={classes.graphLabel}>
                   BLOOD PRESSURE
                 </Typography>
-                <Grid container className={classes.graphctn}>
-                  <GraphBp />
-                </Grid>
+                <GraphBp height={400} />
               </Grid>
               <Grid item xs={12} md={6}>
-                <Typography className={classes.timeline}>
+                <Typography className={classes.graphLabel}>
                   GLUCOSE LEVEL
                 </Typography>
-                <Grid container className={classes.graphctn}>
-                  <GraphGlocuse />
-                </Grid>
+                <GraphGlocuse height={400} />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item sm={1}></Grid>
-
+          </div>
         </Grid>
       </Grid>
     </div>

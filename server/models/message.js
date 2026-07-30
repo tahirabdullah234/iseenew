@@ -15,7 +15,8 @@ var Message = new Schema({
     },
     patient: {
         type: Boolean
-    }
+    },
+    deletedBy: [{ type: mongoose.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Message', Message);
