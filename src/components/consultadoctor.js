@@ -79,7 +79,15 @@ const useStyles = makeStyles((theme) => ({
     height: "78vh",
     overflowY: "auto",
     overflowX: "hidden",
-    margin: -16,
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": { width: 5, height: 5 },
+    "&::-webkit-scrollbar-track": { background: "transparent" },
+    "&::-webkit-scrollbar-thumb": { background: "transparent", borderRadius: 4 },
+    "&.scrolling": {
+      scrollbarWidth: "thin",
+      scrollbarColor: "rgba(53, 133, 218, 0.55) transparent",
+      "&::-webkit-scrollbar-thumb": { background: "rgba(53, 133, 218, 0.55)" },
+    },
   },
   appointdocgrid: {
     display: "flex",
@@ -131,6 +139,16 @@ export default function ConsultDoctor() {
   const requested = useSelector((state) => state.states.requesteddocs)
 
   const dispatch = useDispatch();
+  const scrollTimer = React.useRef(null);
+
+  const handleScroll = (e) => {
+    const el = e.target;
+    if (el.classList) {
+      el.classList.add('scrolling');
+      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+      scrollTimer.current = setTimeout(() => el.classList.remove('scrolling'), 400);
+    }
+  };
 
 
   React.useEffect(() => {
@@ -185,7 +203,7 @@ export default function ConsultDoctor() {
             Request Status
           </Button>
         </div>
-        <Grid container className={classes.AllGridsAdjust}>
+        <Grid container className={classes.AllGridsAdjust} onScroll={handleScroll}>
           {
             filteredDoctors ?
               filteredDoctors.length > 0 ?

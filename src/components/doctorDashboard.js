@@ -200,8 +200,15 @@ const useStyles = makeStyles({
     minHeight: 200,
     overflowY: "auto",
     paddingRight: 4,
-    "&::-webkit-scrollbar": { width: 4 },
-    "&::-webkit-scrollbar-thumb": { background: "#dbe4ee", borderRadius: 4 },
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": { width: 5, height: 5 },
+    "&::-webkit-scrollbar-track": { background: "transparent" },
+    "&::-webkit-scrollbar-thumb": { background: "transparent", borderRadius: 4 },
+    "&.scrolling": {
+      scrollbarWidth: "thin",
+      scrollbarColor: "rgba(53, 133, 218, 0.55) transparent",
+      "&::-webkit-scrollbar-thumb": { background: "rgba(53, 133, 218, 0.55)" },
+    },
   },
   appointmentTable: {
     borderCollapse: "separate",
@@ -214,8 +221,15 @@ const useStyles = makeStyles({
     minHeight: 200,
     overflowY: "auto",
     overflowX: "auto",
-    "&::-webkit-scrollbar": { width: 4 },
-    "&::-webkit-scrollbar-thumb": { background: "#dbe4ee", borderRadius: 4 },
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": { width: 5, height: 5 },
+    "&::-webkit-scrollbar-track": { background: "transparent" },
+    "&::-webkit-scrollbar-thumb": { background: "transparent", borderRadius: 4 },
+    "&.scrolling": {
+      scrollbarWidth: "thin",
+      scrollbarColor: "rgba(53, 133, 218, 0.55) transparent",
+      "&::-webkit-scrollbar-thumb": { background: "rgba(53, 133, 218, 0.55)" },
+    },
   },
   appointmentTableHeadRow: {
     "& th": {
@@ -497,6 +511,16 @@ export function DoctorDashboard() {
   const dispatch = useDispatch()
   const [activity, setActivity] = React.useState(null);
   const [todayAppointments, setTodayAppointments] = React.useState(null);
+  const scrollTimer = React.useRef(null);
+
+  const handleScroll = (e) => {
+    const el = e.target;
+    if (el.classList) {
+      el.classList.add('scrolling');
+      if (scrollTimer.current) clearTimeout(scrollTimer.current);
+      scrollTimer.current = setTimeout(() => el.classList.remove('scrolling'), 400);
+    }
+  };
 
   const loadActivity = React.useCallback(() => {
     getpatientactivity(token)
@@ -615,7 +639,7 @@ export function DoctorDashboard() {
                 <span className={classes.panelBar} />
                 TODAY'S SCHEDULE
               </Typography>
-              <div className={classes.scrollList}>
+              <div className={classes.scrollList} onScroll={handleScroll}>
                 {
                   todaysList.length > 0 ?
                     todaysList.map((item) => {
@@ -647,7 +671,7 @@ export function DoctorDashboard() {
                 <span className={classes.panelBar} />
                 RECENT REQUESTS
               </Typography>
-              <div className={classes.scrollList}>
+              <div className={classes.scrollList} onScroll={handleScroll}>
                 {
                   requests && requests.length > 0 ?
                     requests.slice(0, 4).map((item) => {
@@ -676,7 +700,7 @@ export function DoctorDashboard() {
                 <span className={classes.panelBar} />
                 PATIENT ACTIVITY
               </Typography>
-              <div className={classes.scrollList}>
+              <div className={classes.scrollList} onScroll={handleScroll}>
                 {
                   activity && activity.length > 0 ?
                     activity.map((item) => {
@@ -707,7 +731,7 @@ export function DoctorDashboard() {
                 <span className={classes.panelBar} />
                 UPCOMING APPOINTMENTS
               </Typography>
-              <div className={classes.scrollList}>
+              <div className={classes.scrollList} onScroll={handleScroll}>
                 {
                   appointments && appointments.length > 0 ?
                     appointments.map((item) => {
@@ -736,7 +760,7 @@ export function DoctorDashboard() {
                 <span className={classes.panelBar} />
                 APPOINTMENT REQUESTS
               </Typography>
-              <TableContainer className={classes.appointmentTableContainer}>
+              <TableContainer className={classes.appointmentTableContainer} onScroll={handleScroll}>
                 <Table className={classes.appointmentTable}>
                   <TableHead>
                     <TableRow className={classes.appointmentTableHeadRow}>
