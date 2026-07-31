@@ -23,6 +23,15 @@
   display: flex;
 }
 
+@media (max-width: 600px) {
+  .logoText {
+    font-size: 20px;
+  }
+  .logoTextSlash {
+    font-size: 20px;
+  }
+}
+
 .logoDiv {
   height: 50px;
   width: 100%;

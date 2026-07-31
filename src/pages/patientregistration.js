@@ -75,6 +75,7 @@ const useStyles = makeStyles({
     fontSize: 20,
     fontWeight: 700,
     color: "#fff",
+    textAlign: "center",
   },
   bannerSub: {
     fontFamily: "Montserrat",
@@ -91,6 +92,8 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     "@media (max-width: 600px)": {
       padding: "28px 16px",
+      alignItems: "center",
+      textAlign: "center",
     },
   },
   formTitle: {
