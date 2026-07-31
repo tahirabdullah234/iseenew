@@ -45,7 +45,8 @@ const useStyles = makeStyles({
     fontFamily: "Montserrat",
     fontWeight: 700,
     fontSize: 26,
-    color: "#1061b0",
+    color: "#3585da",
+    textDecoration: "underline",
   },
   pageSubtitle: {
     fontFamily: "Montserrat",
@@ -58,7 +59,7 @@ const useStyles = makeStyles({
     fontFamily: "Montserrat",
     fontWeight: 700,
     fontSize: 18,
-    color: "#1061b0",
+    color: "#3585da",
     marginBottom: 16,
   },
   sectionCard: {

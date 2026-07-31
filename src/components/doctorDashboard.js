@@ -25,6 +25,7 @@ const useStyles = makeStyles({
     boxShadow: "0 8px 24px rgba(16, 97, 176, 0.08)",
     padding: "20px",
     boxSizing: "border-box",
+    minHeight: "calc(100vh - 130px)",
   },
   welcomeBanner: {
     width: "100%",
@@ -61,6 +62,8 @@ const useStyles = makeStyles({
     padding: "20px",
     boxSizing: "border-box",
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   panelTitle: {
     fontFamily: "Montserrat",
@@ -103,7 +106,8 @@ const useStyles = makeStyles({
     textAlign: "right",
   },
   scrollList: {
-    height: "40vh",
+    flex: 1,
+    minHeight: 200,
     overflowY: "auto",
     paddingRight: 4,
     "&::-webkit-scrollbar": { width: 4 },
