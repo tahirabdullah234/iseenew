@@ -20,124 +20,207 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
-    borderRadius: "12px",
+    borderRadius: 16,
     background: "#fff",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 8px 24px rgba(16, 97, 176, 0.08)",
+    padding: "20px",
+    boxSizing: "border-box",
   },
-  card_root: {
-    flexGrow: 1,
-    background: '#fff',
-  },
-  bloodpressuretableitem: {
-    margin: "auto",
-  },
-  DashboardHead: {
+  welcomeBanner: {
     width: "100%",
-    borderRadius: "12px",
-    background: "linear-gradient(#3585da 0%, #59c1e8 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-  },
-  sameinfont: {
-    fontWeight: "bold",
-    color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-  },
-  sameinfont1: { color: "#1061B0", fontWeight: "bold", fontSize: "19px" },
-  sameinfont2: {
-    color: "#1061B0",
-    fontSize: "19px",
-    textDecorationLine: "underline",
-  },
-  sameinfont3: {
-    fontWeight: "bold",
-    color: "#fff",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    textAlign: "start",
-  },
-  NotificationsFont: {
-    fontSize: "15px",
-    color: "#fff",
-  },
-  BellIcon: {
-    width: "50%",
-    justifyContent: "flex-start",
-  },
-  notifications: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: "1px",
-  },
-  Tablecontentbox: {
-    width: "100%",
-    borderRadius: "10px",
-    background: "linear-gradient(45deg,#59c1e8 0%, #59c1e8 100%)",
-    filter: "drop-shadow(6px 6px 10px rgba(0, 0, 0, 0.16))",
-    display: "flex",
-    marginTop: "30px",
-    padding: "10px",
-  },
-  Reportheader: {
-    width: "100%",
-    borderRadius: "12px",
-    background: "linear-gradient(45deg,#59c1e8 0%, #3585da 100%)",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    display: "flex",
-    marginTop: "30px",
-    padding: "10px",
-  },
-  TableContentFont: {
-    fontWeight: "bold",
-    fontSize: "14px",
-    color: "#fff",
-    textAlign: "start",
-  },
-  appmsg: {
-    marginTop: "20px",
-    display: "flex",
-    flexDirection: "column",
-  },
-  fonttxt: {
-    fontWeight: "bold",
-    color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-  },
-  messageDisplay: {
-    width: "100%",
-    borderRadius: "10px",
-    background: "#fff",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    padding: "5px",
-  },
-  AllGridsAdjust: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  AppAdjust: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  AppAdjust1: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  Apptxt: { display: "flex", textAlign: "start" },
-  textfield: {
-    display: "flex",
-    width: "80%",
-    color: "black",
-    margin: "auto",
-    "&:hover": {
-      color: "white",
+    borderRadius: 16,
+    background: "linear-gradient(135deg, #1061b0 0%, #59c1e8 100%)",
+    padding: "28px 32px",
+    boxSizing: "border-box",
+    marginBottom: 24,
+    "@media (max-width: 600px)": {
+      padding: "20px 16px",
     },
-    fontFamily: "Montserrat",
-    marginTop: 10,
-    marginBottom: 10,
   },
-  font: {
+  welcomeTitle: {
     fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 26,
+    color: "#fff",
+    "@media (max-width: 600px)": {
+      fontSize: 20,
+    },
+  },
+  welcomeSubtitle: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "rgba(255,255,255,0.9)",
+    marginTop: 4,
+  },
+  panel: {
+    width: "100%",
+    borderRadius: 16,
+    background: "#fff",
+    border: "1px solid #eef1f6",
+    boxShadow: "0 6px 20px rgba(16, 97, 176, 0.06)",
+    padding: "20px",
+    boxSizing: "border-box",
+    height: "100%",
+  },
+  panelTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#1061b0",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 16,
+  },
+  panelBar: {
+    display: "inline-block",
+    width: 5,
+    height: 22,
+    borderRadius: 3,
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+  },
+  apptRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "12px 16px",
+    borderRadius: 10,
+    background: "#f7fafd",
+    marginBottom: 10,
+    gap: 12,
+  },
+  apptDate: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 14,
+    color: "#3585da",
+  },
+  apptName: {
+    fontFamily: "Montserrat",
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#2b3a55",
+    textAlign: "right",
+  },
+  scrollList: {
+    height: "40vh",
+    overflowY: "auto",
+    paddingRight: 4,
+    "&::-webkit-scrollbar": { width: 4 },
+    "&::-webkit-scrollbar-thumb": { background: "#dbe4ee", borderRadius: 4 },
+  },
+  tableHeader: {
+    display: "flex",
+    alignItems: "center",
+    background: "#f0f4f8",
+    borderRadius: 10,
+    padding: "10px 16px",
+    marginBottom: 8,
+    gap: 12,
+  },
+  thText: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 12,
+    letterSpacing: 0.8,
+    color: "#1061b0",
+  },
+  requestRow: {
+    display: "flex",
+    alignItems: "center",
+    padding: "12px 16px",
+    borderRadius: 10,
+    background: "#fff",
+    border: "1px solid #eef1f6",
+    marginBottom: 8,
+    gap: 12,
+    transition: "all 0.2s ease",
+    "&:hover": {
+      background: "#f7fafd",
+    },
+  },
+  reqText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    fontWeight: 600,
+    color: "#2b3a55",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    minWidth: 0,
+  },
+  detailsLink: {
+    fontFamily: "Montserrat",
+    fontSize: 13,
+    fontWeight: 700,
+    color: "#3585da",
+    cursor: "pointer",
+    textAlign: "center",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  acceptBtn: {
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 12,
+    textTransform: "none",
+    borderRadius: 8,
+    padding: "6px 14px",
+    boxShadow: "0 4px 12px rgba(53, 133, 218, 0.3)",
+    "&:hover": {
+      background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+    },
+  },
+  emptyText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#8e9bb0",
+  },
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    padding: 24,
+  },
+  modalCard: {
+    width: "100%",
+    borderRadius: 16,
+    background: "#fff",
+    padding: "24px",
+    boxSizing: "border-box",
+    boxShadow: "0 20px 50px rgba(2, 32, 71, 0.3)",
+    outline: "none",
+  },
+  modalTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 20,
+    color: "#1061b0",
+    marginBottom: 20,
+  },
+  modalField: {
+    width: "100%",
+    marginBottom: 16,
+  },
+  modalInput: {
+    fontFamily: "Montserrat",
+  },
+  modalBtn: {
+    width: "100%",
+    height: 46,
+    borderRadius: 10,
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 15,
+    letterSpacing: 1,
+    textTransform: "none",
+    marginTop: 8,
+    boxShadow: "0 6px 18px rgba(53, 133, 218, 0.35)",
+    "&:hover": {
+      background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+    },
   },
 });
 
@@ -190,96 +273,70 @@ function PatientRequest({ data }) {
   }
 
   return (
-    <Grid item xs={12} className={classes.Tablecontentbox}>
-      <Grid container>
-        <Grid item xs={4} sm={3} className={classes.TableContentFont}>
-          <Typography>{data.p_id.slice(0, 10)}</Typography>
-        </Grid>
-        <Grid item xs={5} sm={4} className={classes.TableContentFont}>
-          <Typography>{data.name}</Typography>
-        </Grid>
-        <Grid item xs={4} sm={2}
-          className={classes.TableContentFont}
-          style={{ cursor: "pointer" }}
-          onClick={() => history.push({ pathname: '/userinfo', state: { id: data.p_id } })}
-        >
-          <Typography>DETAILS</Typography>
-        </Grid>
-        <Grid item xs={8} sm={2}
-          className={classes.TableContentFont}
-          style={{ cursor: "pointer" }}
-          onClick={handleOpen}
-        >
-          <Typography>ACCEPT</Typography>
-        </Grid>
-      </Grid>
+    <div className={classes.requestRow}>
+      <Typography className={classes.reqText} style={{ flex: 2 }}>
+        {data.p_id.slice(0, 10)}
+      </Typography>
+      <Typography className={classes.reqText} style={{ flex: 4 }}>
+        {data.name}
+      </Typography>
+      <Typography
+        className={classes.detailsLink}
+        style={{ flex: 2 }}
+        onClick={() => history.push({ pathname: '/userinfo', state: { id: data.p_id } })}
+      >
+        DETAILS
+      </Typography>
+      <Button className={classes.acceptBtn} style={{ flex: 2 }} onClick={handleOpen}>
+        ACCEPT
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
+        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <Grid item xs={10} sm={5} style={{ margin: "auto", marginTop: "15%" }}>
-          <Card variant="outlined" className={classes.cardroot}>
-            <Grid container>
-              <TextField
-                className={classes.textfield}
-                label="Appointment Date"
-                id="Appointment Date"
-                InputLabelProps={{
-                  className: classes.font,
-                  shrink: true,
-                }}
-                inputProps={{
-                  className: classes.font
-                }}
-                type="date"
-                name="Appointment Date"
-                value={date}
-                onChange={e => setdate(e.target.value)}
-              />
-            </Grid>
-            <Grid container>
-              <TextField
-                className={classes.textfield}
-                label="Appointment Time"
-                id="Appointment Date"
-                InputLabelProps={{
-                  className: classes.font,
-                  shrink: true,
-                }}
-                inputProps={{
-                  className: classes.font
-                }}
-                type="time"
-                name="Appointment Date"
-                value={time}
-                onChange={e => settime(e.target.value)}
-              />
-            </Grid>
-            <Grid container>
-              <Button onClick={onAccept}>Accept Request</Button>
-            </Grid>
+        <Grid item xs={11} sm={6} md={4}>
+          <Card variant="outlined" className={classes.modalCard}>
+            <Typography className={classes.modalTitle}>Schedule Appointment</Typography>
+            <TextField
+              className={classes.modalField}
+              label="Appointment Date"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ classes: { input: classes.modalInput } }}
+              type="date"
+              value={date}
+              onChange={e => setdate(e.target.value)}
+            />
+            <TextField
+              className={classes.modalField}
+              label="Appointment Time"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ classes: { input: classes.modalInput } }}
+              type="time"
+              value={time}
+              onChange={e => settime(e.target.value)}
+            />
+            <Button variant="contained" disableElevation className={classes.modalBtn} onClick={onAccept}>
+              Accept Request
+            </Button>
           </Card>
         </Grid>
       </Modal>
-    </Grid >
+    </div >
   );
 }
 
 function Appointments({ data }) {
   const classes = useStyles();
   return (
-    <Grid container className={classes.AppAdjust1}>
-      <Grid item xs={6} className={classes.Apptxt}>
-        <Typography className={classes.sameinfont1}>
-          {data.date.split('T')[0] + " @ " + data.time}
-        </Typography>
-      </Grid>
-      <Grid item xs={6}>
-        <Typography className={classes.sameinfont1}>{data.name}</Typography>
-      </Grid>
-    </Grid>
+    <div className={classes.apptRow}>
+      <Typography className={classes.apptDate}>
+        {data.date.split('T')[0]} @ {data.time}
+      </Typography>
+      <Typography className={classes.apptName}>{data.name}</Typography>
+    </div>
   );
 }
 
@@ -314,118 +371,79 @@ export function DoctorDashboard() {
   }, [token])
   return (
     <div className="dashdiv">
-      <Grid container className={classes.DialogBox} style={{ padding: "15px" }}>
-        <Typography style={{ fontSize: "30px", testAlign: "center", width: "100%" }} className={classes.sameinfont1}>
-          WELCOME, Dr. {name}
-        </Typography>
-        <Grid container className={classes.AllGridsAdjust}>
-          <Grid
-            item
-            md={5}
-            xs={11}
-            style={{ marginTop: "10px", padding: "10px" }}
-            className={classes.DialogBox}
-          >
-            <Typography
-              style={{ fontSize: "26px" }}
-              className={classes.sameinfont}
-            >
-              UPCOMING APPOINTMENTS
-            </Typography>
-            <Grid
-              item
-              className={classes.AppAdjust}
-              style={{ height: "40vh", overflowY: "scroll" }}
-            >
-              {
-                appointments && appointments.length > 0 ?
-                  appointments.map((item) => {
-                    return (
-                      <Grid container style={{ marginTop: "20px", margin: "auto" }}>
-                        <Appointments data={item} />
-                      </Grid>
-                    )
-                  })
-                  :
-                  (appointments && appointments.length === 0) ?
-                    <Grid container className={classes.AppAdjust1}>
-                      <Grid item xs={8} className={classes.Apptxt}>
-                        <Typography className={classes.sameinfont1}>
-                          No Upcoming Appointments
-                        </Typography>
-                      </Grid>
-                    </Grid>
+      <Grid container className={classes.DialogBox}>
+        <div className={classes.welcomeBanner}>
+          <Typography className={classes.welcomeTitle}>
+            WELCOME, Dr. {name}
+          </Typography>
+          <Typography className={classes.welcomeSubtitle}>
+            Here's what's happening with your patients today.
+          </Typography>
+        </div>
+        <Grid container spacing={3}>
+          <Grid item md={5} xs={12}>
+            <div className={classes.panel}>
+              <Typography className={classes.panelTitle}>
+                <span className={classes.panelBar} />
+                UPCOMING APPOINTMENTS
+              </Typography>
+              <div className={classes.scrollList}>
+                {
+                  appointments && appointments.length > 0 ?
+                    appointments.map((item) => {
+                      return (
+                        <Appointments data={item} key={item._id || item.date} />
+                      )
+                    })
                     :
-                    <CircularProgress
-                      style={{ width: "50px", height: "50px", margin: "auto" }}
-                    />
-              }
-            </Grid>
+                    (appointments && appointments.length === 0) ?
+                      <Typography className={classes.emptyText}>
+                        No Upcoming Appointments
+                      </Typography>
+                      :
+                      <div className={classes.loader}>
+                        <CircularProgress
+                          style={{ width: "50px", height: "50px", color: "#3585da" }}
+                        />
+                      </div>
+                }
+              </div>
+            </div>
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={11}
-            className={classes.DialogBox}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-              marginTop: "20px",
-              padding: "10px"
-            }}
-          >
-            <Typography
-              style={{ fontSize: "26px" }}
-              className={classes.sameinfont}
-            >
-              APPOINTMENT REQUESTS
-            </Typography>
-            <Grid item xs={11} className={classes.Reportheader}>
-              <Grid container>
-                <Grid item xs={4} sm={3} className={classes.TableContentFont}>
-                  <Typography>ID</Typography>
-                </Grid>
-                <Grid item xs={5} sm={4} className={classes.TableContentFont}>
-                  <Typography>PATIENT NAME</Typography>
-                </Grid>
-                <Grid item xs={4} sm={2} className={classes.TableContentFont}>
-                  <Typography>DETAILS</Typography>
-                </Grid>
-                <Grid item xs={8} sm={2} className={classes.TableContentFont}>
-                  <Typography>ACTION</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              style={{ height: "40vh", overflowY: "scroll" }}
-            >
-              {
-                requests && requests.length > 0 ?
-                  requests.map((item) => {
-                    return (
-                      <Grid item xs={11} style={{ margin: "auto" }}>
+          <Grid item md={7} xs={12}>
+            <div className={classes.panel}>
+              <Typography className={classes.panelTitle}>
+                <span className={classes.panelBar} />
+                APPOINTMENT REQUESTS
+              </Typography>
+              <div className={classes.tableHeader}>
+                <Typography className={classes.thText} style={{ flex: 2 }}>ID</Typography>
+                <Typography className={classes.thText} style={{ flex: 4 }}>PATIENT NAME</Typography>
+                <Typography className={classes.thText} style={{ flex: 2 }}>DETAILS</Typography>
+                <Typography className={classes.thText} style={{ flex: 2 }}>ACTION</Typography>
+              </div>
+              <div className={classes.scrollList}>
+                {
+                  requests && requests.length > 0 ?
+                    requests.map((item) => {
+                      return (
                         <PatientRequest data={item} key={item._id} />
-                      </Grid>
-                    )
-                  })
-                  :
-                  (requests && requests.length === 0) ?
-                    <Grid container className={classes.AppAdjust1}>
-                      <Grid item xs={6} className={classes.Apptxt}>
-                        <Typography className={classes.sameinfont1}>
-                          No Pending Requests
-                        </Typography>
-                      </Grid>
-                    </Grid>
+                      )
+                    })
                     :
-                    <CircularProgress
-                      style={{ width: "50px", height: "50px", margin: "auto" }}
-                    />
-              }
-            </Grid>
+                    (requests && requests.length === 0) ?
+                      <Typography className={classes.emptyText}>
+                        No Pending Requests
+                      </Typography>
+                      :
+                      <div className={classes.loader}>
+                        <CircularProgress
+                          style={{ width: "50px", height: "50px", color: "#3585da" }}
+                        />
+                      </div>
+                }
+              </div>
+            </div>
           </Grid>
         </Grid>
       </Grid>
