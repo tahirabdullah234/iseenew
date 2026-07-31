@@ -31,11 +31,18 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 0,
         transition: "max-width 0.3s ease",
     },
+    mobileChatArea: {
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        minWidth: 0,
+        overflow: "hidden",
+    },
     menuBtn: {
         background: "#1061B0",
         color: "#fff",
         borderRadius: 8,
-        marginBottom: 12,
+        
         alignSelf: "flex-start",
         "&:hover": { background: "#0d4d8f" },
     },
@@ -77,7 +84,7 @@ export default function ChatMsg() {
                         </IconButton>
                         <SideDrawer expanded />
                     </Drawer>
-                    <Box className={classes.chatArea}>
+                    <Box className={classes.mobileChatArea}>
                         <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
                             <MenuIcon />
                         </IconButton>

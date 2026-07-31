@@ -5,6 +5,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
@@ -12,6 +13,7 @@ import SendIcon from "@material-ui/icons/Send";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import io from "socket.io-client";
 
 import * as apt from "../Services/appointment";
@@ -75,16 +77,42 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     background: "#fafbfc",
+    "@media (max-width: 1000px)": {
+      width: 240,
+      minWidth: 240,
+    },
+    "@media (max-width: 900px)": {
+      width: 200,
+      minWidth: 200,
+    },
+  },
+  sidebarMobile: {
+    width: "100%",
+    minWidth: 0,
+    borderRight: "none",
+  },
+  backBtn: {
+    marginRight: 4,
+    color: "#3585da",
   },
   sidebarHeader: {
     padding: "24px 24px 16px",
     borderBottom: "1px solid #f0f0f0",
     background: "#fff",
+    "@media (max-width: 600px)": {
+      padding: "16px 16px 12px",
+    },
   },
   sidebarTitle: {
     fontWeight: 700,
     fontSize: 22,
     color: "#1a1a2e",
+    "@media (max-width: 900px)": {
+      fontSize: 18,
+    },
+    "@media (max-width: 600px)": {
+      fontSize: 16,
+    },
   },
   userList: {
     flex: 1,
@@ -99,6 +127,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     transition: "all 0.2s ease",
     borderLeft: "3px solid transparent",
+    "@media (max-width: 600px)": {
+      padding: "12px 16px",
+    },
     "&:hover": {
       background: "#f0f4ff",
     },
@@ -116,6 +147,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     fontSize: 14,
     color: "#1a1a2e",
+    "@media (max-width: 900px)": {
+      fontSize: 12,
+    },
+    "@media (max-width: 600px)": {
+      fontSize: 11,
+    },
   },
   userPreview: {
     fontSize: 13,
@@ -124,6 +161,12 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    "@media (max-width: 900px)": {
+      fontSize: 11,
+    },
+    "@media (max-width: 600px)": {
+      fontSize: 10,
+    },
   },
   mainPanel: {
     flex: 1,
@@ -138,23 +181,45 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid #f0f0f0",
     background: "#fff",
     minHeight: 72,
+    "@media (max-width: 600px)": {
+      padding: "10px 12px",
+      minHeight: 56,
+    },
   },
   chatHeaderInfo: {
     marginLeft: 14,
+    "@media (max-width: 600px)": {
+      marginLeft: 8,
+    },
   },
   chatHeaderName: {
     fontWeight: 600,
     fontSize: 16,
     color: "#1a1a2e",
+    "@media (max-width: 900px)": {
+      fontSize: 14,
+    },
+    "@media (max-width: 600px)": {
+      fontSize: 13,
+    },
   },
   chatHeaderStatus: {
     fontSize: 12,
     color: "#34c759",
+    "@media (max-width: 900px)": {
+      fontSize: 11,
+    },
+    "@media (max-width: 600px)": {
+      fontSize: 10,
+    },
   },
   messageArea: {
     flex: 1,
     overflowY: "auto",
     padding: "24px 32px",
+    "@media (max-width: 600px)": {
+      padding: "12px",
+    },
     "&::-webkit-scrollbar": { width: 4 },
     "&::-webkit-scrollbar-thumb": { background: "#e0e0e0", borderRadius: 4 },
   },
@@ -162,6 +227,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginBottom: 16,
     alignItems: "flex-end",
+    "@media (max-width: 600px)": {
+      marginBottom: 8,
+    },
   },
   messageRowSent: {
     justifyContent: "flex-end",
@@ -172,14 +240,26 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 13,
     fontWeight: 600,
     flexShrink: 0,
+    "@media (max-width: 600px)": {
+      width: 28,
+      height: 28,
+      fontSize: 11,
+    },
   },
   messageAvatarSpacer: {
     width: 32,
     flexShrink: 0,
+    "@media (max-width: 600px)": {
+      width: 28,
+    },
   },
   messageContent: {
     maxWidth: "60%",
     margin: "0 10px",
+    "@media (max-width: 600px)": {
+      maxWidth: "80%",
+      margin: "0 6px",
+    },
   },
   messageBubble: {
     padding: "10px 16px",
@@ -187,6 +267,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     lineHeight: 1.45,
     wordBreak: "break-word",
+    "@media (max-width: 900px)": {
+      fontSize: 12,
+    },
+    "@media (max-width: 600px)": {
+      padding: "8px 12px",
+      fontSize: 11,
+    },
   },
   messageBubbleReceived: {
     background: "#fff",
@@ -203,6 +290,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 11,
     marginTop: 4,
     opacity: 0.7,
+    "@media (max-width: 900px)": {
+      fontSize: 10,
+    },
+    "@media (max-width: 600px)": {
+      fontSize: 9,
+    },
   },
   messageTimeSent: {
     textAlign: "right",
@@ -218,6 +311,10 @@ const useStyles = makeStyles((theme) => ({
     borderTop: "1px solid #f0f0f0",
     background: "#fff",
     gap: 12,
+    "@media (max-width: 600px)": {
+      padding: "10px 12px",
+      gap: 8,
+    },
   },
   input: {
     flex: 1,
@@ -228,6 +325,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 24,
     background: "#f2f3f7",
     color: "#1a1a2e",
+    "@media (max-width: 900px)": {
+      fontSize: 12,
+    },
+    "@media (max-width: 600px)": {
+      padding: "10px 14px",
+      fontSize: 11,
+    },
     "&::placeholder": {
       color: "#8e8e93",
     },
@@ -264,6 +368,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontSize: 36,
     marginBottom: 8,
+    "@media (max-width: 600px)": {
+      width: 64,
+      height: 64,
+      fontSize: 28,
+    },
   },
   noChat: {
     display: "flex",
@@ -272,6 +381,13 @@ const useStyles = makeStyles((theme) => ({
     padding: "40px 20px",
     color: "#8e8e93",
     fontSize: 14,
+    "@media (max-width: 900px)": {
+      fontSize: 12,
+    },
+    "@media (max-width: 600px)": {
+      padding: "20px 12px",
+      fontSize: 11,
+    },
   },
 }));
 
@@ -307,6 +423,8 @@ function getUserInitials(name) {
 
 export default function Chat() {
   const classes = useStyles();
+  const isMobile = useMediaQuery("(max-width: 500px)");
+  const [showList, setShowList] = React.useState(true);
   const [msg, setmsg] = React.useState([]);
   const [newmsg, setnewmsg] = React.useState("");
   const [editingId, setEditingId] = React.useState(null);
@@ -320,7 +438,9 @@ export default function Chat() {
   const isdoctor = useSelector((state) => state.states.isdoctor);
   const user = useSelector((state) => state.states.user);
 
-  const [socket] = React.useState(io("ws://localhost:8900"));
+  const [socket] = React.useState(() =>
+    io("ws://localhost:8900", { transports: ["websocket"], reconnection: true })
+  );
 
   const [otheruser, setotheruser] = React.useState(null);
   const [otheruserid, setotheruserid] = React.useState(null);
@@ -335,8 +455,14 @@ export default function Chat() {
   React.useEffect(scrollToBottom, [msg]);
 
   React.useEffect(() => {
-    socket.emit("addUser", { id: user._id });
-  }, []);
+    const register = () => socket.emit("addUser", { id: user._id });
+    socket.on("connect", register);
+    if (socket.connected) register();
+    return () => {
+      socket.off("connect", register);
+      socket.disconnect();
+    };
+  }, [socket, user._id]);
 
   const sendMsg = () => {
     if (newmsg.length === 0) return;
@@ -406,13 +532,15 @@ export default function Chat() {
           const first = chats[0];
           const firstId = isdoctor ? first.p_id._id : first.d_id._id;
           setotheruser(chats);
-          setActiveUser(0);
-          setotheruserid(firstId);
-          apt.get_msgs(token, isdoctor, first).then((res2) => {
-            if (res2.data.success) {
-              setmsg(res2.data.msgs);
-            }
-          });
+          if (!isMobile) {
+            setActiveUser(0);
+            setotheruserid(firstId);
+            apt.get_msgs(token, isdoctor, first).then((res2) => {
+              if (res2.data.success) {
+                setmsg(res2.data.msgs);
+              }
+            });
+          }
         }
       }
     });
@@ -422,6 +550,7 @@ export default function Chat() {
     setActiveUser(index);
     const id = isdoctor ? item.p_id._id : item.d_id._id;
     setotheruserid(id);
+    if (isMobile) setShowList(false);
     apt.get_msgs(token, isdoctor, item).then((res) => {
       if (res.data.success) {
         setmsg(res.data.msgs);
@@ -508,10 +637,11 @@ export default function Chat() {
 
   return (
     <div className={classes.wrapper}>
-      <div className={classes.sidebar}>
-        <div className={classes.sidebarHeader}>
-          <Typography className={classes.sidebarTitle}>Messages</Typography>
-        </div>
+      {(!isMobile || showList) && (
+        <div className={`${classes.sidebar} ${isMobile ? classes.sidebarMobile : ""}`}>
+          <div className={classes.sidebarHeader}>
+            <Typography className={classes.sidebarTitle}>Messages</Typography>
+          </div>
         <div className={classes.userList}>
           {otheruser ? (
             otheruser.map((item, index) => {
@@ -554,11 +684,18 @@ export default function Chat() {
           )}
         </div>
       </div>
+      )}
 
+      {(!isMobile || !showList) && (
       <div className={classes.mainPanel}>
         {otheruserid ? (
           <>
             <div className={classes.chatHeader}>
+              {isMobile && !selectMode && (
+                <IconButton className={classes.backBtn} size="small" onClick={() => setShowList(true)}>
+                  <ArrowBackIcon />
+                </IconButton>
+              )}
               {selectMode ? (
                 <>
                   <IconButton size="small" onClick={toggleSelectMode} style={{ marginRight: 8 }}>
@@ -749,6 +886,7 @@ export default function Chat() {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }
