@@ -6,6 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 
 import iseeLogo from "../Assets/isee logo white-01.png";
+import iseeLogoCompact from "../Assets/ISEE-01.png";
 import blood from "../Assets/blood.svg";
 import chat from "../Assets/chat (1).svg";
 import report from "../Assets/document.svg";
@@ -88,6 +89,12 @@ const useStyles = makeStyles((theme) => ({
     "& $divider": {
       opacity: 0,
     },
+    "& $logoWide": {
+      display: "none",
+    },
+    "& $logoCompact": {
+      display: "block",
+    },
     "&:hover": {
       width: drawerWidth,
       backgroundColor: "#1061B0",
@@ -124,6 +131,12 @@ const useStyles = makeStyles((theme) => ({
       "& $divider": {
         opacity: 1,
       },
+      "& $logoWide": {
+        display: "block",
+      },
+      "& $logoCompact": {
+        display: "none",
+      },
     },
   },
   drawerOpen: {
@@ -139,6 +152,14 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     ...theme.mixins.toolbar,
     cursor: "pointer",
+  },
+  logoWide: {
+    display: "block",
+    width: 100,
+  },
+  logoCompact: {
+    display: "none",
+    width: 40,
   },
   userCard: {
     display: "flex",
@@ -375,10 +396,11 @@ export default function MainDrawer({ expanded }) {
         classes={{ paper: paperClass }}
       >
         <div className={classes.toolbar} onClick={() => history.push("/")}>
+          <img src={iseeLogo} alt="ISEE Logo" className={classes.logoWide} />
           <img
-            src={iseeLogo}
+            src={iseeLogoCompact}
             alt="ISEE Logo"
-            style={{ width: "100px" }}
+            className={classes.logoCompact}
           />
         </div>
         <div className={classes.userCard}>
