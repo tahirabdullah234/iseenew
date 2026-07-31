@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import maleDoc from "../Assets/doctor_logo.svg";
 import photo1 from "../Assets/user1-photo.png";
@@ -25,72 +27,105 @@ const userPhotos = [null, photo1, photo2, photo3, photo4, photo5];
 
 
 const useStyles = makeStyles((theme) => ({
-  marginbox: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  infoGrid: {
-    flexDirection: "column",
-    marginTop: "10px",
-    marginBottom: "20px",
-  },
-  textBackground: {
-    // background: "linear-gradient(180deg, #fff 1%, rgba(128,128,128,0.1) 20%)",
-    backgroundColor: "rgba(128,128,128,0.09)",
-    padding: 10,
+  card: {
     width: "100%",
-    marginTop: 20,
-    borderRadius: 10,
+    borderRadius: 16,
+    overflow: "hidden",
+    background: "#fff",
+    boxShadow: "0 4px 16px rgba(16,97,176,0.12)",
+    border: "1px solid #eef2f6",
+    display: "flex",
+    flexDirection: "column",
   },
-  innerGrid: {
-    flexDirection: "row",
+  banner: {
+    display: "flex",
+    alignItems: "center",
+    gap: 16,
+    padding: "20px 20px",
+    background: "linear-gradient(45deg,#1061b0 0%, #4eb2df 100%)",
+    color: "#fff",
   },
-  innerGriditem: {
-    padding: "20px 0px 0px 20px"
+  docIcon: {
+    width: 64,
+    height: 64,
+    background: "rgba(255,255,255,0.2)",
+    border: "2px solid rgba(255,255,255,0.6)",
+    fontSize: 24,
   },
-  Profiletxt: {
-    fontWeight: "bold",
-    textAlign: "left",
-    color: "#1061b0",
+  docName: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#fff",
+    lineHeight: 1.3,
+  },
+  docRole: {
+    fontFamily: "Montserrat",
+    fontSize: 13,
+    color: "rgba(255,255,255,0.85)",
+    marginTop: 2,
+  },
+  body: {
+    padding: "16px 20px 20px",
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+  },
+  infoItem: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 10,
+    marginBottom: 10,
+  },
+  infoLabel: {
+    fontFamily: "Montserrat",
+    fontWeight: 600,
+    fontSize: 13,
+    color: "#999",
+    minWidth: 84,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  infoText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#333",
+    lineHeight: 1.5,
   },
   button: {
-    flexDirection: "row",
+    display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center",
+    marginTop: "auto",
+    paddingTop: 8,
   },
   inbutton: {
     borderRadius: "12px",
     background: "#3585da",
-    boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    boxShadow: "0 3px 8px rgba(53,133,218,0.35)",
     color: "#fff",
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 14,
+    textTransform: "none",
+    padding: "10px 18px",
     "&:hover": {
-      background: "rgba(53,133,218,0.7)",
+      background: "#2b74c4",
     }
   },
   inbuttoncancel: {
     borderRadius: "12px",
-    background: "#FF0000",
-    boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+    background: "#e53935",
+    boxShadow: "0 3px 8px rgba(229,57,53,0.35)",
     color: "#fff",
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 14,
+    textTransform: "none",
+    padding: "10px 18px",
     "&:hover": {
-      background: "rgba(255, 0, 0, 0.7)",
+      background: "#c62828",
     }
   },
-  docIcon: {
-    width: 70,
-    height: 70,
-    // position: "absolute",
-  },
-  appointdocgrid: {
-    margin: "auto",
-    background: "transparent",
-  },
-  modalcenter: {
-    alignItems: "center",
-    marginTop: "10%",
-    borderRadius: 15
-  }
 }));
 
 export default function DoctorCard({ name, id, requested, photo }) {
@@ -102,7 +137,7 @@ export default function DoctorCard({ name, id, requested, photo }) {
 
   const modalStyle = {
     margin: "auto",
-    marginTop: "15%"
+    marginTop: "5%",
   }
 
   const handleOpen = () => {
@@ -121,11 +156,9 @@ export default function DoctorCard({ name, id, requested, photo }) {
                     console.log(response.data)
                     dispatch(setdoctors(data))
                     dispatch(setrequesteddoc(response.data.data))
-                    // setstate({ ...state, doctor: data, requested: response.data.data })
                   } else {
                     dispatch(setdoctors(data))
                     dispatch(setrequesteddoc([]))
-                    // setstate({ ...state, doctor: xdata, requested: [] })
                   }
                 })
             })
@@ -140,67 +173,58 @@ export default function DoctorCard({ name, id, requested, photo }) {
   };
 
   return (
-    <Grid container className={classes.marginbox}>
-      <Grid item className={classes.textBackground}>
-        <Grid item className={classes.innerGrid}>
-          <Grid container>
-            <Avatar
-              src={photo && photo >= 1 && photo <= 5 ? userPhotos[photo] : maleDoc}
-              alt="Male Doctor Avatar"
-              className={classes.docIcon}
-              style={{ backgroundColor: "rgba(53,133,218,0.15)" }}
-            />
-            <Grid item className={classes.innerGriditem}>
-              <Typography
-                variant="body1"
-                display="block"
-                className={classes.Profiletxt}
-              >
-                DR {name}
-              </Typography>
-              <Typography
-                variant="caption"
-                display="block"
-                className={classes.Profiletxt}
-              >
-                Senior Doctor
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid container className={classes.infoGrid}>
-          <Typography
-            variant="body2"
-            align="left"
-            className={classes.Profiletxt}
-            style={{ marginBottom: "10px" }}
-          >
-            MBBS, MRCCGO
-          </Typography>
-          <Typography variant="body2" className={classes.Profiletxt}>
-            10 YEARS of experience in treating disease related to opthamology
-          </Typography>
-        </Grid>
-        <Grid container className={classes.button}>
-          <Button
-            variant="contained"
-            disableElevation
-            className={requested ? classes.inbuttoncancel : classes.inbutton}
-            onClick={handleOpen}
-          >
-            {requested ? "CANCEL REQUEST" : "APPOINT DOCTOR"}
-          </Button>
+    <Grid container>
+      <Grid item className={classes.card}>
+        <div className={classes.banner}>
+          <Avatar
+            src={photo && photo >= 1 && photo <= 5 ? userPhotos[photo] : maleDoc}
+            alt="Male Doctor Avatar"
+            className={classes.docIcon}
+          />
+          <div>
+            <Typography className={classes.docName}>
+              DR {name}
+            </Typography>
+            <Typography className={classes.docRole}>
+              Senior Doctor
+            </Typography>
+          </div>
+        </div>
+        <div className={classes.body}>
+          <div className={classes.infoItem}>
+            <Typography className={classes.infoLabel}>Specialty</Typography>
+            <Typography className={classes.infoText}>
+              MBBS, MRCCGO
+            </Typography>
+          </div>
+          <div className={classes.infoItem}>
+            <Typography className={classes.infoLabel}>Experience</Typography>
+            <Typography className={classes.infoText}>
+              10 years of experience in treating disease related to opthamology
+            </Typography>
+          </div>
+          <div className={classes.button}>
+            <Button
+              variant="contained"
+              disableElevation
+              startIcon={requested ? <CancelIcon /> : <EventAvailableIcon />}
+              className={requested ? classes.inbuttoncancel : classes.inbutton}
+              onClick={handleOpen}
+            >
+              {requested ? "CANCEL REQUEST" : "APPOINT DOCTOR"}
+            </Button>
+          </div>
           <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
           >
-            <Grid item xs={10} sm={3} className={modalStyle}>
+            <Grid item xs={11} sm={7} md={5} lg={4} style={modalStyle}>
               <Appoint name={name} id={id} onClose={handleClose} />
             </Grid>
           </Modal>
-        </Grid>
+        </div>
       </Grid>
     </Grid>
   );

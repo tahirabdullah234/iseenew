@@ -15,7 +15,7 @@ import { setrequesteddoc, setdoctors } from "../pages/statesSlice";
 const useStyles = makeStyles((theme) => ({
   DialogBox: {
     width: "100%",
-    borderRadius: "12px",
+    borderRadius: "16px",
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
     padding: "30px",
@@ -23,30 +23,100 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     boxSizing: "border-box",
   },
-  sameinfont: {
-    textDecorationLine: "underline",
-    color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+  header: {
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  title: {
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 28,
+    color: "#1061b0",
+  },
+  subtitle: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#777",
+    marginTop: 4,
+  },
+  toggleWrap: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: 24,
+  },
+  toggleBtn: {
+    fontFamily: "Montserrat",
+    fontWeight: 600,
+    fontSize: 14,
+    textTransform: "none",
+    borderRadius: 24,
+    padding: "8px 24px",
+    color: "#666",
+    background: "#f0f4f8",
+    boxShadow: "none",
+    "&:hover": {
+      background: "#e3ebf2",
+    },
+  },
+  toggleActive: {
+    background: "linear-gradient(45deg,#3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    boxShadow: "0 3px 10px rgba(53,133,218,0.35)",
+    "&:hover": {
+      background: "linear-gradient(45deg,#3585da 0%, #59c1e8 100%)",
+    },
   },
   AllGridsAdjust: {
-    justifyContent: "space-around",
-    height: "70vh",
-    overflowY: "scroll",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "flex-start",
+    height: "68vh",
+    overflowY: "auto",
+    overflowX: "hidden",
+    margin: -8,
   },
   appointdocgrid: {
-    margin: 10,
-  }
+    display: "flex",
+    justifyContent: "center",
+    padding: "8px",
+    boxSizing: "border-box",
+  },
+  emptyState: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    minHeight: 260,
+  },
+  emptyTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#3585da",
+    marginTop: 12,
+  },
+  emptyText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#999",
+    marginTop: 4,
+  },
+  loader: {
+    width: "100%",
+    height: "100%",
+    minHeight: 260,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export default function ConsultDoctor() {
   const classes = useStyles();
   const token = useSelector((state) => state.states.token);
   const [req, setreq] = React.useState(false);
-
-  // const [state, setstate] = React.useState({
-  //   doctor: null,
-  //   requested: null
-  // })
 
   const doctor = useSelector((state) => state.states.doctors)
   const requested = useSelector((state) => state.states.requesteddocs)
@@ -65,83 +135,78 @@ export default function ConsultDoctor() {
               console.log(response.data)
               dispatch(setdoctors(data))
               dispatch(setrequesteddoc(response.data.data))
-              // setstate({ ...state, doctor: data, requested: response.data.data })
             } else {
               dispatch(setdoctors(data))
               dispatch(setrequesteddoc([]))
-              // setstate({ ...state, doctor: xdata, requested: [] })
             }
           })
       })
   }, [dispatch, token])
 
+  let filteredDoctors = null
+  if (doctor) {
+    filteredDoctors = doctor.filter((item) => req ? requested.includes(item._id) : !requested.includes(item._id))
+  }
+
   return (
     <div className="dashdiv">
       <div className={classes.DialogBox}>
-        <Typography
-          style={{
-            textAlign: "center",
-            fontSize: "30px",
-            fontWeight: "bold",
-            marginBottom: "10px",
-          }}
-          className={classes.sameinfont}
-        >
-          {req ? "REQUESTS STATUS" : "CONSULT A DOCTOR"}
-        </Typography>
-        <Button
-          style={{
-            fontSize: "20px",
-            selfAlign: "left"
-          }}
-          className={classes.sameinfont}
-          onClick={() => setreq(!req)}
-        >
-          {!req ? "VIEW REQUEST STATUS" : "CONSULT A DOCTOR"}
-        </Button>
+        <div className={classes.header}>
+          <Typography className={classes.title}>
+            {req ? "Request Status" : "Consult a Doctor"}
+          </Typography>
+          <Typography className={classes.subtitle}>
+            {req
+              ? "Track the appointment requests you have sent to doctors."
+              : "Choose a specialist and send an appointment request."}
+          </Typography>
+        </div>
+        <div className={classes.toggleWrap}>
+          <Button
+            className={`${classes.toggleBtn} ${!req ? classes.toggleActive : ""}`}
+            onClick={() => setreq(false)}
+          >
+            Find Doctors
+          </Button>
+          <Button
+            className={`${classes.toggleBtn} ${req ? classes.toggleActive : ""}`}
+            onClick={() => setreq(true)}
+            style={{ marginLeft: 12 }}
+          >
+            Request Status
+          </Button>
+        </div>
         <Grid container className={classes.AllGridsAdjust}>
           {
-            doctor ?
-              (requested.length | !req) > 0 ?
-                doctor.map((item, index) => {
-                  if (req) {
-                    if (!requested.includes(item._id)) {
-                      return;
-                    } else
-                      return (
-                        <Grid item xs={11} md={5} className={classes.appointdocgrid} key={index}>
-                          <DoctorCard
-                            name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()}
-                            id={item._id}
-                            requested={true}
-                            photo={item.userid.photo}
-                          />
-                        </Grid>
-                      )
-                  }
-                  else {
-                    if (requested.includes(item._id)) {
-                      return;
-                    } else
-                      return (
-                        <Grid item xs={11} md={5} className={classes.appointdocgrid} key={index}>
-                          <DoctorCard
-                            name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()}
-                            id={item._id}
-                            photo={item.userid.photo}
-                          />
-                        </Grid>
-                      )
-                  }
-                })
+            filteredDoctors ?
+              filteredDoctors.length > 0 ?
+                filteredDoctors.map((item, index) => (
+                  <Grid item xs={12} sm={6} className={classes.appointdocgrid} key={index}>
+                    <DoctorCard
+                      name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()}
+                      id={item._id}
+                      requested={req}
+                      photo={item.userid.photo}
+                    />
+                  </Grid>
+                ))
                 :
-                <Grid item xs={11} md={5} className={classes.appointdocgrid}>
-                  <Typography variant="body1" className={classes.sameinfont}> No Record Found</Typography>
-                </Grid>
+                <div className={classes.emptyState}>
+                  <Typography className={classes.emptyTitle}>
+                    {req ? "No Requests Yet" : "No Doctors Available"}
+                  </Typography>
+                  <Typography className={classes.emptyText}>
+                    {req
+                      ? "Doctors you contact will appear here."
+                      : "Please check back again later."}
+                  </Typography>
+                </div>
               :
-              <CircularProgress
-                style={{ marginRight: "20px", width: "103px", height: "101px" }}
-              />
+              <div className={classes.loader}>
+                <CircularProgress
+                  style={{ width: "56px", height: "56px", color: "#3585da" }}
+                />
+              </div>
           }
         </Grid>
       </div>

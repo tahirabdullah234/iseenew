@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { makeStyles, createTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
+import CloseIcon from '@material-ui/icons/Close';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 
 import maleDoc from '../Assets/doctor_logo.svg';
 import report from '../Assets/reports.svg';
@@ -18,89 +21,130 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setrequesteddoc, setdoctors } from "../pages/statesSlice";
 
-const theme = createTheme({
-    typography: {
-        fontFamily: "Montserrat"
-    },
-});
-
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
         background: '#fff',
     },
-    docIcon: {
-        width: 60,
-        height: 60,
+    card: {
+        width: "100%",
+        borderRadius: 16,
+        overflow: "hidden",
+        boxShadow: "0 8px 30px rgba(16,97,176,0.25)",
+        background: "#fff",
+        padding: "24px",
+        boxSizing: "border-box",
     },
-    docIcon1: {
-        width: 50,
-        height: 50,
-        paddingTop: 10,
-        paddingLeft: 5,
+    header: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 16,
     },
-    textBackground: {
-        backgroundColor: 'rgba(128,128,128,0.05)',
-        padding: 10,
-        width: 'auto',
-        borderRadius: 10,
+    headerTitle: {
+        fontFamily: "Montserrat",
+        fontWeight: "bold",
+        fontSize: 20,
         color: "#1061b0",
-        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)"
     },
-    innerGrid: {
-        flexDirection: "row",
+    closeBtn: {
+        color: "#999",
+        padding: 4,
+        "&:hover": {
+            background: "#f0f4f8",
+            color: "#1061b0",
+        },
     },
-    innerGriditem: {
-        padding: "20px 0px 0px 20px"
-    }, infoGrid: {
-        flexDirection: 'column'
+    docRow: {
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        background: "linear-gradient(45deg,#1061b0 0%, #4eb2df 100%)",
+        borderRadius: 12,
+        padding: "14px 16px",
+        marginBottom: 20,
     },
-    button: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
+    docIcon: {
+        width: 52,
+        height: 52,
+        background: "rgba(255,255,255,0.2)",
+        border: "2px solid rgba(255,255,255,0.6)",
     },
-    drTitle: {
-        marginLeft: 60,
-        fontWeight: "bold",
+    docName: {
+        fontFamily: "Montserrat",
+        fontWeight: 700,
+        fontSize: 16,
+        color: "#fff",
     },
-    drDesc: {
-        bottom: 35,
-        fontWeight: "bold",
+    docRole: {
+        fontFamily: "Montserrat",
+        fontSize: 13,
+        color: "rgba(255,255,255,0.85)",
     },
-    reportsGrid: {
-        backgroundColor: "#fff",
-        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-        borderRadius: 15,
+    sectionLabel: {
+        fontFamily: "Montserrat",
+        fontWeight: 600,
+        fontSize: 13,
+        color: "#888",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        marginBottom: 8,
     },
-    bottomGrids: {
-        marginTop: 20,
-        padding: 5,
+    attachBox: {
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        background: "#f5f8fc",
+        borderRadius: 12,
+        padding: "12px 14px",
+        border: "1px dashed #bcd4ec",
+        marginBottom: 20,
+    },
+    attachIcon: {
+        width: 36,
+        height: 36,
+    },
+    attachText: {
+        fontFamily: "Montserrat",
+        fontSize: 13,
+        color: "#666",
+    },
+    noReportsText: {
+        fontFamily: "Montserrat",
+        fontSize: 13,
+        color: "#999",
+        fontStyle: "italic",
     },
     messageBox: {
-        backgroundColor: "#fff",
-        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)"
+        width: "100%",
+        marginBottom: 20,
     },
-    Profiletxt: {
-        fontWeight: "bold",
-        textAlign: "left",
-        color: "#1061b0",
+    inputRoot: {
+        fontFamily: "Montserrat",
+        fontSize: 14,
+    },
+    button: {
+        display: "flex",
+        justifyContent: "center",
     },
     inbutton: {
         borderRadius: "12px",
         background: "#3585da",
-        boxshadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+        boxShadow: "0 3px 8px rgba(53,133,218,0.35)",
         color: "#fff",
+        fontFamily: "Montserrat",
+        fontWeight: 700,
+        fontSize: 14,
+        textTransform: "none",
+        padding: "10px 22px",
         "&:hover": {
-            background: "rgba(53,133,218,0.7)",
+            background: "#2b74c4",
         }
     },
 }));
 
 export default function DoctorCard({ name, id, onClose }) {
 
-    const classes = useStyles(theme);
+    const classes = useStyles();
     const token = useSelector((state) => state.states.token)
     const user = useSelector((state) => state.states.user)
     const pname = useSelector((state) => state.states.name)
@@ -140,15 +184,12 @@ export default function DoctorCard({ name, id, onClose }) {
                                         console.log(response.data)
                                         dispatch(setdoctors(data))
                                         dispatch(setrequesteddoc(response.data.data))
-                                        // setstate({ ...state, doctor: data, requested: response.data.data })
                                     } else {
                                         dispatch(setdoctors(data))
                                         dispatch(setrequesteddoc([]))
-                                        // setstate({ ...state, doctor: xdata, requested: [] })
                                     }
                                 })
                         })
-                    // alert("Request Sent")
                     onClose();
                 }
             })
@@ -156,80 +197,79 @@ export default function DoctorCard({ name, id, onClose }) {
 
     return (
         <Grid container className={classes.root}>
-            <Card variant="outlined" className={classes.textBackground}>
-                <Grid container>
-                    <Avatar
-                        src={maleDoc}
-                        alt="Male Doctor Avatar"
-                        className={classes.docIcon}
-                    />
-                    <Grid item className={classes.innerGriditem}>
-                        <Typography
-                            variant="body1"
-                            display="block"
-                            className={classes.Profiletxt}
-                        >
-                            DR {name}
-                        </Typography>
-                        <Typography
-                            variant="caption"
-                            display="block"
-                            className={classes.Profiletxt}
-                        >
-                            Senior Doctor
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Grid container className={classes.infoGrid}>
-                    <Typography variant='body2' aling='left' className={classes.drDesc}>
-                        MBBS, MRCCGO
+            <Card variant="outlined" className={classes.card}>
+                <div className={classes.header}>
+                    <Typography className={classes.headerTitle}>
+                        Appointment Request
                     </Typography>
-                    <Typography variant='body2'>
-                        10 YEARS of experience in treating disease related to opthamology
-                    </Typography>
-                    <Typography variant='body2'>
-                        PMCD ID: 123456-S
-                    </Typography>
-                </Grid>
+                    <Button className={classes.closeBtn} onClick={onClose}>
+                        <CloseIcon />
+                    </Button>
+                </div>
+                <Divider />
+                <div style={{ paddingTop: 20 }}>
+                    <div className={classes.docRow}>
+                        <Avatar
+                            src={maleDoc}
+                            alt="Male Doctor Avatar"
+                            className={classes.docIcon}
+                        />
+                        <div>
+                            <Typography className={classes.docName}>
+                                DR {name}
+                            </Typography>
+                            <Typography className={classes.docRole}>
+                                Senior Doctor
+                            </Typography>
+                        </div>
+                    </div>
 
-                <Grid item xs={12} className={classes.bottomGrids}>
-                    <Typography variant="body1">
-                        ATTACH REPORTS
+                    <Typography className={classes.sectionLabel}>
+                        Attach Reports
                     </Typography>
-                    <Grid item xs={12} className={classes.reportsGrid} >
+                    <div className={classes.attachBox}>
                         {
                             reports ?
-                                <img src={report} alt="Report" className={classes.docIcon1} />
+                                <>
+                                    <img src={report} alt="Report" className={classes.attachIcon} />
+                                    <Typography className={classes.attachText}>
+                                        {reports.length} report{reports.length > 1 ? "s" : ""} ready to attach
+                                    </Typography>
+                                </>
                                 :
-                                <Typography vartiant="h5">No Reports to Attach</Typography>
+                                <Typography className={classes.noReportsText}>
+                                    No Reports to Attach
+                                </Typography>
                         }
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} className={classes.bottomGrids}>
-                    <Typography variant="body1">
-                        MESSAGE
+                    </div>
+
+                    <Typography className={classes.sectionLabel}>
+                        Message
                     </Typography>
-                    <OutlinedInput
+                    <TextField
+                        className={classes.messageBox}
+                        InputProps={{ classes: { input: classes.inputRoot } }}
+                        placeholder="Write a message to the doctor..."
                         multiline
                         fullWidth
-                        maxRows={5}
-                        minRows={5}
-                        placeholder="Write message here..."
-                        className={classes.messageBox}
+                        minRows={4}
+                        maxRows={6}
+                        variant="outlined"
                         value={msg}
                         onChange={e => setmsg(e.target.value)}
                     />
-                </Grid>
-                <Grid container className={classes.button}>
-                    <Button
-                        variant="contained"
-                        disableElevation
-                        className={classes.inbutton}
-                        onClick={handelRequest}
-                    >
-                        APPOINT DOCTOR
-                    </Button>
-                </Grid>
+                    <div className={classes.button}>
+                        <Button
+                            variant="contained"
+                            disableElevation
+                            startIcon={<EventAvailableIcon />}
+                            className={classes.inbutton}
+                            onClick={handelRequest}
+                        >
+                            APPOINT DOCTOR
+                        </Button>
+                    </div>
+                </div>
             </Card>
         </Grid>
     )
