@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     width: "100%",
-    maxWidth: 780,
     borderRadius: 16,
     overflow: "hidden",
     background: "#fff",
