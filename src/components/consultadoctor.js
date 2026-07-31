@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   AllGridsAdjust: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignContent: "flex-start",
     height: "68vh",
     overflowY: "auto",

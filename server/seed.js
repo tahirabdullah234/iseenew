@@ -84,7 +84,62 @@ async function seed() {
       photo: 4
     }), 'password123');
 
-    console.log('Created doctors:', doctor1.username, doctor2.username);
+    var doctor3 = await User.register(new User({
+      username: 'umar@test.com',
+      fname: 'Umar',
+      lname: 'Farooq',
+      gender: 'Male',
+      isDoctor: true,
+      dob: new Date('1978-07-02'),
+      city: 'Lahore',
+      photo: 1
+    }), 'password123');
+
+    var doctor4 = await User.register(new User({
+      username: 'aisha@test.com',
+      fname: 'Aisha',
+      lname: 'Malik',
+      gender: 'Female',
+      isDoctor: true,
+      dob: new Date('1983-02-25'),
+      city: 'Karachi',
+      photo: 2
+    }), 'password123');
+
+    var doctor5 = await User.register(new User({
+      username: 'bilal@test.com',
+      fname: 'Bilal',
+      lname: 'Hussain',
+      gender: 'Male',
+      isDoctor: true,
+      dob: new Date('1975-09-14'),
+      city: 'Multan',
+      photo: 5
+    }), 'password123');
+
+    var doctor6 = await User.register(new User({
+      username: 'fatima@test.com',
+      fname: 'Fatima',
+      lname: 'Zahra',
+      gender: 'Female',
+      isDoctor: true,
+      dob: new Date('1988-06-30'),
+      city: 'Faisalabad',
+      photo: 1
+    }), 'password123');
+
+    var doctor7 = await User.register(new User({
+      username: 'hassan@test.com',
+      fname: 'Hassan',
+      lname: 'Raza',
+      gender: 'Male',
+      isDoctor: true,
+      dob: new Date('1981-12-08'),
+      city: 'Rawalpindi',
+      photo: 3
+    }), 'password123');
+
+    console.log('Created doctors:', doctor1.username, doctor2.username, doctor3.username, doctor4.username, doctor5.username, doctor6.username, doctor7.username);
 
     // Create Doctor profiles
     var docProfile1 = await Doctor.create({
@@ -99,6 +154,41 @@ async function seed() {
       pmdcid: 'PMDC-67890',
       isVerified: true,
       specialization: 'Endocrinologist'
+    });
+
+    var docProfile3 = await Doctor.create({
+      userid: doctor3._id,
+      pmdcid: 'PMDC-11122',
+      isVerified: true,
+      specialization: 'Retina Specialist'
+    });
+
+    var docProfile4 = await Doctor.create({
+      userid: doctor4._id,
+      pmdcid: 'PMDC-22334',
+      isVerified: true,
+      specialization: 'Cardiologist'
+    });
+
+    var docProfile5 = await Doctor.create({
+      userid: doctor5._id,
+      pmdcid: 'PMDC-33445',
+      isVerified: true,
+      specialization: 'Diabetologist'
+    });
+
+    var docProfile6 = await Doctor.create({
+      userid: doctor6._id,
+      pmdcid: 'PMDC-44556',
+      isVerified: true,
+      specialization: 'General Physician'
+    });
+
+    var docProfile7 = await Doctor.create({
+      userid: doctor7._id,
+      pmdcid: 'PMDC-55667',
+      isVerified: true,
+      specialization: 'Ophthalmologist'
     });
 
     console.log('Created doctor profiles');
@@ -282,6 +372,11 @@ async function seed() {
     console.log('Patient 2 - email: ' + patient2.username + ', password: password123');
     console.log('Doctor 1  - email: ' + doctor1.username + ', password: password123');
     console.log('Doctor 2  - email: ' + doctor2.username + ', password: password123');
+    console.log('Doctor 3  - email: ' + doctor3.username + ', password: password123');
+    console.log('Doctor 4  - email: ' + doctor4.username + ', password: password123');
+    console.log('Doctor 5  - email: ' + doctor5.username + ', password: password123');
+    console.log('Doctor 6  - email: ' + doctor6.username + ', password: password123');
+    console.log('Doctor 7  - email: ' + doctor7.username + ', password: password123');
 
   } catch (err) {
     console.error('Seed error:', err);
