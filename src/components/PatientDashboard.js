@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { Doughnut } from "react-chartjs-2";
 import * as chart from "../Services/graphsdata";
 import * as apts from "../Services/appointment";
+import * as tipsService from "../Services/tips";
 import Chip from "@material-ui/core/Chip";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import MessageIcon from "@material-ui/icons/Message";
@@ -152,6 +153,30 @@ const useStyles = makeStyles((theme) => ({
     color: "#5a9bd5",
     [theme.breakpoints.down("sm")]: { fontSize: 14 },
   },
+  tipCard: {
+    padding: "20px 24px",
+    borderRadius: 16,
+    background: "linear-gradient(135deg, #f0f7ff 0%, #e3f1fb 100%)",
+    boxShadow: "0 4px 12px rgba(53, 133, 218, 0.12)",
+    boxSizing: "border-box",
+    height: "100%",
+  },
+  tipCategory: {
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#1061B0",
+    marginBottom: 12,
+  },
+  tipTitle: {
+    fontWeight: 600,
+    fontSize: 16,
+    color: "#1d3557",
+  },
+  tipText: {
+    fontSize: 15,
+    color: "#4a6a8a",
+    marginTop: 4,
+  },
 }));
 
 export function PatientDashboard() {
@@ -166,6 +191,7 @@ export function PatientDashboard() {
   const [health, sethealth] = React.useState(null)
   const [apt, setapt] = React.useState(null)
   const [latestMsg, setLatestMsg] = React.useState(null)
+  const [tipCategories, setTipCategories] = React.useState(null)
   React.useEffect(() => {
     chart.getbpavg(token)
       .then(res => {
@@ -211,6 +237,14 @@ export function PatientDashboard() {
       .then(res => {
         if (res.data.success && res.data.msg) {
           setLatestMsg(res.data.msg)
+        }
+      })
+  }, [])
+  React.useEffect(() => {
+    tipsService.get_tips()
+      .then(res => {
+        if (res.data.success) {
+          setTipCategories(res.data.categories)
         }
       })
   }, [])
@@ -459,6 +493,49 @@ export function PatientDashboard() {
                 <GraphGlocuse height={340} />
               </Grid>
             </Grid>
+          </div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <div className={classes.cardWhite} style={{ minHeight: "auto" }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+              <Typography className={classes.statTitle}>
+                HEALTH TIPS
+              </Typography>
+            </Box>
+            {tipCategories && tipCategories.length > 0 ? (
+              <Grid container spacing={3}>
+                {tipCategories.map((cat) => (
+                  <Grid item xs={12} md={6} lg={4} key={cat._id}>
+                    <div className={classes.tipCard}>
+                      <Typography className={classes.tipCategory}>
+                        {cat.category}
+                      </Typography>
+                      {cat.tips && cat.tips.length > 0 ? (
+                        cat.tips.map((tip) => (
+                          <Box key={tip._id} mb={2}>
+                            <Typography className={classes.tipTitle}>
+                              {tip.title}
+                            </Typography>
+                            <Typography className={classes.tipText}>
+                              {tip.text}
+                            </Typography>
+                          </Box>
+                        ))
+                      ) : (
+                        <Typography className={classes.infoEmpty}>
+                          No tips available
+                        </Typography>
+                      )}
+                    </div>
+                  </Grid>
+                ))}
+              </Grid>
+            ) : (
+              <Typography className={classes.infoEmpty}>
+                No health tips available
+              </Typography>
+            )}
           </div>
         </Grid>
       </Grid>

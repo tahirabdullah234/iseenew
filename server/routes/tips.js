@@ -22,6 +22,28 @@ router.post('/add_tip_category', (req, res) => {
     })
 })
 
+router.get('/get_tips', async (req, res) => {
+    try {
+        var categories = await TipCat.find().lean()
+        var result = await Promise.all(categories.map(async (cat) => {
+            var tips = await TipDetail.find({ cat_id: cat._id }).lean()
+            return {
+                ...cat,
+                tips: tips
+            }
+        }))
+        res.json({
+            success: true,
+            categories: result
+        })
+    } catch (err) {
+        res.json({
+            success: false,
+            err: err.name
+        })
+    }
+})
+
 router.post('/add_tip_detail', authenticate.verifyUser, (req, res) => {
     var tip = new TipDetail({
         cat_id: req.body.id,

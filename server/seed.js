@@ -361,7 +361,8 @@ async function seed() {
       { cat_id: cat1._id, title: 'Healthy Diet', text: 'Eat a balanced diet rich in fiber and low in processed sugars.', addedBy: docProfile2._id },
       { cat_id: cat2._id, title: 'Regular Eye Exams', text: 'Diabetic patients should have a comprehensive eye exam at least once a year.', addedBy: docProfile1._id },
       { cat_id: cat2._id, title: 'Screen Time Breaks', text: 'Take 20-second breaks every 20 minutes to reduce eye strain.', addedBy: docProfile1._id },
-      { cat_id: cat3._id, title: 'Reduce Sodium Intake', text: 'Limit salt consumption to help maintain healthy blood pressure levels.', addedBy: docProfile2._id }
+      { cat_id: cat3._id, title: 'Reduce Sodium Intake', text: 'Limit salt consumption to help maintain healthy blood pressure levels.', addedBy: docProfile2._id },
+      { cat_id: cat3._id, title: 'Stay Active', text: 'Engage in regular moderate exercise such as brisk walking to support healthy blood pressure.', addedBy: docProfile2._id }
     ]);
 
     console.log('Created tip categories and tips');
