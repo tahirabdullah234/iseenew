@@ -223,6 +223,28 @@ router.post("/accept_req", authenticate.verifyUser, (req, res) => {
   });
 });
 
+router.get("/get_today_appointments", authenticate.verifyUser, (req, res) => {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+  Appointment.find(
+    { d_id: req.user._id, date: { $gte: start, $lte: end } },
+    (err, data) => {
+      if (err) {
+        res.json({
+          success: false,
+          err: err.name,
+        });
+      } else {
+        res.json({
+          success: true,
+          data,
+        });
+      }
+    }
+  );
+});
+
 router.get("/get_apponitment", authenticate.verifyUser, (req, res) => {
   Appointment.find(
     { d_id: req.user._id, date: { $gte: Date.now() } },

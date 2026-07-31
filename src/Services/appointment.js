@@ -60,6 +60,16 @@ export const get_apponitment = (token) => {
     })
 }
 
+export const get_today_appointments = (token) => {
+    return axios.get('/request/get_today_appointments', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
 export const accept_req = (token, payload) => {
     return axios.post('/request/accept_req', payload, {
         headers: {

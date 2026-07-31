@@ -1,5 +1,15 @@
 import axios from "axios";
 
+export const getpatientactivity = (token) => {
+    return axios.get('/chart/patient_activity', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
 export const getglocusedata = (token) => {
     return axios.get('/chart/bg_graph', {
         headers: {

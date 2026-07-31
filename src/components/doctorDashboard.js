@@ -3,6 +3,10 @@ import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import PeopleOutline from "@material-ui/icons/PeopleOutline";
+import NotificationsNone from "@material-ui/icons/NotificationsNone";
+import EventNote from "@material-ui/icons/EventNote";
+import Today from "@material-ui/icons/Today";
 
 import TextField from "@material-ui/core/TextField";
 import Card from '@material-ui/core/Card';
@@ -13,6 +17,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from '@material-ui/core/Modal';
 
 import * as apt from "../Services/appointment";
+import { getpatientactivity } from "../Services/graphsdata";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -62,6 +67,7 @@ const useStyles = makeStyles({
     padding: "20px",
     boxSizing: "border-box",
     height: "100%",
+    maxHeight: 270,
     display: "flex",
     flexDirection: "column",
   },
@@ -81,6 +87,43 @@ const useStyles = makeStyles({
     height: 22,
     borderRadius: 3,
     background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+  },
+  statCard: {
+    width: "100%",
+    borderRadius: 16,
+    background: "#fff",
+    border: "1px solid #eef1f6",
+    boxShadow: "0 6px 20px rgba(16, 97, 176, 0.06)",
+    padding: "18px 20px",
+    boxSizing: "border-box",
+    display: "flex",
+    alignItems: "center",
+    gap: 14,
+  },
+  statIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    flexShrink: 0,
+  },
+  statValue: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 24,
+    color: "#1061b0",
+    lineHeight: 1.1,
+  },
+  statLabel: {
+    fontFamily: "Montserrat",
+    fontSize: 13,
+    fontWeight: 600,
+    color: "#8e9bb0",
+    marginTop: 2,
   },
   apptRow: {
     display: "flex",
@@ -103,6 +146,53 @@ const useStyles = makeStyles({
     fontWeight: 600,
     fontSize: 14,
     color: "#2b3a55",
+    textAlign: "right",
+  },
+  reqRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: "12px 16px",
+    borderRadius: 10,
+    background: "#f7fafd",
+    marginBottom: 10,
+  },
+  reqName: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 14,
+    color: "#2b3a55",
+  },
+  reqMsg: {
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    color: "#8e9bb0",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    marginTop: 2,
+  },
+  activityRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    padding: "12px 16px",
+    borderRadius: 10,
+    background: "#f7fafd",
+    marginBottom: 10,
+  },
+  activityName: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 14,
+    color: "#2b3a55",
+  },
+  activityMeta: {
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    fontWeight: 600,
+    color: "#3585da",
     textAlign: "right",
   },
   scrollList: {
@@ -219,7 +309,7 @@ const useStyles = makeStyles({
     fontFamily: "Montserrat",
     fontWeight: 700,
     fontSize: 20,
-    color: "#1061b0",
+    color: "#3585da",
     marginBottom: 20,
   },
   modalField: {
@@ -247,24 +337,14 @@ const useStyles = makeStyles({
   },
 });
 
-function PatientRequest({ data }) {
+function AcceptModal({ data, open, onClose, onAccepted }) {
   const classes = useStyles();
-  const history = useHistory();
-  const [open, setOpen] = React.useState(false);
-  const [date, setdate] = React.useState('');
-  const [time, settime] = React.useState('');
   const token = useSelector((state) => state.states.token);
   const dispatch = useDispatch();
+  const [date, setdate] = React.useState('');
+  const [time, settime] = React.useState('');
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onAccept = () => {
+  const handleAccept = () => {
     const new_data = {
       p_id: data.p_id,
       d_id: data.d_id,
@@ -278,7 +358,6 @@ function PatientRequest({ data }) {
           apt.get_apponitment(token)
             .then(res => {
               if (res.data.success) {
-                console.log(res.data)
                 const apt_data = res.data.data ? res.data.data : []
                 apt.recieved_req(token)
                   .then(res => {
@@ -293,7 +372,52 @@ function PatientRequest({ data }) {
             })
         }
       })
+    onClose();
+    if (onAccepted) onAccepted();
   }
+
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+    >
+      <Grid item xs={11} sm={6} md={4}>
+        <Card variant="outlined" className={classes.modalCard}>
+          <Typography className={classes.modalTitle}>Schedule Appointment</Typography>
+          <TextField
+            className={classes.modalField}
+            label="Appointment Date"
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ classes: { input: classes.modalInput } }}
+            type="date"
+            value={date}
+            onChange={e => setdate(e.target.value)}
+          />
+          <TextField
+            className={classes.modalField}
+            label="Appointment Time"
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ classes: { input: classes.modalInput } }}
+            type="time"
+            value={time}
+            onChange={e => settime(e.target.value)}
+          />
+          <Button variant="contained" disableElevation className={classes.modalBtn} onClick={handleAccept}>
+            Accept Request
+          </Button>
+        </Card>
+      </Grid>
+    </Modal>
+  );
+}
+
+function PatientRequest({ data, onAccepted }) {
+  const classes = useStyles();
+  const history = useHistory();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <React.Fragment>
@@ -309,46 +433,45 @@ function PatientRequest({ data }) {
           </Typography>
         </TableCell>
         <TableCell>
-          <Button className={classes.acceptBtn} onClick={handleOpen}>
+          <Button className={classes.acceptBtn} onClick={() => setOpen(true)}>
             ACCEPT
           </Button>
         </TableCell>
       </TableRow>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <Grid item xs={11} sm={6} md={4}>
-          <Card variant="outlined" className={classes.modalCard}>
-            <Typography className={classes.modalTitle}>Schedule Appointment</Typography>
-            <TextField
-              className={classes.modalField}
-              label="Appointment Date"
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ classes: { input: classes.modalInput } }}
-              type="date"
-              value={date}
-              onChange={e => setdate(e.target.value)}
-            />
-            <TextField
-              className={classes.modalField}
-              label="Appointment Time"
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ classes: { input: classes.modalInput } }}
-              type="time"
-              value={time}
-              onChange={e => settime(e.target.value)}
-            />
-            <Button variant="contained" disableElevation className={classes.modalBtn} onClick={onAccept}>
-              Accept Request
-            </Button>
-          </Card>
-        </Grid>
-      </Modal>
+      <AcceptModal data={data} open={open} onClose={() => setOpen(false)} onAccepted={onAccepted} />
     </React.Fragment>
+  );
+}
+
+function RecentRequestItem({ data, onAccepted }) {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className={classes.reqRow}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <Typography className={classes.reqName}>{data.name}</Typography>
+        <Typography className={classes.reqMsg}>{data.msg}</Typography>
+      </div>
+      <Button className={classes.acceptBtn} onClick={() => setOpen(true)}>
+        ACCEPT
+      </Button>
+      <AcceptModal data={data} open={open} onClose={() => setOpen(false)} onAccepted={onAccepted} />
+    </div>
+  );
+}
+
+function ActivityItem({ data }) {
+  const classes = useStyles();
+  const parts = [];
+  if (data.bp) parts.push("BP " + data.bp.systolic + "/" + data.bp.dystolic);
+  if (data.bg) parts.push("BG " + data.bg.value);
+  return (
+    <div className={classes.activityRow}>
+      <Typography className={classes.activityName}>{data.name}</Typography>
+      <Typography className={classes.activityMeta}>
+        {parts.length > 0 ? parts.join(" • ") : "No readings yet"}
+      </Typography>
+    </div>
   );
 }
 
@@ -372,7 +495,26 @@ export function DoctorDashboard() {
   const appointments = useSelector((state) => state.states.appointments)
 
   const dispatch = useDispatch()
+  const [activity, setActivity] = React.useState(null);
+  const [todayAppointments, setTodayAppointments] = React.useState(null);
+
+  const loadActivity = React.useCallback(() => {
+    getpatientactivity(token)
+      .then(res => {
+        if (res.data.success) setActivity(res.data.data || []);
+        else setActivity([]);
+      })
+      .catch(() => setActivity([]));
+  }, [token]);
+
   React.useEffect(() => {
+    loadActivity();
+    apt.get_today_appointments(token)
+      .then(res => {
+        if (res.data.success) setTodayAppointments(res.data.data || []);
+        else setTodayAppointments([]);
+      })
+      .catch(() => setTodayAppointments([]));
     apt.get_apponitment(token)
       .then(res => {
         var apt_data = []
@@ -392,7 +534,23 @@ export function DoctorDashboard() {
           })
 
       })
-  }, [token])
+  }, [token, loadActivity])
+
+  const totalPatients = React.useMemo(() => {
+    const ids = new Set();
+    (requests || []).forEach(r => ids.add(String(r.p_id)));
+    (appointments || []).forEach(a => ids.add(String(a.p_id)));
+    return ids.size;
+  }, [requests, appointments]);
+
+  const todaysAppointments = todayAppointments ? todayAppointments.length : 0;
+
+  const todaysList = (todayAppointments || [])
+    .sort((a, b) => String(a.time).localeCompare(String(b.time)));
+
+  const pendingRequests = requests ? requests.length : 0;
+  const upcomingAppointments = appointments ? appointments.length : 0;
+
   return (
     <div className="dashdiv">
       <Grid container className={classes.DialogBox}>
@@ -404,6 +562,144 @@ export function DoctorDashboard() {
             Here's what's happening with your patients today.
           </Typography>
         </div>
+        <Grid container spacing={3} style={{ marginBottom: 24 }}>
+          <Grid item md={3} sm={6} xs={12}>
+            <div className={classes.statCard}>
+              <div className={classes.statIcon}>
+                <PeopleOutline fontSize="large" />
+              </div>
+              <div>
+                <Typography className={classes.statValue}>{totalPatients}</Typography>
+                <Typography className={classes.statLabel}>Total Patients</Typography>
+              </div>
+            </div>
+          </Grid>
+          <Grid item md={3} sm={6} xs={12}>
+            <div className={classes.statCard}>
+              <div className={classes.statIcon}>
+                <NotificationsNone fontSize="large" />
+              </div>
+              <div>
+                <Typography className={classes.statValue}>{pendingRequests}</Typography>
+                <Typography className={classes.statLabel}>Pending Requests</Typography>
+              </div>
+            </div>
+          </Grid>
+          <Grid item md={3} sm={6} xs={12}>
+            <div className={classes.statCard}>
+              <div className={classes.statIcon}>
+                <EventNote fontSize="large" />
+              </div>
+              <div>
+                <Typography className={classes.statValue}>{upcomingAppointments}</Typography>
+                <Typography className={classes.statLabel}>Upcoming Appointments</Typography>
+              </div>
+            </div>
+          </Grid>
+          <Grid item md={3} sm={6} xs={12}>
+            <div className={classes.statCard}>
+              <div className={classes.statIcon}>
+                <Today fontSize="large" />
+              </div>
+              <div>
+                <Typography className={classes.statValue}>{todaysAppointments}</Typography>
+                <Typography className={classes.statLabel}>Today's Appointments</Typography>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3} style={{ marginBottom: 24 }}>
+          <Grid item md={4} sm={12} xs={12}>
+            <div className={classes.panel}>
+              <Typography className={classes.panelTitle}>
+                <span className={classes.panelBar} />
+                TODAY'S SCHEDULE
+              </Typography>
+              <div className={classes.scrollList}>
+                {
+                  todaysList.length > 0 ?
+                    todaysList.map((item) => {
+                      return (
+                        <div className={classes.apptRow} key={item._id || item.date}>
+                          <Typography className={classes.apptDate}>{item.time}</Typography>
+                          <Typography className={classes.apptName}>{item.name}</Typography>
+                        </div>
+                      )
+                    })
+                    :
+                    (todayAppointments && todayAppointments.length === 0) ?
+                      <Typography className={classes.emptyText}>
+                        No Appointments Today
+                      </Typography>
+                      :
+                      <div className={classes.loader}>
+                        <CircularProgress
+                          style={{ width: "50px", height: "50px", color: "#3585da" }}
+                        />
+                      </div>
+                }
+              </div>
+            </div>
+          </Grid>
+          <Grid item md={4} sm={12} xs={12}>
+            <div className={classes.panel}>
+              <Typography className={classes.panelTitle}>
+                <span className={classes.panelBar} />
+                RECENT REQUESTS
+              </Typography>
+              <div className={classes.scrollList}>
+                {
+                  requests && requests.length > 0 ?
+                    requests.slice(0, 4).map((item) => {
+                      return (
+                        <RecentRequestItem data={item} key={item._id} onAccepted={loadActivity} />
+                      )
+                    })
+                    :
+                    (requests && requests.length === 0) ?
+                      <Typography className={classes.emptyText}>
+                        No Pending Requests
+                      </Typography>
+                      :
+                      <div className={classes.loader}>
+                        <CircularProgress
+                          style={{ width: "50px", height: "50px", color: "#3585da" }}
+                        />
+                      </div>
+                }
+              </div>
+            </div>
+          </Grid>
+          <Grid item md={4} sm={12} xs={12}>
+            <div className={classes.panel}>
+              <Typography className={classes.panelTitle}>
+                <span className={classes.panelBar} />
+                PATIENT ACTIVITY
+              </Typography>
+              <div className={classes.scrollList}>
+                {
+                  activity && activity.length > 0 ?
+                    activity.map((item) => {
+                      return (
+                        <ActivityItem data={item} key={item.patient} />
+                      )
+                    })
+                    :
+                    (activity && activity.length === 0) ?
+                      <Typography className={classes.emptyText}>
+                        No Patient Activity
+                      </Typography>
+                      :
+                      <div className={classes.loader}>
+                        <CircularProgress
+                          style={{ width: "50px", height: "50px", color: "#3585da" }}
+                        />
+                      </div>
+                }
+              </div>
+            </div>
+          </Grid>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item md={5} xs={12}>
             <div className={classes.panel}>
@@ -455,7 +751,7 @@ export function DoctorDashboard() {
                       requests && requests.length > 0 ?
                         requests.map((item) => {
                           return (
-                            <PatientRequest data={item} key={item._id} />
+                            <PatientRequest data={item} key={item._id} onAccepted={loadActivity} />
                           )
                         })
                         :

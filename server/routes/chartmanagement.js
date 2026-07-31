@@ -3,6 +3,10 @@ var router = express.Router();
 var authenticate = require("../authenticate");
 var BP = require("../models/bp");
 var BG = require("../models/bg");
+var User = require("../models/user");
+var Doctor = require("../models/doctor");
+var Request = require("../models/request");
+var Appointment = require("../models/appointments");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -533,6 +537,49 @@ router.get("/databg/:_id", authenticate.verifyUser, (req, res) => {
     }
   })
 })
+
+
+router.get("/patient_activity", authenticate.verifyUser, async (req, res) => {
+  try {
+    const docProfile = await Doctor.findOne({ userid: req.user._id });
+    const [requests, appointments] = await Promise.all([
+      Request.find(docProfile ? { d_id: docProfile._id } : { _id: null }).lean(),
+      Appointment.find({ d_id: req.user._id }).lean(),
+    ]);
+
+    const ids = new Set();
+    requests.forEach(r => ids.add(String(r.p_id)));
+    appointments.forEach(a => ids.add(String(a.p_id)));
+
+    const patients = await User.find({ _id: { $in: Array.from(ids) } }).lean();
+    const nameMap = {};
+    patients.forEach(p => { nameMap[String(p._id)] = p.fname + " " + p.lname; });
+
+    const activity = [];
+    for (const id of ids) {
+      const [latestBP, latestBG] = await Promise.all([
+        BP.findOne({ patient: id }).sort({ dateAdded: -1 }).lean(),
+        BG.findOne({ patient: id }).sort({ dateAdded: -1 }).lean(),
+      ]);
+      const lastTs = Math.max(
+        latestBP ? new Date(latestBP.dateAdded).getTime() : 0,
+        latestBG ? new Date(latestBG.dateAdded).getTime() : 0
+      );
+      activity.push({
+        patient: id,
+        name: nameMap[id] || "Patient",
+        bp: latestBP || null,
+        bg: latestBG || null,
+        lastActivity: lastTs,
+      });
+    }
+
+    activity.sort((a, b) => b.lastActivity - a.lastActivity);
+    res.json({ success: true, data: activity.slice(0, 10) });
+  } catch (err) {
+    res.json({ success: false, err: err.name });
+  }
+});
 
 
 module.exports = router;

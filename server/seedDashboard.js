@@ -16,19 +16,34 @@ async function seed() {
     const users = await User.find({});
     const doctors = await Doctor.find({});
 
-    if (users.length === 0) {
-      console.log("No users found. Run seed.js first.");
-      process.exit(1);
+    console.log(`Found ${users.length} users, ${doctors.length} doctors`);
+
+    const extraPatients = [
+      { username: "rohan@test.com", fname: "Rohan", lname: "Sharma", gender: "Male", city: "Delhi", photo: 2 },
+      { username: "meera@test.com", fname: "Meera", lname: "Gupta", gender: "Female", city: "Mumbai", photo: 3 },
+      { username: "osman@test.com", fname: "Osman", lname: "Raza", gender: "Male", city: "Karachi", photo: 4 },
+      { username: "nadia@test.com", fname: "Nadia", lname: "Iqbal", gender: "Female", city: "Lahore", photo: 1 },
+      { username: "peter@test.com", fname: "Peter", lname: "George", gender: "Male", city: "Dubai", photo: 5 },
+      { username: "hina@test.com", fname: "Hina", lname: "Khan", gender: "Female", city: "Islamabad", photo: 3 },
+    ];
+
+    for (const p of extraPatients) {
+      const exists = await User.findOne({ username: p.username });
+      if (!exists) {
+        await User.register(new User({ ...p, isDoctor: false, dob: new Date("1992-03-15") }), "password123");
+        console.log(`  Created patient ${p.fname} ${p.lname}`);
+      }
     }
 
-    console.log(`Found ${users.length} users, ${doctors.length} doctors`);
+    const allUsers = await User.find({});
+    const patients = allUsers.filter(u => !u.isDoctor);
 
     await BP.deleteMany({});
     await BG.deleteMany({});
     await Appointment.deleteMany({});
     await Request.deleteMany({});
 
-    for (const user of users) {
+    for (const user of allUsers) {
       const bpRecords = [];
       const bgRecords = [];
 
@@ -64,43 +79,85 @@ async function seed() {
         });
       }
 
+      const noonBP = new Date();
+      noonBP.setHours(12, 30, 0, 0);
+      bpRecords.push({
+        patient: user._id,
+        systolic: (user.isDoctor ? 125 : 118) + Math.floor(Math.random() * 10 - 4),
+        dystolic: (user.isDoctor ? 82 : 77) + Math.floor(Math.random() * 8 - 3),
+        dateAdded: noonBP,
+      });
+
+      const eveningBP = new Date();
+      eveningBP.setHours(19, 30, 0, 0);
+      bpRecords.push({
+        patient: user._id,
+        systolic: (user.isDoctor ? 125 : 118) + Math.floor(Math.random() * 10 - 4),
+        dystolic: (user.isDoctor ? 82 : 77) + Math.floor(Math.random() * 8 - 3),
+        dateAdded: eveningBP,
+      });
+
+      const eveningBG = new Date();
+      eveningBG.setHours(20, 15, 0, 0);
+      bgRecords.push({
+        patient: user._id,
+        value: 140 + Math.floor(Math.random() * 50),
+        isFasting: false,
+        dateAdded: eveningBG,
+      });
+
       await BP.insertMany(bpRecords);
       await BG.insertMany(bgRecords);
       console.log(`  Created health data for ${user.fname} ${user.lname}`);
     }
 
-    var aptIndex = 0;
-    for (const user of users) {
-      if (!user.isDoctor && doctors.length > 0) {
-        const doc = doctors[aptIndex % doctors.length];
-        const futureDate = new Date();
-        futureDate.setDate(futureDate.getDate() + 3 + aptIndex * 5);
+    const times = ["09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "10:00", "10:00"];
+    const reqMessages = [
+      "I would like to schedule an eye checkup.",
+      "I have been experiencing blurred vision lately.",
+      "Need a consultation for my diabetes management.",
+      "I would like to book a retina screening.",
+      "Can you check my recent reports please?",
+    ];
 
-        const times = ["09:00", "10:30", "14:00", "16:30"];
+    var aptIndex = 0;
+    for (const doc of doctors) {
+      for (let i = 0; i < 10 && patients.length > 0; i++) {
+        const patient = patients[aptIndex % patients.length];
+        const futureDate = new Date();
+        if (i < 6) {
+          futureDate.setHours(9 + i * 2, 0, 0, 0);
+        } else {
+          futureDate.setDate(futureDate.getDate() + 1 + (i - 6) * 2);
+          futureDate.setHours(10, 0, 0, 0);
+        }
+
         const apt = new Appointment({
-          p_id: user._id,
+          p_id: patient._id,
           d_id: doc.userid,
           date: futureDate,
           time: times[aptIndex % times.length],
-          name: user.fname + " " + user.lname,
+          name: patient.fname + " " + patient.lname,
         });
         await apt.save();
-        console.log(`  Created appointment for ${user.fname} ${user.lname} with doctor ${doc.userid}`);
+        console.log(`  Created appointment for ${patient.fname} ${patient.lname} with doctor ${doc.userid} on ${futureDate.toISOString()}`);
         aptIndex++;
       }
     }
 
-    for (const user of users) {
-      if (!user.isDoctor && doctors.length > 0) {
-        const doc = doctors[0];
+    var reqIndex = 0;
+    for (const doc of doctors) {
+      for (let i = 0; i < 5 && patients.length > 0; i++) {
+        const patient = patients[reqIndex % patients.length];
         const req = new Request({
-          p_id: user._id,
+          p_id: patient._id,
           d_id: doc._id,
-          name: user.fname + " " + user.lname,
-          msg: "I would like to schedule an appointment.",
+          name: patient.fname + " " + patient.lname,
+          msg: reqMessages[reqIndex % reqMessages.length],
         });
         await req.save();
-        console.log(`  Created request for ${user.fname} ${user.lname}`);
+        console.log(`  Created request for ${patient.fname} ${patient.lname} to doctor ${doc._id}`);
+        reqIndex++;
       }
     }
 
