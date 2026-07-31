@@ -155,8 +155,9 @@ export default function DoctorCard({ name, id, requested, photo }) {
   const dispatch = useDispatch();
 
   const modalStyle = {
-    margin: "auto",
-    marginTop: "5%",
+    outline: "none",
+    overflowY: "auto",
+    maxHeight: "90vh",
   }
 
   const handleOpen = () => {
@@ -236,6 +237,7 @@ export default function DoctorCard({ name, id, requested, photo }) {
           <Modal
             open={open}
             onClose={handleClose}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
           >

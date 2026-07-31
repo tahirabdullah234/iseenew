@@ -233,6 +233,14 @@ const useStyles = makeStyles((theme) => ({
   },
   messageRowSent: {
     justifyContent: "flex-end",
+    "@media (max-width: 600px)": {
+      paddingLeft: "15%",
+    },
+  },
+  messageRowReceived: {
+    "@media (max-width: 600px)": {
+      paddingRight: "15%",
+    },
   },
   messageAvatar: {
     width: 32,
@@ -745,7 +753,7 @@ export default function Chat() {
                 return (
                   <div
                     key={item._id}
-                    className={`${classes.messageRow} ${isSent ? classes.messageRowSent : ""}`}
+                    className={`${classes.messageRow} ${isSent ? classes.messageRowSent : classes.messageRowReceived}`}
                   >
                     {selectMode && (
                       <Checkbox
