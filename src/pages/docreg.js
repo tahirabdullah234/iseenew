@@ -33,117 +33,138 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles({
-  border: {
-    marginTop: 50,
-    border: "6px solid  #59C1E8",
-  },
-  extratxt: {
-    textDecoration: "underline",
-    marginBottom: 10,
-    marginTop: 10,
-    width: "75%",
-    margin: "auto",
-    fontWeight: "bold",
-  },
-  dialogbox: {
-    width: "100%",
-    height: "100%",
+  card: {
     display: "flex",
-    padding: "20px",
+    width: "min(900px, 94%)",
+    marginTop: 96,
+    marginBottom: 48,
     background: "#fff",
-    boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
-    Border: "6px",
-  },
-  setpatientlogo: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginbox: {
-    textAlign: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "270px",
-    height: "350px",
-    borderRadius: "20px",
-    display: "flex",
-    flexDirection: "column",
-    background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-  },
-  loginboxheader: {
-    marginBottom: "20px",
-    fontSize: "24px",
-    textDecorationLine: "underline",
-  },
-  setemail: { marginBottom: "10px", width: "75%" },
-  setpassword: { marginBottom: "40px", width: "75%" },
-  regbutton: {
-    width: "38%",
-    height: "42px",
-    borderRadius: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: "auto",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    background: "#3585da",
-    color: "#fff",
-    "&:hover": {
-      background: "rgba(53,133,218,0.8)",
+    borderRadius: 20,
+    overflow: "hidden",
+    boxShadow: "0 24px 60px rgba(2, 32, 71, 0.35)",
+    "@media (max-width: 600px)": {
+      width: "96%",
     },
-    fontWeight: "bold"
   },
-  setpatientreglogo: {
+  banner: {
+    flex: "0 0 34%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 14,
+    padding: 40,
+    boxSizing: "border-box",
+    background: "linear-gradient(135deg, #1061b0 0%, #59c1e8 100%)",
+    "@media (max-width: 600px)": {
+      display: "none",
+    },
+  },
+  bannerIcon: {
+    width: 120,
+    height: 120,
+    borderRadius: "50%",
+    background: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0 12px 30px rgba(0, 30, 70, 0.3)",
+  },
+  bannerImg: {
+    width: "55%",
+  },
+  bannerText: {
+    fontFamily: "Montserrat",
+    fontSize: 20,
+    fontWeight: 700,
+    color: "#fff",
+  },
+  bannerSub: {
+    fontFamily: "Montserrat",
+    fontSize: 13,
+    color: "rgba(255,255,255,0.9)",
+    textAlign: "center",
+  },
+  formPanel: {
+    flex: "1 1 66%",
+    padding: "40px 36px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
+    boxSizing: "border-box",
+    "@media (max-width: 600px)": {
+      padding: "28px 16px",
+    },
   },
-  registrationheader: {
-    marginBottom: "20px",
-    fontSize: "24px",
-    textDecorationLine: "underline",
-    justifyContent: "center",
-    alignItems: "center",
+  formTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 24,
+    color: "#1061b0",
   },
-  starttextfielddiv: {
+  formSubtitle: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#8e9bb0",
+    marginTop: 4,
+    marginBottom: 20,
+  },
+  fieldRow: {
     display: "flex",
-    flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: "8px",
+    gap: 16,
+    marginBottom: 16,
   },
   textfield: {
-    display: "flex",
-    width: "45%",
-    color: "black",
-    "&:hover": {
-      color: "white",
-    },
+    width: "48%",
+    minWidth: 0,
     fontFamily: "Montserrat",
   },
-  endtextfield: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: "7px",
+  button: {
+    width: "100%",
+    height: 48,
+    borderRadius: 12,
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 15,
+    letterSpacing: 1,
+    textTransform: "none",
+    marginTop: 8,
+    boxShadow: "0 6px 18px rgba(53, 133, 218, 0.35)",
+    "&:hover": {
+      background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+      boxShadow: "0 8px 22px rgba(53, 133, 218, 0.45)",
+    },
   },
-  radiobutton: {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: "7px",
-    justifyContent: "space-between",
+  link: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    fontWeight: 600,
+    color: "#3585da",
+    cursor: "pointer",
+    marginTop: 14,
+    "&:hover": {
+      textDecoration: "underline",
+    },
   },
   font: {
     fontFamily: "Montserrat",
-  }
+  },
 });
 
 const theme = createTheme({
   palette: {
     secondary: {
       main: "#3585da",
+    },
+  },
+  props: {
+    MuiTextField: {
+      variant: "outlined",
+    },
+    MuiButton: {
+      disableElevation: true,
     },
   },
 });
@@ -234,22 +255,28 @@ export default function DoctorRegistration() {
     <ThemeProvider theme={theme}>
       <div className="container">
         <Header />
-
-        <Grid item md={5} sm={6} xs={10} className={classes.border}>
-          <Grid container className={classes.dialogbox}>
-            <Grid item className={classes.setpatientreglogo}>
+        <div className={classes.card}>
+          <div className={classes.banner}>
+            <div className={classes.bannerIcon}>
               <img
                 src={patientreglogo}
-                className="docreglogo"
-                alt="Doctor Reg"
+                className={classes.bannerImg}
+                alt="Doctor Registration"
               />
-              <header className={classes.registrationheader}>
-                DOCTOR REGISTRATION
-              </header>
-            </Grid>
+            </div>
+            <Typography className={classes.bannerText}>Join ISEE</Typography>
+            <Typography className={classes.bannerSub}>
+              Connect with patients and grow your practice.
+            </Typography>
+          </div>
+          <div className={classes.formPanel}>
+            <Typography className={classes.formTitle}>Doctor Registration</Typography>
+            <Typography className={classes.formSubtitle}>
+              Create your account to get started
+            </Typography>
             <form onSubmit={formik.handleSubmit}>
               <Grid item xs={12}>
-                <div className={classes.starttextfielddiv}>
+                <div className={classes.fieldRow}>
                   <TextField
                     className={classes.textfield}
                     label="First name"
@@ -285,7 +312,7 @@ export default function DoctorRegistration() {
                     helperText={formik.touched.lastname && formik.errors.lastname}
                   />
                 </div>
-                <div className={classes.endtextfield}>
+                <div className={classes.fieldRow}>
                   <TextField
                     className={classes.textfield}
                     label="Email Address"
@@ -322,7 +349,7 @@ export default function DoctorRegistration() {
                     helperText={formik.touched.dob && formik.errors.dob}
                   />
                 </div>
-                <div className={classes.endtextfield}>
+                <div className={classes.fieldRow}>
                   <TextField
                     className={classes.textfield}
                     label="Password"
@@ -390,7 +417,7 @@ export default function DoctorRegistration() {
                     helperText={formik.touched.confirmpassword && formik.errors.confirmpassword}
                   />
                 </div>
-                <div className={classes.endtextfield}>
+                <div className={classes.fieldRow}>
                   <TextField
                     className={classes.textfield}
                     label="PMDC ID"
@@ -418,7 +445,7 @@ export default function DoctorRegistration() {
                     helperText={formik.touched.specialization && formik.errors.specialization}
                   />
                 </div>
-                <div className={classes.radiobutton}>
+                <div className={classes.fieldRow}>
                   <FormControl component="fieldset">
                     <FormLabel component="legend" style={{ fontSize: "12px" }}>
                       Gender
@@ -465,20 +492,19 @@ export default function DoctorRegistration() {
                   />
                 </div>
               </Grid>
-              <Button type="submit" className={classes.regbutton}>
+              <Button type="submit" variant="contained" className={classes.button}>
                 Register
               </Button>
               <Typography
                 variant="body2"
-                className={classes.extratxt}
+                className={classes.link}
                 onClick={() => history.push('/')}
-                style={{ "cursor": "pointer" }}
               >
                 Already have An Account? SignIn Here
               </Typography>
             </form>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
         <Snackbar open={snackbar.open}
           autoHideDuration={6000}
           onClose={handleClose}

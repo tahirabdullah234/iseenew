@@ -2,9 +2,9 @@ import React from "react";
 import "./style.css";
 import { Header } from "../components/header";
 import doctorlogo from "../Assets/Doclogo.png";
-import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import * as auth from "../Services/auth";
@@ -17,68 +17,121 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
-  border: {
-    marginTop: "111px",
-    border: "6px solid  #59C1E8",
-  },
-  extratxt: {
-    textDecoration: "underline",
-    marginBottom: 10,
-    marginTop: 10,
-    width: "75%",
-    margin: "auto",
-    fontWeight: "bold",
-  },
-  dialogbox: {
-    width: "100%",
-    height: "100%",
+  card: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "20px",
+    width: "min(880px, 92%)",
+    marginTop: 96,
+    marginBottom: 48,
     background: "#fff",
-    boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.16)",
-    Border: "6px",
+    borderRadius: 20,
+    overflow: "hidden",
+    boxShadow: "0 24px 60px rgba(2, 32, 71, 0.35)",
+    "@media (max-width: 600px)": {
+      width: "94%",
+    },
   },
-  setpatientlogo: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginbox: {
-    textAlign: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "270px",
-    height: "350px",
-    borderRadius: "20px",
+  banner: {
+    flex: "1 1 40%",
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 14,
+    padding: 48,
+    boxSizing: "border-box",
+    background: "linear-gradient(135deg, #1061b0 0%, #59c1e8 100%)",
+    "@media (max-width: 600px)": {
+      display: "none",
+    },
+  },
+  bannerIcon: {
+    width: 140,
+    height: 140,
+    borderRadius: "50%",
     background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-  },
-  loginboxheader: {
-    marginBottom: "30px",
-    fontSize: "24px",
-    textDecorationLine: "underline",
-  },
-  setemail: { marginBottom: "10px", width: "75%" },
-  setpassword: { marginBottom: "40px", width: "75%" },
-  loginbutton: {
-    borderRadius: "10px",
-    background: "#3585da",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    marginTop: "25px",
+    boxShadow: "0 12px 30px rgba(0, 30, 70, 0.3)",
+  },
+  bannerImg: {
+    width: "55%",
+  },
+  bannerText: {
+    fontFamily: "Montserrat",
+    fontSize: 20,
+    fontWeight: 700,
     color: "#fff",
-    width: "80%",
-    margin: "auto",
-    "&:hover": {
-      background: "rgba(53,133,218,0.8)",
+  },
+  bannerSub: {
+    fontFamily: "Montserrat",
+    fontSize: 13,
+    color: "rgba(255,255,255,0.9)",
+    textAlign: "center",
+  },
+  formPanel: {
+    flex: "1 1 60%",
+    padding: "48px 44px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    boxSizing: "border-box",
+    "@media (max-width: 600px)": {
+      padding: "32px 20px",
     },
-    fontWeight: "bold",
+  },
+  formTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 26,
+    color: "#1061b0",
+  },
+  formSubtitle: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#8e9bb0",
+    marginTop: 4,
+    marginBottom: 26,
+  },
+  field: {
+    width: "100%",
+    marginBottom: 16,
+  },
+  inputRoot: {
+    fontFamily: "Montserrat",
+  },
+  button: {
+    width: "100%",
+    height: 48,
+    borderRadius: 12,
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 15,
+    letterSpacing: 1,
+    textTransform: "none",
+    marginTop: 8,
+    boxShadow: "0 6px 18px rgba(53, 133, 218, 0.35)",
+    "&:hover": {
+      background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+      boxShadow: "0 8px 22px rgba(53, 133, 218, 0.45)",
+    },
+  },
+  buttonOutline: {
+    width: "100%",
+    height: 48,
+    borderRadius: 12,
+    background: "#fff",
+    color: "#3585da",
+    border: "1px solid #bcd4ec",
+    fontWeight: 700,
+    fontSize: 15,
+    letterSpacing: 1,
+    textTransform: "none",
+    marginTop: 12,
+    "&:hover": {
+      background: "#f0f4f8",
+    },
   },
 });
 
@@ -163,43 +216,50 @@ export default function DoctorFP() {
   return (
     <div className="container">
       <Header />
-      <Grid item md={6} sm={5} xs={9} className={classes.border}>
-        <Grid container className={classes.dialogbox}>
-          <Grid item md={6} sm={6} xs={5} className={classes.setpatientlogo}>
-            <img src={doctorlogo} className="doctorlogo" alt="error found" />
-          </Grid>
-          <Grid item md={6} sm={12} xs={12} className={classes.loginbox}>
-            <header className={classes.loginboxheader}>FORGET PASSWORD</header>
-            <form onSubmit={formik.handleSubmit}>
-              <Grid container style={{ justifyContent: "center" }}>
-                <TextField
-                  label="Email Address"
-                  id="username"
-                  name="username"
-                  className={classes.setemail}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.username && Boolean(formik.errors.username)
-                  }
-                  helperText={formik.touched.username && formik.errors.username}
-                />
-                <Grid container>
-                  <Button type="submit" className={classes.loginbutton} fullWidth>
-                    RESET PASSWORD
-                  </Button>
-                  <Button onClick={() => history.goBack()} className={classes.loginbutton} fullWidth>
-                    BACK
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
-          </Grid>
-        </Grid>
-      </Grid>
+      <div className={classes.card}>
+        <div className={classes.banner}>
+          <div className={classes.bannerIcon}>
+            <img src={doctorlogo} className={classes.bannerImg} alt="Doctor Logo" />
+          </div>
+          <Typography className={classes.bannerText}>Reset Password</Typography>
+          <Typography className={classes.bannerSub}>
+            We will send you a reset link to your email.
+          </Typography>
+        </div>
+        <div className={classes.formPanel}>
+          <Typography className={classes.formTitle}>Forgot Password</Typography>
+          <Typography className={classes.formSubtitle}>
+            Enter your registered email address
+          </Typography>
+          <form onSubmit={formik.handleSubmit}>
+            <TextField
+              label="Email Address"
+              id="username"
+              name="username"
+              variant="outlined"
+              className={classes.field}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                classes: { input: classes.inputRoot },
+              }}
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.username && Boolean(formik.errors.username)
+              }
+              helperText={formik.touched.username && formik.errors.username}
+            />
+            <Button type="submit" variant="contained" disableElevation className={classes.button} fullWidth>
+              RESET PASSWORD
+            </Button>
+            <Button onClick={() => history.goBack()} className={classes.buttonOutline} fullWidth>
+              BACK
+            </Button>
+          </form>
+        </div>
+      </div>
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
