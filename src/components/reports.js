@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import {
-  Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination,
 } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setdata } from "../pages/statesSlice";
 import { useHistory } from "react-router";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   DialogBox: {
     width: "100%",
     borderRadius: "30px",
@@ -24,8 +24,10 @@ const useStyles = makeStyles({
     padding: "20px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    height: "calc(100vh - 48px)",
+    boxSizing: "border-box",
   },
 
   sameinfont: {
@@ -50,11 +52,18 @@ const useStyles = makeStyles({
     padding: "16px",
     boxSizing: "border-box",
     marginTop: "12px",
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    minHeight: 0,
   },
   reportsTable: {
     borderCollapse: "separate",
     borderSpacing: "0 4px",
     minWidth: 500,
+    [theme.breakpoints.down("md")]: {
+      minWidth: 760,
+    },
   },
   reportsTableHeadRow: {
     "& th": {
@@ -73,6 +82,11 @@ const useStyles = makeStyles({
     "& th:last-child": {
       borderTopRightRadius: 28,
       borderBottomRightRadius: 28,
+    },
+    [theme.breakpoints.down("md")]: {
+      "& th": {
+        minWidth: 130,
+      },
     },
   },
   reportsTableBodyRow: {
@@ -98,10 +112,16 @@ const useStyles = makeStyles({
     "&:hover td": {
       background: "#f0f7fc",
     },
+    [theme.breakpoints.down("md")]: {
+      "& td": {
+        minWidth: 130,
+      },
+    },
   },
   reportlistcontainer: {
     width: "100%",
-    maxHeight: "60vh",
+    flex: 1,
+    minHeight: 0,
     overflowY: "auto",
     overflowX: "auto",
   },
@@ -117,7 +137,7 @@ const useStyles = makeStyles({
       textDecoration: "underline",
     },
   },
-});
+}));
 
 export function Reports() {
   const classes = useStyles();
@@ -125,6 +145,8 @@ export function Reports() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [reports, setreports] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(12);
   React.useEffect(() => {
     rep.get_reports(token)
       .then(res => {
@@ -137,6 +159,7 @@ export function Reports() {
             date: "N/ATN/A"
           }])
         }
+        setPage(0)
       })
   }, [token])
 
@@ -144,6 +167,19 @@ export function Reports() {
     dispatch(setdata(data))
     history.push('/result')
   }
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  const paginatedReports = reports
+    ? reports.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    : null
 
   return (
     <div className="dashdiv">
@@ -167,10 +203,10 @@ export function Reports() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {reports ? (
-                  reports.map((item, index) => (
+                {paginatedReports ? (
+                  paginatedReports.map((item, index) => (
                     <TableRow key={index} className={classes.reportsTableBodyRow}>
-                      <TableCell align="center">{index + 1}</TableCell>
+                      <TableCell align="center">{page * rowsPerPage + index + 1}</TableCell>
                       <TableCell>{item.title}</TableCell>
                       <TableCell>{item.date.split('T')[0]}</TableCell>
                       <TableCell>{item.date.split('T')[1]}</TableCell>
@@ -195,6 +231,15 @@ export function Reports() {
               </TableBody>
             </Table>
           </TableContainer>
+          <TablePagination
+            component="div"
+            count={reports ? reports.length : 0}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[12, 24, 48]}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
         </Grid>
       </Grid>
     </div>
