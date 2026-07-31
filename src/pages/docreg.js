@@ -213,6 +213,7 @@ export default function DoctorRegistration() {
       dob: '',
       pmdcid: '',
       specialization: '',
+      experience: '',
       city: '',
       gender: '',
     },
@@ -449,6 +450,38 @@ export default function DoctorRegistration() {
                   />
                 </div>
                 <div className={classes.fieldRow}>
+                  <TextField
+                    className={classes.textfield}
+                    label="Experience"
+                    id="experience"
+                    name="experience"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={formik.values.experience}
+                    onChange={formik.handleChange}
+                    error={formik.touched.experience && Boolean(formik.errors.experience)}
+                    helperText={formik.touched.experience && formik.errors.experience}
+                  />
+                  <TextField
+                    className={classes.textfield}
+                    label="Current City"
+                    id="city"
+                    name="city"
+                    InputLabelProps={{
+                      className: classes.font,
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      className: classes.font
+                    }}
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                    error={formik.touched.city && Boolean(formik.errors.city)}
+                    helperText={formik.touched.city && formik.errors.city}
+                  />
+                </div>
+                <div className={classes.fieldRow}>
                   <FormControl component="fieldset">
                     <FormLabel component="legend" style={{ fontSize: "12px" }}>
                       Gender
@@ -476,23 +509,6 @@ export default function DoctorRegistration() {
                       />
                     </RadioGroup>
                   </FormControl>
-                  <TextField
-                    className={classes.textfield}
-                    label="Current City"
-                    id="city"
-                    name="city"
-                    InputLabelProps={{
-                      className: classes.font,
-                      shrink: true,
-                    }}
-                    inputProps={{
-                      className: classes.font
-                    }}
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                    error={formik.touched.city && Boolean(formik.errors.city)}
-                    helperText={formik.touched.city && formik.errors.city}
-                  />
                 </div>
               </Grid>
               <Button type="submit" variant="contained" className={classes.button}>

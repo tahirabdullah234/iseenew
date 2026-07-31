@@ -36,6 +36,9 @@ export const validationSchemaSignup = yup.object({
     specialization: yup
         .string("Enter you Specialization")
         .required("Specilization is Required"),
+    experience: yup
+        .string("Enter your Experience")
+        .required("Experience is Required"),
     city: yup
         .string("Enter you Practice City")
         .required("Practice City is Required"),

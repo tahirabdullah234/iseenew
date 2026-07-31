@@ -146,49 +146,56 @@ async function seed() {
       userid: doctor1._id,
       pmdcid: 'PMDC-12345',
       isVerified: true,
-      specialization: 'Ophthalmologist'
+      specialization: 'Ophthalmologist',
+      experience: '12 years'
     });
 
     var docProfile2 = await Doctor.create({
       userid: doctor2._id,
       pmdcid: 'PMDC-67890',
       isVerified: true,
-      specialization: 'Endocrinologist'
+      specialization: 'Endocrinologist',
+      experience: '8 years'
     });
 
     var docProfile3 = await Doctor.create({
       userid: doctor3._id,
       pmdcid: 'PMDC-11122',
       isVerified: true,
-      specialization: 'Retina Specialist'
+      specialization: 'Retina Specialist',
+      experience: '15 years'
     });
 
     var docProfile4 = await Doctor.create({
       userid: doctor4._id,
       pmdcid: 'PMDC-22334',
       isVerified: true,
-      specialization: 'Cardiologist'
+      specialization: 'Cardiologist',
+      experience: '20 years'
     });
 
     var docProfile5 = await Doctor.create({
       userid: doctor5._id,
       pmdcid: 'PMDC-33445',
       isVerified: true,
-      specialization: 'Diabetologist'
+      specialization: 'Diabetologist',
+      experience: '6 years'
     });
 
     var docProfile6 = await Doctor.create({
       userid: doctor6._id,
       pmdcid: 'PMDC-44556',
       isVerified: true,
-      specialization: 'General Physician'
+      specialization: 'General Physician',
+      experience: '10 years'
     });
 
     var docProfile7 = await Doctor.create({
       userid: doctor7._id,
       pmdcid: 'PMDC-55667',
       isVerified: true,
-      specialization: 'Ophthalmologist'
+      specialization: 'Ophthalmologist',
+      experience: '9 years'
     });
 
     console.log('Created doctor profiles');

@@ -14,6 +14,9 @@ var Doctor = new Schema({
     },
     specialization: {
         type: String
+    },
+    experience: {
+        type: String
     }
 });
 

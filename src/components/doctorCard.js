@@ -147,12 +147,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DoctorCard({ name, id, requested, photo }) {
+export default function DoctorCard({ name, id, requested, photo, specialization, experience }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const p_id = useSelector((state) => state.states.user._id);
   const token = useSelector((state) => state.states.token);
   const dispatch = useDispatch();
+
+  const experienceLine = experience
+    ? String(experience).toLowerCase().includes("experience")
+      ? experience
+      : `${experience} of experience in treating disease related to ${(specialization || "medicine").toLowerCase()}`
+    : "Experience not specified";
 
   const modalStyle = {
     outline: "none",
@@ -206,7 +212,7 @@ export default function DoctorCard({ name, id, requested, photo }) {
               DR {name}
             </Typography>
             <Typography className={classes.docRole}>
-              Senior Doctor
+              {specialization || "Senior Doctor"}
             </Typography>
           </div>
         </div>
@@ -214,13 +220,13 @@ export default function DoctorCard({ name, id, requested, photo }) {
           <div className={classes.infoItem}>
             <Typography className={classes.infoLabel}>Specialty</Typography>
             <Typography className={classes.infoText}>
-              MBBS, MRCCGO
+              {specialization || "General Practitioner"}
             </Typography>
           </div>
           <div className={classes.infoItem}>
             <Typography className={classes.infoLabel}>Experience</Typography>
             <Typography className={classes.infoText}>
-              10 years of experience in treating disease related to opthamology
+              {experienceLine}
             </Typography>
           </div>
           <div className={classes.button}>

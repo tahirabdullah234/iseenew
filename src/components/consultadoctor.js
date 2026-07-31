@@ -214,6 +214,8 @@ export default function ConsultDoctor() {
                       id={item._id}
                       requested={req}
                       photo={item.userid.photo}
+                      specialization={item.specialization}
+                      experience={item.experience}
                     />
                   </Grid>
                 ))
