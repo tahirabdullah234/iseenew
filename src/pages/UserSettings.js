@@ -16,7 +16,7 @@ const drawerExpanded = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
+    background: "linear-gradient(45deg,#f5f7fa 0%, #e4e9f0 100%)",
     minHeight: "100vh",
     overflowX: "hidden",
     display: "flex",
