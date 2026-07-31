@@ -223,33 +223,99 @@ async function seed() {
 
     console.log('Created BP and BG records');
 
-    // Create requests (patient1 -> doctor1)
+    // Create pending appointment requests (d_id is the Doctor profile id)
     var request1 = await Request.create({
       p_id: patient1._id,
-      d_id: doctor1._id,
+      d_id: docProfile1._id,
       msg: 'I need an eye checkup',
       name: 'John Doe'
     });
 
     var request2 = await Request.create({
       p_id: patient2._id,
-      d_id: doctor2._id,
+      d_id: docProfile2._id,
       msg: 'Need diabetes consultation',
+      name: 'Jane Smith'
+    });
+
+    var request3 = await Request.create({
+      p_id: patient1._id,
+      d_id: docProfile3._id,
+      msg: 'I have been experiencing blurred vision recently',
+      name: 'John Doe'
+    });
+
+    var request4 = await Request.create({
+      p_id: patient1._id,
+      d_id: docProfile4._id,
+      msg: 'Would like a blood pressure review',
+      name: 'John Doe'
+    });
+
+    var request5 = await Request.create({
+      p_id: patient1._id,
+      d_id: docProfile5._id,
+      msg: 'Need help managing my diabetes',
+      name: 'John Doe'
+    });
+
+    var request6 = await Request.create({
+      p_id: patient2._id,
+      d_id: docProfile1._id,
+      msg: 'I would like to schedule an eye checkup',
+      name: 'Jane Smith'
+    });
+
+    var request7 = await Request.create({
+      p_id: patient2._id,
+      d_id: docProfile3._id,
+      msg: 'Need a retina screening',
+      name: 'Jane Smith'
+    });
+
+    var request8 = await Request.create({
+      p_id: patient2._id,
+      d_id: docProfile4._id,
+      msg: 'Requesting a blood pressure consultation',
       name: 'Jane Smith'
     });
 
     console.log('Created requests');
 
-    // Accept request1 -> create appointment
+    // Create appointments (d_id is the doctor user id so it shows in doctor dashboard)
     var appointment1 = await Appointment.create({
       p_id: patient1._id,
-      d_id: docProfile1._id,
+      d_id: doctor1._id,
       date: new Date('2026-08-05'),
       time: '10:00 AM',
       name: 'John Doe'
     });
 
-    console.log('Created appointment');
+    var appointment2 = await Appointment.create({
+      p_id: patient1._id,
+      d_id: doctor2._id,
+      date: new Date('2026-08-12'),
+      time: '02:30 PM',
+      name: 'John Doe'
+    });
+
+    var appointment3 = await Appointment.create({
+      p_id: patient2._id,
+      d_id: doctor2._id,
+      date: new Date('2026-08-06'),
+      time: '11:00 AM',
+      name: 'Jane Smith'
+    });
+
+    var appointment4 = await Appointment.create({
+      p_id: patient2._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-18'),
+      time: '03:00 PM',
+      name: 'Jane Smith'
+    });
+
+    console.log('Created appointments');
 
     // Create chat between patient1 and doctor1
     var chat1 = await Chats.create({

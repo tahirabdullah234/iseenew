@@ -1,8 +1,10 @@
 import React from "react";
 
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { GraphBp, GraphGlocuse } from "./graphsUserid";
@@ -12,38 +14,245 @@ import * as reps from "../Services/reports";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import report from '../Assets/reports.svg';
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import InsertDriveFileOutlinedIcon from "@material-ui/icons/InsertDriveFileOutlined";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import WcIcon from "@material-ui/icons/Wc";
+import CakeIcon from "@material-ui/icons/Cake";
 import { setdata } from "../pages/statesSlice";
 
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-        // height: "100vh",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    DialogBox: {
         width: "100%",
-        borderRadius: "12px",
+        padding: "28px 24px",
+        boxSizing: "border-box",
+        [theme.breakpoints.down("sm")]: { padding: "20px 14px" },
+    },
+    backBtn: {
+        background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+        color: "#fff",
+        fontWeight: 700,
+        fontSize: 14,
+        textTransform: "none",
+        borderRadius: 10,
+        padding: "8px 18px",
+        marginBottom: 20,
+        boxShadow: "0 4px 12px rgba(53, 133, 218, 0.3)",
+        "&:hover": {
+            background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+        },
+    },
+    profileCard: {
+        width: "100%",
+        borderRadius: 16,
+        background: "linear-gradient(135deg, #1061b0 0%, #59c1e8 100%)",
+        boxShadow: "0 8px 24px rgba(16, 97, 176, 0.25)",
+        padding: "28px 32px",
+        boxSizing: "border-box",
+        marginBottom: 24,
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: 24,
+        [theme.breakpoints.down("sm")]: { padding: "20px 16px", gap: 16 },
+    },
+    avatar: {
+        width: 84,
+        height: 84,
         background: "#fff",
-        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-        padding: "25px",
-        margin: "auto"
+        color: "#1061B0",
+        fontWeight: 700,
+        fontSize: 32,
+        flexShrink: 0,
     },
-    button: {
-        width: "95%",
+    profileName: {
+        fontFamily: "Montserrat",
+        fontWeight: 700,
+        fontSize: 30,
+        color: "#fff",
+        textShadow: "0 2px 4px rgba(0,0,0,0.15)",
+        [theme.breakpoints.down("sm")]: { fontSize: 22 },
+    },
+    profileRole: {
+        fontFamily: "Montserrat",
+        fontSize: 13,
+        letterSpacing: "0.12em",
+        color: "rgba(255,255,255,0.85)",
+        textTransform: "uppercase",
+        marginTop: 4,
+    },
+    badges: {
+        marginLeft: "auto",
+        display: "flex",
+        gap: 16,
+        flexWrap: "wrap",
+        [theme.breakpoints.down("sm")]: { marginLeft: 0 },
+    },
+    badge: {
+        background: "rgba(255,255,255,0.18)",
+        border: "1px solid rgba(255,255,255,0.3)",
+        borderRadius: 12,
+        padding: "10px 18px",
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        minWidth: 118,
+        color: "#fff",
+    },
+    badgeLabel: {
+        fontFamily: "Montserrat",
+        fontSize: 11,
+        fontWeight: 600,
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        color: "rgba(255,255,255,0.85)",
+    },
+    badgeValue: {
+        fontFamily: "Montserrat",
+        fontSize: 16,
+        fontWeight: 700,
+        color: "#fff",
+    },
+    card: {
+        width: "100%",
+        borderRadius: 16,
+        background: "#fff",
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.08)",
+        padding: "28px 32px",
+        boxSizing: "border-box",
+        marginBottom: 24,
+        overflow: "hidden",
+        [theme.breakpoints.down("sm")]: { padding: "20px 16px" },
+    },
+    sectionTitle: {
+        display: "flex",
+        alignItems: "center",
+        fontFamily: "Montserrat",
+        fontWeight: 700,
+        fontSize: 20,
+        color: "#3585da",
+        marginBottom: 20,
+    },
+    sectionBar: {
+        display: "inline-block",
+        width: 5,
+        height: 22,
+        borderRadius: 3,
+        background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+        marginRight: 10,
+    },
+    infoItem: {
+        borderRadius: 12,
+        background: "#f7fafd",
+        border: "1px solid #eef1f6",
+        padding: "18px 20px",
+        boxSizing: "border-box",
+        height: "100%",
+    },
+    infoLabel: {
+        fontFamily: "Montserrat",
+        fontSize: 12,
+        fontWeight: 600,
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        color: "#8e9bb0",
+        marginBottom: 6,
+    },
+    infoValue: {
+        fontFamily: "Montserrat",
+        fontSize: 20,
+        fontWeight: 700,
+        color: "#2b3a55",
+    },
+    reportRow: {
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "14px 18px",
+        borderRadius: 12,
+        background: "#f7fafd",
+        border: "1px solid #eef1f6",
         marginBottom: 10,
-        fontWeight: "bold",
-        marginTop: 10,
+        cursor: "pointer",
+        transition: "background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+        "&:hover": {
+            background: "#eef4fb",
+            transform: "translateX(4px)",
+            boxShadow: "0 4px 12px rgba(53, 133, 218, 0.12)",
+        },
+        "&:last-child": { marginBottom: 0 },
     },
-    docIcon1: {
-        width: 50,
-        height: 50,
-        paddingTop: 10,
-        paddingLeft: 5,
+    reportIcon: {
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+        color: "#fff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
     },
-})
+    reportTitle: {
+        fontFamily: "Montserrat",
+        fontWeight: 700,
+        fontSize: 15,
+        color: "#2b3a55",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+    },
+    reportDate: {
+        fontFamily: "Montserrat",
+        fontSize: 13,
+        color: "#8e9bb0",
+        marginTop: 2,
+    },
+    reportArrow: {
+        marginLeft: "auto",
+        color: "#3585da",
+        flexShrink: 0,
+    },
+    emptyText: {
+        fontFamily: "Montserrat",
+        fontSize: 15,
+        color: "#8e9bb0",
+        padding: "12px 0",
+    },
+    graphCard: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 16,
+        background: "#f7fafd",
+        border: "1px solid #eef1f6",
+        padding: "20px",
+        boxSizing: "border-box",
+    },
+    graphTitle: {
+        fontFamily: "Montserrat",
+        fontWeight: 700,
+        fontSize: 16,
+        color: "#1061b0",
+        marginBottom: 16,
+    },
+}));
+
+const initials = (name) =>
+    name
+        ? name
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map((word) => word[0].toUpperCase())
+            .join("")
+        : "ISEE";
+
+const formatDate = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return String(date).split("T")[0];
+    return d.toLocaleDateString([], { year: "numeric", month: "long", day: "numeric" });
+};
 
 export default function UserInfo() {
     const classes = useStyles();
@@ -62,7 +271,6 @@ export default function UserInfo() {
 
     React.useEffect(() => {
         if (location.state) {
-            console.log(location.state)
             setuserId(location.state.id);
             auth.get_user(token, location.state.id)
                 .then(res => {
@@ -78,7 +286,7 @@ export default function UserInfo() {
                     }
                 })
         }
-    }, [])
+    }, [token, location.state])
 
     const getAge = (dateString) => {
         var today = new Date();
@@ -91,107 +299,124 @@ export default function UserInfo() {
         return age
     }
 
+    const fullName = user ? user.fname + " " + user.lname : "";
+
     return (
-        <Grid className={classes.root}>
-            <Grid container className={classes.DialogBox}>
-                <Grid item xs={2}>
-                    <Button
-                        variant="container"
-                        startIcon={<ArrowBackIcon />}
-                        className={classes.button}
-                        onClick={() => history.goBack()}
-                    >
-                        Back
-                    </Button>
-                </Grid>
-                <Grid container >
-                    <Grid
-                        item
-                        xs={12}
-                        style={{
-                            textAlign: "left", textDecoration: "underline", marginBottom: "10px"
-                        }}>
-                        <Typography variant="h5">Basic Information: </Typography>
+        <div className={classes.root}>
+            <Button
+                className={classes.backBtn}
+                startIcon={<ArrowBackIcon />}
+                onClick={() => history.goBack()}
+            >
+                Back
+            </Button>
+
+            <div className={classes.profileCard}>
+                <Avatar className={classes.avatar}>{initials(fullName)}</Avatar>
+                <Box>
+                    <Typography className={classes.profileName}>{fullName}</Typography>
+                    <Typography className={classes.profileRole}>Patient Profile</Typography>
+                </Box>
+                <div className={classes.badges}>
+                    <div className={classes.badge}>
+                        <WcIcon fontSize="small" />
+                        <Box>
+                            <Typography className={classes.badgeLabel}>Gender</Typography>
+                            <Typography className={classes.badgeValue}>{user ? user.gender : "—"}</Typography>
+                        </Box>
+                    </div>
+                    <div className={classes.badge}>
+                        <CakeIcon fontSize="small" />
+                        <Box>
+                            <Typography className={classes.badgeLabel}>Age</Typography>
+                            <Typography className={classes.badgeValue}>
+                                {user ? getAge(user.dob.split("T")[0]) : "—"}
+                            </Typography>
+                        </Box>
+                    </div>
+                </div>
+            </div>
+
+            <div className={classes.card}>
+                <Typography className={classes.sectionTitle}>
+                    <span className={classes.sectionBar} />
+                    Basic Information
+                </Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={4}>
+                        <div className={classes.infoItem}>
+                            <Typography className={classes.infoLabel}>Full Name</Typography>
+                            <Typography className={classes.infoValue}>{user ? fullName : "—"}</Typography>
+                        </div>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h6">Name: {user ? user.fname + " " + user.lname : ''}</Typography>
+                    <Grid item xs={12} sm={4}>
+                        <div className={classes.infoItem}>
+                            <Typography className={classes.infoLabel}>Gender</Typography>
+                            <Typography className={classes.infoValue}>{user ? user.gender : "—"}</Typography>
+                        </div>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h6">Gender: {user ? user.gender : ""}</Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="h6">Age: {user ? getAge(user.dob.split("T")[0]) : ""}</Typography>
-                    </Grid>
-                </Grid>
-                <hr />
-                <Grid container>
-                    <Grid
-                        item
-                        xs={12}
-                        style={{
-                            textAlign: "left", textDecoration: "underline", marginBottom: "10px"
-                        }}>
-                        <Typography variant="h5">Reports: </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        {
-                            reports ?
-                                reports.map((item) => {
-                                    return (
-                                        <Grid container onClick={() => handleClick(item.report)}>
-                                            <img src={report} alt={item.title} className={classes.docIcon1} />
-                                        </Grid>
-                                    )
-                                })
-                                :
-                                <Grid container>
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        style={{
-                                            textAlign: "left", marginBottom: "10px"
-                                        }}>
-                                        <Typography variant="body1">No Reports Avaliable </Typography>
-                                    </Grid>
-                                </Grid>
-                        }
+                    <Grid item xs={12} sm={4}>
+                        <div className={classes.infoItem}>
+                            <Typography className={classes.infoLabel}>Age</Typography>
+                            <Typography className={classes.infoValue}>{user ? getAge(user.dob.split("T")[0]) : "—"}</Typography>
+                        </div>
                     </Grid>
                 </Grid>
-                <hr />
+            </div>
+
+            <div className={classes.card}>
+                <Typography className={classes.sectionTitle}>
+                    <span className={classes.sectionBar} />
+                    Reports
+                </Typography>
                 {
-                    userId ?
-                        <Grid container className={classes.BPGLtitle}>
-                            <Grid
-                                item
-                                xs={12}
-                                style={{
-                                    textAlign: "left", textDecoration: "underline", marginBottom: "10px"
-                                }}>
-                                <Typography variant="h5">Health Information: </Typography>
-                            </Grid>
+                    reports && reports.length > 0 ?
+                        reports.map((item) => (
+                            <div
+                                key={item._id || item.title}
+                                className={classes.reportRow}
+                                onClick={() => handleClick(item.report)}
+                            >
+                                <div className={classes.reportIcon}>
+                                    <InsertDriveFileOutlinedIcon fontSize="small" />
+                                </div>
+                                <Box style={{ minWidth: 0, flex: 1 }}>
+                                    <Typography className={classes.reportTitle}>{item.title}</Typography>
+                                    <Typography className={classes.reportDate}>{formatDate(item.date)}</Typography>
+                                </Box>
+                                <ChevronRightIcon className={classes.reportArrow} />
+                            </div>
+                        ))
+                        :
+                        <Typography className={classes.emptyText}>No Reports Available</Typography>
+                }
+            </div>
+
+            {
+                userId ?
+                    <div className={classes.card}>
+                        <Typography className={classes.sectionTitle}>
+                            <span className={classes.sectionBar} />
+                            Health Information
+                        </Typography>
+                        <Grid container spacing={2}>
                             <Grid item xs={12} md={6}>
-                                <Typography className={classes.timeline} variant="h6">
-                                    BLOOD PRESSURE
-                                </Typography>
-                                <Grid container className={classes.graphctn}>
+                                <div className={classes.graphCard}>
+                                    <Typography className={classes.graphTitle}>Blood Pressure</Typography>
                                     <GraphBp userId={userId} />
-                                </Grid>
+                                </div>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Typography className={classes.timeline} variant="h6">
-                                    GLUCOSE LEVEL
-                                </Typography>
-                                <Grid container className={classes.graphctn}>
+                                <div className={classes.graphCard}>
+                                    <Typography className={classes.graphTitle}>Glucose Level</Typography>
                                     <GraphGlocuse userId={userId} />
-                                </Grid>
+                                </div>
                             </Grid>
                         </Grid>
-                        :
-                        <Grid></Grid>
-
-                }
-
-            </Grid>
-        </Grid >
+                    </div>
+                    :
+                    null
+            }
+        </div>
     )
 }

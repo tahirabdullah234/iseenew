@@ -144,7 +144,7 @@ router.get("/bg_graph/:id", authenticate.verifyUser, (req, res) => {
         success: false,
         err: err,
       });
-    else if (record.lenght > 0) {
+    else if (record.length > 0) {
       var fasting = [];
       var random = [];
       var fdates = [];
@@ -501,7 +501,7 @@ router.get("/databg/:_id", authenticate.verifyUser, (req, res) => {
         err: err.name,
         success: false
       })
-    else if (record.lenght > 0) {
+    else if (record.length > 0) {
       var fasting = [];
       var random = [];
       var fdates = [];
