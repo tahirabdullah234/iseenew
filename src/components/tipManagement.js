@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
     background: "#fff",
     boxShadow: "0 8px 24px rgba(16, 97, 176, 0.08)",
-    padding: "28px 32px",
+    padding: "20px",
     boxSizing: "border-box",
     "@media (max-width: 600px)": {
-      padding: "20px 16px",
+      padding: "16px",
     },
   },
   pageTitle: {
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     fontSize: 26,
     color: "#3585da",
+    textDecoration: "underline",
   },
   pageSubtitle: {
     fontFamily: "Montserrat",
