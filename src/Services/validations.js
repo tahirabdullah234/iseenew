@@ -154,3 +154,10 @@ export const validationSchemaForgotPassword = yup.object({
         }),
 
 })
+
+export const validationSchemaChangeEmail = yup.object({
+    email: yup
+        .string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+})

@@ -146,7 +146,18 @@ router.post("/uploadprofilepicture", authenticate.verifyUser, (req, res) => {
     if (err) {
       res.sendStatus(500);
     }
-    res.send(req.file);
+    if (req.file) {
+      const photo = "/images/" + req.user._id + "." + req.file.mimetype.split('/')[1] + "?v=" + Date.now();
+      User.findByIdAndUpdate(req.user._id, { photo: photo }, { new: true }, (err, user) => {
+        if (err) {
+          res.json({ success: false, err: err.name });
+        } else {
+          res.json({ success: true, filename: req.file.filename, user });
+        }
+      });
+    } else {
+      res.json({ success: false, err: "No file uploaded" });
+    }
   });
 })
 

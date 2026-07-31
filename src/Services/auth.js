@@ -48,3 +48,25 @@ export const get_user = (token, id) => {
         }
     })
 }
+
+export const update_email = (token, payload) => {
+    return axios.put("/settings/update_email", payload, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
+
+export const upload_profile_picture = (token, file) => {
+    const data = new FormData();
+    data.append("file", file);
+    return axios.post("/users/uploadprofilepicture", data, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}

@@ -21,6 +21,7 @@ import Result from "../pages/results";
 import UserInfo from "../pages/userinfo";
 import Chat from "../pages/chat";
 import Doctor from "../pages/doctor";
+import TipManagementPage from "../pages/tipmanagement";
 
 export default function Main() {
     const islogin = useSelector((state) => state.states.islogin)
@@ -111,6 +112,9 @@ const DoctorRoutes = () => {
             </Route>
             <Route path="/messages">
                 <Chat />
+            </Route>
+            <Route path="/tips">
+                <TipManagementPage />
             </Route>
             <Route path="*">
                 <Redirect to="/" />

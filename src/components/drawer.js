@@ -4,6 +4,8 @@ import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 import iseeLogo from "../Assets/isee logo white-01.png";
 import iseeLogoCompact from "../Assets/ISEE-01.png";
@@ -16,6 +18,7 @@ import user from "../Assets/user (2).svg";
 import appointment from "../Assets/appointment.svg";
 import dashboard from "../Assets/dashboard.png";
 import view from "../Assets/view.svg";
+import guideline from "../Assets/guideline.svg";
 
 import photo1 from "../Assets/user1-photo.png";
 import photo2 from "../Assets/user2-photo.png";
@@ -25,7 +28,8 @@ import photo5 from "../Assets/user5-photo.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router";
-import { logout } from "../pages/statesSlice";
+import { logout, setphoto } from "../pages/statesSlice";
+import * as auth from "../Services/auth";
 
 const userPhotos = [null, photo1, photo2, photo3, photo4, photo5];
 
@@ -179,6 +183,30 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     flexShrink: 0,
   },
+  avatarBtn: {
+    position: "relative",
+    padding: 0,
+    flexShrink: 0,
+    "&:hover $avatarOverlay": {
+      opacity: 1,
+    },
+  },
+  avatarOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: "50%",
+    background: "rgba(0,0,0,0.5)",
+    color: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0,
+    transition: "opacity 0.2s ease",
+    cursor: "pointer",
+  },
   userText: {
     display: "flex",
     flexDirection: "column",
@@ -330,6 +358,7 @@ const doctorSections = [
     items: [
       { to: "/", exact: true, icon: dashboard, label: "Dashboard" },
       { to: "/checkdisease", icon: view, label: "Disease Detection" },
+      { to: "/tips", icon: guideline, label: "Manage Tips" },
     ],
   },
   {
@@ -375,9 +404,15 @@ export default function MainDrawer({ expanded }) {
   const isdoctor = useSelector((state) => state.states.isdoctor);
   const name = useSelector((state) => state.states.name);
   const user = useSelector((state) => state.states.user);
+  const token = useSelector((state) => state.states.token);
+  const fileInputRef = React.useRef(null);
   const sections = isdoctor ? doctorSections : userSections;
   const userPhoto =
-    user && user.photo >= 1 && user.photo <= 5 ? userPhotos[user.photo] : null;
+    user && typeof user.photo === "string"
+      ? user.photo
+      : user && user.photo >= 1 && user.photo <= 5
+        ? userPhotos[user.photo]
+        : null;
 
   const paperClass = expanded
     ? `${classes.paper} ${classes.drawerOpen}`
@@ -386,6 +421,19 @@ export default function MainDrawer({ expanded }) {
   const handleLogout = () => {
     dispatch(logout());
     history.push("/");
+  };
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!file || !user || !user._id) return;
+    auth.upload_profile_picture(token, file)
+      .then((res) => {
+        if (res.data && res.data.filename) {
+          dispatch(setphoto("/" + res.data.filename + "?t=" + Date.now()));
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -404,11 +452,26 @@ export default function MainDrawer({ expanded }) {
           />
         </div>
         <div className={classes.userCard}>
-          {userPhoto ? (
-            <Avatar src={userPhoto} className={classes.avatar} />
-          ) : (
-            <Avatar className={classes.avatar}>{initials(name)}</Avatar>
-          )}
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handlePhotoChange}
+          />
+          <IconButton
+            className={classes.avatarBtn}
+            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+          >
+            {userPhoto ? (
+              <Avatar src={userPhoto} className={classes.avatar} />
+            ) : (
+              <Avatar className={classes.avatar}>{initials(name)}</Avatar>
+            )}
+            <span className={classes.avatarOverlay}>
+              <PhotoCameraIcon fontSize="small" />
+            </span>
+          </IconButton>
           <div className={classes.userText}>
             <span className={classes.userName}>{name || "ISEE User"}</span>
             <span className={classes.userRole}>

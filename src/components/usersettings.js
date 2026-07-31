@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import {
   validationSchemePatientBasic,
   validationSchemaForgotPassword,
+  validationSchemaChangeEmail,
 } from "../Services/validations";
 import * as auth from "../Services/auth";
 import { setuser } from "../pages/statesSlice";
@@ -183,6 +184,33 @@ export function UserSettings() {
     },
   });
 
+  const formikEmail = useFormik({
+    initialValues: {
+      email: user.username || "",
+    },
+    validationSchema: validationSchemaChangeEmail,
+    onSubmit: (values) => {
+      auth.update_email(token, { email: values.email }).then((res) => {
+        if (res.data.success) {
+          dispatch(setuser(res.data.user));
+          setsnackbar({
+            ...snackbar,
+            open: true,
+            msg: "Email updated successfully",
+            type: "success",
+          });
+        } else {
+          setsnackbar({
+            ...snackbar,
+            open: true,
+            msg: res.data.err || res.data.message || "Could not update email",
+            type: "error",
+          });
+        }
+      });
+    },
+  });
+
   return (
     <div className="dashdiv">
       <Grid item xs={12} className={classes.DialogBox}>
@@ -315,6 +343,36 @@ export function UserSettings() {
                   onChange={formikchangepass.handleChange}
                   error={formikchangepass.touched.confirmpassword && Boolean(formikchangepass.errors.confirmpassword)}
                   helperText={formikchangepass.touched.confirmpassword && formikchangepass.errors.confirmpassword}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center" mt={2}>
+                  <Button className={classes.button} variant="contained" disableElevation type="submit" style={{ width: 200 }}>
+                    UPDATE
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
+        <Grid item xs={12} className={classes.sectionCard}>
+          <Typography className={classes.sectionTitle}>
+            CHANGE EMAIL
+          </Typography>
+          <form onSubmit={formikEmail.handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="New Email Address"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
+                  name="email"
+                  value={formikEmail.values.email}
+                  onChange={formikEmail.handleChange}
+                  error={formikEmail.touched.email && Boolean(formikEmail.errors.email)}
+                  helperText={formikEmail.touched.email && formikEmail.errors.email}
                 />
               </Grid>
               <Grid item xs={12}>

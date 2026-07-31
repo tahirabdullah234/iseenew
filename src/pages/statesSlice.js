@@ -75,6 +75,10 @@ export const stateSlice = createSlice({
       state.name = action.payload.fname + " " + action.payload.lname;
       saveAuth(state);
     },
+    setphoto: (state, action) => {
+      state.user.photo = action.payload;
+      saveAuth(state);
+    },
     setdoctortrue: (state) => {
       state.isdoctor = true;
       saveAuth(state);
@@ -104,6 +108,7 @@ export const {
   logout,
   settoken,
   setuser,
+  setphoto,
   setdoctortrue,
   setdoctorfalse,
   setdata,
