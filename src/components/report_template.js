@@ -167,9 +167,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Template() {
     const classes = useStyles();
-    const user = useSelector((state) => state.states.user)
-    const data = useSelector((state) => state.states.data)
+    const user = useSelector((state) => state.states.user) || {}
+    const data = useSelector((state) => state.states.data) || {}
     const name = useSelector((state) => state.states.name)
+    const date = String(data.date || "").split("T")[0]
+    const dob = String(user.dob || "").slice(0, 10)
 
     return (
         <Grid item xs={12} className={classes.border}>
@@ -196,7 +198,7 @@ export default function Template() {
                     </Box>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Date:</Typography>
-                        <Typography className={classes.infoValue}>{data.date.split('T')[0]}</Typography>
+                        <Typography className={classes.infoValue}>{date}</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} className={classes.infoColumn}>
@@ -206,7 +208,7 @@ export default function Template() {
                     </Box>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Date Of Birth:</Typography>
-                        <Typography className={classes.infoValue}>{user.dob.slice(0, 10)}</Typography>
+                        <Typography className={classes.infoValue}>{dob}</Typography>
                     </Box>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Gender:</Typography>
@@ -247,7 +249,7 @@ export default function Template() {
                             <strong>Report ID:</strong> {data._id}
                         </Typography>
                         <Typography className={classes.recText} style={{ marginTop: 8 }}>
-                            <strong>Date:</strong> {data.date.split('T')[0]}
+                            <strong>Date:</strong> {date}
                         </Typography>
                         <Typography className={classes.recText} style={{ marginTop: 12 }}>
                             {data.prediction >= 1
@@ -288,7 +290,7 @@ export default function Template() {
                         <ListItemText
                             primary={
                                 <Typography className={classes.recText}>
-                                    Report Date: {data.date.split('T')[0]}
+                                    Report Date: {date}
                                 </Typography>
                             }
                         />
