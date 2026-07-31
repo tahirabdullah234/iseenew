@@ -51,9 +51,9 @@ const initials = (fullName) =>
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "28px 24px",
+    padding: "24px 32px",
     boxSizing: "border-box",
-    [theme.breakpoints.down("sm")]: { padding: "20px 14px" },
+    [theme.breakpoints.down("sm")]: { padding: "16px 14px" },
   },
   profileCard: {
     width: "100%",

@@ -24,9 +24,9 @@ import { setdata } from "../pages/statesSlice";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
-        padding: "28px 24px",
+        padding: "24px 32px",
         boxSizing: "border-box",
-        [theme.breakpoints.down("sm")]: { padding: "20px 14px" },
+        [theme.breakpoints.down("sm")]: { padding: "16px 14px" },
     },
     backBtn: {
         background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",

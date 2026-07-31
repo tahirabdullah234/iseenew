@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "center",
-    padding: 16,
+    padding: "24px 32px",
+    boxSizing: "border-box",
+    [theme.breakpoints.down("sm")]: { padding: "16px 14px" },
   },
   card: {
     width: "100%",
