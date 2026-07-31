@@ -48,24 +48,33 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     fontSize: 26,
     marginTop: 12,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 20,
+    },
   },
   bannerSub: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: 18,
     opacity: 0.92,
     marginTop: 6,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
   },
   bannerBadge: {
     display: "inline-block",
     fontFamily: "Montserrat",
     fontWeight: 600,
-    fontSize: 11,
+    fontSize: 18,
     letterSpacing: "0.12em",
     background: "rgba(255,255,255,0.18)",
     border: "1px solid rgba(255,255,255,0.45)",
     padding: "4px 14px",
     borderRadius: 999,
     marginTop: 14,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14,
+    },
   },
   stepsRow: {
     display: "flex",
@@ -85,15 +94,20 @@ const useStyles = makeStyles((theme) => ({
     gap: 8,
   },
   stepCircle: {
-    width: 30,
-    height: 30,
+    width: 38,
+    height: 38,
     borderRadius: "50%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "Montserrat",
     fontWeight: 700,
-    fontSize: 13,
+    fontSize: 18,
+    [theme.breakpoints.down("xs")]: {
+      width: 30,
+      height: 30,
+      fontSize: 14,
+    },
   },
   stepDone: {
     background: "#43a047",
@@ -111,7 +125,10 @@ const useStyles = makeStyles((theme) => ({
   stepLabel: {
     fontFamily: "Montserrat",
     fontWeight: 600,
-    fontSize: 12,
+    fontSize: 18,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14,
+    },
   },
   connector: {
     width: 36,
@@ -142,13 +159,19 @@ const useStyles = makeStyles((theme) => ({
     gridColumn: "1 / -1",
     fontFamily: "Montserrat",
     fontWeight: 700,
-    fontSize: 12,
+    fontSize: 18,
     letterSpacing: "0.1em",
     color: "#1061b0",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
   },
   fieldInput: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: 18,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 16,
+    },
   },
   preview: {
     border: "2px dashed #a9c9ea",
@@ -175,9 +198,12 @@ const useStyles = makeStyles((theme) => ({
   },
   previewText: {
     fontFamily: "Montserrat",
-    fontSize: 15,
+    fontSize: 18,
     color: "#6b8cab",
     marginTop: 12,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
   },
   fileBar: {
     display: "flex",
@@ -192,11 +218,14 @@ const useStyles = makeStyles((theme) => ({
   fileName: {
     flex: 1,
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: 18,
     color: "#333",
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
   },
   actionRow: {
     display: "flex",
@@ -210,11 +239,15 @@ const useStyles = makeStyles((theme) => ({
     background: "#fff",
     color: "#3585da",
     fontWeight: 700,
+    fontSize: 18,
     borderRadius: 12,
     padding: "12px 20px",
     border: "2px solid #3585da",
     fontFamily: "Montserrat",
     letterSpacing: "0.04em",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
     "&:hover": {
       background: "#f0f7fc",
     },
@@ -225,11 +258,15 @@ const useStyles = makeStyles((theme) => ({
     background: "linear-gradient(45deg,#3585da,#59c1e8)",
     color: "#fff",
     fontWeight: 700,
+    fontSize: 18,
     borderRadius: 12,
     padding: "12px 20px",
     fontFamily: "Montserrat",
     letterSpacing: "0.04em",
     boxShadow: "0 3px 10px rgba(53,133,218,0.35)",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
     "&:hover": {
       background: "linear-gradient(45deg,#2d76c4,#4db0d8)",
     },
@@ -243,10 +280,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#3585da",
     textDecoration: "underline",
     fontFamily: "Montserrat",
-    fontSize: 13,
+    fontSize: 18,
     cursor: "pointer",
     background: "none",
     border: "none",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 15,
+    },
   },
 }));
 
@@ -371,7 +411,7 @@ export function RetinaScan() {
                     step > i ? classes.stepDone : step === i ? classes.stepActive : classes.stepPending
                   }`}
                 >
-                  {step > i ? <CheckIcon style={{ fontSize: 16 }} /> : i + 1}
+                  {step > i ? <CheckIcon style={{ fontSize: 20 }} /> : i + 1}
                 </Box>
                 <Typography
                   className={classes.stepLabel}
@@ -447,10 +487,10 @@ export function RetinaScan() {
 
           {scan && (
             <Box className={classes.fileBar}>
-              <InsertDriveFileIcon style={{ color: "#3585da", fontSize: 18 }} />
+              <InsertDriveFileIcon style={{ color: "#3585da", fontSize: 22 }} />
               <Typography className={classes.fileName}>{scan.filename || "Scan"}</Typography>
               <IconButton size="small" onClick={handleRemove}>
-                <CloseIcon fontSize="small" />
+                <CloseIcon style={{ fontSize: 22 }} />
               </IconButton>
             </Box>
           )}
