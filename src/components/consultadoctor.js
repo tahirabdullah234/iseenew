@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "16px",
     background: "#fff",
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    padding: "30px",
+    padding: "20px",
     display: "flex",
     flexDirection: "column",
     boxSizing: "border-box",
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#f0f4f8",
     boxShadow: "none",
     "@media (max-width: 700px)": {
-      fontSize: 15,
+      fontSize: 13,
     },
     "&:hover": {
       background: "#e3ebf2",
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-start",
     alignContent: "flex-start",
-    height: "68vh",
+    height: "78vh",
     overflowY: "auto",
     overflowX: "hidden",
     margin: -16,
