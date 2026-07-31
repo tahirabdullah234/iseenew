@@ -64,10 +64,10 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #eef2f6",
     boxShadow: "0 4px 16px rgba(16,97,176,0.12)",
     "@media (max-width: 700px)": {
-      margin: 0,
-      borderRadius: 0,
-      border: "none",
-      boxShadow: "none",
+      margin: "16px 14px",
+      // borderRadius: 0,
+      // border: "none",
+      // boxShadow: "none",
     },
   },
   sidebar: {
