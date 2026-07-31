@@ -1,12 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Grid, Typography } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 import iseeLogo from "../Assets/isee logo white-01.png";
 import blood from "../Assets/blood.svg";
@@ -15,26 +12,37 @@ import report from "../Assets/document.svg";
 import exit from "../Assets/exit.svg";
 import heart from "../Assets/heart.svg";
 import user from "../Assets/user (2).svg";
-import doctor from "../Assets/doctor-female.png";
-import classify from "../Assets/ISEE-01.png";
-import appointment from "../Assets/appointment.png"
+import appointment from "../Assets/appointment.svg";
 import dashboard from "../Assets/dashboard.png";
+import view from "../Assets/view.svg";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from "react-router";
+import photo1 from "../Assets/user1-photo.png";
+import photo2 from "../Assets/user2-photo.png";
+import photo3 from "../Assets/user3-photo.png";
+import photo4 from "../Assets/user4-photo.png";
+import photo5 from "../Assets/user5-photo.png";
+
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory, useRouteMatch } from "react-router";
 import { logout } from "../pages/statesSlice";
+
+const userPhotos = [null, photo1, photo2, photo3, photo4, photo5];
 
 const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    height: "100%",
   },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: "none",
+  paper: {
+    backgroundColor: "#1061B0",
+    color: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    borderRight: "none",
+    boxShadow: "2px 0 8px rgba(0,0,0,0.08)",
+    height: "100%",
   },
   drawer: {
     flexShrink: 0,
@@ -42,212 +50,367 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   drawerClose: {
-    backgroundColor: "#1061B0",
-    color: "#1061B0",
+    width: theme.spacing(10) + 1,
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(12) + 1,
+    },
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
-    width: theme.spacing(10) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(12) + 1,
+    "& $sectionLabel": {
+      opacity: 1,
+      textAlign: "center",
+      padding: "14px 0 4px",
+    },
+    "& $itemText": {
+      opacity: 0,
+      width: 0,
+      flex: "0 0 0",
+    },
+    "& $userText": {
+      opacity: 0,
+      width: 0,
+      marginLeft: 0,
+    },
+    "& $navItem": {
+      justifyContent: "center",
+      padding: "10px 0",
+    },
+    "& $iconWrap": {
+      marginRight: 0,
+    },
+    "& $userCard": {
+      justifyContent: "center",
+      padding: "14px 8px",
+    },
+    "& $divider": {
+      opacity: 0,
     },
     "&:hover": {
       width: drawerWidth,
       backgroundColor: "#1061B0",
-      color: "#fff",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      "& $sectionLabel": {
+        opacity: 1,
+        textAlign: "left",
+        padding: "16px 24px 6px",
+      },
+      "& $itemText": {
+        opacity: 1,
+        width: "auto",
+        flex: "1 1 auto",
+      },
+      "& $userText": {
+        opacity: 1,
+        width: "auto",
+        marginLeft: 12,
+      },
+      "& $navItem": {
+        justifyContent: "flex-start",
+        padding: "10px 20px",
+      },
+      "& $iconWrap": {
+        marginRight: 16,
+      },
+      "& $userCard": {
+        justifyContent: "flex-start",
+        padding: "14px 16px",
+      },
+      "& $divider": {
+        opacity: 1,
+      },
     },
   },
   drawerOpen: {
-    backgroundColor: "#1061B0",
-    color: "#fff",
     width: drawerWidth,
     overflowX: "hidden",
   },
   toolbar: {
-    backgroundColor: '#003C72',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#003C72",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+    flexShrink: 0,
     ...theme.mixins.toolbar,
+    cursor: "pointer",
   },
-  toolbarContent: {
-    display: 'flex',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
+  userCard: {
+    display: "flex",
+    alignItems: "center",
+    padding: "14px 16px",
+    borderBottom: "1px solid rgba(255,255,255,0.14)",
+    flexShrink: 0,
+    minHeight: 64,
+    overflow: "hidden",
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  imageIcon: {
+  avatar: {
     width: 40,
     height: 40,
-    marginRight: 20,
-    marginLeft: 5,
-  },
-  listItemTextStyle: {
+    backgroundColor: "#fff",
+    color: "#1061B0",
+    fontWeight: 700,
     fontSize: 16,
-    fontWeight: 600,
+    flexShrink: 0,
   },
-  listcenter: {
-    alignItems: "center"
-  }
+  userText: {
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: 12,
+    minWidth: 0,
+    overflow: "hidden",
+    transition: "opacity 0.2s ease",
+  },
+  userName: {
+    fontSize: 14,
+    fontWeight: 700,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: 170,
+  },
+  userRole: {
+    fontSize: 11,
+    letterSpacing: "0.08em",
+    color: "rgba(255,255,255,0.6)",
+    textTransform: "uppercase",
+    marginTop: 2,
+  },
+  body: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    minHeight: 0,
+  },
+  nav: {
+    flex: 1,
+    overflowY: "auto",
+    paddingBottom: 8,
+  },
+  sectionLabel: {
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: "0.12em",
+    color: "rgba(255,255,255,0.5)",
+    textTransform: "uppercase",
+    padding: "16px 24px 6px",
+    whiteSpace: "nowrap",
+    transition: "opacity 0.2s ease",
+  },
+  navItem: {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 20px",
+    position: "relative",
+    transition: "background-color 0.2s ease, padding 0.2s ease",
+    "&.MuiListItem-button:hover": {
+      backgroundColor: "rgba(255,255,255,0.08)",
+    },
+    "&$navItemActive": {
+      backgroundColor: "rgba(255,255,255,0.15)",
+      "&.MuiListItem-button:hover": {
+        backgroundColor: "rgba(255,255,255,0.15)",
+      },
+      "&::before": {
+        content: '""',
+        position: "absolute",
+        left: 0,
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: 4,
+        height: 28,
+        borderRadius: "0 2px 2px 0",
+        backgroundColor: "#fff",
+      },
+    },
+  },
+  navItemActive: {},
+  iconWrap: {
+    width: 28,
+    height: 28,
+    flexShrink: 0,
+    marginRight: 16,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "margin-right 0.2s ease",
+  },
+  icon: {
+    width: 28,
+    height: 28,
+    objectFit: "contain",
+  },
+  itemText: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: "rgba(255,255,255,0.85)",
+    whiteSpace: "nowrap",
+    minWidth: 0,
+    overflow: "hidden",
+    transition: "opacity 0.2s ease",
+  },
+  itemTextActive: {
+    color: "#fff",
+    fontWeight: 700,
+  },
+  bottom: {
+    flexShrink: 0,
+  },
+  divider: {
+    backgroundColor: "rgba(255,255,255,0.14)",
+    transition: "opacity 0.2s ease",
+  },
 }));
+
+const initials = (fullName) =>
+  fullName
+    ? fullName
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((word) => word[0].toUpperCase())
+        .join("")
+    : "ISEE";
+
+const userSections = [
+  {
+    title: "Main",
+    items: [
+      { to: "/", exact: true, icon: dashboard, label: "Dashboard" },
+      { to: "/checkdisease", icon: view, label: "Disease Detection" },
+    ],
+  },
+  {
+    title: "Health",
+    items: [
+      { to: "/reports", icon: report, label: "Reports" },
+      { to: "/bloodglocuse", icon: blood, label: "Blood Glucose" },
+      { to: "/bloodpressure", icon: heart, label: "Blood Pressure" },
+      { to: "/appointdoctor", icon: appointment, label: "Appoint Doctors" },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { to: "/editprofile", icon: user, label: "User Profile" },
+      { to: "/messages", icon: chat, label: "Messages" },
+    ],
+  },
+];
+
+const doctorSections = [
+  {
+    title: "Main",
+    items: [
+      { to: "/", exact: true, icon: dashboard, label: "Dashboard" },
+      { to: "/checkdisease", icon: view, label: "Disease Detection" },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { to: "/editprofile", icon: user, label: "Profile" },
+      { to: "/messages", icon: chat, label: "Messages" },
+    ],
+  },
+];
+
+const SideNavItem = ({ to, exact, icon, label, onClick }) => {
+  const classes = useStyles();
+  const history = useHistory();
+  const match = useRouteMatch(to ? { path: to, exact } : { path: "__none__" });
+
+  const itemClass = match
+    ? `${classes.navItem} ${classes.navItemActive}`
+    : classes.navItem;
+  const textClass = match
+    ? `${classes.itemText} ${classes.itemTextActive}`
+    : classes.itemText;
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    else if (to) history.push(to);
+  };
+
+  return (
+    <ListItem button className={itemClass} onClick={handleClick}>
+      <span className={classes.iconWrap}>
+        <img src={icon} alt={label} className={classes.icon} />
+      </span>
+      <span className={textClass}>{label}</span>
+    </ListItem>
+  );
+};
 
 export default function MainDrawer({ expanded }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const isdoctor = useSelector((state) => state.states.isdoctor)
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const isdoctor = useSelector((state) => state.states.isdoctor);
+  const name = useSelector((state) => state.states.name);
+  const user = useSelector((state) => state.states.user);
+  const sections = isdoctor ? doctorSections : userSections;
+  const userPhoto =
+    user && user.photo >= 1 && user.photo <= 5 ? userPhotos[user.photo] : null;
 
-  const handleDrawer = () => {
-    setOpen(!open);
+  const paperClass = expanded
+    ? `${classes.paper} ${classes.drawerOpen}`
+    : `${classes.paper} ${classes.drawerClose}`;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/");
   };
-
-  const paperClass = expanded ? classes.drawerOpen : classes.drawerClose;
 
   return (
     <div className={classes.root}>
-      <Grid container>
-        <Drawer variant="permanent" className={classes.drawer} classes={{ paper: paperClass }}>
-          <Grid item className={classes.toolbar}>
-            <img src={iseeLogo}
-              alt="ISEE Logo"
-              style={{ width: '100px' }}
-              onClick={handleDrawer}
-            />
-          </Grid>
-          <Divider />
-          <Grid container xs={12} className={classes.listcenter}>
-            {isdoctor ? <DoctorActions /> : <UserActions />}
-          </Grid>
-        </Drawer>
-      </Grid>
+      <Drawer
+        variant="permanent"
+        className={classes.drawer}
+        classes={{ paper: paperClass }}
+      >
+        <div className={classes.toolbar} onClick={() => history.push("/")}>
+          <img
+            src={iseeLogo}
+            alt="ISEE Logo"
+            style={{ width: "100px" }}
+          />
+        </div>
+        <div className={classes.userCard}>
+          {userPhoto ? (
+            <Avatar src={userPhoto} className={classes.avatar} />
+          ) : (
+            <Avatar className={classes.avatar}>{initials(name)}</Avatar>
+          )}
+          <div className={classes.userText}>
+            <span className={classes.userName}>{name || "ISEE User"}</span>
+            <span className={classes.userRole}>
+              {isdoctor ? "Doctor" : "Patient"}
+            </span>
+          </div>
+        </div>
+        <div className={classes.body}>
+          <nav className={classes.nav}>
+            {sections.map((section) => (
+              <div key={section.title}>
+                <div className={classes.sectionLabel}>{section.title}</div>
+                {section.items.map((item) => (
+                  <SideNavItem key={item.label} {...item} />
+                ))}
+              </div>
+            ))}
+          </nav>
+          <div className={classes.bottom}>
+            <Divider className={classes.divider} />
+            <SideNavItem icon={exit} label="Logout" onClick={handleLogout} />
+          </div>
+        </div>
+      </Drawer>
     </div>
   );
 }
-
-const UserActions = () => {
-  const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  return (
-    <List>
-      <ListItem button key="dashboard" onClick={() => history.push("/")}>
-        <ListItemIcon>
-          <img src={dashboard} alt='HOME' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DASHBOARD</Typography>} />
-      </ListItem>
-      <ListItem button key={1} onClick={() => history.push("/editprofile")}>
-        <ListItemIcon>
-          <img src={user} alt='User' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>USER PROFILE</Typography>} />
-      </ListItem>
-      <ListItem button key={2} onClick={() => history.push("/checkdisease")}>
-        <ListItemIcon>
-          <img src={classify} alt='Classify Disease' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DISEASE DETECTION<br />SYSTEM</Typography>}
-        />
-      </ListItem>
-      <ListItem button key={3} onClick={() => history.push("/reports")}>
-        <ListItemIcon>
-          <img src={report} alt='Reports' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>REPORTS</Typography>} />
-      </ListItem>
-      <ListItem button key={4} onClick={() => history.push("/bloodglocuse")}>
-        <ListItemIcon>
-          <img src={blood} alt='Blood Glocuse' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MANAGE BLOOD<br />GLUCOSE</Typography>} />
-      </ListItem>
-      <ListItem button key={5} onClick={() => history.push("/bloodpressure")}>
-        <ListItemIcon>
-          <img src={heart} alt='Blood Pressure' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MANAGE BLOOD<br />PRESSURE</Typography>} />
-      </ListItem>
-      <ListItem button key={6} onClick={() => history.push("/appointdoctor")}>
-        <ListItemIcon>
-          <img src={doctor} alt='Doctor' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>APPOINT DOCTORS</Typography>} />
-      </ListItem>
-      <ListItem button key={7} onClick={() => history.push("/messages")}>
-        <ListItemIcon>
-          <img src={chat} alt='chat' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MESSAGES</Typography>} />
-      </ListItem>
-      <ListItem button key={8} onClick={() => {
-        dispatch(logout());
-        history.push('/')
-      }}>
-        <ListItemIcon>
-          <img src={exit} alt='Logout' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>LOGOUT</Typography>} />
-      </ListItem>
-    </List>
-  )
-}
-
-const DoctorActions = () => {
-  const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  return (
-    <List>
-      <ListItem button key="dashboard" onClick={() => history.push("/")}>
-        <ListItemIcon>
-          <img src={dashboard} alt='HOME' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DASHBOARD</Typography>} />
-      </ListItem>
-      <ListItem button key={1} onClick={() => history.push("/editprofile")}>
-        <ListItemIcon>
-          <img src={user} alt='User' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>PROFILE</Typography>} />
-      </ListItem>
-      <ListItem button key={2} onClick={() => history.push("/checkdisease")}>
-        <ListItemIcon>
-          <img src={classify} alt='Classify Disease' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>DISEASE DETECTION<br />SYSTEM</Typography>}
-        />
-      </ListItem>
-      <ListItem button key={7} onClick={() => history.push("/messages")}>
-        <ListItemIcon>
-          <img src={chat} alt='chat' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>MESSAGES</Typography>} />
-      </ListItem>
-      <ListItem button key={8} onClick={() => {
-        dispatch(logout());
-        history.push('/')
-      }}>
-        <ListItemIcon>
-          <img src={exit} alt='Logout' className={classes.imageIcon} />
-        </ListItemIcon>
-        <ListItemText primary={<Typography variant="body1" className={classes.listItemTextStyle}>LOGOUT</Typography>} />
-      </ListItem>
-    </List>
-  )
-}
-
-    // <main className={classes.content}>
-    //   <div className={classes.toolbarContent} />
-    //   {props.children}
-    // </main>

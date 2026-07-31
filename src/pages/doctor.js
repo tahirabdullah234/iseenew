@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         minWidth: 0,
         transition: "max-width 0.3s ease",
-        padding: "24px 32px",
     },
     menuBtn: {
         background: "#1061B0",
