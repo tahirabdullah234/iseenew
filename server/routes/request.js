@@ -267,65 +267,82 @@ router.get("/get_apponitment_p", authenticate.verifyUser, async (req, res) => {
   }
 });
 
-router.get("/patient/get_chat", authenticate.verifyUser, (req, res) => {
-  Chat.find({ p_id: req.user._id })
-    .populate("d_id")
-    .then((data, err) => {
-      console.log(data);
-      if (err) {
-        res.json({
-          err: err.name,
-          success: false,
-        });
-      } else {
-        res.json({
-          success: true,
-          chats: data,
-        });
-      }
-    });
+router.get("/patient/get_chat", authenticate.verifyUser, async (req, res) => {
+  try {
+    const chats = await Chat.find({ p_id: req.user._id }).populate("d_id").lean();
+    const result = await Promise.all(
+      chats.map(async (chat) => {
+        const last = await Message.findOne({
+          p_id: req.user._id,
+          d_id: chat.d_id ? chat.d_id._id : null,
+          deletedBy: { $nin: [req.user._id] },
+        })
+          .sort({ createdAt: -1, _id: -1 })
+          .lean();
+        return {
+          ...chat,
+          lastMessage: last ? last.msg : null,
+          lastMessageTime: last ? last.createdAt : null,
+        };
+      })
+    );
+    result.sort((a, b) => (b.lastMessageTime || 0) - (a.lastMessageTime || 0));
+    res.json({ success: true, chats: result });
+  } catch (err) {
+    res.json({ success: false, err: err.name });
+  }
 });
 
-router.get("/doctor/get_chat", authenticate.verifyUser, (req, res) => {
-  Chat.find({ d_id: req.user._id })
-    .populate("p_id")
-    .then((data, err) => {
-      console.log(err);
-      console.log(data);
-      if (err) {
-        res.json({
-          err: err.name,
-          success: false,
-        });
-      } else {
-        res.json({
-          success: true,
-          chats: data,
-        });
-      }
-    });
+router.get("/doctor/get_chat", authenticate.verifyUser, async (req, res) => {
+  try {
+    const chats = await Chat.find({ d_id: req.user._id }).populate("p_id").lean();
+    const result = await Promise.all(
+      chats.map(async (chat) => {
+        const last = await Message.findOne({
+          p_id: chat.p_id ? chat.p_id._id : null,
+          d_id: req.user._id,
+          deletedBy: { $nin: [req.user._id] },
+        })
+          .sort({ createdAt: -1, _id: -1 })
+          .lean();
+        return {
+          ...chat,
+          lastMessage: last ? last.msg : null,
+          lastMessageTime: last ? last.createdAt : null,
+        };
+      })
+    );
+    result.sort((a, b) => (b.lastMessageTime || 0) - (a.lastMessageTime || 0));
+    res.json({ success: true, chats: result });
+  } catch (err) {
+    res.json({ success: false, err: err.name });
+  }
 });
 
 router.get("/patient/messages/:d_id", authenticate.verifyUser, (req, res) => {
   console.log(req.body);
-  Message.find({ p_id: req.user._id, d_id: req.params.d_id, deletedBy: { $nin: [req.user._id] } }, (err, msgs) => {
-    // console.log(msgs)
-    if (err) {
-      res.json({
-        success: false,
-        err: err.name,
-      });
-    } else {
-      res.json({
-        success: true,
-        msgs,
-      });
-    }
-  });
+  Message.find({ p_id: req.user._id, d_id: req.params.d_id, deletedBy: { $nin: [req.user._id] } })
+    .sort({ createdAt: 1, _id: 1 })
+    .exec((err, msgs) => {
+      // console.log(msgs)
+      if (err) {
+        res.json({
+          success: false,
+          err: err.name,
+        });
+      } else {
+        res.json({
+          success: true,
+          msgs,
+        });
+      }
+    });
 });
 
 router.get("/doctor/messages/:p_id", authenticate.verifyUser, (req, res) => {
-  Message.find({ d_id: req.user._id, p_id: req.params.p_id, deletedBy: { $nin: [req.user._id] } }, (err, msgs) => {
+  Message.find({ d_id: req.user._id, p_id: req.params.p_id, deletedBy: { $nin: [req.user._id] } })
+    .sort({ createdAt: 1, _id: 1 })
+    .exec((err, msgs) => {
     if (err) {
       res.json({
         success: false,
@@ -342,7 +359,7 @@ router.get("/doctor/messages/:p_id", authenticate.verifyUser, (req, res) => {
 
 router.get("/patient/latest-message", authenticate.verifyUser, (req, res) => {
   Message.findOne({ p_id: req.user._id, patient: false, deletedBy: { $nin: [req.user._id] } })
-    .sort({ createdAt: -1 })
+    .sort({ createdAt: -1, _id: -1 })
     .populate("d_id", "fname lname")
     .exec((err, msg) => {
       if (err) {

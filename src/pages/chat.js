@@ -16,9 +16,10 @@ const drawerExpanded = 280;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         overflowX: "hidden",
+        background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
     },
     drawerWrapper: {
         flexShrink: 0,

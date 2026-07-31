@@ -1,0 +1,216 @@
+Connected correctly to server
+[0mGET /chart/get_bg_record [36m304 [0m124.382 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [36m304 [0m127.728 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [36m304 [0m138.580 ms - -[0m
+[0mGET /chart/bg_graph [36m304 [0m101.504 ms - -[0m
+[0mGET /request/patient/get_chat [32m200 [0m87.752 ms - 415[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [32m200 [0m22.021 ms - 848[0m
+[0mGET /request/doctor/get_chat [33m401 [0m7.345 ms - -[0m
+[0mPOST /users/login [32m200 [0m164.151 ms - 1547[0m
+[0mGET /request/get_apponitment [33m401 [0m5.010 ms - -[0m
+[]
+[0mGET /request/get_apponitment [36m304 [0m11.877 ms - -[0m
+[0mGET /request/recieved_req [36m304 [0m14.071 ms - -[0m
+[0mGET /request/doctor/get_chat [32m200 [0m23.631 ms - 417[0m
+[0mGET /request/doctor/messages/6a6c8571f049023048ca389a [32m200 [0m22.117 ms - 1123[0m
+[0mGET /chart/databp [36m304 [0m19.725 ms - -[0m
+
+[0mGET /chart/databg [36m304 [0m25.669 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, sysAvg: 123, dysAvg: 81.2 } ]
+[0mGET /chart/bp_avg [36m304 [0m31.961 ms - -[0m
+[0mGET /request/get_apponitment_p [36m304 [0m27.913 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [36m304 [0m19.648 ms - -[0m
+[0mGET /request/patient/latest-message [36m304 [0m39.202 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [36m304 [0m8.269 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m11.167 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m6.798 ms - -[0m
+[0mGET /request/doctor/messages/6a6c8571f049023048ca389a [36m304 [0m8.948 ms - -[0m
+[0mPOST /users/login [32m200 [0m103.139 ms - 1547[0m
+[0mGET /chart/databp [32m200 [0m9.208 ms - 67[0m
+
+[0mGET /chart/databg [32m200 [0m17.754 ms - 77[0m
+[]
+[0mGET /chart/bp_avg [32m200 [0m23.965 ms - 49[0m
+[0mGET /request/get_apponitment_p [32m200 [0m25.113 ms - 26[0m
+[0mGET /request/patient/latest-message [32m200 [0m35.915 ms - 27[0m
+[0mGET /chart/databp [36m304 [0m12.903 ms - -[0m
+[]
+[0mGET /chart/bg_avg_fasting [32m200 [0m16.463 ms - 41[0m
+[0mGET /chart/databp [36m304 [0m7.902 ms - -[0m
+[]
+[0mGET /chart/bg_avg_random [32m200 [0m14.617 ms - 40[0m
+[0mGET /chart/databp [36m304 [0m16.334 ms - -[0m
+[0mGET /chart/databp [36m304 [0m4.899 ms - -[0m
+[0mGET /chart/databp [36m304 [0m7.835 ms - -[0m
+[0mGET /chart/databp [36m304 [0m4.585 ms - -[0m
+[0mGET /chart/databp [36m304 [0m7.360 ms - -[0m
+[0mGET /chart/databp [36m304 [0m7.595 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.085 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.822 ms - -[0m
+[0mGET /chart/databp [36m304 [0m10.336 ms - -[0m
+[0mGET /chart/databp [36m304 [0m4.903 ms - -[0m
+[0mGET /chart/databp [36m304 [0m6.662 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.321 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.587 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.472 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.548 ms - -[0m
+[0mPOST /users/login [32m200 [0m100.101 ms - 1547[0m
+[]
+[0mGET /request/get_apponitment [36m304 [0m9.642 ms - -[0m
+[]
+[0mGET /request/get_apponitment [36m304 [0m5.726 ms - -[0m
+[0mGET /request/recieved_req [36m304 [0m12.563 ms - -[0m
+[0mGET /request/recieved_req [36m304 [0m9.876 ms - -[0m
+[0mGET /request/doctor/get_chat [36m304 [0m22.197 ms - -[0m
+[0mGET /request/doctor/messages/6a6c8571f049023048ca389a [36m304 [0m11.300 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m25.517 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m15.490 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m21.858 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m19.352 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m28.187 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m22.207 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m37.119 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m22.778 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m15.036 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m18.375 ms - -[0m
+[0mGET /chart/databp [32m200 [0m49.243 ms - 108[0m
+
+[0mGET /chart/databg [32m200 [0m97.608 ms - 149[0m
+[ { _id: 6a6c8571f049023048ca389a, sysAvg: 123, dysAvg: 81.2 } ]
+[0mGET /chart/bp_avg [32m200 [0m104.705 ms - 84[0m
+[0mGET /request/get_apponitment_p [32m200 [0m139.519 ms - 234[0m
+[0mGET /request/patient/latest-message [32m200 [0m138.587 ms - 335[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [32m200 [0m17.314 ms - 88[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [32m200 [0m16.675 ms - 75[0m
+[0mPOST /users/login [32m200 [0m171.461 ms - 1547[0m
+[0mGET /chart/databp [32m200 [0m13.920 ms - 67[0m
+
+[0mGET /chart/databg [32m200 [0m26.015 ms - 77[0m
+[]
+[0mGET /chart/bp_avg [32m200 [0m22.342 ms - 49[0m
+[0mGET /request/get_apponitment_p [32m200 [0m26.496 ms - 26[0m
+[0mGET /request/patient/latest-message [32m200 [0m31.114 ms - 27[0m
+[0mGET /chart/databp [36m304 [0m11.255 ms - -[0m
+[]
+[0mGET /chart/bg_avg_fasting [32m200 [0m20.542 ms - 41[0m
+[]
+[0mGET /chart/bg_avg_random [32m200 [0m16.543 ms - 40[0m
+[0mGET /chart/databp [36m304 [0m6.225 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.373 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.438 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.238 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.741 ms - -[0m
+[0mGET /chart/databp [36m304 [0m13.547 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.373 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.561 ms - -[0m
+[0mGET /chart/databp [36m304 [0m10.184 ms - -[0m
+[0mGET /chart/databp [36m304 [0m6.449 ms - -[0m
+[0mGET /chart/databp [36m304 [0m14.278 ms - -[0m
+[0mGET /chart/databp [36m304 [0m15.143 ms - -[0m
+[0mGET /chart/databp [36m304 [0m12.777 ms - -[0m
+[0mGET /chart/databp [36m304 [0m11.868 ms - -[0m
+[0mGET /chart/databp [36m304 [0m25.557 ms - -[0m
+[0mGET /chart/databp [36m304 [0m7.912 ms - -[0m
+[0mGET /chart/databp [36m304 [0m5.173 ms - -[0m
+[0mGET /chart/databp [36m304 [0m13.583 ms - -[0m
+[0mGET /chart/databp [36m304 [0m13.374 ms - -[0m
+[0mGET /chart/databp [36m304 [0m13.709 ms - -[0m
+[0mGET /chart/databp [36m304 [0m10.609 ms - -[0m
+[0mGET /chart/databp [36m304 [0m5.563 ms - -[0m
+[0mGET /chart/databp [36m304 [0m10.574 ms - -[0m
+[0mGET /chart/databp [36m304 [0m14.023 ms - -[0m
+[0mGET /chart/databp [36m304 [0m7.305 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.100 ms - -[0m
+[0mGET /chart/databp [36m304 [0m12.035 ms - -[0m
+[0mGET /chart/databp [36m304 [0m10.130 ms - -[0m
+[0mGET /chart/databp [36m304 [0m5.436 ms - -[0m
+[0mGET /chart/databp [36m304 [0m4.616 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.764 ms - -[0m
+[0mGET /chart/databp [36m304 [0m6.033 ms - -[0m
+[0mGET /chart/databp [36m304 [0m9.643 ms - -[0m
+[0mGET /chart/databp [36m304 [0m5.413 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.192 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.855 ms - -[0m
+[0mGET /chart/databp [36m304 [0m8.580 ms - -[0m
+[0mGET /chart/databp [36m304 [0m7.140 ms - -[0m
+[0mGET /request/patient/get_chat [32m200 [0m9.529 ms - 27[0m
+[0mGET /chart/databp [36m304 [0m13.731 ms - -[0m
+[0mPOST /users/login [32m200 [0m187.437 ms - 1549[0m
+[0mGET /chart/databp [32m200 [0m10.510 ms - 108[0m
+
+[0mGET /chart/databg [32m200 [0m29.188 ms - 149[0m
+[ { _id: 6a6c8571f049023048ca389a, sysAvg: 123, dysAvg: 81.2 } ]
+[0mGET /chart/bp_avg [32m200 [0m33.337 ms - 84[0m
+[0mGET /request/patient/latest-message [32m200 [0m51.101 ms - 335[0m
+[0mGET /request/get_apponitment_p [32m200 [0m62.265 ms - 234[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [32m200 [0m24.179 ms - 88[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [32m200 [0m25.179 ms - 75[0m
+[0mGET /request/patient/get_chat [32m200 [0m26.877 ms - 415[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m16.987 ms - -[0m
+[0mPOST /users/login [32m200 [0m103.360 ms - 1549[0m
+[0mGET /chart/databp [36m304 [0m9.397 ms - -[0m
+
+[0mGET /chart/databg [36m304 [0m14.826 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, sysAvg: 123, dysAvg: 81.2 } ]
+[0mGET /chart/bp_avg [36m304 [0m24.199 ms - -[0m
+[0mGET /request/patient/latest-message [36m304 [0m34.203 ms - -[0m
+[0mGET /request/get_apponitment_p [36m304 [0m40.176 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [36m304 [0m14.086 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [36m304 [0m10.540 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m18.494 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m15.197 ms - -[0m
+[0mPOST /users/login [32m200 [0m123.036 ms - 1549[0m
+[0mGET /chart/databp [36m304 [0m11.119 ms - -[0m
+
+[0mGET /chart/databg [36m304 [0m18.056 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, sysAvg: 123, dysAvg: 81.2 } ]
+[0mGET /chart/bp_avg [36m304 [0m20.092 ms - -[0m
+[0mGET /request/patient/latest-message [36m304 [0m28.682 ms - -[0m
+[0mGET /request/get_apponitment_p [36m304 [0m32.456 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [36m304 [0m9.210 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [36m304 [0m9.135 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m19.435 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m16.004 ms - -[0m
+[0mGET /request/doctor/get_chat [36m304 [0m17.990 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m18.251 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m6.440 ms - -[0m
+[0mGET /request/doctor/messages/6a6c8571f049023048ca389a [36m304 [0m5.540 ms - -[0m
+[0mGET /chart/get_bg_record [36m304 [0m43.424 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, fastingAvg: 92.33333333333333 } ]
+[0mGET /chart/bg_avg_fasting [36m304 [0m50.181 ms - -[0m
+[ { _id: 6a6c8571f049023048ca389a, randomAvg: 137.5 } ]
+[0mGET /chart/bg_avg_random [36m304 [0m62.714 ms - -[0m
+[0mGET /chart/bg_graph [36m304 [0m65.843 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m21.806 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m20.029 ms - -[0m
+[0mGET /request/doctor/get_chat [36m304 [0m20.563 ms - -[0m
+[0mGET /request/doctor/messages/6a6c8571f049023048ca389a [36m304 [0m13.726 ms - -[0m
+[0mGET /doctor/get_doc [36m304 [0m18.929 ms - -[0m
+[0mGET /request/get_requests [36m304 [0m8.470 ms - -[0m
+[0mGET /request/patient/get_chat [36m304 [0m40.938 ms - -[0m
+{}
+[0mGET /request/patient/messages/6a6c8572f049023048ca389c [36m304 [0m21.661 ms - -[0m

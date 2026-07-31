@@ -11,6 +11,7 @@ import Badge from "@material-ui/core/Badge";
 import SendIcon from "@material-ui/icons/Send";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import io from "socket.io-client";
 
 import * as apt from "../Services/appointment";
@@ -56,7 +57,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "hidden",
     background: "#fff",
-    margin: 0,
+    margin: "24px 32px",
+    borderRadius: 16,
+    border: "1px solid #eef2f6",
+    boxShadow: "0 4px 16px rgba(16,97,176,0.12)",
+    "@media (max-width: 700px)": {
+      margin: 0,
+      borderRadius: 0,
+      border: "none",
+      boxShadow: "none",
+    },
   },
   sidebar: {
     width: 360,
@@ -185,7 +195,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottomLeftRadius: 4,
   },
   messageBubbleSent: {
-    background: "linear-gradient(135deg, #3585da, #1c6bc0)",
+    background: "linear-gradient(45deg,#3585da 0%, #59c1e8 100%)",
     color: "#fff",
     borderBottomRightRadius: 4,
   },
@@ -226,10 +236,10 @@ const useStyles = makeStyles((theme) => ({
     width: 44,
     height: 44,
     borderRadius: 22,
-    background: "linear-gradient(135deg, #3585da, #1c6bc0)",
+    background: "linear-gradient(45deg,#3585da 0%, #59c1e8 100%)",
     color: "#fff",
     "&:hover": {
-      background: "linear-gradient(135deg, #1c6bc0, #1557a0)",
+      background: "linear-gradient(45deg,#2b74c4 0%, #4baede 100%)",
     },
     "&.Mui-disabled": {
       background: "#d0d0d0",
@@ -348,6 +358,16 @@ export default function Chat() {
     }
     setmsg([...msg, { ...data, _id: String(Math.random()), createdAt: new Date().toISOString() }]);
     setnewmsg("");
+    setotheruser((prev) => {
+      if (!prev) return prev;
+      const conv = prev.find((item) => item === otheruser[activeUser]);
+      if (!conv) return prev;
+      return prev.map((item) =>
+        item === conv
+          ? { ...item, lastMessage: newmsg, lastMessageTime: new Date().toISOString() }
+          : item
+      );
+    });
     apt.newMessage(token, data).then((res) => {
       if (res.data.success) {
         socket.emit("sendmsg", res.data.msg);
@@ -361,6 +381,18 @@ export default function Chat() {
         ? newmsg.d_id === user._id && newmsg.p_id === otheruserid
         : newmsg.p_id === user._id && newmsg.d_id === otheruserid;
       if (match) setmsg((prev) => [...prev, newmsg]);
+      setotheruser((prev) => {
+        if (!prev) return prev;
+        const conv = isdoctor
+          ? prev.find((item) => item.p_id && item.p_id._id === newmsg.p_id)
+          : prev.find((item) => item.d_id && item.d_id._id === newmsg.d_id);
+        if (!conv) return prev;
+        return prev.map((item) =>
+          item === conv
+            ? { ...item, lastMessage: newmsg.msg, lastMessageTime: newmsg.createdAt }
+            : item
+        );
+      });
     };
     socket.on("newmsg", handler);
     return () => socket.off("newmsg", handler);
@@ -496,7 +528,7 @@ export default function Chat() {
                     overlap="circle"
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                     variant="dot"
-                    color="secondary"
+                    style={{ color: "#34c759" }}
                   >
                     {photo ? (
                       <Avatar src={photo} style={{ width: 44, height: 44, backgroundColor: color }} />
@@ -509,6 +541,9 @@ export default function Chat() {
                   <div className={classes.userInfo}>
                     <Typography className={classes.userName}>
                       {isdoctor ? name : "DR. " + name}
+                    </Typography>
+                    <Typography className={classes.userPreview}>
+                      {item.lastMessage || "No messages yet"}
                     </Typography>
                   </div>
                 </div>
@@ -546,6 +581,9 @@ export default function Chat() {
                     <Typography className={classes.chatHeaderName}>
                       {isdoctor ? activeUserName : "DR. " + (activeUserName || "")}
                     </Typography>
+                    <Typography className={classes.chatHeaderStatus}>
+                      Online
+                    </Typography>
                   </div>
                   <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
                     <IconButton size="small" onClick={toggleSelectMode} title="Select messages">
@@ -560,6 +598,9 @@ export default function Chat() {
             </div>
 
             <div className={classes.messageArea}>
+              {msg.length === 0 && (
+                <div className={classes.noChat}>No messages yet — say hello!</div>
+              )}
               {msg.map((item, idx) => {
                 const isSent = isdoctor ? !item.patient : item.patient;
                 const prevIsSent = idx > 0 ? (isdoctor ? !msg[idx - 1].patient : msg[idx - 1].patient) : null;
@@ -568,7 +609,6 @@ export default function Chat() {
                   <div
                     key={item._id}
                     className={`${classes.messageRow} ${isSent ? classes.messageRowSent : ""}`}
-                    style={{ alignItems: "center" }}
                   >
                     {selectMode && (
                       <Checkbox
@@ -697,7 +737,9 @@ export default function Chat() {
           </>
         ) : (
           <div className={classes.emptyState}>
-            <div className={classes.emptyIcon}>≡ƒÆ¼</div>
+            <div className={classes.emptyIcon}>
+              <ChatBubbleOutlineIcon style={{ fontSize: 40, color: "#3585da" }} />
+            </div>
             <Typography variant="h6" style={{ fontWeight: 600, color: "#1a1a2e" }}>
               Your Messages
             </Typography>
