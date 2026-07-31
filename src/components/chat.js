@@ -120,6 +120,22 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": { width: 4 },
     "&::-webkit-scrollbar-thumb": { background: "#e0e0e0", borderRadius: 4 },
   },
+  searchBox: {
+    width: "100%",
+    marginTop: 12,
+    border: "none",
+    outline: "none",
+    background: "#f2f3f7",
+    borderRadius: 24,
+    padding: "8px 16px",
+    fontSize: 13,
+    color: "#1a1a2e",
+    fontFamily: "Montserrat",
+    boxSizing: "border-box",
+    "&::placeholder": {
+      color: "#8e8e93",
+    },
+  },
   userItem: {
     display: "flex",
     alignItems: "center",
@@ -223,6 +239,19 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": { width: 4 },
     "&::-webkit-scrollbar-thumb": { background: "#e0e0e0", borderRadius: 4 },
   },
+  daySeparator: {
+    textAlign: "center",
+    margin: "10px auto 20px",
+    fontSize: 11,
+    fontWeight: 600,
+    color: "#8e8e93",
+    background: "#eef1f6",
+    borderRadius: 999,
+    padding: "4px 14px",
+    width: "fit-content",
+    textTransform: "uppercase",
+    letterSpacing: "0.05em",
+  },
   messageRow: {
     display: "flex",
     marginBottom: 16,
@@ -312,6 +341,11 @@ const useStyles = makeStyles((theme) => ({
   messageTimeReceived: {
     color: "#8e8e93",
   },
+  messageTimeSentBubble: {
+    textAlign: "right",
+    color: "rgba(255,255,255,0.8)",
+    marginTop: 3,
+  },
   inputArea: {
     display: "flex",
     alignItems: "center",
@@ -333,6 +367,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 24,
     background: "#f2f3f7",
     color: "#1a1a2e",
+    fontFamily: "Montserrat",
     "@media (max-width: 900px)": {
       fontSize: 12,
     },
@@ -343,6 +378,17 @@ const useStyles = makeStyles((theme) => ({
     "&::placeholder": {
       color: "#8e8e93",
     },
+  },
+  inputTextArea: {
+    resize: "none",
+    lineHeight: 1.4,
+    minHeight: 44,
+    maxHeight: 120,
+    boxSizing: "border-box",
+    overflowY: "auto",
+    alignSelf: "center",
+    "&::-webkit-scrollbar": { width: 4 },
+    "&::-webkit-scrollbar-thumb": { background: "#e0e0e0", borderRadius: 4 },
   },
   sendButton: {
     width: 44,
@@ -401,16 +447,19 @@ const useStyles = makeStyles((theme) => ({
 
 function formatTime(date) {
   if (!date) return "";
+  return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+function formatDayLabel(date) {
+  if (!date) return "";
   const d = new Date(date);
   const now = new Date();
-  const isToday =
-    d.getDate() === now.getDate() &&
-    d.getMonth() === now.getMonth() &&
-    d.getFullYear() === now.getFullYear();
-  if (isToday) {
-    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  }
-  return d.toLocaleDateString([], { month: "short", day: "numeric" }) + " " + d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const target = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const diff = Math.round((today - target) / 86400000);
+  if (diff === 0) return "Today";
+  if (diff === 1) return "Yesterday";
+  return d.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" });
 }
 
 function getUserName(item, isdoctor, currentUser) {
@@ -441,7 +490,7 @@ export default function Chat() {
   const [menuMsgId, setMenuMsgId] = React.useState(null);
   const [selectMode, setSelectMode] = React.useState(false);
   const [selectedIds, setSelectedIds] = React.useState([]);
-  const [showTimeId, setShowTimeId] = React.useState(null);
+  const [search, setSearch] = React.useState("");
   const token = useSelector((state) => state.states.token);
   const isdoctor = useSelector((state) => state.states.isdoctor);
   const user = useSelector((state) => state.states.user);
@@ -455,6 +504,13 @@ export default function Chat() {
   const [activeUser, setActiveUser] = React.useState(null);
 
   const messagesEndRef = React.useRef(null);
+  const inputRef = React.useRef(null);
+
+  const autoResize = (e) => {
+    const el = e.target;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 120) + "px";
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -473,25 +529,27 @@ export default function Chat() {
   }, [socket, user._id]);
 
   const sendMsg = () => {
-    if (newmsg.length === 0) return;
+    const text = newmsg.trim();
+    if (text.length === 0) return;
     var data = {};
     if (isdoctor) {
       data = {
         d_id: user._id,
         p_id: otheruserid,
-        msg: newmsg,
+        msg: text,
         patient: false,
       };
     } else {
       data = {
         p_id: user._id,
         d_id: otheruserid,
-        msg: newmsg,
+        msg: text,
         patient: true,
       };
     }
     setmsg([...msg, { ...data, _id: String(Math.random()), createdAt: new Date().toISOString() }]);
     setnewmsg("");
+    if (inputRef.current) inputRef.current.style.height = "auto";
     setotheruser((prev) => {
       if (!prev) return prev;
       const conv = prev.find((item) => item === otheruser[activeUser]);
@@ -555,7 +613,8 @@ export default function Chat() {
   }, [token, isdoctor]);
 
   const handleUserClick = (index, item) => {
-    setActiveUser(index);
+    const originalIndex = otheruser.indexOf(item);
+    setActiveUser(originalIndex >= 0 ? originalIndex : index);
     const id = isdoctor ? item.p_id._id : item.d_id._id;
     setotheruserid(id);
     if (isMobile) setShowList(false);
@@ -567,7 +626,10 @@ export default function Chat() {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") sendMsg();
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMsg();
+    }
   };
 
   const handleDelete = (msg_id) => {
@@ -632,10 +694,6 @@ export default function Chat() {
     });
   };
 
-  const toggleTime = (id) => {
-    setShowTimeId((prev) => (prev === id ? null : id));
-  };
-
   const activeUserName = activeUser !== null && otheruser
     ? getUserName(otheruser[activeUser], isdoctor)
     : null;
@@ -643,23 +701,36 @@ export default function Chat() {
     ? getUserPhoto(otheruser[activeUser], isdoctor)
     : null;
 
+  const filteredUsers = otheruser && search.trim()
+    ? otheruser.filter((item) =>
+        getUserName(item, isdoctor).toLowerCase().includes(search.trim().toLowerCase())
+      )
+    : otheruser;
+
   return (
     <div className={classes.wrapper}>
       {(!isMobile || showList) && (
         <div className={`${classes.sidebar} ${isMobile ? classes.sidebarMobile : ""}`}>
           <div className={classes.sidebarHeader}>
             <Typography className={classes.sidebarTitle}>Messages</Typography>
+            <input
+              className={classes.searchBox}
+              type="text"
+              placeholder="Search conversations..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
         <div className={classes.userList}>
-          {otheruser ? (
-            otheruser.map((item, index) => {
+          {filteredUsers ? (
+            filteredUsers.map((item, index) => {
               const name = getUserName(item, isdoctor);
               const color = getAvatarColor(name);
               const photo = getUserPhoto(item, isdoctor);
               return (
                 <div
                   key={index}
-                  className={`${classes.userItem} ${activeUser === index ? classes.userItemActive : ""}`}
+                  className={`${classes.userItem} ${otheruser[activeUser] === item ? classes.userItemActive : ""}`}
                   onClick={() => handleUserClick(index, item)}
                 >
                   <Badge
@@ -688,7 +759,9 @@ export default function Chat() {
               );
             })
           ) : (
-            <div className={classes.noChat}>No conversations yet</div>
+            <div className={classes.noChat}>
+              {search.trim() ? "No conversations found" : "No conversations yet"}
+            </div>
           )}
         </div>
       </div>
@@ -750,11 +823,16 @@ export default function Chat() {
                 const isSent = isdoctor ? !item.patient : item.patient;
                 const prevIsSent = idx > 0 ? (isdoctor ? !msg[idx - 1].patient : msg[idx - 1].patient) : null;
                 const isNewGroup = idx > 0 && isSent !== prevIsSent;
+                const dayLabel = formatDayLabel(item.createdAt);
+                const prevDay = idx > 0 ? formatDayLabel(msg[idx - 1].createdAt) : null;
                 return (
-                  <div
-                    key={item._id}
-                    className={`${classes.messageRow} ${isSent ? classes.messageRowSent : classes.messageRowReceived}`}
-                  >
+                  <React.Fragment key={item._id}>
+                    {(idx === 0 || dayLabel !== prevDay) && (
+                      <div className={classes.daySeparator}>{dayLabel}</div>
+                    )}
+                    <div
+                      className={`${classes.messageRow} ${isSent ? classes.messageRowSent : classes.messageRowReceived}`}
+                    >
                     {selectMode && (
                       <Checkbox
                         checked={selectedIds.includes(item._id)}
@@ -823,17 +901,16 @@ export default function Chat() {
                             className={`${classes.messageBubble} ${
                               isSent ? classes.messageBubbleSent : classes.messageBubbleReceived
                             }`}
-                            onClick={() => toggleTime(item._id)}
-                            style={{ cursor: "pointer" }}
                           >
                             {item.msg}
+                            {isSent && (
+                              <div className={classes.messageTimeSentBubble}>
+                                {formatTime(item.createdAt)}
+                              </div>
+                            )}
                           </div>
-                          {showTimeId === item._id && (
-                            <div
-                              className={`${classes.messageTime} ${
-                                isSent ? classes.messageTimeSent : classes.messageTimeReceived
-                              }`}
-                            >
+                          {!isSent && (
+                            <div className={`${classes.messageTime} ${classes.messageTimeReceived}`}>
                               {formatTime(item.createdAt)}
                             </div>
                           )}
@@ -841,6 +918,7 @@ export default function Chat() {
                       )}
                     </div>
                   </div>
+                  </React.Fragment>
                 );
               })}
               <div ref={messagesEndRef} />
@@ -861,18 +939,19 @@ export default function Chat() {
               </div>
             ) : (
               <div className={classes.inputArea}>
-                <input
-                  className={classes.input}
-                  type="text"
+                <textarea
+                  ref={inputRef}
+                  className={`${classes.input} ${classes.inputTextArea}`}
+                  rows="1"
                   placeholder="Type a message..."
                   value={newmsg}
-                  onChange={(e) => setnewmsg(e.target.value)}
+                  onChange={(e) => { setnewmsg(e.target.value); autoResize(e); }}
                   onKeyPress={handleKeyPress}
                 />
                 <IconButton
                   className={classes.sendButton}
                   onClick={sendMsg}
-                  disabled={newmsg.length === 0}
+                  disabled={newmsg.trim().length === 0}
                   size="small"
                 >
                   <SendIcon style={{ fontSize: 18 }} />
