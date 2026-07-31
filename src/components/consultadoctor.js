@@ -35,9 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
   subtitle: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: 18,
     color: "#777",
     marginTop: 4,
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
   },
   toggleWrap: {
     display: "flex",
@@ -47,13 +50,16 @@ const useStyles = makeStyles((theme) => ({
   toggleBtn: {
     fontFamily: "Montserrat",
     fontWeight: 600,
-    fontSize: 14,
+    fontSize: 18,
     textTransform: "none",
     borderRadius: 24,
     padding: "8px 24px",
     color: "#666",
     background: "#f0f4f8",
     boxShadow: "none",
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
     "&:hover": {
       background: "#e3ebf2",
     },
@@ -73,12 +79,12 @@ const useStyles = makeStyles((theme) => ({
     height: "68vh",
     overflowY: "auto",
     overflowX: "hidden",
-    margin: -8,
+    margin: -16,
   },
   appointdocgrid: {
     display: "flex",
     justifyContent: "center",
-    padding: "8px",
+    padding: "16px",
     boxSizing: "border-box",
   },
   emptyState: {
@@ -99,9 +105,12 @@ const useStyles = makeStyles((theme) => ({
   },
   emptyText: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: 18,
     color: "#999",
     marginTop: 4,
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
   },
   loader: {
     width: "100%",
@@ -181,7 +190,7 @@ export default function ConsultDoctor() {
             filteredDoctors ?
               filteredDoctors.length > 0 ?
                 filteredDoctors.map((item, index) => (
-                  <Grid item xs={12} sm={6} className={classes.appointdocgrid} key={index}>
+                  <Grid item xs={12} lg={6} xl={4} className={classes.appointdocgrid} key={index}>
                     <DoctorCard
                       name={item.userid.fname.toUpperCase() + " " + item.userid.lname.toUpperCase()}
                       id={item._id}

@@ -58,12 +58,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     color: "#fff",
     lineHeight: 1.3,
+    "@media (max-width: 700px)": {
+      fontSize: 16,
+    },
   },
   docRole: {
     fontFamily: "Montserrat",
-    fontSize: 13,
+    fontSize: 18,
     color: "rgba(255,255,255,0.85)",
     marginTop: 2,
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
   },
   body: {
     padding: "16px 20px 20px",
@@ -73,24 +79,31 @@ const useStyles = makeStyles((theme) => ({
   },
   infoItem: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "flex-start",
-    gap: 10,
-    marginBottom: 10,
+    gap: 2,
+    marginBottom: 16,
   },
   infoLabel: {
     fontFamily: "Montserrat",
     fontWeight: 600,
-    fontSize: 13,
+    fontSize: 18,
     color: "#999",
-    minWidth: 84,
     textTransform: "uppercase",
     letterSpacing: 0.5,
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
   },
   infoText: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: 18,
     color: "#333",
     lineHeight: 1.5,
+    textAlign: "left",
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
   },
   button: {
     display: "flex",
@@ -105,9 +118,12 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     fontFamily: "Montserrat",
     fontWeight: 700,
-    fontSize: 14,
+    fontSize: 18,
     textTransform: "none",
     padding: "10px 18px",
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
     "&:hover": {
       background: "#2b74c4",
     }
@@ -119,9 +135,12 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     fontFamily: "Montserrat",
     fontWeight: 700,
-    fontSize: 14,
+    fontSize: 18,
     textTransform: "none",
     padding: "10px 18px",
+    "@media (max-width: 700px)": {
+      fontSize: 15,
+    },
     "&:hover": {
       background: "#c62828",
     }

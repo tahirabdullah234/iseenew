@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         fontSize: 20,
         color: "#1061b0",
+        "@media (max-width: 700px)": {
+            fontSize: 17,
+        },
     },
     closeBtn: {
         color: "#999",
@@ -72,22 +75,31 @@ const useStyles = makeStyles((theme) => ({
     docName: {
         fontFamily: "Montserrat",
         fontWeight: 700,
-        fontSize: 16,
+        fontSize: 18,
         color: "#fff",
+        "@media (max-width: 700px)": {
+            fontSize: 16,
+        },
     },
     docRole: {
         fontFamily: "Montserrat",
-        fontSize: 13,
+        fontSize: 18,
         color: "rgba(255,255,255,0.85)",
+        "@media (max-width: 700px)": {
+            fontSize: 15,
+        },
     },
     sectionLabel: {
         fontFamily: "Montserrat",
         fontWeight: 600,
-        fontSize: 13,
+        fontSize: 18,
         color: "#888",
         textTransform: "uppercase",
         letterSpacing: 0.5,
         marginBottom: 8,
+        "@media (max-width: 700px)": {
+            fontSize: 15,
+        },
     },
     attachBox: {
         display: "flex",
@@ -105,14 +117,20 @@ const useStyles = makeStyles((theme) => ({
     },
     attachText: {
         fontFamily: "Montserrat",
-        fontSize: 13,
+        fontSize: 18,
         color: "#666",
+        "@media (max-width: 700px)": {
+            fontSize: 15,
+        },
     },
     noReportsText: {
         fontFamily: "Montserrat",
-        fontSize: 13,
+        fontSize: 18,
         color: "#999",
         fontStyle: "italic",
+        "@media (max-width: 700px)": {
+            fontSize: 15,
+        },
     },
     messageBox: {
         width: "100%",
@@ -120,7 +138,10 @@ const useStyles = makeStyles((theme) => ({
     },
     inputRoot: {
         fontFamily: "Montserrat",
-        fontSize: 14,
+        fontSize: 18,
+        "@media (max-width: 700px)": {
+            fontSize: 15,
+        },
     },
     button: {
         display: "flex",
@@ -133,9 +154,12 @@ const useStyles = makeStyles((theme) => ({
         color: "#fff",
         fontFamily: "Montserrat",
         fontWeight: 700,
-        fontSize: 14,
+        fontSize: 18,
         textTransform: "none",
         padding: "10px 22px",
+        "@media (max-width: 700px)": {
+            fontSize: 15,
+        },
         "&:hover": {
             background: "#2b74c4",
         }
