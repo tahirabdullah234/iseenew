@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
 
 import TextField from "@material-ui/core/TextField";
 import Card from '@material-ui/core/Card';
@@ -69,7 +69,7 @@ const useStyles = makeStyles({
     fontFamily: "Montserrat",
     fontWeight: 700,
     fontSize: 18,
-    color: "#1061b0",
+    color: "#3585da",
     display: "flex",
     alignItems: "center",
     gap: 10,
@@ -113,51 +113,70 @@ const useStyles = makeStyles({
     "&::-webkit-scrollbar": { width: 4 },
     "&::-webkit-scrollbar-thumb": { background: "#dbe4ee", borderRadius: 4 },
   },
-  tableHeader: {
-    display: "flex",
-    alignItems: "center",
-    background: "#f0f4f8",
-    borderRadius: 10,
-    padding: "10px 16px",
-    marginBottom: 8,
-    gap: 12,
+  appointmentTable: {
+    borderCollapse: "separate",
+    borderSpacing: "0 4px",
+    minWidth: 500,
   },
-  thText: {
-    fontFamily: "Montserrat",
-    fontWeight: 700,
-    fontSize: 12,
-    letterSpacing: 0.8,
-    color: "#1061b0",
+  appointmentTableContainer: {
+    width: "100%",
+    flex: 1,
+    minHeight: 200,
+    overflowY: "auto",
+    overflowX: "auto",
+    "&::-webkit-scrollbar": { width: 4 },
+    "&::-webkit-scrollbar-thumb": { background: "#dbe4ee", borderRadius: 4 },
   },
-  requestRow: {
-    display: "flex",
-    alignItems: "center",
-    padding: "12px 16px",
-    borderRadius: 10,
-    background: "#fff",
-    border: "1px solid #eef1f6",
-    marginBottom: 8,
-    gap: 12,
-    transition: "all 0.2s ease",
-    "&:hover": {
-      background: "#f7fafd",
+  appointmentTableHeadRow: {
+    "& th": {
+      background: "linear-gradient(45deg,#59c1e8 0%, #3585da 100%)",
+      color: "#fff",
+      fontWeight: "bold",
+      fontFamily: "Montserrat",
+      fontSize: 16,
+      padding: "12px 16px",
+      borderBottom: "none",
+      textAlign: "center",
+    },
+    "& th:first-child": {
+      borderTopLeftRadius: 28,
+      borderBottomLeftRadius: 28,
+    },
+    "& th:last-child": {
+      borderTopRightRadius: 28,
+      borderBottomRightRadius: 28,
     },
   },
-  reqText: {
-    fontFamily: "Montserrat",
-    fontSize: 14,
-    fontWeight: 600,
-    color: "#2b3a55",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    minWidth: 0,
+  appointmentTableBodyRow: {
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.06)",
+    borderRadius: 8,
+    "& td": {
+      background: "#fff",
+      color: "#444",
+      fontFamily: "Montserrat",
+      fontWeight: 500,
+      fontSize: 15,
+      padding: "10px 16px",
+      borderBottom: "none",
+      textAlign: "center",
+    },
+    "& td:first-child": {
+      borderTopLeftRadius: 8,
+      borderBottomLeftRadius: 8,
+    },
+    "& td:last-child": {
+      borderTopRightRadius: 8,
+      borderBottomRightRadius: 8,
+    },
+    "&:hover td": {
+      background: "#f0f7fc",
+    },
   },
   detailsLink: {
     fontFamily: "Montserrat",
     fontSize: 13,
     fontWeight: 700,
-    color: "#3585da",
+    color: "#444",
     cursor: "pointer",
     textAlign: "center",
     "&:hover": {
@@ -277,23 +296,24 @@ function PatientRequest({ data }) {
   }
 
   return (
-    <div className={classes.requestRow}>
-      <Typography className={classes.reqText} style={{ flex: 2 }}>
-        {data.p_id.slice(0, 10)}
-      </Typography>
-      <Typography className={classes.reqText} style={{ flex: 4 }}>
-        {data.name}
-      </Typography>
-      <Typography
-        className={classes.detailsLink}
-        style={{ flex: 2 }}
-        onClick={() => history.push({ pathname: '/userinfo', state: { id: data.p_id } })}
-      >
-        DETAILS
-      </Typography>
-      <Button className={classes.acceptBtn} style={{ flex: 2 }} onClick={handleOpen}>
-        ACCEPT
-      </Button>
+    <React.Fragment>
+      <TableRow className={classes.appointmentTableBodyRow}>
+        <TableCell>{data.p_id.slice(0, 10)}</TableCell>
+        <TableCell>{data.name}</TableCell>
+        <TableCell>
+          <Typography
+            className={classes.detailsLink}
+            onClick={() => history.push({ pathname: '/userinfo', state: { id: data.p_id } })}
+          >
+            DETAILS
+          </Typography>
+        </TableCell>
+        <TableCell>
+          <Button className={classes.acceptBtn} onClick={handleOpen}>
+            ACCEPT
+          </Button>
+        </TableCell>
+      </TableRow>
       <Modal
         open={open}
         onClose={handleClose}
@@ -328,7 +348,7 @@ function PatientRequest({ data }) {
           </Card>
         </Grid>
       </Modal>
-    </div >
+    </React.Fragment>
   );
 }
 
@@ -420,33 +440,47 @@ export function DoctorDashboard() {
                 <span className={classes.panelBar} />
                 APPOINTMENT REQUESTS
               </Typography>
-              <div className={classes.tableHeader}>
-                <Typography className={classes.thText} style={{ flex: 2 }}>ID</Typography>
-                <Typography className={classes.thText} style={{ flex: 4 }}>PATIENT NAME</Typography>
-                <Typography className={classes.thText} style={{ flex: 2 }}>DETAILS</Typography>
-                <Typography className={classes.thText} style={{ flex: 2 }}>ACTION</Typography>
-              </div>
-              <div className={classes.scrollList}>
-                {
-                  requests && requests.length > 0 ?
-                    requests.map((item) => {
-                      return (
-                        <PatientRequest data={item} key={item._id} />
-                      )
-                    })
-                    :
-                    (requests && requests.length === 0) ?
-                      <Typography className={classes.emptyText}>
-                        No Pending Requests
-                      </Typography>
-                      :
-                      <div className={classes.loader}>
-                        <CircularProgress
-                          style={{ width: "50px", height: "50px", color: "#3585da" }}
-                        />
-                      </div>
-                }
-              </div>
+              <TableContainer className={classes.appointmentTableContainer}>
+                <Table className={classes.appointmentTable}>
+                  <TableHead>
+                    <TableRow className={classes.appointmentTableHeadRow}>
+                      <TableCell>ID</TableCell>
+                      <TableCell>PATIENT NAME</TableCell>
+                      <TableCell>DETAILS</TableCell>
+                      <TableCell>ACTION</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {
+                      requests && requests.length > 0 ?
+                        requests.map((item) => {
+                          return (
+                            <PatientRequest data={item} key={item._id} />
+                          )
+                        })
+                        :
+                        (requests && requests.length === 0) ?
+                          <TableRow>
+                            <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
+                              <Typography className={classes.emptyText}>
+                                No Pending Requests
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                          :
+                          <TableRow>
+                            <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
+                              <div className={classes.loader}>
+                                <CircularProgress
+                                  style={{ width: "50px", height: "50px", color: "#3585da" }}
+                                />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                    }
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </div>
           </Grid>
         </Grid>
