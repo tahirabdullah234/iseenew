@@ -172,6 +172,10 @@ export default function Template() {
     const name = useSelector((state) => state.states.name)
     const date = String(data.date || "").split("T")[0]
     const dob = String(user.dob || "").slice(0, 10)
+    const patientId = data.patientId || user._id
+    const patientName = data.patientName || name
+    const patientDob = data.patientDob || dob
+    const patientGender = data.patientGender || user.gender
 
     return (
         <Grid item xs={12} className={classes.border}>
@@ -190,7 +194,7 @@ export default function Template() {
                 <Grid item xs={12} className={classes.infoColumn}>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Patient ID:</Typography>
-                        <Typography className={classes.infoValue}>{user._id}</Typography>
+                        <Typography className={classes.infoValue}>{patientId}</Typography>
                     </Box>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Report ID:</Typography>
@@ -204,15 +208,15 @@ export default function Template() {
                 <Grid item xs={12} className={classes.infoColumn}>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Patient Name:</Typography>
-                        <Typography className={classes.infoValue}>{name}</Typography>
+                        <Typography className={classes.infoValue}>{patientName}</Typography>
                     </Box>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Date Of Birth:</Typography>
-                        <Typography className={classes.infoValue}>{dob}</Typography>
+                        <Typography className={classes.infoValue}>{patientDob}</Typography>
                     </Box>
                     <Box className={classes.infoRow}>
                         <Typography className={classes.infoLabel}>Gender:</Typography>
-                        <Typography className={classes.infoValue}>{user.gender}</Typography>
+                        <Typography className={classes.infoValue}>{patientGender}</Typography>
                     </Box>
                 </Grid>
             </Grid>
