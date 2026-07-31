@@ -30,58 +30,79 @@ function Alert(props) {
 const useStyles = makeStyles({
   DialogBox: {
     width: "100%",
-    borderRadius: "30px",
+    borderRadius: 20,
     background: "#fff",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    padding: "16px 24px",
+    boxShadow: "0 12px 30px rgba(16, 97, 176, 0.12)",
+    padding: "32px 32px 40px",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-  },
-  sameinfont: {
-    fontWeight: "bold",
-    textDecoration: "underline",
-    color: "#3585da",
-    textShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-  },
-  DEDialogBox: {
-    width: "100%",
-    borderRadius: "12px",
-    background: "#fff",
-    boxShadow: "6px 6px 10px rgba(0, 0, 0, 0.16)",
-    padding: "20px",
-    marginTop: "10px",
-  },
-  DEDial: {
-    width: "100%",
-    borderRadius: "20px",
-    background: "#3585da",
-    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    color: "white",
-    marginTop: "10px",
-    "&:hover": {
-      background: "rgba(53,133,218,0.7)",
+    boxSizing: "border-box",
+    "@media (max-width: 600px)": {
+      padding: "24px 16px",
     },
   },
-  Glucoselevel: { width: "100%" },
-  radiopos: {
-    display: "flex",
-    justifyContent: "space-around",
-    textAlign: "center",
+  pageTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 26,
+    color: "#1061b0",
   },
-  radiosize: {
-    marginTop: "16px",
+  pageSubtitle: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#8e9bb0",
+    marginTop: 4,
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#1061b0",
+    marginBottom: 16,
+  },
+  sectionCard: {
     width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+    borderRadius: 14,
+    background: "#fff",
+    border: "1px solid #eef1f6",
+    boxShadow: "0 4px 16px rgba(16, 97, 176, 0.08)",
+    padding: "24px",
+    boxSizing: "border-box",
+    marginBottom: 28,
+    "@media (max-width: 600px)": {
+      padding: "16px",
+    },
   },
-  radiogrp: { display: "flex", flexDirection: "row" },
-  DEDialpos: {
+  field: {
+    width: "100%",
+  },
+  inputRoot: {
+    fontFamily: "Montserrat",
+  },
+  genderLabel: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#8e9bb0",
+    marginBottom: 4,
+  },
+  radiogrp: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "space-around",
+    flexDirection: "row",
+  },
+  button: {
+    borderRadius: 10,
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    boxShadow: "0 6px 18px rgba(53, 133, 218, 0.35)",
+    color: "#fff",
+    fontWeight: 700,
+    fontFamily: "Montserrat",
+    letterSpacing: 1,
+    textTransform: "none",
+    "&:hover": {
+      background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+      boxShadow: "0 8px 22px rgba(53, 133, 218, 0.45)",
+    },
   },
 });
 export function UserSettings() {
@@ -164,23 +185,25 @@ export function UserSettings() {
   return (
     <div className="dashdiv">
       <Grid item xs={12} className={classes.DialogBox}>
-        <Typography style={{ fontSize: "30px" }} className={classes.sameinfont}>
+        <Typography className={classes.pageTitle}>
           USER SETTINGS
         </Typography>
-        <Typography
-          style={{ fontSize: "28px", width: "100%", textAlign: "left" }}
-          className={classes.sameinfont}
-        >
-          BASIC PROFILE
+        <Typography className={classes.pageSubtitle}>
+          Manage your personal information and account security.
         </Typography>
-        <Grid item xs={12} className={classes.DEDialogBox}>
+        <Grid item xs={12} className={classes.sectionCard}>
+          <Typography className={classes.sectionTitle}>
+            BASIC PROFILE
+          </Typography>
           <form onSubmit={formikBasicInfo.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="First Name"
+                  variant="outlined"
                   InputLabelProps={{ shrink: true }}
-                  className={classes.Glucoselevel}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
                   name="fname"
                   value={formikBasicInfo.values.fname}
                   onChange={formikBasicInfo.handleChange}
@@ -191,8 +214,10 @@ export function UserSettings() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Last Name"
+                  variant="outlined"
                   InputLabelProps={{ shrink: true }}
-                  className={classes.Glucoselevel}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
                   name="lname"
                   value={formikBasicInfo.values.lname}
                   onChange={formikBasicInfo.handleChange}
@@ -204,8 +229,10 @@ export function UserSettings() {
                 <TextField
                   label="Date of Birth"
                   type="date"
+                  variant="outlined"
                   InputLabelProps={{ shrink: true }}
-                  className={classes.Glucoselevel}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
                   name="dob"
                   value={formikBasicInfo.values.dob}
                   onChange={formikBasicInfo.handleChange}
@@ -215,7 +242,7 @@ export function UserSettings() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl component="fieldset" style={{ width: "100%", marginTop: 8 }}>
-                  <FormLabel component="legend" style={{ fontSize: "12px" }}>Gender</FormLabel>
+                  <FormLabel component="legend" className={classes.genderLabel}>Gender</FormLabel>
                   <RadioGroup
                     aria-label="gender"
                     name="gender"
@@ -229,8 +256,8 @@ export function UserSettings() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Box display="flex" justifyContent="center" mt={1}>
-                  <Button className={classes.DEDial} type="submit" style={{ width: 200, marginTop: 0 }}>
+                <Box display="flex" justifyContent="center" mt={2}>
+                  <Button className={classes.button} variant="contained" disableElevation type="submit" style={{ width: 200 }}>
                     UPDATE
                   </Button>
                 </Box>
@@ -238,22 +265,19 @@ export function UserSettings() {
             </Grid>
           </form>
         </Grid>
-        <Grid container style={{ marginTop: "24px" }}>
-          <Typography
-            style={{ fontSize: "20px" }}
-            className={classes.sameinfont}
-          >
+        <Grid item xs={12} className={classes.sectionCard}>
+          <Typography className={classes.sectionTitle}>
             CHANGE PASSWORD
           </Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.DEDialogBox}>
           <form onSubmit={formikchangepass.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Old Password"
+                  variant="outlined"
                   InputLabelProps={{ shrink: true }}
-                  className={classes.Glucoselevel}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
                   type="password"
                   name="oldpassword"
                   value={formikchangepass.values.oldpassword}
@@ -265,8 +289,10 @@ export function UserSettings() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="New Password"
+                  variant="outlined"
                   InputLabelProps={{ shrink: true }}
-                  className={classes.Glucoselevel}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
                   type="password"
                   name="newpassword"
                   value={formikchangepass.values.newpassword}
@@ -278,8 +304,10 @@ export function UserSettings() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Confirm New Password"
+                  variant="outlined"
                   InputLabelProps={{ shrink: true }}
-                  className={classes.Glucoselevel}
+                  InputProps={{ classes: { input: classes.inputRoot } }}
+                  className={classes.field}
                   type="password"
                   name="confirmpassword"
                   value={formikchangepass.values.confirmpassword}
@@ -289,8 +317,8 @@ export function UserSettings() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Box display="flex" justifyContent="center" mt={1}>
-                  <Button className={classes.DEDial} type="submit" style={{ width: 200, marginTop: 0 }}>
+                <Box display="flex" justifyContent="center" mt={2}>
+                  <Button className={classes.button} variant="contained" disableElevation type="submit" style={{ width: 200 }}>
                     UPDATE
                   </Button>
                 </Box>
