@@ -2,6 +2,7 @@ import React from "react";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Drawer from "@material-ui/core/Drawer";
@@ -28,7 +29,7 @@ const drawerExpanded = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "linear-gradient(45deg,#f9f9f9 0%, #e8e8e8 100%)",
+    background: "linear-gradient(45deg,#f5f7fa 0%, #e4e9f0 100%)",
     minHeight: "100vh",
     overflowX: "hidden",
     display: "flex",
@@ -51,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     marginBottom: 16,
     "&:hover": { background: "#0d4d8f" },
+    [theme.breakpoints.down("sm")]: {
+      marginTop: -16,
+      marginLeft: -14,
+    },
   },
   mobileDrawer: {
     "& .MuiDrawer-paper": {
@@ -65,31 +70,96 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1300,
     color: "#fff",
   },
-  actionBar: {
+  pageHeader: {
     display: "flex",
     alignItems: "center",
-    gap: 12,
+    gap: 16,
     marginBottom: 20,
     flexWrap: "wrap",
   },
-  actionBtn: {
+  backBtn: {
     background: "#fff",
     color: "#3585da",
     fontWeight: 600,
     fontSize: 15,
     textTransform: "none",
-    borderRadius: 8,
-    padding: "8px 20px",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-    border: "1px solid #e0e0e0",
+    borderRadius: 10,
+    padding: "8px 16px",
+    boxShadow: "0 2px 8px rgba(16,97,176,0.12)",
+    border: "1px solid #e0e8f2",
     "&:hover": {
       background: "#f0f7fc",
       borderColor: "#3585da",
     },
   },
+  headerText: {
+    flex: 1,
+    minWidth: 220,
+  },
+  sectionBar: {
+    display: "inline-block",
+    width: 5,
+    height: 24,
+    borderRadius: 3,
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    marginRight: 12,
+    verticalAlign: "middle",
+  },
+  pageTitle: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+    fontSize: 24,
+    color: "#1061b0",
+    [theme.breakpoints.down("sm")]: { fontSize: 19 },
+  },
+  pageSub: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#8e9bb0",
+    marginTop: 4,
+    marginLeft: 17,
+  },
+  actions: {
+    display: "flex",
+    gap: 10,
+    flexWrap: "wrap",
+    marginLeft: "auto",
+  },
+  saveBtn: {
+    background: "linear-gradient(45deg, #3585da 0%, #59c1e8 100%)",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 15,
+    textTransform: "none",
+    borderRadius: 10,
+    padding: "10px 22px",
+    boxShadow: "0 6px 18px rgba(53, 133, 218, 0.35)",
+    "&:hover": {
+      background: "linear-gradient(45deg, #2b74c4 0%, #49a9d6 100%)",
+      boxShadow: "0 8px 22px rgba(53, 133, 218, 0.45)",
+    },
+  },
+  downloadBtn: {
+    background: "#fff",
+    color: "#3585da",
+    fontWeight: 700,
+    fontSize: 15,
+    textTransform: "none",
+    borderRadius: 10,
+    padding: "10px 22px",
+    boxShadow: "0 2px 8px rgba(16,97,176,0.12)",
+    border: "1px solid #3585da",
+    "&:hover": {
+      background: "#f0f7fc",
+    },
+  },
   reportContainer: {
-    maxWidth: 900,
+    width: "100%",
     margin: "0 auto",
+    background: "#fff",
+    borderRadius: 16,
+    overflow: "hidden",
+    boxShadow: "0 12px 32px rgba(16, 97, 176, 0.18)",
   },
 }));
 
@@ -149,6 +219,45 @@ export default function Result() {
     pdfExportComponent.current.save();
   }
 
+  const header = (
+    <Box className={classes.pageHeader}>
+      <Button
+        startIcon={<ArrowBackIcon />}
+        className={classes.backBtn}
+        onClick={() => history.goBack()}
+      >
+        Back
+      </Button>
+      <Box className={classes.headerText}>
+        <Typography className={classes.pageTitle}>
+          <span className={classes.sectionBar} />
+          Screening Report
+        </Typography>
+        <Typography className={classes.pageSub}>
+          Review the auto-generated diabetic retinopathy screening result below
+        </Typography>
+      </Box>
+      <Box className={classes.actions}>
+        {!isdoctor && (
+          <Button
+            startIcon={<SaveIcon />}
+            className={classes.saveBtn}
+            onClick={saveReport}
+          >
+            Save Report
+          </Button>
+        )}
+        <Button
+          startIcon={<DownloadIcon />}
+          className={classes.downloadBtn}
+          onClick={handleExportWithComponent}
+        >
+          Download
+        </Button>
+      </Box>
+    </Box>
+  );
+
   return (
     <Box className={classes.root}>
       {isMobile ? (
@@ -169,33 +278,9 @@ export default function Result() {
             <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
               <MenuIcon />
             </IconButton>
-            <Box className={classes.actionBar}>
-              <Button
-                startIcon={<ArrowBackIcon />}
-                className={classes.actionBtn}
-                onClick={() => history.goBack()}
-              >
-                Back
-              </Button>
-              {!isdoctor && (
-                <Button
-                  startIcon={<SaveIcon />}
-                  className={classes.actionBtn}
-                  onClick={saveReport}
-                >
-                  Save Report
-                </Button>
-              )}
-              <Button
-                startIcon={<DownloadIcon />}
-                className={classes.actionBtn}
-                onClick={handleExportWithComponent}
-              >
-                Download Report
-              </Button>
-            </Box>
+            {header}
             <Box className={classes.reportContainer}>
-              <PDFExport ref={pdfExportComponent} paperSize="A4">
+              <PDFExport ref={pdfExportComponent} paperSize="A4" margin={0}>
                 <ReportTemplate />
               </PDFExport>
             </Box>
@@ -212,33 +297,9 @@ export default function Result() {
             <SideDrawer />
           </Box>
           <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
-            <Box className={classes.actionBar}>
-              <Button
-                startIcon={<ArrowBackIcon />}
-                className={classes.actionBtn}
-                onClick={() => history.goBack()}
-              >
-                Back
-              </Button>
-              {!isdoctor && (
-                <Button
-                  startIcon={<SaveIcon />}
-                  className={classes.actionBtn}
-                  onClick={saveReport}
-                >
-                  Save Report
-                </Button>
-              )}
-              <Button
-                startIcon={<DownloadIcon />}
-                className={classes.actionBtn}
-                onClick={handleExportWithComponent}
-              >
-                Download Report
-              </Button>
-            </Box>
+            {header}
             <Box className={classes.reportContainer}>
-              <PDFExport ref={pdfExportComponent} paperSize="A4">
+              <PDFExport ref={pdfExportComponent} paperSize="A4" margin={0}>
                 <ReportTemplate />
               </PDFExport>
             </Box>
