@@ -179,7 +179,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function PatientDashboard() {
+export function PatientDashboard({ drawerOffset = 0 }) {
   const classes = useStyles();
   const name = useSelector((state) => state.states.name);
   const userId = useSelector((state) => state.states.user._id);
@@ -484,13 +484,13 @@ export function PatientDashboard() {
                 <Typography className={classes.graphLabel}>
                   BLOOD PRESSURE
                 </Typography>
-                <GraphBp height={340} />
+                <GraphBp height={340} drawerOffset={drawerOffset} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <Typography className={classes.graphLabel}>
                   GLUCOSE LEVEL
                 </Typography>
-                <GraphGlocuse height={340} />
+                <GraphGlocuse height={340} drawerOffset={drawerOffset} />
               </Grid>
             </Grid>
           </div>

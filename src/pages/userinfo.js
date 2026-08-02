@@ -81,7 +81,7 @@ export default function UserInfo() {
                         <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
                             <MenuIcon />
                         </IconButton>
-                        <UserDetail />
+                        <UserDetail drawerOffset={0} />
                     </Box>
                 </>
             ) : (
@@ -95,7 +95,7 @@ export default function UserInfo() {
                         <SideDrawer />
                     </Box>
                     <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
-                        <UserDetail />
+                        <UserDetail drawerOffset={current} />
                     </Box>
                 </>
             )}

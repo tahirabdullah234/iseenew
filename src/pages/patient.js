@@ -81,7 +81,7 @@ export default function Patient() {
                         <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
                             <MenuIcon />
                         </IconButton>
-                        <PatientDashboard />
+                        <PatientDashboard drawerOffset={0} />
                     </Box>
                 </>
             ) : (
@@ -95,7 +95,7 @@ export default function Patient() {
                         <SideDrawer />
                     </Box>
                     <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
-                        <PatientDashboard />
+                        <PatientDashboard drawerOffset={current} />
                     </Box>
                 </>
             )}

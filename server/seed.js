@@ -36,7 +36,7 @@ async function seed() {
     ]);
     console.log('Cleared all collections');
 
-    // Create 2 patients
+    // Create 3 patients
     var patient1 = await User.register(new User({
       username: 'john@test.com',
       fname: 'John',
@@ -59,7 +59,18 @@ async function seed() {
       photo: 2
     }), 'password123');
 
-    console.log('Created patients:', patient1.username, patient2.username);
+    var patient3 = await User.register(new User({
+      username: 'empty@test.com',
+      fname: 'Mike',
+      lname: 'Walker',
+      gender: 'Male',
+      isDoctor: false,
+      dob: new Date('1992-01-10'),
+      city: 'Karachi',
+      photo: 3
+    }), 'password123');
+
+    console.log('Created patients:', patient1.username, patient2.username, patient3.username);
 
     // Create 2 doctors
     var doctor1 = await User.register(new User({
@@ -444,6 +455,7 @@ async function seed() {
     console.log('Login Credentials:');
     console.log('Patient 1 - email: ' + patient1.username + ', password: password123');
     console.log('Patient 2 - email: ' + patient2.username + ', password: password123');
+    console.log('Patient 3 (no data) - email: ' + patient3.username + ', password: password123');
     console.log('Doctor 1  - email: ' + doctor1.username + ', password: password123');
     console.log('Doctor 2  - email: ' + doctor2.username + ', password: password123');
     console.log('Doctor 3  - email: ' + doctor3.username + ', password: password123');

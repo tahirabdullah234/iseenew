@@ -15,7 +15,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export function GraphGlocuse({ userId, height = 300 }) {
+export function GraphGlocuse({ userId, height = 300, drawerOffset = 0 }) {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
 
@@ -42,7 +42,6 @@ export function GraphGlocuse({ userId, height = 300 }) {
                     // console.log(res.data)
                     setdata(res.data.record)
                     setsnackbar({
-                        ...snackbar,
                         open: true,
                         msg: "No Blood Glocuse Data Found",
                         type: "info"
@@ -110,9 +109,18 @@ export function GraphGlocuse({ userId, height = 300 }) {
                         style={{ marginRight: "20px", width: "103px", height: "101px" }}
                     />
             }
-            <Snackbar open={snackbar.open}
+            <Snackbar
+                open={snackbar.open}
                 autoHideDuration={2000}
                 onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                style={{
+                    left: 0,
+                    right: 0,
+                    transform: "none",
+                    paddingLeft: drawerOffset,
+                    justifyContent: "center",
+                }}
             >
                 <Alert severity={snackbar.type}>
                     {snackbar.msg}
@@ -122,7 +130,7 @@ export function GraphGlocuse({ userId, height = 300 }) {
     )
 }
 
-export function GraphBp({ userId, height = 300 }) {
+export function GraphBp({ userId, height = 300, drawerOffset = 0 }) {
     const token = useSelector((state) => state.states.token);
     const [data, setdata] = React.useState(null);
 
@@ -149,14 +157,13 @@ export function GraphBp({ userId, height = 300 }) {
                 } else {
                     setdata(res.data.record)
                     setsnackbar({
-                        ...snackbar,
                         open: true,
                         msg: "No Blood Pressure Data Found",
                         type: "info"
                     })
                 }
             })
-    }, [snackbar, token, userId])
+    }, [token, userId])
     // systolic upper - 120 ideal
     // distlic lower - 80 ideal
 
@@ -218,9 +225,18 @@ export function GraphBp({ userId, height = 300 }) {
                         style={{ marginRight: "20px", width: "103px", height: "101px" }}
                     />
             }
-            <Snackbar open={snackbar.open}
+            <Snackbar
+                open={snackbar.open}
                 autoHideDuration={2000}
                 onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                style={{
+                    left: 0,
+                    right: 0,
+                    transform: "none",
+                    paddingLeft: drawerOffset,
+                    justifyContent: "center",
+                }}
             >
                 <Alert severity={snackbar.type}>
                     {snackbar.msg}

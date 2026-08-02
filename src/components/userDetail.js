@@ -254,7 +254,7 @@ const formatDate = (date) => {
     return d.toLocaleDateString([], { year: "numeric", month: "long", day: "numeric" });
 };
 
-export default function UserInfo() {
+export default function UserInfo({ drawerOffset = 0 }) {
     const classes = useStyles();
     const [user, setuser] = React.useState(null)
     const token = useSelector((state) => state.states.token)
@@ -403,13 +403,13 @@ export default function UserInfo() {
                             <Grid item xs={12} md={6}>
                                 <div className={classes.graphCard}>
                                     <Typography className={classes.graphTitle}>Blood Pressure</Typography>
-                                    <GraphBp userId={userId} />
+                                    <GraphBp userId={userId} drawerOffset={drawerOffset} />
                                 </div>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <div className={classes.graphCard}>
                                     <Typography className={classes.graphTitle}>Glucose Level</Typography>
-                                    <GraphGlocuse userId={userId} />
+                                    <GraphGlocuse userId={userId} drawerOffset={drawerOffset} />
                                 </div>
                             </Grid>
                         </Grid>
