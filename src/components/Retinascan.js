@@ -296,7 +296,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export function RetinaScan() {
+export function RetinaScan({ drawerOffset = 0 }) {
   const classes = useStyles();
   const fileInput = React.useRef(null);
   const [scan, setscan] = React.useState(null);
@@ -534,7 +534,19 @@ export function RetinaScan() {
           </button>
         </Box>
 
-        <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          style={{
+            left: 0,
+            right: 0,
+            transform: "none",
+            paddingLeft: drawerOffset,
+            justifyContent: "center",
+          }}
+        >
           <Alert onClose={handleClose} severity="info">
             {snackbar.msg}
           </Alert>

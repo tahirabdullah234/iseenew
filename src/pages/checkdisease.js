@@ -80,7 +80,7 @@ export default function Scan() {
                         <IconButton className={classes.menuBtn} onClick={() => setMobileOpen(true)}>
                             <MenuIcon />
                         </IconButton>
-                        <RetinaScan />
+                        <RetinaScan drawerOffset={0} />
                     </Box>
                 </>
             ) : (
@@ -94,7 +94,7 @@ export default function Scan() {
                         <SideDrawer />
                     </Box>
                     <Box className={classes.content} style={{ maxWidth: `calc(100% - ${current}px)` }}>
-                        <RetinaScan />
+                        <RetinaScan drawerOffset={current} />
                     </Box>
                 </>
             )}
