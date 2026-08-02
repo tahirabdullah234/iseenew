@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -343,6 +344,7 @@ export function ManageGL() {
                 </Box>
                 <Box flex="1 1 140px" minWidth={0}>
                   <FormControl fullWidth style={{ marginTop: 0 }}>
+                    <InputLabel shrink>Unit</InputLabel>
                     <Select value={GLunit} onChange={handleChange}>
                       <MenuItem value="mg/dl">
                         <em>mg/dl</em>
