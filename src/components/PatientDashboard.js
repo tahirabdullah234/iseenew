@@ -120,6 +120,16 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     overflow: "hidden",
   },
+  infoCardUpper: {
+    [theme.breakpoints.up("lg")]: {
+      height: 156,
+    },
+  },
+  infoCardLower: {
+    [theme.breakpoints.up("lg")]: {
+      height: 191,
+    },
+  },
   infoCardTitle: {
     fontSize: 30,
     fontWeight: 700,
@@ -315,7 +325,7 @@ export function PatientDashboard({ drawerOffset = 0 }) {
             </div>
           </Grid>
           <Grid item xs={12} md={6} style={{ display: "flex" }}>
-            <div className={classes.infoCard}>
+            <div className={`${classes.infoCard} ${classes.infoCardUpper}`}>
               <Typography className={classes.infoCardTitle}>
                 <CalendarTodayIcon style={{ fontSize: 18 }} />
                 Latest Appointment
@@ -337,7 +347,7 @@ export function PatientDashboard({ drawerOffset = 0 }) {
             </div>
           </Grid>
           <Grid item xs={12} md={6} style={{ display: "flex" }}>
-            <div className={classes.infoCard}>
+            <div className={`${classes.infoCard} ${classes.infoCardLower}`}>
               <Typography className={classes.infoCardTitle}>
                 <MessageIcon style={{ fontSize: 18 }} />
                 Latest Message
@@ -422,7 +432,7 @@ export function PatientDashboard({ drawerOffset = 0 }) {
           </Grid>
           <Grid item md={4} style={{ display: "flex" }}>
             <Box display="flex" flexDirection="column" style={{ gap: 16, width: "100%" }}>
-              <div className={classes.infoCard}>
+              <div className={`${classes.infoCard} ${classes.infoCardUpper}`}>
                 <Typography className={classes.infoCardTitle}>
                   <CalendarTodayIcon style={{ fontSize: 18 }} />
                   Latest Appointment
@@ -442,7 +452,7 @@ export function PatientDashboard({ drawerOffset = 0 }) {
                   </Typography>
                 )}
               </div>
-              <div className={classes.infoCard}>
+              <div className={`${classes.infoCard} ${classes.infoCardLower}`}>
                 <Typography className={classes.infoCardTitle}>
                   <MessageIcon style={{ fontSize: 18 }} />
                   Latest Message

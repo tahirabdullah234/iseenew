@@ -36,7 +36,7 @@ async function seed() {
     ]);
     console.log('Cleared all collections');
 
-    // Create 3 patients
+    // Create 4 patients
     var patient1 = await User.register(new User({
       username: 'john@test.com',
       fname: 'John',
@@ -70,7 +70,28 @@ async function seed() {
       photo: 3
     }), 'password123');
 
-    console.log('Created patients:', patient1.username, patient2.username, patient3.username);
+    var patient4 = await User.register(new User({
+      username: 'sarah@test.com',
+      fname: 'Sarah',
+      lname: 'Khan',
+      gender: 'Female',
+      isDoctor: false,
+      dob: new Date('1993-04-12'),
+      city: 'Islamabad',
+      photo: 4
+    }), 'password123');
+
+    var patient5 = await User.register(new User({
+      username: 'nobody@test.com',
+      fname: 'Noah',
+      lname: 'Rehman',
+      gender: 'Male',
+      isDoctor: false,
+      dob: new Date('1991-09-05'),
+      city: 'Lahore'
+    }), 'password123');
+
+    console.log('Created patients:', patient1.username, patient2.username, patient3.username, patient4.username, patient5.username);
 
     // Create 2 doctors
     var doctor1 = await User.register(new User({
@@ -150,7 +171,17 @@ async function seed() {
       photo: 3
     }), 'password123');
 
-    console.log('Created doctors:', doctor1.username, doctor2.username, doctor3.username, doctor4.username, doctor5.username, doctor6.username, doctor7.username);
+    var doctor8 = await User.register(new User({
+      username: 'nodoctor@test.com',
+      fname: 'Usman',
+      lname: 'Qureshi',
+      gender: 'Male',
+      isDoctor: true,
+      dob: new Date('1986-04-19'),
+      city: 'Karachi'
+    }), 'password123');
+
+    console.log('Created doctors:', doctor1.username, doctor2.username, doctor3.username, doctor4.username, doctor5.username, doctor6.username, doctor7.username, doctor8.username);
 
     // Create Doctor profiles
     var docProfile1 = await Doctor.create({
@@ -211,7 +242,7 @@ async function seed() {
 
     console.log('Created doctor profiles');
 
-    // Create BP records for both patients
+    // Create BP records for all patients (except patient3 kept empty for empty-state testing)
     await BP.create([
       { patient: patient1._id, systolic: 120, dystolic: 80, dateAdded: new Date('2026-07-25') },
       { patient: patient1._id, systolic: 125, dystolic: 82, dateAdded: new Date('2026-07-26') },
@@ -222,10 +253,14 @@ async function seed() {
       { patient: patient2._id, systolic: 115, dystolic: 75, dateAdded: new Date('2026-07-26') },
       { patient: patient2._id, systolic: 112, dystolic: 72, dateAdded: new Date('2026-07-27') },
       { patient: patient2._id, systolic: 118, dystolic: 76, dateAdded: new Date('2026-07-28') },
-      { patient: patient2._id, systolic: 120, dystolic: 78, dateAdded: new Date('2026-07-29') }
+      { patient: patient2._id, systolic: 120, dystolic: 78, dateAdded: new Date('2026-07-29') },
+      { patient: patient4._id, systolic: 128, dystolic: 84, dateAdded: new Date('2026-07-29') },
+      { patient: patient4._id, systolic: 124, dystolic: 80, dateAdded: new Date('2026-07-30') },
+      { patient: patient4._id, systolic: 132, dystolic: 86, dateAdded: new Date('2026-07-31') },
+      { patient: patient4._id, systolic: 126, dystolic: 82, dateAdded: new Date('2026-08-01') }
     ]);
 
-    // Create BG records for both patients
+    // Create BG records for all patients (except patient3 kept empty for empty-state testing)
     await BG.create([
       { patient: patient1._id, value: 95, isFasting: true, dateAdded: new Date('2026-07-25') },
       { patient: patient1._id, value: 140, isFasting: false, dateAdded: new Date('2026-07-25') },
@@ -236,7 +271,11 @@ async function seed() {
       { patient: patient2._id, value: 145, isFasting: false, dateAdded: new Date('2026-07-25') },
       { patient: patient2._id, value: 105, isFasting: true, dateAdded: new Date('2026-07-26') },
       { patient: patient2._id, value: 140, isFasting: false, dateAdded: new Date('2026-07-27') },
-      { patient: patient2._id, value: 98, isFasting: true, dateAdded: new Date('2026-07-28') }
+      { patient: patient2._id, value: 98, isFasting: true, dateAdded: new Date('2026-07-28') },
+      { patient: patient4._id, value: 110, isFasting: true, dateAdded: new Date('2026-07-29') },
+      { patient: patient4._id, value: 150, isFasting: false, dateAdded: new Date('2026-07-30') },
+      { patient: patient4._id, value: 108, isFasting: true, dateAdded: new Date('2026-07-31') },
+      { patient: patient4._id, value: 155, isFasting: false, dateAdded: new Date('2026-08-01') }
     ]);
 
     console.log('Created BP and BG records');
@@ -298,6 +337,48 @@ async function seed() {
       name: 'Jane Smith'
     });
 
+    var request9 = await Request.create({
+      p_id: patient1._id,
+      d_id: docProfile6._id,
+      msg: 'Feeling fatigued, would like a general checkup',
+      name: 'John Doe'
+    });
+
+    var request10 = await Request.create({
+      p_id: patient2._id,
+      d_id: docProfile7._id,
+      msg: 'Need an eye examination appointment',
+      name: 'Jane Smith'
+    });
+
+    var request11 = await Request.create({
+      p_id: patient3._id,
+      d_id: docProfile1._id,
+      msg: 'New patient, requesting first checkup',
+      name: 'Mike Walker'
+    });
+
+    var request12 = await Request.create({
+      p_id: patient3._id,
+      d_id: docProfile5._id,
+      msg: 'Need diabetes screening',
+      name: 'Mike Walker'
+    });
+
+    var request13 = await Request.create({
+      p_id: patient4._id,
+      d_id: docProfile1._id,
+      msg: 'Need an eye checkup for blurred vision',
+      name: 'Sarah Khan'
+    });
+
+    var request14 = await Request.create({
+      p_id: patient4._id,
+      d_id: docProfile2._id,
+      msg: 'Need a diabetes consultation',
+      name: 'Sarah Khan'
+    });
+
     console.log('Created requests');
 
     // Create appointments (d_id is the doctor user id so it shows in doctor dashboard)
@@ -331,6 +412,144 @@ async function seed() {
       date: new Date('2026-08-18'),
       time: '03:00 PM',
       name: 'Jane Smith'
+    });
+
+    // Today's appointments (2026-08-02) so the doctor dashboard shows TODAY'S SCHEDULE
+    var today1 = await Appointment.create({
+      p_id: patient1._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-02'),
+      time: '09:30 AM',
+      name: 'John Doe'
+    });
+
+    var today2 = await Appointment.create({
+      p_id: patient2._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-02'),
+      time: '11:45 AM',
+      name: 'Jane Smith'
+    });
+
+    var today3 = await Appointment.create({
+      p_id: patient3._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-02'),
+      time: '02:15 PM',
+      name: 'Mike Walker'
+    });
+
+    var today4 = await Appointment.create({
+      p_id: patient1._id,
+      d_id: doctor2._id,
+      date: new Date('2026-08-02'),
+      time: '10:15 AM',
+      name: 'John Doe'
+    });
+
+    var today5 = await Appointment.create({
+      p_id: patient4._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-02'),
+      time: '08:45 AM',
+      name: 'Sarah Khan'
+    });
+
+    var today6 = await Appointment.create({
+      p_id: patient1._id,
+      d_id: doctor2._id,
+      date: new Date('2026-08-02'),
+      time: '01:00 PM',
+      name: 'John Doe'
+    });
+
+    var today7 = await Appointment.create({
+      p_id: patient4._id,
+      d_id: doctor2._id,
+      date: new Date('2026-08-02'),
+      time: '04:30 PM',
+      name: 'Sarah Khan'
+    });
+
+    var today8 = await Appointment.create({
+      p_id: patient3._id,
+      d_id: doctor2._id,
+      date: new Date('2026-08-02'),
+      time: '05:45 PM',
+      name: 'Mike Walker'
+    });
+
+    // Additional upcoming appointments for other doctors
+    var appointment5 = await Appointment.create({
+      p_id: patient3._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-20'),
+      time: '10:00 AM',
+      name: 'Mike Walker'
+    });
+
+    var appointment6 = await Appointment.create({
+      p_id: patient1._id,
+      d_id: doctor3._id,
+      date: new Date('2026-08-07'),
+      time: '09:00 AM',
+      name: 'John Doe'
+    });
+
+    var appointment7 = await Appointment.create({
+      p_id: patient2._id,
+      d_id: doctor4._id,
+      date: new Date('2026-08-11'),
+      time: '04:00 PM',
+      name: 'Jane Smith'
+    });
+
+    var appointment8 = await Appointment.create({
+      p_id: patient3._id,
+      d_id: doctor5._id,
+      date: new Date('2026-08-14'),
+      time: '12:00 PM',
+      name: 'Mike Walker'
+    });
+
+    var appointment9 = await Appointment.create({
+      p_id: patient4._id,
+      d_id: doctor1._id,
+      date: new Date('2026-08-22'),
+      time: '11:30 AM',
+      name: 'Sarah Khan'
+    });
+
+    var appointment10 = await Appointment.create({
+      p_id: patient1._id,
+      d_id: doctor5._id,
+      date: new Date('2026-08-19'),
+      time: '02:00 PM',
+      name: 'John Doe'
+    });
+
+    var appointment11 = await Appointment.create({
+      p_id: patient2._id,
+      d_id: doctor6._id,
+      date: new Date('2026-08-13'),
+      time: '10:30 AM',
+      name: 'Jane Smith'
+    });
+
+    var appointment12 = await Appointment.create({
+      p_id: patient3._id,
+      d_id: doctor7._id,
+      date: new Date('2026-08-15'),
+      time: '03:30 PM',
+      name: 'Mike Walker'
+    });
+
+    var appointment13 = await Appointment.create({
+      p_id: patient4._id,
+      d_id: doctor3._id,
+      date: new Date('2026-08-17'),
+      time: '09:15 AM',
+      name: 'Sarah Khan'
     });
 
     console.log('Created appointments');
@@ -456,6 +675,9 @@ async function seed() {
     console.log('Patient 1 - email: ' + patient1.username + ', password: password123');
     console.log('Patient 2 - email: ' + patient2.username + ', password: password123');
     console.log('Patient 3 (no data) - email: ' + patient3.username + ', password: password123');
+    console.log('Patient 4 - email: ' + patient4.username + ', password: password123');
+    console.log('Patient 5 (only profile, no data) - email: ' + patient5.username + ', password: password123');
+    console.log('Doctor 8 (only profile, no data) - email: ' + doctor8.username + ', password: password123');
     console.log('Doctor 1  - email: ' + doctor1.username + ', password: password123');
     console.log('Doctor 2  - email: ' + doctor2.username + ', password: password123');
     console.log('Doctor 3  - email: ' + doctor3.username + ', password: password123');

@@ -201,6 +201,18 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 300,
     overflowY: "auto",
     overflowX: "auto",
+  },
+  emptyBox: {
+    width: "100%",
+    height: 300,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyText: {
+    fontFamily: "Montserrat",
+    fontSize: 22,
+    color: "#5a9bd5",
   }
 }));
 
@@ -244,22 +256,9 @@ export function ManageBP() {
       .then(res => {
         if (res.data.success) {
           console.log(res.data)
-          if (res.data.record.length > 0)
-            setdata(res.data.record)
-          else
-            setdata([{
-              systolic: 'No Record Found ',
-              dystolic: "No Record Found",
-              dateAdded: "N/ATN/A",
-              type: ""
-            }])
+          setdata(res.data.record.length > 0 ? res.data.record : [])
         } else {
-          setdata([{
-            value: 'No Record Found ',
-            unit: "",
-            dateAdded: "N/ATN/A",
-            type: ""
-          }])
+          setdata([])
         }
       })
   }
@@ -448,36 +447,48 @@ export function ManageBP() {
                 >
                   BLOOD PRESSURE TABLE
                 </Typography>
-                <TableContainer className={classes.bloodpressuretablecontainer}>
-                  <Table className={classes.bpTable}>
-                    <TableHead>
-                      <TableRow className={classes.bpTableHeadRow}>
-                        <TableCell align="center">SYS</TableCell>
-                        <TableCell align="center">DYS</TableCell>
-                        <TableCell>Time</TableCell>
-                        <TableCell>Date</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data ? (
-                        data.map((item, index) => (
-                          <TableRow key={index} className={classes.bpTableBodyRow}>
-                            <TableCell align="center">{item.systolic + " mmHg"}</TableCell>
-                            <TableCell align="center">{item.dystolic + " mmHg"}</TableCell>
-                            <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
-                            <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
-                          </TableRow>
-                        ))
-                      ) : (
-                        <TableRow>
-                          <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
-                            <CircularProgress />
-                          </TableCell>
+                {data && data.length > 0 ? (
+                  <TableContainer className={classes.bloodpressuretablecontainer}>
+                    <Table className={classes.bpTable}>
+                      <TableHead>
+                        <TableRow className={classes.bpTableHeadRow}>
+                          <TableCell align="center">SYS</TableCell>
+                          <TableCell align="center">DYS</TableCell>
+                          <TableCell>Time</TableCell>
+                          <TableCell>Date</TableCell>
                         </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                      </TableHead>
+                      <TableBody>
+                        {data ? (
+                          data.map((item, index) => (
+                            <TableRow key={index} className={classes.bpTableBodyRow}>
+                              <TableCell align="center">{item.systolic + " mmHg"}</TableCell>
+                              <TableCell align="center">{item.dystolic + " mmHg"}</TableCell>
+                              <TableCell>{item.dateAdded.split("T")[1].split(".")[0]}</TableCell>
+                              <TableCell>{item.dateAdded.split("T")[0]}</TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={4} align="center" style={{ border: "none", background: "transparent" }}>
+                              <CircularProgress />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : data === null ? (
+                  <Box className={classes.emptyBox}>
+                    <CircularProgress />
+                  </Box>
+                ) : (
+                  <Box className={classes.emptyBox}>
+                    <Typography className={classes.emptyText}>
+                      No Records Found
+                    </Typography>
+                  </Box>
+                )}
               </Box>
             </Box>
             <Box className={classes.tableGraphItem}>

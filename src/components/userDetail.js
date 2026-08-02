@@ -21,6 +21,14 @@ import WcIcon from "@material-ui/icons/Wc";
 import CakeIcon from "@material-ui/icons/Cake";
 import { setdata } from "../pages/statesSlice";
 
+import photo1 from "../Assets/user1-photo.png";
+import photo2 from "../Assets/user2-photo.png";
+import photo3 from "../Assets/user3-photo.png";
+import photo4 from "../Assets/user4-photo.png";
+import photo5 from "../Assets/user5-photo.png";
+
+const userPhotos = [null, photo1, photo2, photo3, photo4, photo5];
+
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
@@ -301,6 +309,13 @@ export default function UserInfo({ drawerOffset = 0 }) {
 
     const fullName = user ? user.fname + " " + user.lname : "";
 
+    const patientPhoto =
+        user && typeof user.photo === "string"
+            ? user.photo
+            : user && user.photo >= 1 && user.photo <= 5
+                ? userPhotos[user.photo]
+                : null;
+
     return (
         <div className={classes.root}>
             <Button
@@ -312,7 +327,9 @@ export default function UserInfo({ drawerOffset = 0 }) {
             </Button>
 
             <div className={classes.profileCard}>
-                <Avatar className={classes.avatar}>{initials(fullName)}</Avatar>
+                <Avatar className={classes.avatar} src={patientPhoto || undefined}>
+                    {!patientPhoto ? initials(fullName) : null}
+                </Avatar>
                 <Box>
                     <Typography className={classes.profileName}>{fullName}</Typography>
                     <Typography className={classes.profileRole}>Patient Profile</Typography>

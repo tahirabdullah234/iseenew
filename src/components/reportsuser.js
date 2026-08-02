@@ -26,6 +26,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    height: "calc(100vh - 48px)",
+    boxSizing: "border-box",
   },
 
   sameinfont: {
@@ -50,6 +52,10 @@ const useStyles = makeStyles({
     padding: "16px",
     boxSizing: "border-box",
     marginTop: "12px",
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    minHeight: 0,
   },
   reportsTable: {
     borderCollapse: "separate",
@@ -101,9 +107,23 @@ const useStyles = makeStyles({
   },
   reportlistcontainer: {
     width: "100%",
-    maxHeight: "60vh",
+    flex: 1,
+    minHeight: 0,
     overflowY: "auto",
     overflowX: "auto",
+  },
+  emptyBox: {
+    flex: 1,
+    minHeight: 0,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyText: {
+    fontFamily: "Montserrat",
+    fontSize: 22,
+    color: "#5a9bd5",
   },
   actionIcon: {
     color: "#3585da",
@@ -127,10 +147,7 @@ export default function Reports({ userId }) {
           console.log(res.data)
           setreports(res.data.reports)
         } else {
-          setreports([{
-            title: "No Reports Found",
-            date: "N/ATN/A"
-          }])
+          setreports([])
         }
       })
   }, [token])
@@ -150,46 +167,58 @@ export default function Reports({ userId }) {
           <Typography className={classes.cardTitle}>
             All Reports
           </Typography>
-          <TableContainer className={classes.reportlistcontainer}>
-            <Table className={classes.reportsTable}>
-              <TableHead>
-                <TableRow className={classes.reportsTableHeadRow}>
-                  <TableCell align="center">SR</TableCell>
-                  <TableCell>Report Name</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {reports ? (
-                  reports.map((item, index) => (
-                    <TableRow key={index} className={classes.reportsTableBodyRow}>
-                      <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell>{item.title}</TableCell>
-                      <TableCell>{item.date.split('T')[0]}</TableCell>
-                      <TableCell>{item.date.split('T')[1]}</TableCell>
-                      <TableCell align="center">
-                        <IconButton
-                          className={classes.actionIcon}
-                          size="small"
-                          onClick={() => handleView(item.report)}
-                        >
-                          <VisibilityOutlinedIcon fontSize="small" />
-                        </IconButton>
+          {reports && reports.length > 0 ? (
+            <TableContainer className={classes.reportlistcontainer}>
+              <Table className={classes.reportsTable}>
+                <TableHead>
+                  <TableRow className={classes.reportsTableHeadRow}>
+                    <TableCell align="center">SR</TableCell>
+                    <TableCell>Report Name</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Time</TableCell>
+                    <TableCell align="center">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {reports ? (
+                    reports.map((item, index) => (
+                      <TableRow key={index} className={classes.reportsTableBodyRow}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        <TableCell>{item.title}</TableCell>
+                        <TableCell>{item.date.split('T')[0]}</TableCell>
+                        <TableCell>{item.date.split('T')[1]}</TableCell>
+                        <TableCell align="center">
+                          <IconButton
+                            className={classes.actionIcon}
+                            size="small"
+                            onClick={() => handleView(item.report)}
+                          >
+                            <VisibilityOutlinedIcon fontSize="small" />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={5} align="center" style={{ border: "none", background: "transparent" }}>
+                        <CircularProgress />
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={5} align="center" style={{ border: "none", background: "transparent" }}>
-                      <CircularProgress />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : reports === null ? (
+            <div className={classes.emptyBox}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className={classes.emptyBox}>
+              <Typography className={classes.emptyText}>
+                No Reports Found
+              </Typography>
+            </div>
+          )}
         </Grid>
       </Grid>
     </div>

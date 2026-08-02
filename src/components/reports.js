@@ -125,6 +125,19 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     overflowX: "auto",
   },
+  emptyBox: {
+    flex: 1,
+    minHeight: 0,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyText: {
+    fontFamily: "Montserrat",
+    fontSize: 22,
+    color: "#5a9bd5",
+  },
   viewBtn: {
     textTransform: "none",
     fontWeight: 600,
@@ -154,10 +167,7 @@ export function Reports() {
           console.log(res.data)
           setreports(res.data.reports)
         } else {
-          setreports([{
-            title: "No Reports Found",
-            date: "N/ATN/A"
-          }])
+          setreports([])
         }
         setPage(0)
       })
@@ -191,55 +201,69 @@ export function Reports() {
           <Typography className={classes.cardTitle}>
             All Reports
           </Typography>
-          <TableContainer className={classes.reportlistcontainer}>
-            <Table className={classes.reportsTable}>
-              <TableHead>
-                <TableRow className={classes.reportsTableHeadRow}>
-                  <TableCell align="center">SR</TableCell>
-                  <TableCell>Report Name</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {paginatedReports ? (
-                  paginatedReports.map((item, index) => (
-                    <TableRow key={index} className={classes.reportsTableBodyRow}>
-                      <TableCell align="center">{page * rowsPerPage + index + 1}</TableCell>
-                      <TableCell>{item.title}</TableCell>
-                      <TableCell>{item.date.split('T')[0]}</TableCell>
-                      <TableCell>{item.date.split('T')[1]}</TableCell>
-                      <TableCell align="center">
-                        <Button
-                          className={classes.viewBtn}
-                          startIcon={<VisibilityOutlinedIcon fontSize="small" />}
-                          onClick={() => handleView(item.report)}
-                        >
-                          View
-                        </Button>
-                      </TableCell>
+          {reports && reports.length > 0 ? (
+            <>
+              <TableContainer className={classes.reportlistcontainer}>
+                <Table className={classes.reportsTable}>
+                  <TableHead>
+                    <TableRow className={classes.reportsTableHeadRow}>
+                      <TableCell align="center">SR</TableCell>
+                      <TableCell>Report Name</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Time</TableCell>
+                      <TableCell align="center">Actions</TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={5} align="center" style={{ border: "none", background: "transparent" }}>
-                      <CircularProgress />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            component="div"
-            count={reports ? reports.length : 0}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[12, 24, 48]}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+                  </TableHead>
+                  <TableBody>
+                    {paginatedReports ? (
+                      paginatedReports.map((item, index) => (
+                        <TableRow key={index} className={classes.reportsTableBodyRow}>
+                          <TableCell align="center">{page * rowsPerPage + index + 1}</TableCell>
+                          <TableCell>{item.title}</TableCell>
+                          <TableCell>{item.date.split('T')[0]}</TableCell>
+                          <TableCell>{item.date.split('T')[1]}</TableCell>
+                          <TableCell align="center">
+                            <Button
+                              className={classes.viewBtn}
+                              startIcon={<VisibilityOutlinedIcon fontSize="small" />}
+                              onClick={() => handleView(item.report)}
+                            >
+                              View
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={5} align="center" style={{ border: "none", background: "transparent" }}>
+                          <CircularProgress />
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                component="div"
+                count={reports ? reports.length : 0}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                rowsPerPageOptions={[12, 24, 48]}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </>
+          ) : reports === null ? (
+            <div className={classes.emptyBox}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className={classes.emptyBox}>
+              <Typography className={classes.emptyText}>
+                No Reports Found
+              </Typography>
+            </div>
+          )}
         </Grid>
       </Grid>
     </div>
